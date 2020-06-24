@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode",
+  "version": "${version}",
+
+  "name": "Motherlode",
+  "description": "",
+  "authors": [
+    "Spaceman",
+    "Glow"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore"
+  },
+
+  "license": "CC BY-NC-SA 4.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.core.Motherlode"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
