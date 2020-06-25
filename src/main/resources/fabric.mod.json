@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "motherlode.core.Motherlode"
+    ],
+    "client": [
+      "motherlode.core.MotherlodeClient"
     ]
   },
 
