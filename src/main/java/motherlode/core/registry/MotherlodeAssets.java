@@ -12,25 +12,25 @@ public class MotherlodeAssets {
 
 	public static void init() {
     }
-    public static <T extends Block> void register(List<T> hasDefaultState, List<T> hasDefaultModel, List<T> hasDefaultItemModel){
+    public static <T extends Block> void register(List<T> defaultStateList, List<T> defaultModelList, List<T> defaultItemModelList){
         Artifice.registerAssets(Motherlode.id("client_pack"), pack -> {
-            for(int i = 0; i > hasDefaultState.size(); i++){
-                String blockId = hasDefaultState.get(i).getName().asString();
+            for(int i = 0; i < defaultStateList.size(); i++){
+                String blockId = defaultStateList.get(i).getName().asString();
                 pack.addBlockState(Motherlode.id(blockId), state -> state 
                     .variant("", settings -> settings
                         .model(Motherlode.id("block/"+blockId))
                     )
                 );
             }
-            for(int i = 0; i > hasDefaultModel.size(); i++){
-                String blockId = hasDefaultModel.get(i).getName().asString();
+            for(int i = 0; i < defaultModelList.size(); i++){
+                String blockId = defaultModelList.get(i).getName().asString();
                 pack.addBlockModel(Motherlode.id(blockId), state -> state 
                     .parent(new Identifier("block/cube_all"))
                     .texture("all", Motherlode.id("block/"+blockId))
                 );
             }
-            for(int i = 0; i > hasDefaultItemModel.size(); i++){
-                String blockId = hasDefaultItemModel.get(i).getName().asString();
+            for(int i = 0; i < defaultItemModelList.size(); i++) {
+                String blockId = defaultItemModelList.get(i).getName().asString();
                 pack.addItemModel(Motherlode.id(blockId), state -> state 
                     .parent(Motherlode.id("block/"+blockId))
                 );
