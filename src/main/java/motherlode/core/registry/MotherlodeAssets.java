@@ -1,18 +1,18 @@
 package motherlode.core.registry;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.swordglowsblue.artifice.api.Artifice;
 
 import motherlode.core.Motherlode;
-import net.minecraft.block.Block;
+import motherlode.core.block.DefaultBlock;
 import net.minecraft.util.Identifier;
 
 public class MotherlodeAssets {
 
 	public static void init() {
     }
-    public static <T extends Block> void register(List<T> defaultStateList, List<T> defaultModelList, List<T> defaultItemModelList){
+    public static void register(ArrayList<DefaultBlock> defaultStateList, ArrayList<DefaultBlock> defaultModelList, ArrayList<DefaultBlock> defaultItemModelList){
         Artifice.registerAssets(Motherlode.id("client_pack"), pack -> {
             for(int i = 0; i < defaultStateList.size(); i++){
                 String blockId = defaultStateList.get(i).getName().asString();

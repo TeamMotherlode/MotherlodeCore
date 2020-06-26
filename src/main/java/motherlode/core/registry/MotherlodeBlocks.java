@@ -11,15 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 public class MotherlodeBlocks {
+    public static final ArrayList<DefaultBlock> defaultStateList = new ArrayList<DefaultBlock>();;
+    public static final ArrayList<DefaultBlock> defaultModelList = new ArrayList<DefaultBlock>();;
+    public static final ArrayList<DefaultBlock> defaultItemModelList = new ArrayList<DefaultBlock>();;
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block COPPER_BLOCK = register("copper_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
-    public static final List<DefaultBlock> defaultStateList = new ArrayList<DefaultBlock>();;
-    public static final List<DefaultBlock> defaultModelList = new ArrayList<DefaultBlock>();;
-    public static final List<DefaultBlock> defaultItemModelList = new ArrayList<DefaultBlock>();;
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
@@ -42,14 +41,14 @@ public class MotherlodeBlocks {
         if (item != null) {
             MotherlodeItems.register(name, item);
         }
-        if (block instanceof DefaultBlock){
+        if (block != null && block instanceof DefaultBlock){
             if (((DefaultBlock) block).hasDefaultState()){
                 defaultStateList.add((DefaultBlock) block);
             }
             if (((DefaultBlock) block).hasDefaultModel()){
                 defaultModelList.add((DefaultBlock) block);
             }
-            if (((DefaultBlock) block).hasDefaultItemModel()){
+            if (((DefaultBlock) block).hasDefaultItemModel()) {
                 defaultItemModelList.add((DefaultBlock) block);
             }
         }
