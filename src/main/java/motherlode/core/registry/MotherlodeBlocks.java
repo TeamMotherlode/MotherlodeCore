@@ -3,6 +3,7 @@ package motherlode.core.registry;
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultBlock;
 import motherlode.core.block.DefaultOreBlock;
+import motherlode.core.block.RedstoneTransmitterBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
@@ -19,6 +20,8 @@ public class MotherlodeBlocks {
     public static final ArrayList<DefaultBlock> defaultItemModelList = new ArrayList<DefaultBlock>();;
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block COPPER_BLOCK = register("copper_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
+
+    public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER

@@ -22,6 +22,7 @@ public class Motherlode implements ModInitializer {
         MotherlodeSounds.init();
         MotherlodeFluids.init();
         MotherlodeTags.init();
+        MotherlodeScreenHandlers.init();
     }
 
     public static final ItemGroup MAIN_GROUP = FabricItemGroupBuilder
@@ -33,6 +34,7 @@ public class Motherlode implements ModInitializer {
             stacks.add(new ItemStack(MotherlodeBlocks.COPPER_ORE));
             stacks.add(new ItemStack(MotherlodeBlocks.COPPER_BLOCK));
             stacks.add(new ItemStack(MotherlodeItems.COPPER_INGOT));
+            stacks.add(new ItemStack(MotherlodeBlocks.REDSTONE_TRANSMITTER));
         }).build();
 
     public static Identifier id(String name) {
