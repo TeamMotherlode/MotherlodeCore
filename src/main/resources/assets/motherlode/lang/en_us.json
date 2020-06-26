@@ -3,5 +3,15 @@
     "itemGroup.motherlode.general":"Motherlode",
     "block.motherlode.copper_ore":"Copper Ore",
     "block.motherlode.copper_block":"Copper Block",
-    "item.motherlode.copper_ingot":"Copper Ingot"
+    "item.motherlode.copper_ingot":"Copper Ingot",
+    "block.motherlode.silver_ore":"Silver Ore",
+    "block.motherlode.silver_block":"Silver Block",
+    "item.motherlode.silver_ingot":"Silver Ingot",
+    "block.motherlode.titanium_ore":"Titanium Ore",
+    "block.motherlode.titanium_block":"Titanium Block",
+    "item.motherlode.titanium_ingot":"Titanium Ingot",
+    "block.motherlode.adamantite_ore":"Adamantite Ore",
+    "block.motherlode.adamantite_block":"Adamantite Block",
+    "item.motherlode.adamantite_ingot":"Adamantite Ingot"
+    
 }
