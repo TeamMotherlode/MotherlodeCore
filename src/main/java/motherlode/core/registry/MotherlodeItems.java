@@ -8,6 +8,7 @@ public class MotherlodeItems {
     public static final Item ITEM_GROUP = register("item_group", new Item(newSettings()));
     public static final Item COPPER_INGOT = register("copper_ingot", new Item(newSettings()));
     public static final Item SILVER_INGOT = register("silver_ingot", new Item(newSettings()));
+    public static final Item TITANIUM_INGOT = register("titanium_ingot", new Item(newSettings()));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER

@@ -36,6 +36,9 @@ public class Motherlode implements ModInitializer {
             stacks.add(new ItemStack(MotherlodeBlocks.SILVER_ORE));
             stacks.add(new ItemStack(MotherlodeBlocks.SILVER_BLOCK));
             stacks.add(new ItemStack(MotherlodeItems.SILVER_INGOT));
+            stacks.add(new ItemStack(MotherlodeBlocks.TITANIUM_ORE));
+            stacks.add(new ItemStack(MotherlodeBlocks.TITANIUM_BLOCK));
+            stacks.add(new ItemStack(MotherlodeItems.TITANIUM_INGOT));
         }).build();
 
     public static Identifier id(String name) {
