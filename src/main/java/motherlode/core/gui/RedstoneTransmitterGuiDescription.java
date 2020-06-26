@@ -29,7 +29,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3);
         panel.add(grid, 36, 22);
 
-        WSprite transmitter = new WSprite(Motherlode.id("textures/gui/container/transmitter.png"));
+        WSprite transmitter = new WSprite(Motherlode.id("textures/gui/container/transmitter_disconnected.png"));
         panel.add(transmitter, 109, 22, 15, 54);
 
         for (int i = 0; i < 9; i++) {
