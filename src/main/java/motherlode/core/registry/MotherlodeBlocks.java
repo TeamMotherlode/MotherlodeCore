@@ -23,6 +23,8 @@ public class MotherlodeBlocks {
     public static final Block SILVER_BLOCK = register("silver_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
     public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block TITANIUM_BLOCK = register("titanium_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+    public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
