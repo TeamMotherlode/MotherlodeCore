@@ -1,12 +1,14 @@
 package motherlode.core.gui;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.*;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WItemSlot;
+import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
+import io.github.cottonmc.cotton.gui.widget.WSprite;
 import motherlode.core.Motherlode;
 import motherlode.core.registry.MotherlodeScreenHandlers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.SlotActionType;
@@ -47,19 +49,6 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         root.add(panel, 0, 0);
         root.add(this.createPlayerInventoryPanel(), 0, 5);
         root.validate(this);
-    }
-
-    @Override
-    public void onContentChanged(Inventory inventory) {
-        System.out.println("HEY");
-        for (int i = 0; i < blockInventory.size(); i++) {
-            if (blockInventory.getStack(i).isEmpty()) {
-                gems.get(i).setImage(Motherlode.id("textures/gui/container/gem.png"));
-            } else {
-                gems.get(i).setImage(Motherlode.id("textures/gui/container/empty.png"));
-            }
-        }
-        super.onContentChanged(inventory);
     }
 
     @Override
