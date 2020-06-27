@@ -3,5 +3,6 @@
     "itemGroup.motherlode.general":"Motherlode",
     "block.motherlode.copper_ore":"Copper Ore",
     "block.motherlode.copper_block":"Copper Block",
-    "item.motherlode.copper_ingot":"Copper Ingot"
+    "item.motherlode.copper_ingot":"Copper Ingot",
+	"block.motherlode.redstone_transmitter":"Redstone Transmitter"
 }
