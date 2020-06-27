@@ -4,6 +4,7 @@ import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.gui.RedstoneTransmitterScreen;
 import motherlode.core.registry.MotherlodeAssets;
 import motherlode.core.registry.MotherlodeBlocks;
+import motherlode.core.registry.MotherlodeItems;
 import motherlode.core.registry.MotherlodeScreenHandlers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -14,8 +15,6 @@ import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 public class MotherlodeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		MotherlodeAssets.register(MotherlodeBlocks.defaultStateList, MotherlodeBlocks.defaultModelList, MotherlodeBlocks.defaultItemModelList);
-
-		ScreenRegistry.<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (gui, inventory, title) -> new RedstoneTransmitterScreen(gui, inventory.player, title));
-	}
+		MotherlodeAssets.register(MotherlodeBlocks.defaultStateList, MotherlodeBlocks.defaultModelList, MotherlodeBlocks.defaultItemModelList, MotherlodeItems.defaultItemModelList);
+		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);	}
 }
