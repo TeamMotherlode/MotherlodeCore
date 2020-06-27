@@ -64,7 +64,7 @@ public class MotherlodeBlocks {
         if (item != null) {
             MotherlodeItems.register(name, item);
         }
-        if (block != null && block instanceof DefaultBlock){
+        if (block instanceof DefaultBlock){
             if (((DefaultBlock) block).hasDefaultState()){
                 defaultStateList.add((DefaultBlock) block);
             }
