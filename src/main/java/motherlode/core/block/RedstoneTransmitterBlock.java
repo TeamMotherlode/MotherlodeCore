@@ -51,8 +51,10 @@ public class RedstoneTransmitterBlock extends DefaultShapedBlock implements Arti
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient()) {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+        if (!player.isSneaking()) {
+            if (!world.isClient()) {
+                player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+            }
             return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
