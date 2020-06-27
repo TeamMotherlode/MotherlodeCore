@@ -5,13 +5,21 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 public class DefaultItem extends Item implements ArtificeProperties {
+    private boolean hasDefaultItemModel;
+
     public DefaultItem(Settings settings) {
         super(settings);
+        this.hasDefaultItemModel = true;
+    }
+
+    public DefaultItem(boolean hasDefaultItemModel, Settings settings) {
+        super(settings);
+        this.hasDefaultItemModel = hasDefaultItemModel;
     }
 
     @Override
     public boolean hasDefaultItemModel() {
-        return true;
+        return hasDefaultItemModel;
     }
 
     @Override
