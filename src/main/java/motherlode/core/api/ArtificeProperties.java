@@ -9,5 +9,7 @@ public interface ArtificeProperties {
 
     boolean hasDefaultItemModel();
 
+    boolean hasDefaultLootTable();
+
     Block getBlockInstance();
 }

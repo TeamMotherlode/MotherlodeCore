@@ -8,17 +8,19 @@ public class DefaultBlock extends Block implements ArtificeProperties {
     public final boolean hasDefaultState;
     public final boolean hasDefaultModel;
     public final boolean hasDefaultItemModel;
+    public final boolean hasDefaultLootTable;
 
     public DefaultBlock(AbstractBlock.Settings settings) {
-        this(true, true, true, settings);
+        this(true, true, true, true, settings);
     }
 
-    public DefaultBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, AbstractBlock.Settings settings) {
+    public DefaultBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, AbstractBlock.Settings settings) {
         super(settings);
 
         this.hasDefaultState = hasDefaultState;
         this.hasDefaultModel = hasDefaultModel;
         this.hasDefaultItemModel = hasDefaultItemModel;
+        this.hasDefaultLootTable = hasDefaultLootTable;
     }
 
     @Override
@@ -34,6 +36,11 @@ public class DefaultBlock extends Block implements ArtificeProperties {
     @Override
     public boolean hasDefaultItemModel() {
         return hasDefaultItemModel;
+    }
+
+    @Override
+    public boolean hasDefaultLootTable() {
+        return hasDefaultLootTable;
     }
 
     @Override

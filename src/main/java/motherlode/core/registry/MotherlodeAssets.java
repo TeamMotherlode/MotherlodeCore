@@ -1,7 +1,5 @@
 package motherlode.core.registry;
 
-import java.util.ArrayList;
-
 import com.swordglowsblue.artifice.api.Artifice;
 
 import motherlode.core.Motherlode;

@@ -18,12 +18,14 @@ public class MotherlodeBlocks {
     public static final ArrayList<DefaultBlock> defaultStateList = new ArrayList<DefaultBlock>();;
     public static final ArrayList<DefaultBlock> defaultModelList = new ArrayList<DefaultBlock>();;
     public static final ArrayList<DefaultBlock> defaultItemModelList = new ArrayList<DefaultBlock>();;
-    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
-    public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
-    public static final Block CHARITE_ORE = register("charite_ore", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
-    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
-    public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
-    public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final ArrayList<DefaultBlock> defaultLootTableList = new ArrayList<DefaultBlock>();;
+
+    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block HOWLITE_ORE = register("howlite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
@@ -41,7 +43,7 @@ public class MotherlodeBlocks {
     public static final Block SAPPHIRE_BLOCK = register("sapphire_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
     public static final Block TOPAZ_BLOCK = register("topaz_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
 
-    public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
@@ -65,14 +67,18 @@ public class MotherlodeBlocks {
             MotherlodeItems.register(name, item);
         }
         if (block instanceof DefaultBlock){
-            if (((DefaultBlock) block).hasDefaultState()){
-                defaultStateList.add((DefaultBlock) block);
+            DefaultBlock defaultBlock = (DefaultBlock)block;
+            if (defaultBlock.hasDefaultState()){
+                defaultStateList.add(defaultBlock);
             }
-            if (((DefaultBlock) block).hasDefaultModel()){
-                defaultModelList.add((DefaultBlock) block);
+            if (defaultBlock.hasDefaultModel()){
+                defaultModelList.add(defaultBlock);
             }
-            if (((DefaultBlock) block).hasDefaultItemModel()) {
-                defaultItemModelList.add((DefaultBlock) block);
+            if (defaultBlock.hasDefaultItemModel()) {
+                defaultItemModelList.add(defaultBlock);
+            }
+            if (defaultBlock.hasDefaultLootTable()) {
+                defaultLootTableList.add(defaultBlock);
             }
         }
         return b;

@@ -1,6 +1,5 @@
 package motherlode.core.block;
 
-import motherlode.core.api.ArtificeProperties;
 import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
 import motherlode.core.util.ShapeUtilities;
 import net.minecraft.block.Block;
@@ -21,16 +20,16 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class RedstoneTransmitterBlock extends DefaultShapedBlock implements ArtificeProperties, BlockEntityProvider {
+public class RedstoneTransmitterBlock extends DefaultShapedBlock implements BlockEntityProvider {
     public static final Box REDSTONE_TRANSMITTER_TORCH_SHAPE = new Box(0, 0.5, 0, 2F / 16F, 1, 2F / 16F);
     public static final VoxelShape REDSTONE_TRANSMITTER_SHAPE = VoxelShapes.union(VoxelShapes.cuboid(0, 0, 0, 1, 0.5, 1), VoxelShapes.cuboid(REDSTONE_TRANSMITTER_TORCH_SHAPE), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.EAST), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.SOUTH), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.WEST));
 
     public RedstoneTransmitterBlock(Settings settings) {
-        this(true, true, true, settings);
+        this(true, true, true, true, settings);
     }
 
-    public RedstoneTransmitterBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, Settings settings) {
-        super(REDSTONE_TRANSMITTER_SHAPE, hasDefaultState, hasDefaultModel, hasDefaultItemModel, settings);
+    public RedstoneTransmitterBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, Settings settings) {
+        super(REDSTONE_TRANSMITTER_SHAPE, hasDefaultState, hasDefaultModel, hasDefaultItemModel, hasDefaultLootTable, settings);
     }
 
     @Override

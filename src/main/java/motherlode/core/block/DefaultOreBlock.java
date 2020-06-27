@@ -17,16 +17,25 @@ public class DefaultOreBlock extends DefaultBlock {
     public final int maxExperience;
 
     public DefaultOreBlock(Settings settings) {
-        this(false, 0, 0, settings);
+        this(false, false, 0, 0, settings);
+    }
+    
+    public DefaultOreBlock(boolean hasDefaultLootTable, Settings settings) {
+        this(hasDefaultLootTable, false, 0, 0, settings);
     }
 
     public DefaultOreBlock(boolean dropsExperience, int minExperience, int maxExperience, Settings settings) {
-        super(true, true, true, settings);
+        this(false, dropsExperience, minExperience, maxExperience, settings);
+    }
+    
+    public DefaultOreBlock(boolean hasDefaultLootTable, boolean dropsExperience, int minExperience, int maxExperience, Settings settings) {
+        super(true, true, true, hasDefaultLootTable, settings);
 
         this.dropsExperience = dropsExperience;
         this.minExperience = minExperience;
         this.maxExperience = maxExperience;
     }
+
 
     protected int getExperienceWhenMined(Random random) {
         if (dropsExperience) {
