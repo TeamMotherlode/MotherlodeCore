@@ -67,17 +67,18 @@ public class MotherlodeBlocks {
             MotherlodeItems.register(name, item);
         }
         if (block instanceof DefaultBlock){
-            if (((DefaultBlock) block).hasDefaultState()){
-                defaultStateList.add((DefaultBlock) block);
+            DefaultBlock defaultBlock = (DefaultBlock)block;
+            if (defaultBlock.hasDefaultState()){
+                defaultStateList.add(defaultBlock);
             }
-            if (((DefaultBlock) block).hasDefaultModel()){
-                defaultModelList.add((DefaultBlock) block);
+            if (defaultBlock.hasDefaultModel()){
+                defaultModelList.add(defaultBlock);
             }
-            if (((DefaultBlock) block).hasDefaultItemModel()) {
-                defaultItemModelList.add((DefaultBlock) block);
+            if (defaultBlock.hasDefaultItemModel()) {
+                defaultItemModelList.add(defaultBlock);
             }
-            if (((DefaultBlock) block).hasDefaultLootTable()) {
-                defaultLootTableList.add((DefaultBlock) block);
+            if (defaultBlock.hasDefaultLootTable()) {
+                defaultLootTableList.add(defaultBlock);
             }
         }
         return b;
