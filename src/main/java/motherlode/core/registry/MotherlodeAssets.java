@@ -17,9 +17,9 @@ public class MotherlodeAssets {
             for(int i = 0; i < defaultStateList.size(); i++){
                 String blockId = defaultStateList.get(i).getTranslationKey().replace("block.motherlode.","");
                 pack.addBlockState(Motherlode.id(blockId), state -> state
-                        .variant("", settings -> settings
-                                .model(Motherlode.id("block/"+blockId))
-                        )
+                    .variant("", settings -> settings
+                        .model(Motherlode.id("block/"+blockId))
+                    )
                 );
             }
             for(int i = 0; i < defaultModelList.size(); i++){
