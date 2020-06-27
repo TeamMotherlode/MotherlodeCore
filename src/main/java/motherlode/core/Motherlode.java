@@ -28,22 +28,8 @@ public class Motherlode implements ModInitializer {
             .create(
 		new Identifier(MODID, "general"))
 		.icon(() -> new ItemStack(MotherlodeItems.ITEM_GROUP))
-		.appendItems(stacks ->
-		{
-            stacks.add(new ItemStack(MotherlodeBlocks.COPPER_ORE));
-            stacks.add(new ItemStack(MotherlodeBlocks.COPPER_BLOCK));
-            stacks.add(new ItemStack(MotherlodeItems.COPPER_INGOT));
-            stacks.add(new ItemStack(MotherlodeBlocks.SILVER_ORE));
-            stacks.add(new ItemStack(MotherlodeBlocks.SILVER_BLOCK));
-            stacks.add(new ItemStack(MotherlodeItems.SILVER_INGOT));
-            stacks.add(new ItemStack(MotherlodeBlocks.TITANIUM_ORE));
-            stacks.add(new ItemStack(MotherlodeBlocks.TITANIUM_BLOCK));
-            stacks.add(new ItemStack(MotherlodeItems.TITANIUM_INGOT));
-            stacks.add(new ItemStack(MotherlodeBlocks.ADAMANTITE_ORE));
-            stacks.add(new ItemStack(MotherlodeBlocks.ADAMANTITE_BLOCK));
-            stacks.add(new ItemStack(MotherlodeItems.ADAMANTITE_INGOT));
-        }).build();
-
+		.build();
+  
     public static Identifier id(String name) {
         return new Identifier(MODID, name);
     }
