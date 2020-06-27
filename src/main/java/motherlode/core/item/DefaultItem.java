@@ -8,8 +8,7 @@ public class DefaultItem extends Item implements ArtificeProperties {
     private boolean hasDefaultItemModel;
 
     public DefaultItem(Settings settings) {
-        super(settings);
-        this.hasDefaultItemModel = true;
+        this(true, settings);
     }
 
     public DefaultItem(boolean hasDefaultItemModel, Settings settings) {
