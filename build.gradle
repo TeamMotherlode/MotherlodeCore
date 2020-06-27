@@ -10,8 +10,12 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version+ "+" +project.minecraft_version
 group = project.maven_group
 
-repositories { 
-    jcenter() 
+repositories {
+	maven {
+		name = "CottonMC"
+		url = "https://server.bbkr.space/artifactory/libs-release"
+	}
+    jcenter()
 }
 
 minecraft {
@@ -22,8 +26,12 @@ dependencies {
     mappings "net.fabricmc:yarn:1.16.1+build.1:v2"
     modImplementation "net.fabricmc:fabric-loader:0.8.8+build.202"
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.13.1+build.370-1.16"
+
 	modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 	include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
+
+	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
+	include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
 }
 processResources {
 	inputs.property "version", project.version
