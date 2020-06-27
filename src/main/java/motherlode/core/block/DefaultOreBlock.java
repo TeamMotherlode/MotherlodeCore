@@ -21,7 +21,7 @@ public class DefaultOreBlock extends DefaultBlock {
     }
 
     public DefaultOreBlock(boolean dropsExperience, int minExperience, int maxExperience, Settings settings) {
-        super(true, true, true, settings);
+        super(true, true, true, false, settings);
 
         this.dropsExperience = dropsExperience;
         this.minExperience = minExperience;

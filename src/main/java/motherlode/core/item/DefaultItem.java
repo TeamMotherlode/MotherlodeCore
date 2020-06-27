@@ -35,4 +35,9 @@ public class DefaultItem extends Item implements ArtificeProperties {
     public boolean hasDefaultModel() {
         return false;
     }
+
+    @Override
+    public boolean hasDefaultLootTable() {
+        return false;
+    }
 }
