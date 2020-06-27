@@ -29,7 +29,7 @@ public class Motherlode implements ModInitializer {
 		new Identifier(MODID, "general"))
 		.icon(() -> new ItemStack(MotherlodeItems.ITEM_GROUP))
 		.build();
-
+  
     public static Identifier id(String name) {
         return new Identifier(MODID, name);
     }

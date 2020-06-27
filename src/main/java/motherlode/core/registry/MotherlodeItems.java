@@ -7,6 +7,9 @@ import net.minecraft.util.registry.Registry;
 public class MotherlodeItems {
     public static final Item ITEM_GROUP = register("item_group", new Item(new Item.Settings()));
     public static final Item COPPER_INGOT = register("copper_ingot", new Item(newSettings()));
+    public static final Item SILVER_INGOT = register("silver_ingot", new Item(newSettings()));
+    public static final Item TITANIUM_INGOT = register("titanium_ingot", new Item(newSettings()));
+    public static final Item ADAMANTITE_INGOT = register("adamantite_ingot", new Item(newSettings()));
 
     public static final Item AMETHYST_INGOT = register("amethyst", new Item(newSettings()));
     public static final Item HOWLITE_INGOT = register("howlite", new Item(newSettings()));
