@@ -20,6 +20,17 @@ public class MotherlodeBlocks {
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block COPPER_BLOCK = register("copper_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
 
+    public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block HOWLITE_ORE = register("howlite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block AMETHYST_BLOCK = register("amethyst_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+    public static final Block HOWLITE_BLOCK = register("howlite_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+    public static final Block RUBY_BLOCK = register("ruby_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+    public static final Block TOPAZ_BLOCK = register("topaz_block", new DefaultBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
+
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }
