@@ -6,8 +6,11 @@ import com.swordglowsblue.artifice.api.Artifice;
 
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultBlock;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
 
 	public static void init() {

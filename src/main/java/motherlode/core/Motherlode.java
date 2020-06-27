@@ -28,12 +28,7 @@ public class Motherlode implements ModInitializer {
             .create(
 		new Identifier(MODID, "general"))
 		.icon(() -> new ItemStack(MotherlodeItems.ITEM_GROUP))
-		.appendItems(stacks ->
-		{
-            stacks.add(new ItemStack(MotherlodeBlocks.COPPER_ORE));
-            stacks.add(new ItemStack(MotherlodeBlocks.COPPER_BLOCK));
-            stacks.add(new ItemStack(MotherlodeItems.COPPER_INGOT));
-        }).build();
+		.build();
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);
