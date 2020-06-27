@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "motherlode.core.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "ModelPredicateProviderRegistryMixin"
+  ],
+  "mixins": [
+    "PotionItemMixin",
+    "PotionUtilsMixin"
+  ]
+}
