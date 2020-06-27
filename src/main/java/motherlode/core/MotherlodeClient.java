@@ -16,6 +16,6 @@ public class MotherlodeClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		MotherlodeAssets.register(MotherlodeBlocks.defaultStateList, MotherlodeBlocks.defaultModelList, MotherlodeBlocks.defaultItemModelList);
 
-		ScreenRegistry.<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (gui, inventory, title) -> new RedstoneTransmitterScreen(gui, inventory.player, title));
+		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
 	}
 }
