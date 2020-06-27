@@ -19,6 +19,8 @@ public class MotherlodeTags {
 	}
 
 	public static class Items {
+		public static final Tag<Item> GEMS = register("gems");
+
 		public static Tag<Item> register(String name) {
 			return TagRegistry.item(Motherlode.id(name));
 		}

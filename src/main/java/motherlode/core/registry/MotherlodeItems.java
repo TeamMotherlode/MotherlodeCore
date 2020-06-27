@@ -1,6 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
+import motherlode.core.item.DefaultGemItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
@@ -12,11 +13,11 @@ public class MotherlodeItems {
     public static final Item ECHERITE_INGOT = register("echerite_ingot", new Item(newSettings()));
     public static final Item TITANIUM_INGOT = register("titanium_ingot", new Item(newSettings()));
     public static final Item ADAMANTITE_INGOT = register("adamantite_ingot", new Item(newSettings()));
-    public static final Item AMETHYST = register("amethyst", new Item(newSettings()));
-    public static final Item HOWLITE = register("howlite", new Item(newSettings()));
-    public static final Item RUBY = register("ruby", new Item(newSettings()));
-    public static final Item SAPPHIRE = register("sapphire", new Item(newSettings()));
-    public static final Item TOPAZ = register("topaz", new Item(newSettings()));
+    public static final Item AMETHYST = register("amethyst", new DefaultGemItem(0xF989FF, newSettings()));
+    public static final Item HOWLITE = register("howlite", new DefaultGemItem(0xFFFFFF, newSettings()));
+    public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, newSettings()));
+    public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
+    public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
