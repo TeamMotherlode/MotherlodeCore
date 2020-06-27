@@ -1,6 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
+import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -9,6 +10,8 @@ import net.minecraft.util.registry.Registry;
 import java.util.function.Supplier;
 
 public class MotherlodeBlockEntities {
+	public static BlockEntityType REDSTONE_TRANSMITTER = register("redstone_transmitter", RedstoneTransmitterBlockEntity::new, MotherlodeBlocks.REDSTONE_TRANSMITTER);
+
 	public static void init() {
 		// CALLED TO MAINTAIN REGISTRY ORDER
 	}

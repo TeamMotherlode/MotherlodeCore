@@ -6,33 +6,41 @@ import com.swordglowsblue.artifice.api.Artifice;
 
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultBlock;
+import motherlode.core.item.DefaultItem;
 import net.minecraft.util.Identifier;
 
 public class MotherlodeAssets {
 
 	public static void init() {
     }
-    public static void register(ArrayList<DefaultBlock> defaultStateList, ArrayList<DefaultBlock> defaultModelList, ArrayList<DefaultBlock> defaultItemModelList){
+    public static void register(){
         Artifice.registerAssets(Motherlode.id("client_pack"), pack -> {
-            for(int i = 0; i < defaultStateList.size(); i++){
-                String blockId = defaultStateList.get(i).getTranslationKey().replace("block.motherlode.","");
-                pack.addBlockState(Motherlode.id(blockId), state -> state
+            for(DefaultBlock defaultBlock : MotherlodeBlocks.defaultStateList) {
+                String blockId = defaultBlock.getTranslationKey().replace("block.motherlode.","");
+                pack.addBlockState(Motherlode.id(blockId), state -> state 
                     .variant("", settings -> settings
                         .model(Motherlode.id("block/"+blockId))
                     )
                 );
             }
-            for(int i = 0; i < defaultModelList.size(); i++){
-                String blockId = defaultModelList.get(i).getTranslationKey().replace("block.motherlode.","");
+            for(DefaultBlock defaultBlock : MotherlodeBlocks.defaultModelList) {
+                String blockId = defaultBlock.getTranslationKey().replace("block.motherlode.","");
                 pack.addBlockModel(Motherlode.id(blockId), state -> state 
                     .parent(new Identifier("block/cube_all"))
                     .texture("all", Motherlode.id("block/"+blockId))
                 );
             }
-            for(int i = 0; i < defaultItemModelList.size(); i++) {
-                String blockId = defaultItemModelList.get(i).getTranslationKey().replace("block.motherlode.","");
+            for(DefaultBlock defaultBlock : MotherlodeBlocks.defaultItemModelList) {
+                String blockId = defaultBlock.getTranslationKey().replace("block.motherlode.","");
                 pack.addItemModel(Motherlode.id(blockId), state -> state 
                     .parent(Motherlode.id("block/"+blockId))
+                );
+            }
+            for(DefaultItem defaultItem : MotherlodeItems.defaultItemModelList) {
+                String itemId = defaultItem.getTranslationKey().replace("item.motherlode.","");
+                pack.addItemModel(Motherlode.id(itemId), state -> state 
+                    .parent(new Identifier("item/generated"))
+                    .texture("layer0", Motherlode.id("item/"+itemId))
                 );
             }
         });
