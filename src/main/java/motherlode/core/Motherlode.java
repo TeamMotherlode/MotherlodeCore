@@ -24,7 +24,8 @@ public class Motherlode implements ModInitializer {
         MotherlodeTags.init();
         MotherlodeScreenHandlers.init();
 
-        MotherlodeData.register();
+        MotherlodeData.register();;
+        MotherlodeFeatures.register();
     }
 
     public static final ItemGroup MAIN_GROUP = FabricItemGroupBuilder

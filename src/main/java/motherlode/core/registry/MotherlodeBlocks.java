@@ -20,7 +20,7 @@ public class MotherlodeBlocks {
     public static final ArrayList<DefaultBlock> defaultItemModelList = new ArrayList<DefaultBlock>();;
     public static final ArrayList<DefaultBlock> defaultLootTableList = new ArrayList<DefaultBlock>();;
 
-    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
     public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F)));
     public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
