@@ -6,10 +6,12 @@
     "defaultRequire": 1
   },
   "client": [
-    "ModelPredicateProviderRegistryMixin"
+    "potions.ModelPredicateProviderRegistryMixin"
   ],
   "mixins": [
-    "PotionItemMixin",
-    "PotionUtilsMixin"
+    "potions.EntityMixin",
+    "potions.PotionEntityMixin",
+    "potions.PotionItemMixin",
+    "potions.PotionUtilsMixin"
   ]
 }

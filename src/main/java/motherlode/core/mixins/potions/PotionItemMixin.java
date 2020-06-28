@@ -1,4 +1,4 @@
-package motherlode.core.mixins;
+package motherlode.core.mixins.potions;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
