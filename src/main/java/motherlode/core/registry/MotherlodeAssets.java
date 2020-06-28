@@ -1,7 +1,5 @@
 package motherlode.core.registry;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.Artifice;
 
@@ -12,10 +10,7 @@ import motherlode.core.item.DefaultItem;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.Identifier;
-
-import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
@@ -53,19 +48,29 @@ public class MotherlodeAssets {
                 );
             }
 
-            for (PotionModelInfo info : MotherlodePotions.potionPredicateValues.values()) {
-                pack.addItemModel(Motherlode.id("potions/" + info.model), (model) -> model
+            for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
+                if (!info.useDefaultModel)
+                    pack.addItemModel(Motherlode.id("potions/" + info.model), (model) -> model
                         .parent(new Identifier("item/generated"))
                         .texture("layer0", Motherlode.id("item/potions/" + info.model)));
             }
 
+            pack.addItemModel(Motherlode.id("potions/default"), (model) -> model
+                    .parent(new Identifier("item/generated"))
+                    .texture("layer0", new Identifier("item/potion_overlay"))
+                    .texture("layer1", new Identifier("item/potion")));
+
             pack.addItemModel(new Identifier("potion"), (model) -> {
                  model.parent(new Identifier("item/generated"));
                  model.texture("layer0", new Identifier("item/potion"));
+                model.texture("layer1", new Identifier("item/potion_overlay"));
 
                  for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
-                     if (info.model != null)
-                        model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
+                     if (info.model == null || info.useDefaultModel)
+                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/default")) );
+                     else
+                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
+
                  }
              });
 

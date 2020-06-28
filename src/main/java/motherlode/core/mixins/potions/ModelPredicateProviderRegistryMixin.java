@@ -23,7 +23,7 @@ public class ModelPredicateProviderRegistryMixin {
 
     static {
         register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
-                PotionModelInfo potion = MotherlodePotions.potionPredicateValues.get( PotionUtil.getPotion(itemStack) );
+                PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
                 return potion == null ? 1 : potion.predicateValue;
         });
     }

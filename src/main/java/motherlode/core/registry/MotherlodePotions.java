@@ -1,17 +1,44 @@
 package motherlode.core.registry;
 
+import motherlode.core.potions.ThornsEffect;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
+import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MotherlodePotions {
 
-    public static Map<Potion,PotionModelInfo> potionPredicateValues = new HashMap<>();
+    public static Map<Potion,PotionModelInfo> potionModelInfos = new HashMap<>();
+
+    public static final StatusEffect THORNS_EFFECT = register("thorns", new ThornsEffect(9848355));
+
+    public static final Potion THORNS = register("thorns", new Potion(new StatusEffectInstance(THORNS_EFFECT, 3600)));
+    public static final Potion LONG_THORNS = register("long_thorns", new Potion(new StatusEffectInstance(THORNS_EFFECT, 9600)));
+    public static final Potion STRONG_THORNS = register("strong_thorns", new Potion(new StatusEffectInstance(THORNS_EFFECT, 1800, 1)));
+    public static final Potion HEALING_III = register("healing_3", healing(2));
+    public static final Potion HEALING_IV = register("healing_4", healing(3));
+
+    private static Potion healing(int amplifier) {
+        return new Potion("healing", new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, amplifier));
+    }
+
+    private static StatusEffect register(String id, StatusEffect entry) {
+        return Registry.register(Registry.STATUS_EFFECT, id, entry);
+    }
+
+    private static Potion register(String name, Potion potion) {
+        return Registry.register(Registry.POTION, name, potion);
+    }
 
     public static void init() {}
 
@@ -73,29 +100,45 @@ public class MotherlodePotions {
         addPotion(Potions.HARMING, "harming", 0.190F);
         addPotion(Potions.STRONG_HARMING, "harming", 0.191F);
 
-        addPotion(Potions.HEALING, "healing", 0.200F);
-        addPotion(Potions.STRONG_HEALING, "healing", 0.201F);
+        addPotion(Potions.HEALING, "healing_1", 0.200F);
+        addPotion(Potions.STRONG_HEALING, "healing_2", 0.201F);
+        addPotion(HEALING_III, "healing_3", 0.202F);
+        addPotion(HEALING_IV, "healing_4", 0.203F);
+
+        addPotion(THORNS, "thorns", 0.210F);
+        addPotion(LONG_THORNS, "thorns", 0.211F);
+        addPotion(STRONG_THORNS, "thorns", 0.212F);
 
     }
 
     public static void addPotion(Potion potion, String model, float predicateValue) {
-        potionPredicateValues.put(potion, new PotionModelInfo(model, predicateValue));
+        potionModelInfos.put(potion, new PotionModelInfo(model, predicateValue));
     }
 
     public static List<PotionModelInfo> getPotionModelInfos() {
-        return potionPredicateValues.entrySet().stream()
+        return potionModelInfos.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
+    }
+
+    public static boolean applyTint(ItemStack stack) {
+        if (stack.getItem() != Items.POTION)
+            return true;
+
+        PotionModelInfo info = potionModelInfos.get(PotionUtil.getPotion(stack));
+        return info == null || info.useDefaultModel;
     }
     
     public static class PotionModelInfo implements Comparable<PotionModelInfo>{
         public final String model;
         public final float predicateValue;
+        public final boolean useDefaultModel;
         
         public PotionModelInfo(String model, float predicateValue) {
             this.model = model;
             this.predicateValue = predicateValue;
+            this.useDefaultModel = getClass().getResourceAsStream("/assets/motherlode/textures/item/potions/" + model + ".png") == null;
         }
 
         @Override

@@ -23,6 +23,7 @@ public class Motherlode implements ModInitializer {
         MotherlodeFluids.init();
         MotherlodeTags.init();
         MotherlodeScreenHandlers.init();
+        MotherlodePotions.init();
 
         MotherlodeData.register();
     }
