@@ -52,13 +52,12 @@ public class StoneBlocks {
         MotherlodeItems.register(baseID + "_stairs", new BlockItem(STAIRS, new Item.Settings().group(Motherlode.BLOCKS)));
 
         List<Block> carved = new ArrayList<>();
-        char variant = 'a';
-        for (int i = 0; i < 27; i++) {
+
+        for (char variant = 'a'; variant < 'z'; variant++) {
             String id = baseID + "_carved_" + variant;
             if (getClass().getResourceAsStream("assets/motherlode/textures/block/" + id + ".png") == null)
                 break;
             carved.add(register(id));
-            variant++;
         }
         CARVED = new Block[carved.size()];
         carved.toArray(CARVED);
