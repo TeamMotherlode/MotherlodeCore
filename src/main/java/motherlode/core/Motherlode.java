@@ -32,7 +32,7 @@ public class Motherlode implements ModInitializer {
 		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE))
 		.build();
 
-    public static final ItemGroup ITEMS = FabricItemGroupBuilder.create( id("blocks"))
+    public static final ItemGroup ITEMS = FabricItemGroupBuilder.create( id("items"))
             .icon(() -> new ItemStack(MotherlodeItems.COPPER_INGOT))
             .build();
 
