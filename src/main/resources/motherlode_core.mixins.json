@@ -9,6 +9,7 @@
     "potions.ModelPredicateProviderRegistryMixin"
   ],
   "mixins": [
+    "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
     "potions.PotionEntityMixin",
     "potions.PotionItemMixin",

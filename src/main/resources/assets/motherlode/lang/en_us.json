@@ -1,6 +1,7 @@
 {
     "itemGroup.motherlode.blocks":"Motherlode Blocks",
     "itemGroup.motherlode.items":"Motherlode Items",
+  
     "block.motherlode.copper_ore":"Copper Ore",
     "block.motherlode.copper_block":"Copper Block",
     "item.motherlode.copper_ingot":"Copper Ingot",
@@ -19,6 +20,7 @@
     "block.motherlode.charite_ore":"Charite Ore",
     "block.motherlode.charite_block":"Charite Block",
     "item.motherlode.charite_crystal":"Charite Crystal",
+  
     "block.motherlode.amethyst_ore":"Amethyst Ore",
     "block.motherlode.howlite_ore":"Howlite Ore",
     "block.motherlode.ruby_ore":"Ruby Ore",
@@ -34,8 +36,9 @@
     "item.motherlode.ruby":"Ruby",
     "item.motherlode.sapphire":"Sapphire",
     "item.motherlode.topaz":"Topaz",
-	"block.motherlode.redstone_transmitter":"Redstone Transmitter",
-
+  
+	  "block.motherlode.redstone_transmitter":"Redstone Transmitter",
+  
     "block.motherlode.limestone": "Limestone",
     "block.motherlode.limestone_cobble": "Limestone Cobble",
     "block.motherlode.limestone_bricks": "Limestone Bricks",
@@ -165,5 +168,10 @@
     "block.motherlode.sandstone_tiles_small": "Small Sandstone Tiles",
     "block.motherlode.sandstone_pillar": "Sandstone Pillar",
     "block.motherlode.sandstone_slab": "Sandstone Slab",
-    "block.motherlode.sandstone_stairs": "Sandstone Stairs"
+    "block.motherlode.sandstone_stairs": "Sandstone Stairs",
+  
+    "item.minecraft.potion.effect.thorns": "Potion of Thorns",
+    "item.minecraft.potion.effect.long_thorns": "Potion of Thorns",
+    "item.minecraft.potion.effect.strong_thorns": "Potion of Thorns",
+    "effect.motherlode.thorns": "Thorns"
 }
