@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeItems {
-    public static final ArrayList<DefaultItem> defaultItemModelList = new ArrayList<DefaultItem>();;
+    public static final ArrayList<DefaultItem> defaultItemModelList = new ArrayList<>();
   
     public static final Item ITEM_GROUP = register("item_group", new DefaultItem(new Item.Settings()));
     public static final Item COPPER_INGOT = register("copper_ingot", new DefaultItem(newSettings()));
@@ -23,16 +23,17 @@ public class MotherlodeItems {
     public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, newSettings()));
     public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
     public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
+    public static final Item ONYX = register("onyx", new DefaultGemItem(0xFFC304, newSettings()));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }
 
     static Item.Settings newSettings() {
-        return new Item.Settings().group(Motherlode.MAIN_GROUP);
+        return new Item.Settings().group(Motherlode.ITEMS);
     }
 
-    protected static <T extends Item> T register(String name, T item) {
+    public static <T extends Item> T register(String name, T item) {
         if (item instanceof DefaultItem){
             if (((DefaultItem) item).hasDefaultItemModel()){
                 defaultItemModelList.add((DefaultItem) item);
