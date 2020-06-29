@@ -23,7 +23,7 @@ public class MotherlodeItems {
     public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, newSettings()));
     public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
     public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
-    public static final Item ONYX = register("onyx", new DefaultGemItem(0xFFC304, newSettings()));
+    public static final Item ONYX = register("onyx", new DefaultGemItem(0x675885, newSettings()));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
