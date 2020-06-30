@@ -22,15 +22,15 @@ public class DefaultOreBlock extends DefaultBlock implements OreProperties{
     public final int maxY;
 
     public DefaultOreBlock(Settings settings) {
-        this(false, 0, 0, 8, 2, 0, 50, settings);
+        this(false, 0, 0, 8, 1, 0, 50, settings);
     }
     
     public DefaultOreBlock(boolean hasDefaultLootTable, Settings settings) {
-        this(hasDefaultLootTable, 0, 0, 8, 2, 0, 50, settings);
+        this(hasDefaultLootTable, 0, 0, 8, 1, 0, 50, settings);
     }
 
     public DefaultOreBlock( int minExperience, int maxExperience, Settings settings) {
-        this(false, minExperience, maxExperience, 8, 2, 0, 50, settings);
+        this(false, minExperience, maxExperience, 8, 1, 0, 50, settings);
     }
     
     public DefaultOreBlock(boolean hasDefaultLootTable, int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY,  Settings settings) {
