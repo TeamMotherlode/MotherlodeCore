@@ -37,6 +37,10 @@ public class Motherlode implements ModInitializer {
             .icon(() -> new ItemStack(MotherlodeItems.COPPER_INGOT))
             .build();
 
+    public static final ItemGroup ARMOUR_AND_TOOLS = FabricItemGroupBuilder.create( id("armor_and_tools"))
+            .icon(() -> new ItemStack(MotherlodeItems.COPPER.helmet))
+            .build();
+
     public static Identifier id(String name) {
         return new Identifier(MODID, name);
     }
