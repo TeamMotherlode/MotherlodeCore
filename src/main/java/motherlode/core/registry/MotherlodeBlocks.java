@@ -48,7 +48,7 @@ public class MotherlodeBlocks {
     public static final Block RUBY_BLOCK = register("ruby_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block SAPPHIRE_BLOCK = register("sapphire_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block TOPAZ_BLOCK = register("topaz_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block ONYX_BLOCK = register("onyx_block", new new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+    public static final Block ONYX_BLOCK = register("onyx_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
 
     public static final StoneBlocks LIMESTONE = new StoneBlocks("limestone",true,true,false);
     public static final StoneBlocks GRAVESTONE = new StoneBlocks("gravestone",true,true,true);
