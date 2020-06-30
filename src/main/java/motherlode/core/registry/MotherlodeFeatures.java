@@ -26,7 +26,7 @@ public class MotherlodeFeatures {
 	}
 
 	public static void register() {
-		Registry.BIOME.forEach(biome -> addToBiome(biome));
+		Registry.BIOME.forEach(MotherlodeFeatures::addToBiome);
 		RegistryEntryAddedCallback.event(Registry.BIOME).register((i, identifier, biome) -> addToBiome(biome));
 	}
 
