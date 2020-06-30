@@ -23,16 +23,19 @@ public class Motherlode implements ModInitializer {
         MotherlodeFluids.init();
         MotherlodeTags.init();
         MotherlodeScreenHandlers.init();
+        MotherlodePotions.init();
 
         MotherlodeData.register();
         MotherlodeFeatures.register();
     }
 
-    public static final ItemGroup MAIN_GROUP = FabricItemGroupBuilder
-            .create(
-		new Identifier(MODID, "general"))
-		.icon(() -> new ItemStack(MotherlodeItems.ITEM_GROUP))
+    public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
+		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE))
 		.build();
+
+    public static final ItemGroup ITEMS = FabricItemGroupBuilder.create( id("items"))
+            .icon(() -> new ItemStack(MotherlodeItems.COPPER_INGOT))
+            .build();
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);

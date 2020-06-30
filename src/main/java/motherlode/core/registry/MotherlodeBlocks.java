@@ -17,10 +17,13 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 public class MotherlodeBlocks {
-    public static final ArrayList<DefaultBlock> defaultStateList = new ArrayList<DefaultBlock>();;
-    public static final ArrayList<DefaultBlock> defaultModelList = new ArrayList<DefaultBlock>();;
-    public static final ArrayList<DefaultBlock> defaultItemModelList = new ArrayList<DefaultBlock>();;
-    public static final ArrayList<DefaultBlock> defaultLootTableList = new ArrayList<DefaultBlock>();;
+    public static final ArrayList<Block> defaultStateList = new ArrayList<>();
+    public static final ArrayList<Block> defaultModelList = new ArrayList<>();
+    public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
+    public static final ArrayList<Block> defaultLootTableList = new ArrayList<>();
+    public static final ArrayList<StairsBlock> usesStairModel = new ArrayList<>();
+    public static final ArrayList<SlabBlock> usesSlabModel = new ArrayList<>();
+    public static final ArrayList<Block> usesPillarModel = new ArrayList<>();
 
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
     public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
@@ -33,6 +36,7 @@ public class MotherlodeBlocks {
     public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+    
     public static final Block COPPER_BLOCK = register("copper_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
     public static final Block SILVER_BLOCK = register("silver_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block CHARITE_BLOCK = register("charite_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 3)));
@@ -44,6 +48,21 @@ public class MotherlodeBlocks {
     public static final Block RUBY_BLOCK = register("ruby_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block SAPPHIRE_BLOCK = register("sapphire_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block TOPAZ_BLOCK = register("topaz_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+    public static final Block ONYX_BLOCK = register("onyx_block", new new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+
+    public static final StoneBlocks LIMESTONE = new StoneBlocks("limestone",true,true,false);
+    public static final StoneBlocks GRAVESTONE = new StoneBlocks("gravestone",true,true,true);
+    public static final StoneBlocks JASPER = new StoneBlocks("jasper",true,true,false);
+    public static final StoneBlocks MARBLE = new StoneBlocks("marble",true, true,false);
+    public static final StoneBlocks SLATE = new StoneBlocks("slate",true, true,false);
+
+    public static final StoneBlocks BRICK = new StoneBlocks("brick",false,true,false);
+    public static final StoneBlocks MAGMA = new StoneBlocks("magma",false,false,false);
+    public static final StoneBlocks OBSIDIAN = new StoneBlocks("obsidian",false,false,false);
+    public static final StoneBlocks CRYING_OBSIDIAN = new StoneBlocks("crying_obsidian",false,false,false);
+    public static final StoneBlocks GOLD = new StoneBlocks("gold",false,true,false);
+    public static final StoneBlocks ICE = new StoneBlocks("ice",false,true,false);
+    public static final StoneBlocks SANDSTONE = new StoneBlocks("sandstone",false,true,false);
 
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
     public static void init() {
@@ -55,8 +74,8 @@ public class MotherlodeBlocks {
         return register(name, block, new BlockItem(block, settings));
     }
 
-    static <T extends Block> T register(String name, T block) {
-        return register(name, block, new Item.Settings().group(Motherlode.MAIN_GROUP));
+    public static <T extends Block> T register(String name, T block) {
+        return register(name, block, new Item.Settings().group(Motherlode.BLOCKS));
     }
 
     static <T extends Block> T register(String name, T block, Function<T, BlockItem> itemFactory) {

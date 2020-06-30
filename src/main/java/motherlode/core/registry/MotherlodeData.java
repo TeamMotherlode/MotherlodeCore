@@ -2,8 +2,10 @@ package motherlode.core.registry;
 
 import com.swordglowsblue.artifice.api.Artifice;
 
+import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultBlock;
+import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 
 public class MotherlodeData {
@@ -13,8 +15,8 @@ public class MotherlodeData {
 
     public static void register(){
         Artifice.registerData(Motherlode.id("server_pack"), pack -> {
-           for(DefaultBlock defaultBlock : MotherlodeBlocks.defaultLootTableList){
-                String blockId = defaultBlock.getTranslationKey().replace("block.motherlode.","");
+           for(Block block : MotherlodeBlocks.defaultLootTableList){
+                String blockId = block.getTranslationKey().replace("block.motherlode.","");
                 pack.addLootTable(Motherlode.id("blocks/"+blockId), table -> table
                 .type(new Identifier("minecraft:block"))
                 .pool(pool -> pool
@@ -23,8 +25,7 @@ public class MotherlodeData {
                         .type(new Identifier("minecraft","item"))
                         .name(Motherlode.id(blockId))
                     )
-                    .condition(new Identifier("minecraft","survives_explosion"), condition -> condition
-                        .build()
+                    .condition(new Identifier("minecraft","survives_explosion"), TypedJsonBuilder::build
                     )
                 )
             );
