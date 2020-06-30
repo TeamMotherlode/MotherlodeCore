@@ -3,13 +3,13 @@ package motherlode.core.registry;
 import java.util.ArrayList;
 
 import motherlode.core.Motherlode;
-import motherlode.core.item.DefaultItem;
 import motherlode.core.item.DefaultGemItem;
+import motherlode.core.item.DefaultItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeItems {
-    public static final ArrayList<DefaultItem> defaultItemModelList = new ArrayList<>();
+    public static final ArrayList<DefaultItem> defaultItemModelList = new ArrayList<DefaultItem>();
   
     public static final Item ITEM_GROUP = register("item_group", new DefaultItem(new Item.Settings()));
     public static final Item COPPER_INGOT = register("copper_ingot", new DefaultItem(newSettings()));

@@ -11,34 +11,43 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class DefaultOreBlock extends DefaultBlock {
-    public final boolean dropsExperience;
+import motherlode.core.api.OreProperties;
+
+public class DefaultOreBlock extends DefaultBlock implements OreProperties{
     public final int minExperience;
     public final int maxExperience;
+    public final int veinSize;
+    public final int veinsPerChunk;
+    public final int minY;
+    public final int maxY;
 
     public DefaultOreBlock(Settings settings) {
-        this(false, false, 0, 0, settings);
+        this(false, 0, 0, 8, 1, 0, 50, settings);
     }
     
     public DefaultOreBlock(boolean hasDefaultLootTable, Settings settings) {
-        this(hasDefaultLootTable, false, 0, 0, settings);
+        this(hasDefaultLootTable, 0, 0, 8, 1, 0, 50, settings);
     }
 
-    public DefaultOreBlock(boolean dropsExperience, int minExperience, int maxExperience, Settings settings) {
-        this(false, dropsExperience, minExperience, maxExperience, settings);
+    public DefaultOreBlock( int minExperience, int maxExperience, Settings settings) {
+        this(false, minExperience, maxExperience, 8, 1, 0, 50, settings);
     }
     
-    public DefaultOreBlock(boolean hasDefaultLootTable, boolean dropsExperience, int minExperience, int maxExperience, Settings settings) {
+    public DefaultOreBlock(boolean hasDefaultLootTable, int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY,  Settings settings) {
         super(true, true, true, hasDefaultLootTable, settings);
 
-        this.dropsExperience = dropsExperience;
         this.minExperience = minExperience;
         this.maxExperience = maxExperience;
+        this.veinSize = veinSize;
+        this.veinsPerChunk = veinsPerChunk;
+        this.minY = minY;
+        this.maxY = maxY;
+
     }
 
 
     protected int getExperienceWhenMined(Random random) {
-        if (dropsExperience) {
+        if (maxExperience!=0) {
             return MathHelper.nextInt(random, minExperience, maxExperience);
         }
         return 0;
@@ -58,5 +67,25 @@ public class DefaultOreBlock extends DefaultBlock {
     @Override
     public Block getBlockInstance() {
         return this;
+    }
+
+    @Override
+    public int veinSize() {
+        return veinSize;
+    }
+
+    @Override
+    public int veinsPerChunk() {
+        return veinsPerChunk;
+    }
+
+    @Override
+    public int minY() {
+        return minY;
+    }
+
+    @Override
+    public int maxY() {
+        return maxY;
     }
 }
