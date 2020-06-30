@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeItems {
+
     public static final ArrayList<Item> defaultItemModelList = new ArrayList<>();
 
     public static final Item COPPER_INGOT = register("copper_ingot", new DefaultItem(newSettings()));
