@@ -6,13 +6,13 @@ import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
-import motherlode.core.item.DefaultItem;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -43,8 +43,8 @@ public class MotherlodeAssets {
                     .parent(Motherlode.id("block/"+blockId))
                 );
             }
-            for(DefaultItem defaultItem : MotherlodeItems.defaultItemModelList) {
-                String itemId = defaultItem.getTranslationKey().replace("item.motherlode.","");
+            for(Item item : MotherlodeItems.defaultItemModelList) {
+                String itemId = item.getTranslationKey().replace("item.motherlode.","");
                 pack.addItemModel(Motherlode.id(itemId), state -> state 
                     .parent(new Identifier("item/generated"))
                     .texture("layer0", Motherlode.id("item/"+itemId))
