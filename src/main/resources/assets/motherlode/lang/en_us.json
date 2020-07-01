@@ -27,19 +27,22 @@
     "block.motherlode.ruby_ore":"Ruby Ore",
     "block.motherlode.sapphire_ore":"Sapphire Ore",
     "block.motherlode.topaz_ore":"Topaz Ore",
+    "block.motherlode.onyx_ore":"Onyx Ore",
     "block.motherlode.amethyst_block":"Amethyst Block",
     "block.motherlode.howlite_block":"Howlite Block",
     "block.motherlode.ruby_block":"Ruby Block",
     "block.motherlode.sapphire_block":"Sapphire Block",
     "block.motherlode.topaz_block":"Topaz Block",
+    "block.motherlode.onyx_block":"Onyx Block",
     "item.motherlode.amethyst":"Amethyst",
     "item.motherlode.howlite":"Howlite",
     "item.motherlode.ruby":"Ruby",
     "item.motherlode.sapphire":"Sapphire",
     "item.motherlode.topaz":"Topaz",
+    "item.motherlode.onyx":"Onyx",
   
 	"block.motherlode.redstone_transmitter":"Redstone Transmitter",
-  
+
     "block.motherlode.limestone": "Limestone",
     "block.motherlode.limestone_cobble": "Limestone Cobble",
     "block.motherlode.limestone_bricks": "Limestone Bricks",
