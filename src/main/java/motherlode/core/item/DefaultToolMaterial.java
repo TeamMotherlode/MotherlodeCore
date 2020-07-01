@@ -1,6 +1,5 @@
 package motherlode.core.item;
 
-import motherlode.core.block.DefaultBlock;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 

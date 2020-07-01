@@ -1,15 +1,14 @@
 package motherlode.core.mixins.potions;
 
+import static net.minecraft.potion.PotionUtil.getPotionEffects;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtil;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static net.minecraft.potion.PotionUtil.getPotionEffects;
 
 @Mixin(PotionEntity.class)
 public class PotionEntityMixin {

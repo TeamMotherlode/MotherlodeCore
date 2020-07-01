@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import motherlode.core.Motherlode;
 import motherlode.core.MotherlodeMaterials;
-import motherlode.core.item.*;
+import motherlode.core.item.DefaultGemItem;
+import motherlode.core.item.DefaultItem;
+import motherlode.core.item.MaterialToolsAndArmor;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 

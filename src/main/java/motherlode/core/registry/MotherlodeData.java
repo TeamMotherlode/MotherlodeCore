@@ -1,10 +1,9 @@
 package motherlode.core.registry;
 
 import com.swordglowsblue.artifice.api.Artifice;
-
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
+
 import motherlode.core.Motherlode;
-import motherlode.core.block.DefaultBlock;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 

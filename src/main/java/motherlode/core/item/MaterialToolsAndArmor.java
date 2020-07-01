@@ -3,7 +3,14 @@ package motherlode.core.item;
 import motherlode.core.Motherlode;
 import motherlode.core.registry.MotherlodeItems;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.registry.Registry;
 
 public class MaterialToolsAndArmor {
