@@ -39,6 +39,7 @@ public class MotherlodeBlocks {
     public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+    public static final Block ONYX_ORE = register("onyx_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     
     public static final Block COPPER_BLOCK = register("copper_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
     public static final Block SILVER_BLOCK = register("silver_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));

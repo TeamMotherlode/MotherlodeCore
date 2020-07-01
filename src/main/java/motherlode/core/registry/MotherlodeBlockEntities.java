@@ -10,7 +10,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.function.Supplier;
 
 public class MotherlodeBlockEntities {
-	public static BlockEntityType REDSTONE_TRANSMITTER = register("redstone_transmitter", RedstoneTransmitterBlockEntity::new, MotherlodeBlocks.REDSTONE_TRANSMITTER);
+	public static BlockEntityType<RedstoneTransmitterBlockEntity> REDSTONE_TRANSMITTER = register("redstone_transmitter", RedstoneTransmitterBlockEntity::new, MotherlodeBlocks.REDSTONE_TRANSMITTER);
 
 	public static void init() {
 		// CALLED TO MAINTAIN REGISTRY ORDER
