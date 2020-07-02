@@ -1,17 +1,10 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
-import motherlode.core.block.DefaultBlock;
-import motherlode.core.block.DefaultOreBlock;
-import motherlode.core.block.RedstoneTransmitterBlock;
-import motherlode.core.block.StoneBlocks;
+import motherlode.core.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
@@ -68,11 +61,13 @@ public class MotherlodeBlocks {
     public static final StoneBlocks ICE = new StoneBlocks("ice",false,true,false);
     public static final StoneBlocks SANDSTONE = new StoneBlocks("sandstone",false,true,false);
 
+    public static final Block SHINGLES = register("shingles", new DefaultRoofBlock(Blocks.TERRACOTTA.getDefaultState(), FabricBlockSettings.copyOf(Blocks.TERRACOTTA).nonOpaque()));
+
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
+
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }
-
 
     static <T extends Block> T register(String name, T block, Item.Settings settings) {
         return register(name, block, new BlockItem(block, settings));
