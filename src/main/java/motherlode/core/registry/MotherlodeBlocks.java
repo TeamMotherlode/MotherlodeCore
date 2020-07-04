@@ -15,6 +15,7 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class MotherlodeBlocks {
     public static final StoneBlocks SANDSTONE = new StoneBlocks("sandstone",false,true,false);
 
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
-    public static final Block POT = register("pot", new PotBlock(FabricBlockSettings.of(Material.STONE)));
+    public static final Block POT = register("pot", new PotBlock(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.GLASS).strength(2.0F, 2.0F)));
     
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER

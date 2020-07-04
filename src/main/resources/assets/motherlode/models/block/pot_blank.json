@@ -1,0 +1,6 @@
+{
+	"parent": "motherlode:block/pot_template",
+	"textures": {
+		"0": "motherlode:block/pot_blank"
+    }
+}
