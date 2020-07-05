@@ -26,6 +26,7 @@ public class Motherlode implements ModInitializer {
         MotherlodePotions.init();
 
         MotherlodeData.register();
+        MotherlodeFeatures.register();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
@@ -34,6 +35,10 @@ public class Motherlode implements ModInitializer {
 
     public static final ItemGroup ITEMS = FabricItemGroupBuilder.create( id("items"))
             .icon(() -> new ItemStack(MotherlodeItems.COPPER_INGOT))
+            .build();
+
+    public static final ItemGroup ARMOUR_AND_TOOLS = FabricItemGroupBuilder.create( id("armor_and_tools"))
+            .icon(() -> new ItemStack(MotherlodeItems.COPPER.helmet))
             .build();
 
     public static Identifier id(String name) {
