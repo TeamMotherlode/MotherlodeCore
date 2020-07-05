@@ -123,18 +123,44 @@ public class MotherlodeAssets {
 
                  for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
                      if (info.model == null || info.useDefaultModel)
-                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/default")) );
+                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/default")) );
                      else
-                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
+                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
 
                  }
              });
 
+            int[] stackCounts = new int[]{0,8,16,24,32,40,48,56,64};
+
+            for (int stackCount : stackCounts) {
+                pack.addItemModel(Motherlode.id("rope" + stackCount), builder -> builder
+                    .parent(new Identifier("item/generated"))
+                    .texture("layer0", Motherlode.id("item/rope/rope" + stackCount))
+                );
+            }
+
+            pack.addItemModel(Motherlode.id("rope"), builder -> {
+                for (int stackCount : stackCounts)
+                    builder.override(override -> floatPredicate(override, "stack_count", stackCount / 100F).model(Motherlode.id("item/rope" + stackCount)));
+            });
+
+            pack.addBlockState(Motherlode.id("rope"), builder -> {
+                String[] directions = new String[]{"south", "west", "north", "east"};
+                for (int i = 0; i < directions.length; i++) {
+                    int ii = i;
+                    builder.variant("connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii *90));
+                    builder.variant("connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii *90));
+                }
+                builder.variant("connected=none", settings -> settings.model(Motherlode.id("block/rope")));
+            });
+
+
+
         });
     }
 
-    private static ModelBuilder.Override potionPredicate(ModelBuilder.Override override, Number value) {
-	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty("potion_type", value));
+    private static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
+	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
 	    return override;
     }
 
@@ -158,10 +184,10 @@ public class MotherlodeAssets {
                     int jj = j;
                     int ii = i;
                     builder.variant("facing="+facing+",half="+half+",shape="+shape, settings ->
-                            settings.model(Motherlode.id("block/"+id+modelStrings[models[jj]]))
-                                    .rotationX(xs[jj]*90)
-                                    .rotationY(ys[ii]*90)
-                                    .uvlock(xs[jj] != 0 || ys[ii] != 0));
+                        settings.model(Motherlode.id("block/"+id+modelStrings[models[jj]]))
+                            .rotationX(xs[jj]*90)
+                            .rotationY(ys[ii]*90)
+                            .uvlock(xs[jj] != 0 || ys[ii] != 0));
                     i++;
                     j++;
                 }
