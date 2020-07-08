@@ -148,10 +148,13 @@ public class MotherlodeAssets {
                 String[] directions = new String[]{"south", "west", "north", "east"};
                 for (int i = 0; i < directions.length; i++) {
                     int ii = i;
-                    builder.variant("connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii *90));
-                    builder.variant("connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii *90));
+                    builder.variant("bottom=false,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii *90));
+                    builder.variant("bottom=true,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top_bottom")).rotationY(ii *90));
+                    builder.variant("bottom=false,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii *90));
+                    builder.variant("bottom=true,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side_bottom")).rotationY(ii *90));
                 }
-                builder.variant("connected=none", settings -> settings.model(Motherlode.id("block/rope")));
+                builder.variant("bottom=false,connected=none", settings -> settings.model(Motherlode.id("block/rope")));
+                builder.variant("bottom=true,connected=none", settings -> settings.model(Motherlode.id("block/rope_bottom")));
             });
 
 

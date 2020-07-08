@@ -1,10 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
-import motherlode.core.block.DefaultBlock;
-import motherlode.core.block.DefaultOreBlock;
-import motherlode.core.block.RedstoneTransmitterBlock;
-import motherlode.core.block.StoneBlocks;
+import motherlode.core.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.AbstractBlock;
