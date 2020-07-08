@@ -28,7 +28,18 @@ public class StoneBlocks {
     public final Block STAIRS;
     public final Block[] CARVED;
 
-    public StoneBlocks(String baseID, boolean newStoneType, boolean tinyBricks, boolean rubble) {
+    public final List<Block> ALL;
+
+    public static StoneBlocks newStone(String baseID, boolean rubble) {
+        return new StoneBlocks(baseID, true, true, true, rubble);
+    }
+
+    public static StoneBlocks fromStone(String baseID, boolean moreDetailed) {
+        return new StoneBlocks(baseID, false, moreDetailed, moreDetailed, false);
+    }
+
+    private StoneBlocks(String baseID, boolean newStoneType, boolean tinyBricks, boolean pillar, boolean rubble) {
+
         BASE = newStoneType? register(baseID) : Registry.BLOCK.get(new Identifier(baseID));
         COBBLE = newStoneType? register(baseID + "_cobble") : null;
         RUBBLE = rubble? register(baseID + "_rubble") : null;
@@ -39,9 +50,10 @@ public class StoneBlocks {
         TILES = register(baseID + "_tiles");
         TILES_SMALL = register(baseID + "_tiles_small");
 
-        PILLAR = Registry.register(Registry.BLOCK,Motherlode.id(baseID + "_pillar"),
-                new PillarBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
-        MotherlodeItems.register(baseID + "_pillar", new BlockItem(PILLAR, new Item.Settings().group(Motherlode.BLOCKS)));
+        PILLAR = pillar ? Registry.register(Registry.BLOCK,Motherlode.id(baseID + "_pillar"),
+                new PillarBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F))) : null;
+        if (pillar)
+            MotherlodeItems.register(baseID + "_pillar", new BlockItem(PILLAR, new Item.Settings().group(Motherlode.BLOCKS)));
 
         SLAB = Registry.register(Registry.BLOCK, Motherlode.id(baseID) + "_slab",
                 new SlabBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
@@ -68,6 +80,21 @@ public class StoneBlocks {
         MotherlodeBlocks.defaultItemModelList.add(SLAB);
         MotherlodeBlocks.defaultItemModelList.add(STAIRS);
         MotherlodeBlocks.defaultItemModelList.add(PILLAR);
+
+        ALL = new ArrayList<>();
+        ALL.add(BASE);
+        ALL.add(BRICKS);
+        ALL.add(BRICKS_SMALL);
+        ALL.add(HERRINGBONE);
+        ALL.add(TILES);
+        ALL.add(TILES_SMALL);
+        ALL.add(PILLAR);
+        ALL.add(SLAB);
+        ALL.add(STAIRS);
+        ALL.addAll(carved);
+        if (COBBLE != null) ALL.add(COBBLE);
+        if (RUBBLE != null) ALL.add(RUBBLE);
+        if (BRICKS_TINY != null) ALL.add(BRICKS_TINY);
 
     }
 

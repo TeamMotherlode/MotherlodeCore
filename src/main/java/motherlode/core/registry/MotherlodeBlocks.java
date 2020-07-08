@@ -51,19 +51,19 @@ public class MotherlodeBlocks {
     public static final Block TOPAZ_BLOCK = register("topaz_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
     public static final Block ONYX_BLOCK = register("onyx_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
 
-    public static final StoneBlocks LIMESTONE = new StoneBlocks("limestone",true,true,false);
-    public static final StoneBlocks GRAVESTONE = new StoneBlocks("gravestone",true,true,true);
-    public static final StoneBlocks JASPER = new StoneBlocks("jasper",true,true,false);
-    public static final StoneBlocks MARBLE = new StoneBlocks("marble",true, true,false);
-    public static final StoneBlocks SLATE = new StoneBlocks("slate",true, true,false);
+    public static final StoneBlocks LIMESTONE = StoneBlocks.newStone("limestone",false);
+    public static final StoneBlocks GRAVESTONE = StoneBlocks.newStone("gravestone",true);
+    public static final StoneBlocks JASPER = StoneBlocks.newStone("jasper",false);
+    public static final StoneBlocks MARBLE = StoneBlocks.newStone("marble",false);
+    public static final StoneBlocks SLATE = StoneBlocks.newStone("slate",false);
 
-    public static final StoneBlocks BRICK = new StoneBlocks("brick",false,true,false);
-    public static final StoneBlocks MAGMA = new StoneBlocks("magma",false,false,false);
-    public static final StoneBlocks OBSIDIAN = new StoneBlocks("obsidian",false,false,false);
-    public static final StoneBlocks CRYING_OBSIDIAN = new StoneBlocks("crying_obsidian",false,false,false);
-    public static final StoneBlocks GOLD = new StoneBlocks("gold",false,true,false);
-    public static final StoneBlocks ICE = new StoneBlocks("ice",false,true,false);
-    public static final StoneBlocks SANDSTONE = new StoneBlocks("sandstone",false,true,false);
+    public static final StoneBlocks BRICK = StoneBlocks.fromStone("brick",false);
+    public static final StoneBlocks MAGMA = StoneBlocks.fromStone("magma",false);
+    public static final StoneBlocks OBSIDIAN = StoneBlocks.fromStone("obsidian",false);
+    public static final StoneBlocks CRYING_OBSIDIAN = StoneBlocks.fromStone("crying_obsidian",false);
+    public static final StoneBlocks GOLD = StoneBlocks.fromStone("gold",false);
+    public static final StoneBlocks ICE = StoneBlocks.fromStone("ice",false);
+    public static final StoneBlocks SANDSTONE = StoneBlocks.fromStone("sandstone",false);
 
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
 
