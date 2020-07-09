@@ -1,5 +1,6 @@
 package motherlode.core;
 
+import motherlode.core.entities.render.MotherlodeEntityRenderers;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.gui.RedstoneTransmitterScreen;
 import motherlode.core.registry.MotherlodeAssets;
@@ -14,6 +15,7 @@ public class MotherlodeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		MotherlodeAssets.register();
+		MotherlodeEntityRenderers.init();
 		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
 	}
 }
