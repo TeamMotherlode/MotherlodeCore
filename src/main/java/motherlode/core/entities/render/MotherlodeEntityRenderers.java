@@ -8,5 +8,8 @@ public class MotherlodeEntityRenderers {
         EntityRendererRegistry.INSTANCE.register(MotherlodeEntities.ARMADILLO_ENTITY,
                 (dispatcher, context) ->
                         new ArmadilloEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(MotherlodeEntities.LIZARD_ENTITY,
+                (dispatcher,context) ->
+                new LizardEntityRenderer(dispatcher));
     }
 }
