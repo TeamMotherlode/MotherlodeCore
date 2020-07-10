@@ -40,7 +40,7 @@ public class ArmadilloEntity extends AnimalEntity {
 
     /*Builds attributes for ArmadilloEntity. Called when ArmadilloEntity is registered*/
     public static DefaultAttributeContainer.Builder createArmadilloAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 15.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.18D)
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.18D)
                 .add(EntityAttributes.GENERIC_ARMOR, 5.0D);
     }
 
@@ -75,7 +75,6 @@ public class ArmadilloEntity extends AnimalEntity {
             if(targetEntity != null) {
                 /*checks if player is holding a tool*/
                 if (this.targetEntity.getMainHandStack().getItem() instanceof ToolItem) {
-                    System.out.println("check");
                     return super.canStart();
                 }
                 else {

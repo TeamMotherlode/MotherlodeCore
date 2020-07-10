@@ -1,6 +1,5 @@
 package motherlode.core.registry;
 
-import jdk.vm.ci.code.Register;
 import motherlode.core.Motherlode;
 import motherlode.core.entities.ArmadilloEntity;
 import motherlode.core.entities.LizardEntity;
@@ -10,7 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeEntities {

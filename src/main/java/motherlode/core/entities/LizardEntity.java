@@ -1,19 +1,20 @@
 package motherlode.core.entities;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.AmbientEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 public class LizardEntity extends AnimalEntity {
 
-
+    //lizard constructor
     public LizardEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -26,6 +27,7 @@ public class LizardEntity extends AnimalEntity {
         this.goalSelector.add(3, new LookAroundGoal(this));
     }
 
+    //entity attributes
     public static DefaultAttributeContainer.Builder createLizardAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D);
     }

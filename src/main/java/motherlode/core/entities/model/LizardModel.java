@@ -70,15 +70,15 @@ public class LizardModel extends EntityModel<LizardEntity> {
 
 
 
-//    @Override
-//    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+    @Override
+    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 //        //body.render(matrixStack, buffer, packedLight, packedOverlay);
 //        leg_front_left.render(matrixStack, buffer, packedLight, packedOverlay);
 //        //head.render(matrixStack, buffer, packedLight, packedOverlay);
 //        leg_front_right.render(matrixStack, buffer, packedLight, packedOverlay);
 //        leg_back_left.render(matrixStack, buffer, packedLight, packedOverlay);
 //        leg_back_right.render(matrixStack, buffer, packedLight, packedOverlay);
-//    }
+    }
 
 
     public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
