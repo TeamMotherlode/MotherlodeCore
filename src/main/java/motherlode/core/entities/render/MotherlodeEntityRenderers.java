@@ -11,5 +11,7 @@ public class MotherlodeEntityRenderers {
         EntityRendererRegistry.INSTANCE.register(MotherlodeEntities.LIZARD_ENTITY,
                 (dispatcher,context) ->
                 new LizardEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(MotherlodeEntities.REDSTONE_GOLEM_ENTITY,
+                ((entityRenderDispatcher, context) -> new RedstoneGolemEntityRenderer(entityRenderDispatcher)));
     }
 }
