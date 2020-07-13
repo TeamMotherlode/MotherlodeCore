@@ -4,16 +4,15 @@ import motherlode.core.Motherlode;
 import motherlode.core.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class MotherlodeBlocks {
@@ -21,8 +20,8 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> defaultModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultLootTableList = new ArrayList<>();
-    public static final ArrayList<StairsBlock> usesStairModel = new ArrayList<>();
-    public static final ArrayList<SlabBlock> usesSlabModel = new ArrayList<>();
+    public static final Map<StairsBlock, Boolean> usesStairModel = new LinkedHashMap<>();
+    public static final Map<SlabBlock, Boolean> usesSlabModel = new LinkedHashMap<>();
     public static final ArrayList<Block> usesPillarModel = new ArrayList<>();
 
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
@@ -57,13 +56,20 @@ public class MotherlodeBlocks {
     public static final StoneBlocks MARBLE = StoneBlocks.newStone("marble",false);
     public static final StoneBlocks SLATE = StoneBlocks.newStone("slate",false);
 
-    public static final StoneBlocks BRICK = StoneBlocks.fromStone("brick",false);
-    public static final StoneBlocks MAGMA = StoneBlocks.fromStone("magma",false);
-    public static final StoneBlocks OBSIDIAN = StoneBlocks.fromStone("obsidian",false);
-    public static final StoneBlocks CRYING_OBSIDIAN = StoneBlocks.fromStone("crying_obsidian",false);
-    public static final StoneBlocks GOLD = StoneBlocks.fromStone("gold",false);
-    public static final StoneBlocks ICE = StoneBlocks.fromStone("ice",false);
-    public static final StoneBlocks SANDSTONE = StoneBlocks.fromStone("sandstone",false);
+    public static final StoneBlocks BRICK = StoneBlocks.fromBlock("brick", Blocks.BRICKS);
+    public static final StoneBlocks MAGMA = StoneBlocks.fromBlock("magma", Blocks.MAGMA_BLOCK);
+    public static final StoneBlocks OBSIDIAN = StoneBlocks.fromBlock("obsidian", null);
+    public static final StoneBlocks CRYING_OBSIDIAN = StoneBlocks.fromBlock("crying_obsidian", null);
+    public static final StoneBlocks GOLD = StoneBlocks.fromBlock("gold", Blocks.GOLD_BLOCK);
+    public static final StoneBlocks ICE = StoneBlocks.fromBlock("ice", null);
+
+    public static final StoneBlocks STONE = StoneBlocks.fromStone("stone", Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE);
+    public static final StoneBlocks GRANTITE = StoneBlocks.fromStone("granite", null, Blocks.POLISHED_GRANITE);
+    public static final StoneBlocks DIORITE = StoneBlocks.fromStone("diorite", null, Blocks.POLISHED_DIORITE);
+    public static final StoneBlocks ANDESITE = StoneBlocks.fromStone("andesite", null, Blocks.POLISHED_ANDESITE);
+    public static final StoneBlocks BLACK_STONE = StoneBlocks.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE);
+    public static final StoneBlocks BASALT = StoneBlocks.fromStone("basalt", null, Blocks.POLISHED_BASALT);
+    public static final StoneBlocks SANDSTONE = StoneBlocks.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE);
 
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
 

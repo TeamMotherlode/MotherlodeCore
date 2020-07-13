@@ -14,6 +14,9 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+
+import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
@@ -51,20 +54,22 @@ public class MotherlodeAssets {
                 );
             }
 
-            for (SlabBlock block : MotherlodeBlocks.usesSlabModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+            for (Map.Entry<SlabBlock,Boolean>  entry : MotherlodeBlocks.usesSlabModel.entrySet()) {
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
+                String texId = blockId.replace("_slab", "").replace("_pillar","_pillar_side");
+                String namespace = entry.getValue() ? "motherlode" : "minecraft";
                 for (String variant : new String[]{"_top",""}) {
                     pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
                             .parent(new Identifier("block/slab" + variant))
-                            .texture("top", Motherlode.id("block/" + blockId + "_top"))
-                            .texture("bottom", Motherlode.id("block/" + blockId + "_top"))
-                            .texture("side", Motherlode.id("block/" + blockId + "_side"))
+                            .texture("top", new Identifier(namespace,"block/" + texId))
+                            .texture("bottom", new Identifier(namespace,"block/" + texId))
+                            .texture("side", new Identifier(namespace,"block/" + texId))
                     );
                 }
                 pack.addBlockModel(Motherlode.id(blockId + "_double"), model -> model
                         .parent(new Identifier("block/cube_column"))
-                        .texture("end", Motherlode.id("block/" + blockId + "_top"))
-                        .texture("side", Motherlode.id("block/" + blockId + "_side"))
+                        .texture("end", new Identifier(namespace,"block/" + texId))
+                        .texture("side", new Identifier(namespace,"block/" + texId))
                 );
                 pack.addBlockState(Motherlode.id(blockId), builder -> builder
                     .variant("type=top", settings -> settings.model(Motherlode.id("block/" + blockId + "_top")))
@@ -73,16 +78,17 @@ public class MotherlodeAssets {
                 );
             }
 
-            for (StairsBlock block : MotherlodeBlocks.usesStairModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+            for (Map.Entry<StairsBlock,Boolean>  entry : MotherlodeBlocks.usesStairModel.entrySet()) {
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
                 String texId = blockId.replace("_stairs", "");
+                String namespace = entry.getValue() ? "motherlode" : "minecraft";
                 for (int i = 0; i < 3; i++) {
                     int ii = i;
                     pack.addBlockModel(Motherlode.id(blockId + modelStrings[i]), model -> model
                         .parent(new Identifier("block/" + (ii == 0? "" : ii == 1? "inner_" : "outer_") + "stairs"))
-                        .texture("top", Motherlode.id("block/" + texId))
-                        .texture("bottom", Motherlode.id("block/" + texId))
-                        .texture("side", Motherlode.id("block/" + texId))
+                        .texture("top", new Identifier(namespace, "block/" + texId))
+                        .texture("bottom", new Identifier(namespace, "block/" + texId))
+                        .texture("side", new Identifier(namespace, "block/" + texId))
                     );
                 }
                 pack.addBlockState(Motherlode.id(blockId), builder -> stairBlockState(builder,blockId));
