@@ -11,28 +11,25 @@ import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
-public class RedstoneGolemEntity extends GolemEntity {
-
-
-    public RedstoneGolemEntity(EntityType<? extends GolemEntity> entityType, World world) {
+public class RedstoneSentryEntity extends GolemEntity {
+    public RedstoneSentryEntity(EntityType<? extends GolemEntity> entityType, World world) {
         super(entityType, world);
     }
 
     protected void initGoals() {
         this.goalSelector.add(1, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.add(2, new GoToEntityTargetGoal(this, 0.9D, 32.0F));
-        this.goalSelector.add(5, new WanderAroundGoal(this, 0.9D));
-        this.goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
+        this.goalSelector.add(2, new GoToEntityTargetGoal(this, 0.9D, 16.0F));
+        this.goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 16.0F));
         this.targetSelector.add(1, new RevengeGoal(this, new Class[0]));
         this.targetSelector.add(2, new FollowTargetGoal(this, LivingEntity.class, 3, false, false, (livingEntity) -> {
             return livingEntity instanceof PlayerEntity || (livingEntity instanceof Monster);
         }));
-
     }
 
-    public static DefaultAttributeContainer.Builder createRedstoneGolemAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30D)
-                .add(EntityAttributes.GENERIC_ARMOR, 6.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.5D);
+    public static DefaultAttributeContainer.Builder createRedstoneSentryAttributes() {
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.50D)
+                .add(EntityAttributes.GENERIC_ARMOR, 1.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 7.0D)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 40.0F);
     }
 
     public boolean canTarget(EntityType<?> type) {
@@ -42,11 +39,4 @@ public class RedstoneGolemEntity extends GolemEntity {
             return super.canTarget(type);
         }
     }
-
-
-
-
-
-
-
 }

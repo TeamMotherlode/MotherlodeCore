@@ -1,9 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
-import motherlode.core.entities.ArmadilloEntity;
-import motherlode.core.entities.LizardEntity;
-import motherlode.core.entities.RedstoneGolemEntity;
+import motherlode.core.entities.*;
 import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
@@ -23,7 +21,13 @@ public class MotherlodeEntities {
 
 
 	public static final EntityType<RedstoneGolemEntity> REDSTONE_GOLEM_ENTITY = register("redstone_golem", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RedstoneGolemEntity::new)
-			.size(EntityDimensions.fixed(1.4F, 2.7F)).build());
+			.size(EntityDimensions.fixed(3.0F, 3.5F)).build());
+
+	public static final EntityType<RedstoneMarauderEntity> REDSTONE_MARAUDER_ENTITY = register("redstone_marauder", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RedstoneMarauderEntity::new)
+			.size(EntityDimensions.fixed(1.2F, 2.0F)).build());
+
+	public static final EntityType<RedstoneSentryEntity> REDSTONE_SENTRY_ENTITY = register("redstone_sentry", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RedstoneSentryEntity::new)
+			.size(EntityDimensions.fixed(1.3F, 1.8F)).build());
 
 	public static void init() {
 		//Registry.register(Registry.ENTITY_TYPE, new Identifier("motherlode", "armadillo"), ARMADILLO_ENTITY);
@@ -33,6 +37,10 @@ public class MotherlodeEntities {
 				LizardEntity.createLizardAttributes());
 		FabricDefaultAttributeRegistry.register(REDSTONE_GOLEM_ENTITY,
 				RedstoneGolemEntity.createRedstoneGolemAttributes());
+		FabricDefaultAttributeRegistry.register( REDSTONE_MARAUDER_ENTITY,
+				RedstoneMarauderEntity.createRedstoneMarauderAttributes());
+		FabricDefaultAttributeRegistry.register(REDSTONE_SENTRY_ENTITY,
+				RedstoneSentryEntity.createRedstoneSentryAttributes());
 	}
 
 	private static <T extends Entity> EntityType<T> register(String name, EntityType<T> entity) {
