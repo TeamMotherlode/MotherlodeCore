@@ -6,6 +6,7 @@ import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
+import motherlode.core.block.PotBlock;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -123,19 +124,54 @@ public class MotherlodeAssets {
 
                  for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
                      if (info.model == null || info.useDefaultModel)
-                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/default")) );
+                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/default")) );
                      else
-                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
+                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
 
                  }
              });
 
+            pack.addBlockState(Motherlode.id("pot"), state -> {
+                for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                    int ii = i;
+                    pack.addBlockModel(Motherlode.id("pot_with_overlay_" + i), model -> model
+                            .parent(Motherlode.id("block/pot"))
+                            .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                    );
+                    state.variant("pattern="+i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
+                }
+            });
+
+            pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
+                    .parent(Motherlode.id("block/pot"))
+                    .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
+
+                    .display("thirdperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                    .display("thirdperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                    .display("firstperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(2,2,-2))
+                    .display("firstperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(0,5,10))
+            );
+
+            pack.addItemModel(Motherlode.id("pot"), model -> {
+                for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                    float pattern = i / 100F;
+                    int ii = i;
+                    model.override(override -> floatPredicate(override, "pot_pattern", pattern).model(Motherlode.id("item/pot_" + ii)));
+
+                    pack.addItemModel(Motherlode.id("pot_" + ii), model2 -> model2
+                       .parent(Motherlode.id("item/pot_template"))
+                       .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                    );
+
+                }
+            });
+
         });
     }
 
-    private static ModelBuilder.Override potionPredicate(ModelBuilder.Override override, Number value) {
-	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty("potion_type", value));
-	    return override;
+    private static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
+        override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
+        return override;
     }
 
 

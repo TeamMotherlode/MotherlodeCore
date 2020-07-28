@@ -1,5 +1,6 @@
-package motherlode.core.mixins.potions;
+package motherlode.core.mixins;
 
+import motherlode.core.registry.MotherlodeBlocks;
 import motherlode.core.registry.MotherlodePotions;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
@@ -8,6 +9,7 @@ import net.minecraft.client.item.ModelPredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ModelPredicateProviderRegistry.class)
-public class ModelPredicateProviderRegistryMixin {
+public abstract class ModelPredicateProviderRegistryMixin {
 
     @Shadow
     private static void register(Item item, Identifier id, ModelPredicateProvider provider) {}
@@ -25,6 +27,17 @@ public class ModelPredicateProviderRegistryMixin {
         register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
                 PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
                 return potion == null ? 1 : potion.predicateValue;
+        });
+
+        register(MotherlodeBlocks.POT_ITEM, new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
+            CompoundTag tag = itemStack.getTag();
+            if (tag == null || !tag.contains("BlockStateTag"))
+                return 0;
+            tag = tag.getCompound("BlockStateTag");
+            if (tag == null || !tag.contains("pattern"))
+                return 0;
+
+            return Integer.parseInt(tag.getString("pattern")) / 100F;
         });
     }
 

@@ -1,6 +1,88 @@
 {
-	"parent": "motherlode:block/pot_template",
 	"textures": {
-		"0": "motherlode:block/pot"
-    }
+		"pot": "motherlode:block/pots/pot_blank",
+		"particle": "#pot"
+	},
+	"elements": [
+		{
+			"name": "base_base",
+			"from": [3, 0, 3],
+			"to": [13, 10, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 8, 12]},
+			"faces": {
+				"north": {"uv": [2.5, 5, 5, 10], "texture": "#pot"},
+				"east": {"uv": [0, 5, 2.5, 10], "texture": "#pot"},
+				"south": {"uv": [7.5, 5, 10, 10], "texture": "#pot"},
+				"west": {"uv": [5, 5, 7.5, 10], "texture": "#pot"},
+				"up": {"uv": [2.5, 0, 5, 5], "texture": "#pot"},
+				"down": {"uv": [5, 0, 7.5, 4.5], "texture": "#pot"}
+			}
+		},
+		{
+			"name": "neck_base",
+			"from": [4, 10, 4],
+			"to": [12, 12, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 18, 13]},
+			"faces": {
+				"north": {"uv": [9.5, 4, 11.5, 5], "texture": "#pot"},
+				"east": {"uv": [7.5, 4, 9.5, 5], "texture": "#pot"},
+				"south": {"uv": [13.5, 4, 15.5, 5], "texture": "#pot"},
+				"west": {"uv": [11.5, 4, 13.5, 5], "texture": "#pot"}
+			}
+		},
+		{
+			"name": "top_base",
+			"from": [3, 12, 3],
+			"to": [13, 14, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 20, 11]},
+			"faces": {
+				"north": {"uv": [2.5, 15, 5, 16], "texture": "#pot"},
+				"east": {"uv": [0, 15, 2.5, 16], "texture": "#pot"},
+				"south": {"uv": [7.5, 15, 10, 16], "texture": "#pot"},
+				"west": {"uv": [5, 15, 7.5, 16], "texture": "#pot"},
+				"up": {"uv": [2.5, 10, 5, 15], "texture": "#pot"},
+				"down": {"uv": [5, 10, 7.5, 15], "texture": "#pot"}
+			}
+		},
+		{
+			"name": "base_overlay",
+			"from": [3, 0, 3],
+			"to": [13, 10, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 8, 12]},
+			"faces": {
+				"north": {"uv": [2.5, 5, 5, 10], "texture": "#overlay", "tintindex": 1000},
+				"east": {"uv": [0, 5, 2.5, 10], "texture": "#overlay", "tintindex": 1000},
+				"south": {"uv": [7.5, 5, 10, 10], "texture": "#overlay", "tintindex": 1000},
+				"west": {"uv": [5, 5, 7.5, 10], "texture": "#overlay", "tintindex": 1000},
+				"up": {"uv": [2.5, 0, 5, 5], "texture": "#overlay", "tintindex": 1000},
+				"down": {"uv": [5, 0, 7.5, 4.5], "texture": "#overlay", "tintindex": 1000}
+			}
+		},
+		{
+			"name": "neck_overlay",
+			"from": [4, 10, 4],
+			"to": [12, 12, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 18, 13]},
+			"faces": {
+				"north": {"uv": [9.5, 4, 11.5, 5], "texture": "#overlay", "tintindex": 0},
+				"east": {"uv": [7.5, 4, 9.5, 5], "texture": "#overlay", "tintindex": 0},
+				"south": {"uv": [13.5, 4, 15.5, 5], "texture": "#overlay", "tintindex": 0},
+				"west": {"uv": [11.5, 4, 13.5, 5], "texture": "#overlay", "tintindex": 0}
+			}
+		},
+		{
+			"name": "top_overlay",
+			"from": [3, 12, 3],
+			"to": [13, 14, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 20, 11]},
+			"faces": {
+				"north": {"uv": [2.5, 15, 5, 16], "texture": "#overlay", "tintindex": 0},
+				"east": {"uv": [0, 15, 2.5, 16], "texture": "#overlay", "tintindex": 0},
+				"south": {"uv": [7.5, 15, 10, 16], "texture": "#overlay", "tintindex": 0},
+				"west": {"uv": [5, 15, 7.5, 16], "texture": "#overlay", "tintindex": 0},
+				"up": {"uv": [2.5, 10, 5, 15], "texture": "#overlay", "tintindex": 0},
+				"down": {"uv": [5, 10, 7.5, 15], "texture": "#overlay", "tintindex": 0}
+			}
+		}
+	]
 }
