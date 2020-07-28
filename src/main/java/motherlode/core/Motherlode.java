@@ -18,6 +18,7 @@ public class Motherlode implements ModInitializer {
         MotherlodeBlockEntities.init();
         MotherlodeEnchantments.init();
         MotherlodeFeatures.init();
+        MotherlodeStructures.init();
         MotherlodeBiomes.init();
         MotherlodeSounds.init();
         MotherlodeFluids.init();

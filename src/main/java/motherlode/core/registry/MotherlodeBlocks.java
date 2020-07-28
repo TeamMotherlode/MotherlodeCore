@@ -1,17 +1,10 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
-import motherlode.core.block.DefaultBlock;
-import motherlode.core.block.DefaultOreBlock;
-import motherlode.core.block.RedstoneTransmitterBlock;
-import motherlode.core.block.StoneBlocks;
+import motherlode.core.block.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
@@ -27,6 +20,7 @@ public class MotherlodeBlocks {
     public static final ArrayList<StairsBlock> usesStairModel = new ArrayList<>();
     public static final ArrayList<SlabBlock> usesSlabModel = new ArrayList<>();
     public static final ArrayList<Block> usesPillarModel = new ArrayList<>();
+    //public static final ArrayList<Block> paintableBlocks = new ArrayList<>();
 
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
     public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
@@ -69,6 +63,7 @@ public class MotherlodeBlocks {
     public static final StoneBlocks SANDSTONE = new StoneBlocks("sandstone",false,true,false);
 
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
+
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }
@@ -91,7 +86,7 @@ public class MotherlodeBlocks {
         if (item != null) {
             MotherlodeItems.register(name, item);
         }
-        if (block instanceof DefaultBlock){
+        if (block instanceof DefaultBlock) {
             DefaultBlock defaultBlock = (DefaultBlock)block;
             if (defaultBlock.hasDefaultState()){
                 defaultStateList.add(defaultBlock);

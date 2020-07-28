@@ -6,6 +6,7 @@ import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
+import motherlode.core.block.stateproperty.BlockDyeColor;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -103,6 +104,49 @@ public class MotherlodeAssets {
                     .variant("axis=z", settings -> settings.model(Motherlode.id("block/" + blockId + "_horizontal")).rotationX(90))
                 );
             }
+
+            /* DEAD CODE
+            for (Block block : MotherlodeBlocks.paintableBlocks) {
+                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                System.out.println(blockId);
+                for (BlockDyeColor color : BlockDyeColor.values()) {
+                    System.out.println(blockId + "_" + color.asString());
+                    pack.addBlockModel(Motherlode.id(blockId + "_" + color.asString()), model -> model
+                            .parent(Motherlode.id("block/single_face"))
+                            .texture("texture", Motherlode.id("block/" + blockId + "_" + color.asString()))
+                    );
+                }
+                pack.addBlockState(Motherlode.id(blockId), builder -> builder
+                        .multipartCase(cases -> {
+                            for (BlockDyeColor color : BlockDyeColor.values()) {
+                                System.out.println("Blockstating " + blockId + "_" + color.asString());
+                                cases.when("north", color.asString()).apply(variant -> variant
+                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
+                                );
+                                cases.when("south", color.asString()).apply(variant -> variant
+                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
+                                        .rotationY(180)
+                                );
+                                cases.when("east", color.asString()).apply(variant -> variant
+                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
+                                        .rotationY(270)
+                                );
+                                cases.when("west", color.asString()).apply(variant -> variant
+                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
+                                        .rotationY(90)
+                                );
+                                cases.when("up", color.asString()).apply(variant -> variant
+                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
+                                        .rotationX(90)
+                                );
+                                cases.when("down", color.asString()).apply(variant -> variant
+                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
+                                        .rotationX(270)
+                                );
+                            }
+                        })
+                );
+            } DEAD CODE */
 
             for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
                 if (!info.useDefaultModel)
