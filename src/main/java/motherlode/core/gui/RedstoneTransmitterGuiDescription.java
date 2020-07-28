@@ -1,20 +1,24 @@
 package motherlode.core.gui;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WItemSlot;
-import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
-import io.github.cottonmc.cotton.gui.widget.WSprite;
+import io.github.cottonmc.cotton.gui.widget.*;
+import io.netty.buffer.Unpooled;
 import motherlode.core.Motherlode;
+import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
 import motherlode.core.item.DefaultGemItem;
+import motherlode.core.registry.MotherlodePackets;
 import motherlode.core.registry.MotherlodeScreenHandlers;
 import motherlode.core.registry.MotherlodeTags;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.text.LiteralText;
 
 import java.util.ArrayList;
 
@@ -36,6 +40,25 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WSprite transmitter = new WSprite(Motherlode.id("textures/gui/container/transmitter_disconnected.png"));
         panel.add(transmitter, 109, 22, 15, 54);
+
+        context.run((world, pos) -> {
+            BlockEntity entity = world.getBlockEntity(pos);
+
+            if(entity instanceof RedstoneTransmitterBlockEntity) {
+                RedstoneTransmitterBlockEntity blockEntity = (RedstoneTransmitterBlockEntity)entity;
+                WButton button = new WButton(new LiteralText(blockEntity.getReceiver() ? "Receiver" : "Transmitter"));
+                panel.add(button, 130, 15, 63, 30);
+                button.setOnClick(() -> {
+                    if(world.isClient()) {
+                        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                        buf.writeBlockPos(pos);
+                        ClientSidePacketRegistry.INSTANCE.sendToServer(MotherlodePackets.C2S_REDSTONE_TRANSMITTER_SWAP, buf);
+                    }
+                    blockEntity.swapTransmitter();
+                    button.setLabel(new LiteralText(blockEntity.getReceiver() ? "Receiver" : "Transmitter"));
+                });
+            }
+        });
 
         for (int i = 0; i < 9; i++) {
             WSprite gem = new WSprite(Motherlode.id("textures/gui/container/gem.png"));

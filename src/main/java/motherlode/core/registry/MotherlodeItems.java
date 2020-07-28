@@ -10,6 +10,8 @@ import motherlode.core.item.MaterialToolsAndArmor;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
+import static motherlode.core.item.DefaultGemItem.GemType;
+
 public class MotherlodeItems {
 
     public static final ArrayList<Item> defaultItemModelList = new ArrayList<>();
@@ -20,12 +22,12 @@ public class MotherlodeItems {
     public static final Item ECHERITE_INGOT = register("echerite_ingot", new DefaultItem(newSettings()));
     public static final Item TITANIUM_INGOT = register("titanium_ingot", new DefaultItem(newSettings()));
     public static final Item ADAMANTITE_INGOT = register("adamantite_ingot", new DefaultItem(newSettings()));
-    public static final Item AMETHYST = register("amethyst", new DefaultGemItem(0xF989FF, newSettings()));
-    public static final Item HOWLITE = register("howlite", new DefaultGemItem(0xFFFFFF, newSettings()));
-    public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, newSettings()));
-    public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
-    public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
-    public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, newSettings()));
+    public static final Item AMETHYST = register("amethyst", new DefaultGemItem(0xF989FF, GemType.Amethyst, newSettings()));
+    public static final Item HOWLITE = register("howlite", new DefaultGemItem(0xFFFFFF, GemType.Howlite, newSettings()));
+    public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, GemType.Ruby, newSettings()));
+    public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, GemType.Sapphire, newSettings()));
+    public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, GemType.Topaz, newSettings()));
+    public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, GemType.Onyx, newSettings()));
 
     public static final MaterialToolsAndArmor COPPER = new MaterialToolsAndArmor(MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR);
     public static final MaterialToolsAndArmor SILVER = new MaterialToolsAndArmor(MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR);

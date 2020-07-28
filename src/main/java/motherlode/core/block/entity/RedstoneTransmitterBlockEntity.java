@@ -1,7 +1,9 @@
 package motherlode.core.block.entity;
 
+import motherlode.core.datastore.RedstoneChannelManager;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.inventory.DefaultInventory;
+import motherlode.core.item.DefaultGemItem;
 import motherlode.core.registry.MotherlodeBlockEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,7 +11,6 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -19,19 +20,21 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 
-public class RedstoneTransmitterBlockEntity extends BlockEntity implements DefaultInventory, BlockEntityClientSerializable, ExtendedScreenHandlerFactory {
-    private DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);
+import java.util.Arrays;
+
+public class RedstoneTransmitterBlockEntity extends BlockEntity implements DefaultInventory, BlockEntityClientSerializable, ExtendedScreenHandlerFactory, Tickable {
+    private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);
+    private boolean receiver = false;
+    private boolean updated = false;
 
     public RedstoneTransmitterBlockEntity() {
         super(MotherlodeBlockEntities.REDSTONE_TRANSMITTER);
-    }
-
-    public <T extends BlockEntity> RedstoneTransmitterBlockEntity(BlockEntityType<T> type) {
-        super(type);
     }
 
     @Override
@@ -59,6 +62,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         Inventories.fromTag(tag, stacks);
+        receiver = tag.getBoolean("transmitter");
     }
 
     @Override
@@ -69,11 +73,48 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         Inventories.toTag(tag, stacks);
+        tag.putBoolean("transmitter", receiver);
         return super.toTag(tag);
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
         return toTag(tag);
+    }
+
+    @Override
+    public void tick() {
+        if(world.isClient() || !updated) {
+            return;
+        }
+
+        RedstoneChannelManager rcm = world.getServer().getOverworld().getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels");
+        if(!receiver) {
+            rcm.setChannelValue(getChannelID(), world.getReceivedRedstonePower(pos));
+            rcm.markDirty();
+        } else {
+            world.setBlockState(pos, world.getBlockState(pos).with(Properties.POWER, rcm.getChannelValue(getChannelID())));
+        }
+    }
+
+    public void update() {
+        updated = true;
+    }
+
+    public int getChannelID() {
+        Integer[] idArr = new Integer[stacks.size()];
+        for(int i = 0; i < stacks.size(); i++)
+            idArr[i] = DefaultGemItem.GemType.getType(stacks.get(i).getItem()).ordinal() + 1;
+        return Arrays.deepHashCode(idArr);
+    }
+
+    public void swapTransmitter() {
+        receiver = !receiver;
+        updated = true;
+        world.getBlockTickScheduler().schedule(pos, world.getBlockState(pos).getBlock(), 2);
+    }
+
+    public boolean getReceiver() {
+        return receiver;
     }
 }

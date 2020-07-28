@@ -3,16 +3,17 @@
   "package": "motherlode.core.mixins",
   "compatibilityLevel": "JAVA_8",
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   },
   "client": [
-    "potions.ModelPredicateProviderRegistryMixin"
+	"potions.ModelPredicateProviderRegistryMixin"
   ],
   "mixins": [
-    "potions.BrewingRecipeRegistryMixin",
-    "potions.EntityMixin",
-    "potions.PotionEntityMixin",
-    "potions.PotionItemMixin",
-    "potions.PotionUtilsMixin"
+	"ServerWorldMixin",
+	"potions.BrewingRecipeRegistryMixin",
+	"potions.EntityMixin",
+	"potions.PotionEntityMixin",
+	"potions.PotionItemMixin",
+	"potions.PotionUtilsMixin"
   ]
 }
