@@ -20,7 +20,8 @@ public class MotherlodeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		MotherlodeAssets.register();
-
+    
+    BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
 		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
 
