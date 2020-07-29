@@ -6,6 +6,7 @@ import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
+import motherlode.core.block.PotBlock;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -136,6 +137,41 @@ public class MotherlodeAssets {
                  }
              });
 
+            pack.addBlockState(Motherlode.id("pot"), state -> {
+                for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                    int ii = i;
+                    pack.addBlockModel(Motherlode.id("pot_with_overlay_" + i), model -> model
+                            .parent(Motherlode.id("block/pot"))
+                            .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                    );
+                    state.variant("pattern="+i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
+                }
+            });
+
+            pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
+                    .parent(Motherlode.id("block/pot"))
+                    .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
+
+                    .display("thirdperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                    .display("thirdperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                    .display("firstperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(2,2,-2))
+                    .display("firstperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(0,5,10))
+            );
+
+            pack.addItemModel(Motherlode.id("pot"), model -> {
+                for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                    float pattern = i / 100F;
+                    int ii = i;
+                    model.override(override -> floatPredicate(override, "pot_pattern", pattern).model(Motherlode.id("item/pot_" + ii)));
+
+                    pack.addItemModel(Motherlode.id("pot_" + ii), model2 -> model2
+                       .parent(Motherlode.id("item/pot_template"))
+                       .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                    );
+
+                }
+            });
+
             int[] stackCounts = new int[]{0,8,16,24,32,40,48,56,64};
 
             for (int stackCount : stackCounts) {
@@ -162,8 +198,6 @@ public class MotherlodeAssets {
                 builder.variant("bottom=false,connected=none", settings -> settings.model(Motherlode.id("block/rope")));
                 builder.variant("bottom=true,connected=none", settings -> settings.model(Motherlode.id("block/rope_bottom")));
             });
-
-
 
         });
     }

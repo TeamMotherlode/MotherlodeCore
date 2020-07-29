@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -72,6 +73,9 @@ public class MotherlodeBlocks {
     public static final StoneBlocks SANDSTONE = StoneBlocks.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE);
 
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
+
+    public static final Block POT = register("pot", new PotBlock(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.GLASS).strength(2.0F, 2.0F)), (BlockItem) null);
+    public static final Item POT_ITEM = Registry.register(Registry.ITEM, Motherlode.id("pot"), new BlockItem(POT, new Item.Settings().group(Motherlode.ITEMS)));
 
     public static final Block ROPE_BLOCK = register("rope", new RopeBlock(AbstractBlock.Settings.of(Material.PLANT)), (BlockItem) null);
     public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(Motherlode.ITEMS)));

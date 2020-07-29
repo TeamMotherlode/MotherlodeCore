@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.ModelPredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -33,8 +34,19 @@ public abstract class ModelPredicateProviderRegistryMixin {
                 PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
                 return potion == null ? 1 : potion.predicateValue;
         });
-
+      
         register(new Identifier("stack_count"), ( itemStack,  _world,  _entity) -> itemStack.getCount() / 100F);
+
+        register(MotherlodeBlocks.POT_ITEM, new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
+            CompoundTag tag = itemStack.getTag();
+            if (tag == null || !tag.contains("BlockStateTag"))
+                return 0;
+            tag = tag.getCompound("BlockStateTag");
+            if (tag == null || !tag.contains("pattern"))
+                return 0;
+
+            return Integer.parseInt(tag.getString("pattern")) / 100F;
+        });
     }
 
 }
