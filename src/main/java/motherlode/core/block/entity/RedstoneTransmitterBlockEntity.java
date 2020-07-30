@@ -2,9 +2,9 @@ package motherlode.core.block.entity;
 
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.inventory.DefaultInventory;
-import motherlode.core.item.DefaultGemItem;
 import motherlode.core.persistantData.RedstoneChannelManager;
 import motherlode.core.registry.MotherlodeBlockEntities;
+import motherlode.core.registry.MotherlodeItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -15,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
@@ -26,6 +27,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Arrays;
 
@@ -65,6 +67,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
         super.fromTag(state, tag);
         Inventories.fromTag(tag, stacks);
         receiver = tag.getBoolean("transmitter");
+        channelIDCache = tag.getInt("channelCache");
     }
 
     @Override
@@ -81,6 +84,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     public CompoundTag toTag(CompoundTag tag) {
         Inventories.toTag(tag, stacks);
         tag.putBoolean("transmitter", receiver);
+        tag.putInt("channelCache", channelIDCache);
         return super.toTag(tag);
     }
 
@@ -100,6 +104,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
             return;
 
         if(channelIDCache != getChannelID()) {
+            LogManager.getLogger("motherlode").info(channelIDCache + "  " + getChannelID());
             rcm.swapChannel(receiver, pos, channelIDCache, getChannelID());
             channelIDCache = getChannelID();
         }
@@ -119,8 +124,30 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     public int getChannelID() {
         Integer[] idArr = new Integer[stacks.size()];
         for(int i = 0; i < stacks.size(); i++)
-            idArr[i] = DefaultGemItem.GemType.getType(stacks.get(i).getItem()).ordinal() + 1;
+            idArr[i] = getGemValue(stacks.get(i));
         return Arrays.deepHashCode(idArr);
+    }
+
+    private int getGemValue(ItemStack gemStack) {
+        // I wish I could use a switch statement
+        if (MotherlodeItems.AMETHYST.equals(gemStack.getItem())) {
+            return 1;
+        } else if (MotherlodeItems.HOWLITE.equals(gemStack.getItem())) {
+            return 2;
+        } else if (MotherlodeItems.RUBY.equals(gemStack.getItem())) {
+            return 3;
+        } else if (MotherlodeItems.SAPPHIRE.equals(gemStack.getItem())) {
+            return 4;
+        } else if (MotherlodeItems.TOPAZ.equals(gemStack.getItem())) {
+            return 5;
+        } else if (MotherlodeItems.ONYX.equals(gemStack.getItem())) {
+            return 6;
+        } else if (Items.DIAMOND.equals(gemStack.getItem())) {
+            return 7;
+        } else if (Items.EMERALD.equals(gemStack.getItem())) {
+            return 8;
+        }
+        return 0;
     }
 
     public void swapTransmitter() {
