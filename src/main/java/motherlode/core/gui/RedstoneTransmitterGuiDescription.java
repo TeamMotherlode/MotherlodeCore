@@ -38,10 +38,10 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         WPlainPanel panel = new WPlainPanel();
 
         WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeTags.Items.GEMS)));
-        panel.add(grid, 36, 22);
+        panel.add(grid, 36, 17);
 
         WSprite transmitter = new WSprite(Motherlode.id("textures/gui/container/transmitter_disconnected.png"));
-        panel.add(transmitter, 109, 22, 15, 54);
+        panel.add(transmitter, 109, 17, 15, 54);
 
         context.run((world, pos) -> {
             BlockEntity entity = world.getBlockEntity(pos);
@@ -50,7 +50,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 RedstoneTransmitterBlockEntity blockEntity = (RedstoneTransmitterBlockEntity)entity;
 
                 WButton button = new WButton(new LiteralText(blockEntity.getReceiver() ? "Receiver" : "Transmitter"));
-                panel.add(button, 130, 15, 63, 30);
+                panel.add(button, 100, 75, 63, 30);
                 button.setOnClick(() -> {
                     if(world.isClient()) {
                         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -65,14 +65,14 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         for (int i = 0; i < 9; i++) {
             WSprite gem = new WSprite(Motherlode.id("textures/gui/container/gem.png"));
-            panel.add(gem, 38 + (i * 18 - ((i / 3) * 54)), 26 + ((i / 3) * 18), 14, 11);
+            panel.add(gem, 38 + (i * 18 - ((i / 3) * 54)), 21 + ((i / 3) * 18), 14, 11);
             gems.add(gem);
 
             WSprite miniGemTop = new WSprite(Motherlode.id("textures/gui/container/white.png"));
-            panel.add(miniGemTop, 112 + (i * 4 - ((i / 3) * 12)), 25 + ((i / 3) * 4), 1, 1);
+            panel.add(miniGemTop, 112 + (i * 4 - ((i / 3) * 12)), 20 + ((i / 3) * 4), 1, 1);
 
             WSprite miniGemBottom = new WSprite(Motherlode.id("textures/gui/container/white.png"));
-            panel.add(miniGemBottom, 112 + (i * 4 - ((i / 3) * 12)), 64 + ((i / 3) * 4), 1, 1);
+            panel.add(miniGemBottom, 112 + (i * 4 - ((i / 3) * 12)), 59 + ((i / 3) * 4), 1, 1);
 
             miniGemsTop.add(miniGemTop);
             miniGemsBottom.add(miniGemBottom);
