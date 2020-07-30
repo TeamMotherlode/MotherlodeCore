@@ -22,9 +22,9 @@ public class MaterialToolsAndArmor {
     public final Item SWORD;
 
     public final Item HELMET;
-    public final Item chestplate;
-    public final Item leggings;
-    public final Item boots;
+    public final Item CHESTPLATE;
+    public final Item LEGGINGS;
+    public final Item BOOTS;
 
     public MaterialToolsAndArmor(DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
         this.AXE = register(toolMaterial.getName() + "_axe", new MaterialAxe(toolMaterial));
@@ -34,9 +34,9 @@ public class MaterialToolsAndArmor {
         this.SWORD = register(toolMaterial.getName() + "_sword", new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(Motherlode.ARMOUR_AND_TOOLS)));
 
         this.HELMET = register(toolMaterial.getName() + "_helmet", new ArmorItem(armorMaterial, EquipmentSlot.HEAD, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.chestplate = register(toolMaterial.getName() + "_chestplate", new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.leggings = register(toolMaterial.getName() + "_leggings", new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.boots = register(toolMaterial.getName() + "_boots", new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.CHESTPLATE = register(toolMaterial.getName() + "_chestplate", new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.LEGGINGS = register(toolMaterial.getName() + "_leggings", new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.BOOTS = register(toolMaterial.getName() + "_boots", new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
 
     }
 
