@@ -1,9 +1,9 @@
 package motherlode.core.block.entity;
 
-import motherlode.core.datastore.RedstoneChannelManager;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.inventory.DefaultInventory;
 import motherlode.core.item.DefaultGemItem;
+import motherlode.core.persistantData.RedstoneChannelManager;
 import motherlode.core.registry.MotherlodeBlockEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,6 +20,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -32,6 +33,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);
     private boolean receiver = false;
     private boolean updated = false;
+    private int channelIDCache = getChannelID();
 
     public RedstoneTransmitterBlockEntity() {
         super(MotherlodeBlockEntities.REDSTONE_TRANSMITTER);
@@ -66,6 +68,11 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     @Override
+    public void onClose(PlayerEntity player) {
+        updated = true;
+    }
+
+    @Override
     public void fromClientTag(CompoundTag tag) {
         fromTag(getCachedState(), tag);
     }
@@ -84,17 +91,25 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
 
     @Override
     public void tick() {
-        if(world.isClient() || !updated) {
+        if(world.isClient())
             return;
+
+        RedstoneChannelManager rcm = ((ServerWorld)world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels");
+
+        if(!updated)
+            return;
+
+        if(channelIDCache != getChannelID()) {
+            rcm.swapChannel(receiver, pos, channelIDCache, getChannelID());
+            channelIDCache = getChannelID();
         }
 
-        RedstoneChannelManager rcm = world.getServer().getOverworld().getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels");
-        if(!receiver) {
-            rcm.setChannelValue(getChannelID(), world.getReceivedRedstonePower(pos));
-            rcm.markDirty();
-        } else {
+        if(!receiver)
+            rcm.setChannelValue(getChannelID(), pos, world.getReceivedRedstonePower(pos));
+        else
             world.setBlockState(pos, world.getBlockState(pos).with(Properties.POWER, rcm.getChannelValue(getChannelID())));
-        }
+
+        updated = false;
     }
 
     public void update() {
@@ -110,8 +125,29 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
 
     public void swapTransmitter() {
         receiver = !receiver;
+        if(world.isClient())
+            return;
+
+        ((ServerWorld)world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels")
+                .swapType(!receiver, channelIDCache, pos, 0);
+
         updated = true;
-        world.getBlockTickScheduler().schedule(pos, world.getBlockState(pos).getBlock(), 2);
+        if(!receiver)
+            world.setBlockState(pos, world.getBlockState(pos).with(Properties.POWER, 0));
+    }
+
+    public void remove() {
+        if(world.isClient())
+            return;
+
+        ServerWorld sWorld = (ServerWorld)world;
+        RedstoneChannelManager rcm = sWorld.getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels");
+
+        rcm.remove(receiver, channelIDCache, pos);
+    }
+
+    public void register() {
+        ((ServerWorld)world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels").registerTransmitter(getChannelID(), pos, 0);
     }
 
     public boolean getReceiver() {

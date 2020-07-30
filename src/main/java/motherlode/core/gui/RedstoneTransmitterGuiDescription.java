@@ -19,6 +19,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     ArrayList<WSprite> gems = new ArrayList<>();
     ArrayList<WSprite> miniGemsTop = new ArrayList<>();
     ArrayList<WSprite> miniGemsBottom = new ArrayList<>();
+    BlockPos currPos;
 
     public RedstoneTransmitterGuiDescription(int syncId, PlayerInventory inventory, ScreenHandlerContext context) {
         super(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, syncId, inventory, getBlockInventory(context), getBlockPropertyDelegate(context));
@@ -43,9 +45,10 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         context.run((world, pos) -> {
             BlockEntity entity = world.getBlockEntity(pos);
-
+            currPos = pos;
             if(entity instanceof RedstoneTransmitterBlockEntity) {
                 RedstoneTransmitterBlockEntity blockEntity = (RedstoneTransmitterBlockEntity)entity;
+
                 WButton button = new WButton(new LiteralText(blockEntity.getReceiver() ? "Receiver" : "Transmitter"));
                 panel.add(button, 130, 15, 63, 30);
                 button.setOnClick(() -> {
@@ -151,5 +154,13 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
             }
         }
         return stack;
+    }
+
+    @Override
+    public void close(PlayerEntity player) {
+        if(!world.isClient())
+            ((RedstoneTransmitterBlockEntity)world.getBlockEntity(currPos)).update();
+
+        super.close(player);
     }
 }
