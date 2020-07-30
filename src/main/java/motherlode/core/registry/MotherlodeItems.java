@@ -6,8 +6,10 @@ import motherlode.core.Motherlode;
 import motherlode.core.MotherlodeMaterials;
 import motherlode.core.item.DefaultGemItem;
 import motherlode.core.item.DefaultItem;
+import motherlode.core.item.DefaultMusicDiscItem;
 import motherlode.core.item.MaterialToolsAndArmor;
 import net.minecraft.item.Item;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeItems {
@@ -46,6 +48,10 @@ public class MotherlodeItems {
 
     static Item.Settings newSettings() {
         return new Item.Settings().group(Motherlode.ITEMS);
+    }
+
+    public static DefaultMusicDiscItem registerDisc(String name, SoundEvent soundEvent) {
+        return register(name, new DefaultMusicDiscItem(soundEvent));
     }
 
     public static <T extends Item> T register(String name, T item) {

@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class Motherlode implements ModInitializer {
@@ -38,7 +39,11 @@ public class Motherlode implements ModInitializer {
             .build();
 
     public static final ItemGroup ARMOUR_AND_TOOLS = FabricItemGroupBuilder.create( id("armor_and_tools"))
-            .icon(() -> new ItemStack(MotherlodeItems.COPPER.helmet))
+            .icon(() -> new ItemStack(MotherlodeItems.COPPER.HELMET))
+            .build();
+
+    public static final ItemGroup MUSIC = FabricItemGroupBuilder.create( id("music"))
+            .icon(() -> new ItemStack(Items.MUSIC_DISC_CAT))
             .build();
 
     public static Identifier id(String name) {

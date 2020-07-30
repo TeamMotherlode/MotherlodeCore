@@ -1,5 +1,6 @@
 package motherlode.core.mixins;
 
+import motherlode.core.registry.MotherlodeBlocks;
 import motherlode.core.registry.MotherlodePotions;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
