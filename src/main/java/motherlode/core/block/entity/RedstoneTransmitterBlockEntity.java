@@ -14,6 +14,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -124,29 +125,19 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     public int getChannelID() {
         Integer[] idArr = new Integer[stacks.size()];
         for(int i = 0; i < stacks.size(); i++)
-            idArr[i] = getGemValue(stacks.get(i));
+            idArr[i] = getGemValue(stacks.get(i).getItem());
         return Arrays.deepHashCode(idArr);
     }
 
-    private int getGemValue(ItemStack gemStack) {
-        // I wish I could use a switch statement
-        if (MotherlodeItems.AMETHYST.equals(gemStack.getItem())) {
-            return 1;
-        } else if (MotherlodeItems.HOWLITE.equals(gemStack.getItem())) {
-            return 2;
-        } else if (MotherlodeItems.RUBY.equals(gemStack.getItem())) {
-            return 3;
-        } else if (MotherlodeItems.SAPPHIRE.equals(gemStack.getItem())) {
-            return 4;
-        } else if (MotherlodeItems.TOPAZ.equals(gemStack.getItem())) {
-            return 5;
-        } else if (MotherlodeItems.ONYX.equals(gemStack.getItem())) {
-            return 6;
-        } else if (Items.DIAMOND.equals(gemStack.getItem())) {
-            return 7;
-        } else if (Items.EMERALD.equals(gemStack.getItem())) {
-            return 8;
-        }
+    private int getGemValue(Item item) {
+        if (item.equals(MotherlodeItems.AMETHYST)) return 1;
+        if (item.equals(MotherlodeItems.HOWLITE)) return 2;
+        if (item.equals(MotherlodeItems.RUBY)) return 3;
+        if (item.equals(MotherlodeItems.SAPPHIRE)) return 4;
+        if (item.equals(MotherlodeItems.TOPAZ)) return 5;
+        if (item.equals(MotherlodeItems.ONYX)) return 6;
+        if (item.equals(Items.DIAMOND)) return 7;
+        if (item.equals(Items.EMERALD)) return 8;
         return 0;
     }
 
