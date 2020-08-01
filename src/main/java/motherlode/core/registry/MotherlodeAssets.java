@@ -8,6 +8,7 @@ import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultShovelableBlock;
 import motherlode.core.block.stateproperty.BlockDyeColor;
+import motherlode.core.block.PotBlock;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,6 +17,9 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+
+import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
@@ -82,20 +86,22 @@ public class MotherlodeAssets {
                 );
             }
 
-            for (SlabBlock block : MotherlodeBlocks.usesSlabModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+            for (Map.Entry<SlabBlock,Boolean>  entry : MotherlodeBlocks.usesSlabModel.entrySet()) {
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
+                String texId = blockId.replace("_slab", "").replace("_pillar","_pillar_side");
+                String namespace = entry.getValue() ? "motherlode" : "minecraft";
                 for (String variant : new String[]{"_top",""}) {
                     pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
                             .parent(new Identifier("block/slab" + variant))
-                            .texture("top", Motherlode.id("block/" + blockId + "_top"))
-                            .texture("bottom", Motherlode.id("block/" + blockId + "_top"))
-                            .texture("side", Motherlode.id("block/" + blockId + "_side"))
+                            .texture("top", new Identifier(namespace,"block/" + texId))
+                            .texture("bottom", new Identifier(namespace,"block/" + texId))
+                            .texture("side", new Identifier(namespace,"block/" + texId))
                     );
                 }
                 pack.addBlockModel(Motherlode.id(blockId + "_double"), model -> model
                         .parent(new Identifier("block/cube_column"))
-                        .texture("end", Motherlode.id("block/" + blockId + "_top"))
-                        .texture("side", Motherlode.id("block/" + blockId + "_side"))
+                        .texture("end", new Identifier(namespace,"block/" + texId))
+                        .texture("side", new Identifier(namespace,"block/" + texId))
                 );
                 pack.addBlockState(Motherlode.id(blockId), builder -> builder
                     .variant("type=top", settings -> settings.model(Motherlode.id("block/" + blockId + "_top")))
@@ -104,16 +110,17 @@ public class MotherlodeAssets {
                 );
             }
 
-            for (StairsBlock block : MotherlodeBlocks.usesStairModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+            for (Map.Entry<StairsBlock,Boolean>  entry : MotherlodeBlocks.usesStairModel.entrySet()) {
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
                 String texId = blockId.replace("_stairs", "");
+                String namespace = entry.getValue() ? "motherlode" : "minecraft";
                 for (int i = 0; i < 3; i++) {
                     int ii = i;
                     pack.addBlockModel(Motherlode.id(blockId + modelStrings[i]), model -> model
                         .parent(new Identifier("block/" + (ii == 0? "" : ii == 1? "inner_" : "outer_") + "stairs"))
-                        .texture("top", Motherlode.id("block/" + texId))
-                        .texture("bottom", Motherlode.id("block/" + texId))
-                        .texture("side", Motherlode.id("block/" + texId))
+                        .texture("top", new Identifier(namespace, "block/" + texId))
+                        .texture("bottom", new Identifier(namespace, "block/" + texId))
+                        .texture("side", new Identifier(namespace, "block/" + texId))
                     );
                 }
                 pack.addBlockState(Motherlode.id(blockId), builder -> stairBlockState(builder,blockId));
@@ -213,18 +220,80 @@ public class MotherlodeAssets {
 
                  for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
                      if (info.model == null || info.useDefaultModel)
-                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/default")) );
+                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/default")) );
                      else
-                         model.override( override -> potionPredicate(override, info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
+                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
 
                  }
              });
 
+            pack.addBlockState(Motherlode.id("pot"), state -> {
+                for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                    int ii = i;
+                    pack.addBlockModel(Motherlode.id("pot_with_overlay_" + i), model -> model
+                            .parent(Motherlode.id("block/pot"))
+                            .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                    );
+                    state.variant("pattern="+i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
+                }
+            });
+
+            pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
+                    .parent(Motherlode.id("block/pot"))
+                    .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
+
+                    .display("thirdperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                    .display("thirdperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                    .display("firstperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(2,2,-2))
+                    .display("firstperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(0,5,10))
+            );
+
+            pack.addItemModel(Motherlode.id("pot"), model -> {
+                for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                    float pattern = i / 100F;
+                    int ii = i;
+                    model.override(override -> floatPredicate(override, "pot_pattern", pattern).model(Motherlode.id("item/pot_" + ii)));
+
+                    pack.addItemModel(Motherlode.id("pot_" + ii), model2 -> model2
+                       .parent(Motherlode.id("item/pot_template"))
+                       .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                    );
+
+                }
+            });
+
+            int[] stackCounts = new int[]{0,8,16,24,32,40,48,56,64};
+
+            for (int stackCount : stackCounts) {
+                pack.addItemModel(Motherlode.id("rope" + stackCount), builder -> builder
+                    .parent(new Identifier("item/generated"))
+                    .texture("layer0", Motherlode.id("item/rope/rope" + stackCount))
+                );
+            }
+
+            pack.addItemModel(Motherlode.id("rope"), builder -> {
+                for (int stackCount : stackCounts)
+                    builder.override(override -> floatPredicate(override, "stack_count", stackCount / 100F).model(Motherlode.id("item/rope" + stackCount)));
+            });
+
+            pack.addBlockState(Motherlode.id("rope"), builder -> {
+                String[] directions = new String[]{"south", "west", "north", "east"};
+                for (int i = 0; i < directions.length; i++) {
+                    int ii = i;
+                    builder.variant("bottom=false,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii *90));
+                    builder.variant("bottom=true,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top_bottom")).rotationY(ii *90));
+                    builder.variant("bottom=false,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii *90));
+                    builder.variant("bottom=true,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side_bottom")).rotationY(ii *90));
+                }
+                builder.variant("bottom=false,connected=none", settings -> settings.model(Motherlode.id("block/rope")));
+                builder.variant("bottom=true,connected=none", settings -> settings.model(Motherlode.id("block/rope_bottom")));
+            });
+
         });
     }
 
-    private static ModelBuilder.Override potionPredicate(ModelBuilder.Override override, Number value) {
-	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty("potion_type", value));
+    private static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
+	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
 	    return override;
     }
 
@@ -248,10 +317,10 @@ public class MotherlodeAssets {
                     int jj = j;
                     int ii = i;
                     builder.variant("facing="+facing+",half="+half+",shape="+shape, settings ->
-                            settings.model(Motherlode.id("block/"+id+modelStrings[models[jj]]))
-                                    .rotationX(xs[jj]*90)
-                                    .rotationY(ys[ii]*90)
-                                    .uvlock(xs[jj] != 0 || ys[ii] != 0));
+                        settings.model(Motherlode.id("block/"+id+modelStrings[models[jj]]))
+                            .rotationX(xs[jj]*90)
+                            .rotationY(ys[ii]*90)
+                            .uvlock(xs[jj] != 0 || ys[ii] != 0));
                     i++;
                     j++;
                 }
