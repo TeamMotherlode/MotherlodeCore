@@ -3,6 +3,8 @@ package motherlode.core.world.biome;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.GlStateManager;
 import motherlode.core.Motherlode;
+import motherlode.core.registry.MotherlodeBlocks;
+import motherlode.core.registry.MotherlodeFeatures;
 import motherlode.core.registry.MotherlodeStructures;
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.EntityType;
@@ -11,8 +13,11 @@ import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
-import net.minecraft.world.gen.feature.StructurePoolFeatureConfig;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.decorator.*;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placer.SimpleBlockPlacer;
+import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 
 import java.awt.*;
@@ -44,6 +49,8 @@ public class RuinedFlatsBiome extends AbstractFoggyBiome {
                         )
                         .parent(null)
         );
+        this.addFeature(GenerationStep.Feature.LAKES, MotherlodeFeatures.MARSH.configure(new DefaultFeatureConfig()).createDecoratedFeature(Decorator.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceDecoratorConfig(5))));
+        this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
         this.addStructureFeature(MotherlodeStructures.CAMP.configure(new StructurePoolFeatureConfig(Motherlode.id("camps/ruined/start"), 5)));
         DefaultBiomeFeatures.addLandCarvers(this);
         DefaultBiomeFeatures.addMineables(this);

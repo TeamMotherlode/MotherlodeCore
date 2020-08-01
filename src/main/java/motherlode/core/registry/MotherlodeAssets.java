@@ -6,6 +6,7 @@ import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
+import motherlode.core.block.DefaultShovelableBlock;
 import motherlode.core.block.stateproperty.BlockDyeColor;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
@@ -38,10 +39,32 @@ public class MotherlodeAssets {
                     .texture("all", Motherlode.id("block/"+blockId))
                 );
             }
+            for(Block block : MotherlodeBlocks.defaultPlantModelList) {
+                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                pack.addBlockModel(Motherlode.id(blockId), state -> state
+                        .parent(new Identifier("block/tinted_cross"))
+                        .texture("cross", Motherlode.id("block/"+blockId))
+                );
+            }
+            for(Block block : MotherlodeBlocks.thickCrossModelList) {
+                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                pack.addBlockModel(Motherlode.id(blockId), state -> state
+                        .parent(Motherlode.id("block/thick_cross"))
+                        .texture("cross", Motherlode.id("block/"+blockId))
+                );
+            }
             for(Block block : MotherlodeBlocks.defaultItemModelList) {
                 String blockId = block.getTranslationKey().replace("block.motherlode.","");
                 pack.addItemModel(Motherlode.id(blockId), state -> state 
                     .parent(Motherlode.id("block/"+blockId))
+                );
+            }
+            for(Block block : MotherlodeBlocks.flatItemModelList.keySet()) {
+                String itemId = block.getTranslationKey().replace("block.motherlode.","");
+                String texture = MotherlodeBlocks.flatItemModelList.get(block).get();
+                pack.addItemModel(Motherlode.id(itemId), state -> state
+                        .parent(new Identifier("item/generated"))
+                        .texture("layer0", Motherlode.id("block/"+texture))
                 );
             }
             for(Item item : MotherlodeItems.defaultItemModelList) {
@@ -49,6 +72,13 @@ public class MotherlodeAssets {
                 pack.addItemModel(Motherlode.id(itemId), state -> state 
                     .parent(new Identifier("item/generated"))
                     .texture("layer0", Motherlode.id("item/"+itemId))
+                );
+            }
+            for(Item item : MotherlodeItems.handheldItemModelList) {
+                String itemId = item.getTranslationKey().replace("item.motherlode.","");
+                pack.addItemModel(Motherlode.id(itemId), state -> state
+                        .parent(new Identifier("item/handheld"))
+                        .texture("layer0", Motherlode.id("item/"+itemId))
                 );
             }
 
@@ -89,6 +119,33 @@ public class MotherlodeAssets {
                 pack.addBlockState(Motherlode.id(blockId), builder -> stairBlockState(builder,blockId));
             }
 
+            for(DefaultShovelableBlock block : MotherlodeBlocks.shovelableBlocks) {
+                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                pack.addBlockState(Motherlode.id(blockId), state -> {
+                    for (int i = 0; i < (block.isRotatable ? 4 : 1); i++) {
+                        int finalI = i;
+                        state.variant("shoveled=false", settings -> settings
+                                .model(Motherlode.id("block/" + blockId))
+                                .rotationY(finalI * 90)
+                        );
+                        state.variant("shoveled=true", settings -> settings
+                                .model(Motherlode.id("block/" + blockId + "_shoveled"))
+                                .rotationY(finalI * 90)
+                        );
+                    }
+                });
+                pack.addBlockModel(Motherlode.id(blockId), state -> state
+                        .parent(new Identifier("block/cube_all"))
+                        .texture("all", Motherlode.id("block/"+blockId))
+                );
+                pack.addBlockModel(Motherlode.id(blockId+"_shoveled"), state -> state
+                        .parent(Motherlode.id("block/cube_lowered"))
+                        .texture("top", Motherlode.id("block/"+blockId))
+                        .texture("side", Motherlode.id("block/"+blockId))
+                        .texture("bottom", Motherlode.id("block/"+blockId))
+                );
+            }
+
             for (Block block : MotherlodeBlocks.usesPillarModel) {
                 String blockId = block.getTranslationKey().replace("block.motherlode.","");
                 for (String variant : new String[]{"","_horizontal"}) {
@@ -105,48 +162,37 @@ public class MotherlodeAssets {
                 );
             }
 
-            /* DEAD CODE
-            for (Block block : MotherlodeBlocks.paintableBlocks) {
+            for(Block block : MotherlodeBlocks.usesPaintableModel) {
                 String blockId = block.getTranslationKey().replace("block.motherlode.","");
-                System.out.println(blockId);
+                pack.addBlockModel(Motherlode.id(blockId + "_base"), model -> model
+                        .parent(new Identifier("block/cube_all"))
+                        .texture("all", Motherlode.id("block/" + blockId + "_side"))
+                );
                 for (BlockDyeColor color : BlockDyeColor.values()) {
-                    System.out.println(blockId + "_" + color.asString());
                     pack.addBlockModel(Motherlode.id(blockId + "_" + color.asString()), model -> model
-                            .parent(Motherlode.id("block/single_face"))
+                            .parent(Motherlode.id("block/paintable_face"))
                             .texture("texture", Motherlode.id("block/" + blockId + "_" + color.asString()))
                     );
                 }
-                pack.addBlockState(Motherlode.id(blockId), builder -> builder
-                        .multipartCase(cases -> {
-                            for (BlockDyeColor color : BlockDyeColor.values()) {
-                                System.out.println("Blockstating " + blockId + "_" + color.asString());
-                                cases.when("north", color.asString()).apply(variant -> variant
-                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
-                                );
-                                cases.when("south", color.asString()).apply(variant -> variant
-                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
-                                        .rotationY(180)
-                                );
-                                cases.when("east", color.asString()).apply(variant -> variant
-                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
-                                        .rotationY(270)
-                                );
-                                cases.when("west", color.asString()).apply(variant -> variant
-                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
-                                        .rotationY(90)
-                                );
-                                cases.when("up", color.asString()).apply(variant -> variant
-                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
-                                        .rotationX(90)
-                                );
-                                cases.when("down", color.asString()).apply(variant -> variant
-                                        .model(Motherlode.id("block/" + blockId + "_" + color.asString()))
-                                        .rotationX(270)
-                                );
-                            }
-                        })
+                pack.addBlockState(Motherlode.id(blockId), builder -> {
+                        builder.multipartCase(cases -> cases.apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_base"))));
+                        for (BlockDyeColor color : BlockDyeColor.values()) {
+                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
+                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
+                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
+                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
+                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
+                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
+                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
+                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
+                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
+                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
+                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
+                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
+                        }
+                    }
                 );
-            } DEAD CODE */
+            }
 
             for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
                 if (!info.useDefaultModel)

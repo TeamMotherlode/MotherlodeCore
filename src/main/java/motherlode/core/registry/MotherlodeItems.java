@@ -13,6 +13,7 @@ import net.minecraft.util.registry.Registry;
 public class MotherlodeItems {
 
     public static final ArrayList<Item> defaultItemModelList = new ArrayList<>();
+    public static final ArrayList<Item> handheldItemModelList = new ArrayList<>();
 
     public static final Item COPPER_INGOT = register("copper_ingot", new DefaultItem(newSettings()));
     public static final Item SILVER_INGOT = register("silver_ingot", new DefaultItem(newSettings()));
@@ -36,6 +37,7 @@ public class MotherlodeItems {
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
+        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.asItem());
     }
 
     static Item.Settings newSettings() {

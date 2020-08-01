@@ -28,6 +28,7 @@ public class Motherlode implements ModInitializer {
 
         MotherlodeData.register();
         MotherlodeFeatures.register();
+        MotherlodeResources.initServer();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
