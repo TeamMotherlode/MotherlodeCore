@@ -1,5 +1,7 @@
 package motherlode.core;
 
+import motherlode.core.block.PotBlock;
+import motherlode.core.block.PotColor;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.gui.RedstoneTransmitterScreen;
 import motherlode.core.registry.MotherlodeAssets;
@@ -15,14 +17,22 @@ import net.minecraft.block.Block;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.resource.GrassColormapResourceSupplier;
+import net.minecraft.world.BlockRenderView;
+import net.minecraft.world.level.ColorResolver;
+import net.minecraft.client.render.RenderLayer;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		MotherlodeAssets.register();
+    	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
+		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
 		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
-		for(Block block : MotherlodeBlocks.cutouts) {
+		
+    for(Block block : MotherlodeBlocks.cutouts) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
 		}
 		for(Block block : MotherlodeBlocks.grassColored) {
