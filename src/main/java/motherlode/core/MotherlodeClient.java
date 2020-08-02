@@ -32,7 +32,7 @@ public class MotherlodeClient implements ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
 		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
 		
-    for(Block block : MotherlodeBlocks.cutouts) {
+    		for(Block block : MotherlodeBlocks.cutouts) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
 		}
 		for(Block block : MotherlodeBlocks.grassColored) {
