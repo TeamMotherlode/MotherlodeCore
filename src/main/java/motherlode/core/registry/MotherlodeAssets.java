@@ -16,6 +16,7 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
@@ -25,7 +26,7 @@ public class MotherlodeAssets {
     public static void register(){
         Artifice.registerAssets(Motherlode.id("client_pack"), pack -> {
             for(Block block : MotherlodeBlocks.defaultStateList) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockState(Motherlode.id(blockId), state -> state 
                     .variant("", settings -> settings
                         .model(Motherlode.id("block/"+blockId))
@@ -33,34 +34,34 @@ public class MotherlodeAssets {
                 );
             }
             for(Block block : MotherlodeBlocks.defaultModelList) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockModel(Motherlode.id(blockId), state -> state 
                     .parent(new Identifier("block/cube_all"))
                     .texture("all", Motherlode.id("block/"+blockId))
                 );
             }
             for(Block block : MotherlodeBlocks.defaultPlantModelList) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockModel(Motherlode.id(blockId), state -> state
                         .parent(new Identifier("block/tinted_cross"))
                         .texture("cross", Motherlode.id("block/"+blockId))
                 );
             }
             for(Block block : MotherlodeBlocks.thickCrossModelList) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockModel(Motherlode.id(blockId), state -> state
                         .parent(Motherlode.id("block/thick_cross"))
                         .texture("cross", Motherlode.id("block/"+blockId))
                 );
             }
             for(Block block : MotherlodeBlocks.defaultItemModelList) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addItemModel(Motherlode.id(blockId), state -> state 
                     .parent(Motherlode.id("block/"+blockId))
                 );
             }
             for(Block block : MotherlodeBlocks.flatItemModelList.keySet()) {
-                String itemId = block.getTranslationKey().replace("block.motherlode.","");
+                String itemId = Registry.BLOCK.getId(block).getPath();
                 String texture = MotherlodeBlocks.flatItemModelList.get(block).get();
                 pack.addItemModel(Motherlode.id(itemId), state -> state
                         .parent(new Identifier("item/generated"))
@@ -68,14 +69,14 @@ public class MotherlodeAssets {
                 );
             }
             for(Item item : MotherlodeItems.defaultItemModelList) {
-                String itemId = item.getTranslationKey().replace("item.motherlode.","");
+                String itemId = Registry.ITEM.getId(item).getPath();
                 pack.addItemModel(Motherlode.id(itemId), state -> state 
                     .parent(new Identifier("item/generated"))
                     .texture("layer0", Motherlode.id("item/"+itemId))
                 );
             }
             for(Item item : MotherlodeItems.handheldItemModelList) {
-                String itemId = item.getTranslationKey().replace("item.motherlode.","");
+                String itemId = Registry.ITEM.getId(item).getPath();
                 pack.addItemModel(Motherlode.id(itemId), state -> state
                         .parent(new Identifier("item/handheld"))
                         .texture("layer0", Motherlode.id("item/"+itemId))
@@ -83,7 +84,7 @@ public class MotherlodeAssets {
             }
 
             for (SlabBlock block : MotherlodeBlocks.usesSlabModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 for (String variant : new String[]{"_top",""}) {
                     pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
                             .parent(new Identifier("block/slab" + variant))
@@ -105,7 +106,7 @@ public class MotherlodeAssets {
             }
 
             for (StairsBlock block : MotherlodeBlocks.usesStairModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 String texId = blockId.replace("_stairs", "");
                 for (int i = 0; i < 3; i++) {
                     int ii = i;
@@ -120,7 +121,7 @@ public class MotherlodeAssets {
             }
 
             for(DefaultShovelableBlock block : MotherlodeBlocks.shovelableBlocks) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockState(Motherlode.id(blockId), state -> {
                     for (int i = 0; i < (block.isRotatable ? 4 : 1); i++) {
                         int finalI = i;
@@ -147,7 +148,7 @@ public class MotherlodeAssets {
             }
 
             for (Block block : MotherlodeBlocks.usesPillarModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 for (String variant : new String[]{"","_horizontal"}) {
                     pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
                             .parent(new Identifier("block/cube_column" + variant))
@@ -163,7 +164,7 @@ public class MotherlodeAssets {
             }
 
             for(Block block : MotherlodeBlocks.usesPaintableModel) {
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockModel(Motherlode.id(blockId + "_base"), model -> model
                         .parent(new Identifier("block/cube_all"))
                         .texture("all", Motherlode.id("block/" + blockId + "_side"))
@@ -209,7 +210,7 @@ public class MotherlodeAssets {
             pack.addItemModel(new Identifier("potion"), (model) -> {
                  model.parent(new Identifier("item/generated"));
                  model.texture("layer0", new Identifier("item/potion"));
-                model.texture("layer1", new Identifier("item/potion_overlay"));
+                 model.texture("layer1", new Identifier("item/potion_overlay"));
 
                  for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
                      if (info.model == null || info.useDefaultModel)

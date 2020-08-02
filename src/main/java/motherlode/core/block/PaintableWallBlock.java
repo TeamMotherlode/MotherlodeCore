@@ -60,22 +60,6 @@ public class PaintableWallBlock extends DefaultBlock {
         builder.add(SIDE_A_COLOR, SIDE_B_COLOR, VARIANT);
     }
 
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        int variant = 0;
-        BlockPos b = ctx.getBlockPos();
-        Vec3d v = new Vec3d(b.getX(), b.getY(), b.getZ());
-
-        /*float y = ctx.getPlayerYaw();
-        if((y > -22.5 && y < 22.5) || ((y > 157.5 && y < 180) || (y < -157.5 && y > -180))) variant = 0;
-        else if((y > 67.5 && y < 122.5) || (y > -122.5 && y < -67.5)) variant = 1;
-        if(y > -67.5 && y < -22.5) variant = 2;
-        else if(y > 22.5 && y < 67.5) variant = 3;
-        if(y > 112.5 && y < 157.5) variant = 4;
-        else if(y > -157.5 && y < -112.5) variant = 5;*/
-        return super.getPlacementState(ctx).with(VARIANT, variant);
-    }
-
     static {
         SIDE_A_COLOR = EnumProperty.of("side_a", BlockDyeColor.class);
         SIDE_B_COLOR = EnumProperty.of("side_b", BlockDyeColor.class);
