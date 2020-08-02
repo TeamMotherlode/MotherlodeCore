@@ -1,0 +1,6 @@
+{
+	"parent": "motherlode:block/thick_cross",
+	"textures": {
+		"texture": "motherlode:block/reeds"
+	}
+}
