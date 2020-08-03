@@ -46,31 +46,31 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> grassColored = new ArrayList<>();
     public static final ArrayList<Block> foliageColored = new ArrayList<>();
 
-    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
-    public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 3)));
-    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 4)));
-    public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 5)));
-    public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 6)));
-    public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block HOWLITE_ORE = register("howlite_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block ONYX_ORE = register("onyx_ore", new DefaultOreBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, 1));
+    public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, 2));
+    public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(false, 3));
+    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, 4));
+    public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, 5));
+    public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, 6));
+    public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(false, 2));
+    public static final Block HOWLITE_ORE = register("howlite_ore", new DefaultOreBlock(false, 2));
+    public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(false, 2));
+    public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(false, 2));
+    public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(false, 2));
+    public static final Block ONYX_ORE = register("onyx_ore", new DefaultOreBlock(false, 2));
 
-    public static final Block COPPER_BLOCK = register("copper_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 1)));
-    public static final Block SILVER_BLOCK = register("silver_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block CHARITE_BLOCK = register("charite_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 3)));
-    public static final Block ECHERITE_BLOCK = register("echerite_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 4)));
-    public static final Block TITANIUM_BLOCK = register("titanium_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 5)));
-    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 6)));
-    public static final Block AMETHYST_BLOCK = register("amethyst_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block HOWLITE_BLOCK = register("howlite_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block RUBY_BLOCK = register("ruby_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block TOPAZ_BLOCK = register("topaz_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
-    public static final Block ONYX_BLOCK = register("onyx_block", new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, 2)));
+    public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1));
+    public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2));
+    public static final Block CHARITE_BLOCK = register("charite_block", mineralBlock(3));
+    public static final Block ECHERITE_BLOCK = register("echerite_block", mineralBlock(4));
+    public static final Block TITANIUM_BLOCK = register("titanium_block", mineralBlock(5));
+    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", mineralBlock(6));
+    public static final Block AMETHYST_BLOCK = register("amethyst_block", mineralBlock(2));
+    public static final Block HOWLITE_BLOCK = register("howlite_block", mineralBlock(2));
+    public static final Block RUBY_BLOCK = register("ruby_block", mineralBlock(2));
+    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", mineralBlock(2));
+    public static final Block TOPAZ_BLOCK = register("topaz_block", mineralBlock(2));
+    public static final Block ONYX_BLOCK = register("onyx_block", mineralBlock(2));
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
@@ -136,6 +136,10 @@ public class MotherlodeBlocks {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }
 
+    private static Block mineralBlock(int miningLevel) {
+        return new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel)); 
+    }
+    
     static <T extends Block> T register(String name, T block, Item.Settings settings) {
         return register(name, block, new BlockItem(block, settings));
     }
