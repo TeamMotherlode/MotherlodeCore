@@ -1,7 +1,10 @@
 package motherlode.core.block;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -21,20 +24,14 @@ public class DefaultOreBlock extends DefaultBlock implements OreProperties{
     public final int minY;
     public final int maxY;
 
-    public DefaultOreBlock(Settings settings) {
-        this(false, 0, 0, 8, 1, 0, 50, settings);
-    }
-    
-    public DefaultOreBlock(boolean hasDefaultLootTable, Settings settings) {
-        this(hasDefaultLootTable, 0, 0, 8, 1, 0, 50, settings);
-    }
 
-    public DefaultOreBlock( int minExperience, int maxExperience, Settings settings) {
-        this(false, minExperience, maxExperience, 8, 1, 0, 50, settings);
+    public DefaultOreBlock(boolean hasDefaultLootTable, int miningLevel) {
+        this(hasDefaultLootTable, 0, 0, 8, 1, 0, 50, miningLevel);
     }
     
-    public DefaultOreBlock(boolean hasDefaultLootTable, int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY,  Settings settings) {
-        super(true, true, true, hasDefaultLootTable, settings);
+    public DefaultOreBlock(boolean hasDefaultLootTable, int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY,  int miningLevel) {
+        super(true, true, true, hasDefaultLootTable,
+                FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
 
         this.minExperience = minExperience;
         this.maxExperience = maxExperience;

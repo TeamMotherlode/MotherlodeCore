@@ -1,21 +1,15 @@
 package motherlode.core.world.feature;
 
-import com.mojang.serialization.Codec;
-import com.sun.javafx.geom.Vec2d;
 import motherlode.core.block.ReedsBlock;
 import motherlode.core.registry.MotherlodeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -32,7 +26,6 @@ public class MarshFeature extends Feature<DefaultFeatureConfig> {
     public boolean generate(ServerWorldAccess serverWorldAccess, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos bpos, DefaultFeatureConfig config) {
         boolean b = false;
         BlockPos pos = serverWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE, bpos).down();
-        Vec2d center = new Vec2d(0, 0);
         boolean[][] replace = new boolean[24][24];
         if(serverWorldAccess.getBlockState(pos.up()).isAir()) {
             for (int a = 0; a < 24; a++) {
@@ -40,8 +33,7 @@ public class MarshFeature extends Feature<DefaultFeatureConfig> {
                     int x = a - 12;
                     int z = c - 12;
                     BlockPos mpos = pos.add(x, 0, z);
-                    Vec2d mvec = new Vec2d(x, z);
-                    if (shouldReplace(serverWorldAccess, mpos) && center.distance(mvec) <= 12) {
+                    if (shouldReplace(serverWorldAccess, mpos) && Math.sqrt(Math.pow(x,2) + Math.pow(z,2)) <= 12) {
                         b = true;
                         replace[a][c] = true;
                     }
