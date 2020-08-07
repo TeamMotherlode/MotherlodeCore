@@ -1,6 +1,7 @@
 package motherlode.core.block;
 
 import motherlode.core.registry.MotherlodeBlocks;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -25,10 +26,9 @@ public class ReedsBlock extends Block implements Waterloggable {
 
     public static final EnumProperty<Type> TYPE;
 
-    public ReedsBlock(Settings settings) {
-        super(settings);
+    public ReedsBlock() {
+        super(FabricBlockSettings.copy(Blocks.SEAGRASS));
         this.setDefaultState(getDefaultState().with(TYPE, Type.SINGLE));
-        MotherlodeBlocks.cutouts.add(this);
     }
 
     @Override

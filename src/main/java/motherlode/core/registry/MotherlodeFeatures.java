@@ -1,7 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
-import motherlode.core.block.DefaultOreBlock;
+import motherlode.core.block.defaults.DefaultOreBlock;
 import motherlode.core.world.feature.MarshFeature;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.block.Block;
@@ -70,7 +70,7 @@ public class MotherlodeFeatures {
 	private static void addOre(Biome biome, Target canReplaceIn, Block block) {
 		DefaultOreBlock ore = (DefaultOreBlock) block;
 		biome.addFeature(GenerationStep.Feature.UNDERGROUND_ORES, Feature.ORE.configure(
-				new OreFeatureConfig(canReplaceIn, ore.getBlockInstance().getDefaultState(), ore.veinSize())).createDecoratedFeature(Decorator.COUNT_RANGE.configure(
+				new OreFeatureConfig(canReplaceIn, ore.getDefaultState(), ore.veinSize())).createDecoratedFeature(Decorator.COUNT_RANGE.configure(
 				new RangeDecoratorConfig(ore.veinsPerChunk(), ore.minY(), ore.minY(), ore.maxY()))));
 	}
 

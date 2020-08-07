@@ -2,328 +2,216 @@ package motherlode.core.registry;
 
 import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.Artifice;
-
-import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
+import static com.swordglowsblue.artifice.api.ArtificeResourcePack.ClientResourcePackBuilder;
+
 import motherlode.core.Motherlode;
-import motherlode.core.block.DefaultShovelableBlock;
-import motherlode.core.block.stateproperty.BlockDyeColor;
+import motherlode.core.api.BlockProperties;
+import motherlode.core.assets.BlockTint;
+import motherlode.core.assets.BlockModel;
+import motherlode.core.assets.ItemModel;
 import motherlode.core.block.PotBlock;
 import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.item.Item;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import java.util.Map;
+
+import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
 
-	public static void init() {
+	public static void init() {}
+
+    public static List<String> defaultStates = new ArrayList<>();
+    public static List<String> cutout = new ArrayList<>();
+    public static Map<String, Map.Entry<BlockModel, Boolean>> blockModels = new HashMap<>();
+    public static Map<String, ItemModel> itemModels = new HashMap<>();
+    public static Map<Block, BlockTint> blockTints = new HashMap<>();
+
+    public static void register(BlockProperties prop, String id, Block block) {
+        if (prop.defaultState) defaultStates.add(id);
+        if (prop.cutout) cutout.add(id);
+        if (prop.blockTint != null) blockTints.put(block, prop.blockTint);
+
+        blockModels.put(id, new AbstractMap.SimpleEntry<>(prop.blockModel, prop.blockModelBoolean));
+        itemModels.putIfAbsent(id, prop.itemModel);
     }
+
+    public static void clear() {
+        defaultStates = null;
+        blockModels = null;
+        itemModels = null;
+        cutout = null;
+        blockTints = null;
+    }
+
     public static void register(){
         Artifice.registerAssets(Motherlode.id("client_pack"), pack -> {
-            for(Block block : MotherlodeBlocks.defaultStateList) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addBlockState(Motherlode.id(blockId), state -> state 
-                    .variant("", settings -> settings
-                        .model(Motherlode.id("block/"+blockId))
-                    )
-                );
-            }
-            for(Block block : MotherlodeBlocks.defaultModelList) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addBlockModel(Motherlode.id(blockId), state -> state 
-                    .parent(new Identifier("block/cube_all"))
-                    .texture("all", Motherlode.id("block/"+blockId))
-                );
-            }
-            for(Block block : MotherlodeBlocks.defaultPlantModelList) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addBlockModel(Motherlode.id(blockId), state -> state
-                        .parent(new Identifier("block/tinted_cross"))
-                        .texture("cross", Motherlode.id("block/"+blockId))
-                );
-            }
-            for(Block block : MotherlodeBlocks.thickCrossModelList) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addBlockModel(Motherlode.id(blockId), state -> state
-                        .parent(Motherlode.id("block/thick_cross"))
-                        .texture("cross", Motherlode.id("block/"+blockId))
-                );
-            }
-            for(Block block : MotherlodeBlocks.defaultItemModelList) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addItemModel(Motherlode.id(blockId), state -> state 
-                    .parent(Motherlode.id("block/"+blockId))
-                );
-            }
-            for(Block block : MotherlodeBlocks.flatItemModelList.keySet()) {
-                String itemId = Registry.BLOCK.getId(block).getPath();
-                String texture = MotherlodeBlocks.flatItemModelList.get(block).get();
-                pack.addItemModel(Motherlode.id(itemId), state -> state
-                        .parent(new Identifier("item/generated"))
-                        .texture("layer0", Motherlode.id("block/"+texture))
-                );
-            }
-            for(Item item : MotherlodeItems.defaultItemModelList) {
-                String itemId = Registry.ITEM.getId(item).getPath();
-                pack.addItemModel(Motherlode.id(itemId), state -> state 
-                    .parent(new Identifier("item/generated"))
-                    .texture("layer0", Motherlode.id("item/"+itemId))
-                );
-            }
-            for(Item item : MotherlodeItems.handheldItemModelList) {
-                String itemId = Registry.ITEM.getId(item).getPath();
-                pack.addItemModel(Motherlode.id(itemId), state -> state
-                        .parent(new Identifier("item/handheld"))
-                        .texture("layer0", Motherlode.id("item/"+itemId))
+            for(String blockId : defaultStates) {
+                pack.addBlockState(Motherlode.id(blockId), state -> state
+                        .variant("", settings -> settings.model(Motherlode.id("block/" + blockId)))
                 );
             }
 
-            for (Map.Entry<SlabBlock,Boolean>  entry : MotherlodeBlocks.usesSlabModel.entrySet()) {
-                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
-                String texId = blockId.replace("_slab", "").replace("_pillar","_pillar_side");
-                String namespace = entry.getValue() ? "motherlode" : "minecraft";
-                for (String variant : new String[]{"_top",""}) {
-                    pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
-                            .parent(new Identifier("block/slab" + variant))
-                            .texture("top", new Identifier(namespace,"block/" + texId))
-                            .texture("bottom", new Identifier(namespace,"block/" + texId))
-                            .texture("side", new Identifier(namespace,"block/" + texId))
-                    );
-                }
-                pack.addBlockModel(Motherlode.id(blockId + "_double"), model -> model
-                        .parent(new Identifier("block/cube_column"))
-                        .texture("end", new Identifier(namespace,"block/" + texId))
-                        .texture("side", new Identifier(namespace,"block/" + texId))
-                );
-                pack.addBlockState(Motherlode.id(blockId), builder -> builder
-                    .variant("type=top", settings -> settings.model(Motherlode.id("block/" + blockId + "_top")))
-                    .variant("type=bottom", settings -> settings.model(Motherlode.id("block/" + blockId)))
-                    .variant("type=double", settings -> settings.model(Motherlode.id("block/" + blockId + "_double")))
-                );
-            }
+            for (Map.Entry<String, Map.Entry<BlockModel, Boolean>> entry : blockModels.entrySet())
+                entry.getValue().getKey().register(pack, entry.getKey(), entry.getValue().getValue());
 
-            for (Map.Entry<StairsBlock,Boolean>  entry : MotherlodeBlocks.usesStairModel.entrySet()) {
-                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
-                String texId = blockId.replace("_stairs", "");
-                String namespace = entry.getValue() ? "motherlode" : "minecraft";
-                for (int i = 0; i < 3; i++) {
-                    int ii = i;
-                    pack.addBlockModel(Motherlode.id(blockId + modelStrings[i]), model -> model
-                        .parent(new Identifier("block/" + (ii == 0? "" : ii == 1? "inner_" : "outer_") + "stairs"))
-                        .texture("top", new Identifier(namespace, "block/" + texId))
-                        .texture("bottom", new Identifier(namespace, "block/" + texId))
-                        .texture("side", new Identifier(namespace, "block/" + texId))
-                    );
-                }
-                pack.addBlockState(Motherlode.id(blockId), builder -> stairBlockState(builder,blockId));
-            }
+            for (Map.Entry<String, ItemModel> entry : itemModels.entrySet())
+                entry.getValue().register(pack,entry.getKey());
 
-            for(DefaultShovelableBlock block : MotherlodeBlocks.shovelableBlocks) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addBlockState(Motherlode.id(blockId), state -> {
-                    for (int i = 0; i < (block.isRotatable ? 4 : 1); i++) {
-                        int finalI = i;
-                        state.variant("shoveled=false", settings -> settings
-                                .model(Motherlode.id("block/" + blockId))
-                                .rotationY(finalI * 90)
-                        );
-                        state.variant("shoveled=true", settings -> settings
-                                .model(Motherlode.id("block/" + blockId + "_shoveled"))
-                                .rotationY(finalI * 90)
-                        );
-                    }
-                });
-                pack.addBlockModel(Motherlode.id(blockId), state -> state
-                        .parent(new Identifier("block/cube_all"))
-                        .texture("all", Motherlode.id("block/"+blockId))
-                );
-                pack.addBlockModel(Motherlode.id(blockId+"_shoveled"), state -> state
-                        .parent(Motherlode.id("block/cube_lowered"))
-                        .texture("top", Motherlode.id("block/"+blockId))
-                        .texture("side", Motherlode.id("block/"+blockId))
-                        .texture("bottom", Motherlode.id("block/"+blockId))
-                );
-            }
+            registerPotions(pack);
+            registerPots(pack);
+            registerRope(pack);
 
-            for (Block block : MotherlodeBlocks.usesPillarModel) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                for (String variant : new String[]{"","_horizontal"}) {
-                    pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
-                            .parent(new Identifier("block/cube_column" + variant))
-                            .texture("end", Motherlode.id("block/" + blockId + "_top"))
-                            .texture("side", Motherlode.id("block/" + blockId + "_side"))
-                    );
-                }
-                pack.addBlockState(Motherlode.id(blockId), builder -> builder
-                    .variant("axis=x", settings -> settings.model(Motherlode.id("block/" + blockId + "_horizontal")).rotationX(90).rotationY(90))
-                    .variant("axis=y", settings -> settings.model(Motherlode.id("block/" + blockId)))
-                    .variant("axis=z", settings -> settings.model(Motherlode.id("block/" + blockId + "_horizontal")).rotationX(90))
-                );
-            }
+        });
 
-            for(Block block : MotherlodeBlocks.usesPaintableModel) {
-                String blockId = Registry.BLOCK.getId(block).getPath();
-                pack.addBlockModel(Motherlode.id(blockId + "_base"), model -> model
-                        .parent(new Identifier("block/cube_all"))
-                        .texture("all", Motherlode.id("block/" + blockId + "_side"))
-                );
-                for (BlockDyeColor color : BlockDyeColor.values()) {
-                    pack.addBlockModel(Motherlode.id(blockId + "_" + color.asString()), model -> model
-                            .parent(Motherlode.id("block/paintable_face"))
-                            .texture("texture", Motherlode.id("block/" + blockId + "_" + color.asString()))
-                    );
-                }
-                pack.addBlockState(Motherlode.id(blockId), builder -> {
-                        builder.multipartCase(cases -> cases.apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_base"))));
-                        for (BlockDyeColor color : BlockDyeColor.values()) {
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
-                        }
-                    }
-                );
-            }
+        registerModelPredicateProviders();
 
-            for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
-                if (!info.useDefaultModel)
-                    pack.addItemModel(Motherlode.id("potions/" + info.model), (model) -> model
+        for (String id : cutout)
+            BlockRenderLayerMap.INSTANCE.putBlock(Registry.BLOCK.get(Motherlode.id(id)), RenderLayer.getCutout());
+
+        for (Map.Entry<Block, BlockTint> entry : blockTints.entrySet())
+            entry.getValue().register(entry.getKey());
+
+        ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
+
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
+                BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
+
+        clear();
+    }
+
+    private static void registerPotions(ClientResourcePackBuilder pack) {
+        for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
+            if (!info.useDefaultModel)
+                pack.addItemModel(Motherlode.id("potions/" + info.model), (model) -> model
                         .parent(new Identifier("item/generated"))
                         .texture("layer0", Motherlode.id("item/potions/" + info.model)));
-            }
+        }
 
-            pack.addItemModel(Motherlode.id("potions/default"), (model) -> model
+        pack.addItemModel(Motherlode.id("potions/default"), (model) -> model
                 .parent(new Identifier("item/generated"))
                 .texture("layer0", new Identifier("item/potion_overlay"))
                 .texture("layer1", new Identifier("item/potion")));
 
-            pack.addItemModel(new Identifier("potion"), (model) -> {
-                 model.parent(new Identifier("item/generated"));
-                 model.texture("layer0", new Identifier("item/potion"));
-                 model.texture("layer1", new Identifier("item/potion_overlay"));
+        pack.addItemModel(new Identifier("potion"), (model) -> {
+            model.parent(new Identifier("item/generated"));
+            model.texture("layer0", new Identifier("item/potion"));
+            model.texture("layer1", new Identifier("item/potion_overlay"));
 
-                 for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
-                     if (info.model == null || info.useDefaultModel)
-                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/default")) );
-                     else
-                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
+            for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
+                if (info.model == null || info.useDefaultModel)
+                    model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/default")) );
+                else
+                    model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
 
-                 }
-             });
-
-            pack.addBlockState(Motherlode.id("pot"), state -> {
-                for (int i = 0; i <= PotBlock.maxPattern; i++) {
-                    int ii = i;
-                    pack.addBlockModel(Motherlode.id("pot_with_overlay_" + i), model -> model
-                            .parent(Motherlode.id("block/pot"))
-                            .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
-                    );
-                    state.variant("pattern="+i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
-                }
-            });
-
-            pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
-                    .parent(Motherlode.id("block/pot"))
-                    .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
-
-                    .display("thirdperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
-                    .display("thirdperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
-                    .display("firstperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(2,2,-2))
-                    .display("firstperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(0,5,10))
-            );
-
-            pack.addItemModel(Motherlode.id("pot"), model -> {
-                for (int i = 0; i <= PotBlock.maxPattern; i++) {
-                    float pattern = i / 100F;
-                    int ii = i;
-                    model.override(override -> floatPredicate(override, "pot_pattern", pattern).model(Motherlode.id("item/pot_" + ii)));
-
-                    pack.addItemModel(Motherlode.id("pot_" + ii), model2 -> model2
-                       .parent(Motherlode.id("item/pot_template"))
-                       .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
-                    );
-
-                }
-            });
-
-            int[] stackCounts = new int[]{0,8,16,24,32,40,48,56,64};
-
-            for (int stackCount : stackCounts) {
-                pack.addItemModel(Motherlode.id("rope" + stackCount), builder -> builder
-                    .parent(new Identifier("item/generated"))
-                    .texture("layer0", Motherlode.id("item/rope/rope" + stackCount))
-                );
             }
-
-            pack.addItemModel(Motherlode.id("rope"), builder -> {
-                for (int stackCount : stackCounts)
-                    builder.override(override -> floatPredicate(override, "stack_count", stackCount / 100F).model(Motherlode.id("item/rope" + stackCount)));
-            });
-
-            pack.addBlockState(Motherlode.id("rope"), builder -> {
-                String[] directions = new String[]{"south", "west", "north", "east"};
-                for (int i = 0; i < directions.length; i++) {
-                    int ii = i;
-                    builder.variant("bottom=false,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii *90));
-                    builder.variant("bottom=true,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top_bottom")).rotationY(ii *90));
-                    builder.variant("bottom=false,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii *90));
-                    builder.variant("bottom=true,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side_bottom")).rotationY(ii *90));
-                }
-                builder.variant("bottom=false,connected=none", settings -> settings.model(Motherlode.id("block/rope")));
-                builder.variant("bottom=true,connected=none", settings -> settings.model(Motherlode.id("block/rope_bottom")));
-            });
-
         });
     }
+
+    private static void registerPots(ClientResourcePackBuilder pack) {
+        pack.addBlockState(Motherlode.id("pot"), state -> {
+            for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                int ii = i;
+                pack.addBlockModel(Motherlode.id("pot_with_overlay_" + i), model -> model
+                        .parent(Motherlode.id("block/pot"))
+                        .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                );
+                state.variant("pattern="+i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
+            }
+        });
+
+        pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
+                .parent(Motherlode.id("block/pot"))
+                .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
+
+                .display("thirdperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                .display("thirdperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(66F, 135F, 0F).translation(0,4,4))
+                .display("firstperson_righthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(2,2,-2))
+                .display("firstperson_lefthand", settings -> settings.scale(0.625F,0.625F,0.625F).rotation(0F, 135F, 0F).translation(0,5,10))
+        );
+
+        pack.addItemModel(Motherlode.id("pot"), model -> {
+            for (int i = 0; i <= PotBlock.maxPattern; i++) {
+                float pattern = i / 100F;
+                int ii = i;
+                model.override(override -> floatPredicate(override, "pot_pattern", pattern).model(Motherlode.id("item/pot_" + ii)));
+
+                pack.addItemModel(Motherlode.id("pot_" + ii), model2 -> model2
+                        .parent(Motherlode.id("item/pot_template"))
+                        .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                );
+
+            }
+        });
+    }
+
+    private static void registerRope(ClientResourcePackBuilder pack) {
+        int[] stackCounts = new int[]{0,8,16,24,32,40,48,56,64};
+
+        for (int stackCount : stackCounts) {
+            pack.addItemModel(Motherlode.id("rope" + stackCount), builder -> builder
+                    .parent(new Identifier("item/generated"))
+                    .texture("layer0", Motherlode.id("item/rope/rope" + stackCount))
+            );
+        }
+
+        pack.addItemModel(Motherlode.id("rope"), builder -> {
+            for (int stackCount : stackCounts)
+                builder.override(override -> floatPredicate(override, "stack_count", stackCount / 100F).model(Motherlode.id("item/rope" + stackCount)));
+        });
+
+        pack.addBlockState(Motherlode.id("rope"), builder -> {
+            String[] directions = new String[]{"south", "west", "north", "east"};
+            for (int i = 0; i < directions.length; i++) {
+                int ii = i;
+                builder.variant("bottom=false,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii *90));
+                builder.variant("bottom=true,connected=up,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_top_bottom")).rotationY(ii *90));
+                builder.variant("bottom=false,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii *90));
+                builder.variant("bottom=true,connected=side,facing="+directions[i], settings -> settings.model(Motherlode.id("block/rope_side_bottom")).rotationY(ii *90));
+            }
+            builder.variant("bottom=false,connected=none", settings -> settings.model(Motherlode.id("block/rope")));
+            builder.variant("bottom=true,connected=none", settings -> settings.model(Motherlode.id("block/rope_bottom")));
+        });
+    }
+
 
     private static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
 	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
 	    return override;
     }
 
+    private static void registerModelPredicateProviders() {
+        FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
+            MotherlodePotions.PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
+            return potion == null ? 1 : potion.predicateValue;
+        });
 
-    private static final String[] facings = new String[]{"east","north","south","west"};
-    private static final String[] halfs = new String[]{"bottom","top"};
-    private static final String[] shapes = new String[]{"inner_left","inner_right","outer_left","outer_right","straight"};
-    private static final String[] modelStrings = new String[]{"","_inner","_outer"};
+        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), ( itemStack,  _world,  _entity) -> itemStack.getCount() / 100F);
 
-    // models: 0 = "", 1 = "_inner", 2 = "_outer" | xs & ys: # = # * 90
-    private static final int[] models = new int[]{1,1,2,2,0,1,1,2,2,0};
-    private static final int[] xs = new int[]{0,0,0,0,0,2,2,2,2,2};
-    private static final int[] ys = new int[]{3,0,3,0,0,0,1,0,1,0,0,2,2,3,3,3,3,3,0,3,3,0,0,1,1,1,1,1,2,1,1,1,1,2,2,2,2,2,3,2};
+        FabricModelPredicateProviderRegistry.register(MotherlodeBlocks.POT.asItem(), new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
+            CompoundTag tag = itemStack.getTag();
+            if (tag == null || !tag.contains("BlockStateTag"))
+                return 0;
+            tag = tag.getCompound("BlockStateTag");
+            if (tag == null || !tag.contains("pattern"))
+                return 0;
 
-    private static void stairBlockState(BlockStateBuilder builder, String id) {
-        int i = 0;
-        for (String facing : facings) {
-            int j = 0;
-            for (String half : halfs) {
-                for (String shape : shapes) {
-                    int jj = j;
-                    int ii = i;
-                    builder.variant("facing="+facing+",half="+half+",shape="+shape, settings ->
-                        settings.model(Motherlode.id("block/"+id+modelStrings[models[jj]]))
-                            .rotationX(xs[jj]*90)
-                            .rotationY(ys[ii]*90)
-                            .uvlock(xs[jj] != 0 || ys[ii] != 0));
-                    i++;
-                    j++;
-                }
-            }
-        }
+            return Integer.parseInt(tag.getString("pattern")) / 100F;
+        });
     }
+
+
+
 }

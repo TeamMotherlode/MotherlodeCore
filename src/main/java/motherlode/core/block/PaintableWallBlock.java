@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
@@ -17,13 +16,11 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.Map;
 
-public class PaintableWallBlock extends DefaultBlock {
+public class PaintableWallBlock extends Block {
 
     public static final EnumProperty<BlockDyeColor> SIDE_A_COLOR;
     public static final EnumProperty<BlockDyeColor> SIDE_B_COLOR;
@@ -31,9 +28,8 @@ public class PaintableWallBlock extends DefaultBlock {
     private static final Map<Integer, Pair<Direction, Direction>> VARIANT_TO_DIRECTIONS = Maps.newHashMap();
 
     public PaintableWallBlock(Settings settings) {
-        super(false, false, false, true, settings);
+        super(settings);
         this.setDefaultState(getDefaultState().with(SIDE_A_COLOR, BlockDyeColor.UNCOLORED).with(SIDE_B_COLOR, BlockDyeColor.UNCOLORED).with(VARIANT, 0));
-        MotherlodeBlocks.usesPaintableModel.add(this);
     }
 
     @Override

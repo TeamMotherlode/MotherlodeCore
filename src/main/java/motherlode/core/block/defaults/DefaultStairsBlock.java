@@ -1,4 +1,4 @@
-package motherlode.core.block;
+package motherlode.core.block.defaults;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;

@@ -1,7 +1,7 @@
 package motherlode.core.item;
 
 import motherlode.core.Motherlode;
-import motherlode.core.registry.MotherlodeItems;
+import motherlode.core.assets.ItemModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
-import net.minecraft.util.registry.Registry;
+import static motherlode.core.registry.MotherlodeItems.register;
 
 public class MaterialToolsAndArmor {
 
@@ -27,23 +27,16 @@ public class MaterialToolsAndArmor {
     public final Item BOOTS;
 
     public MaterialToolsAndArmor(DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
-        this.AXE = register(true, toolMaterial.getName() + "_axe", new MaterialAxe(toolMaterial));
-        this.HOE = register(true, toolMaterial.getName() + "_hoe", new MaterialHoe(toolMaterial));
-        this.PICKAXE = register(true, toolMaterial.getName() + "_pickaxe", new MaterialPickaxe(toolMaterial));
-        this.SHOVEL = register(true, toolMaterial.getName() + "_shovel", new ShovelItem(toolMaterial, 1.5F, 3.0F, new Item.Settings().maxCount(1).group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.SWORD = register(true, toolMaterial.getName() + "_sword", new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.AXE = register(toolMaterial.getName() + "_axe", ItemModel.HANDHELD, new MaterialAxe(toolMaterial));
+        this.HOE = register(toolMaterial.getName() + "_hoe", ItemModel.HANDHELD, new MaterialHoe(toolMaterial));
+        this.PICKAXE = register(toolMaterial.getName() + "_pickaxe", ItemModel.HANDHELD, new MaterialPickaxe(toolMaterial));
+        this.SHOVEL = register(toolMaterial.getName() + "_shovel", ItemModel.HANDHELD, new ShovelItem(toolMaterial, 1.5F, 3.0F, new Item.Settings().maxCount(1).group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.SWORD = register(toolMaterial.getName() + "_sword", ItemModel.HANDHELD, new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(Motherlode.ARMOUR_AND_TOOLS)));
 
-        this.HELMET = register(false, toolMaterial.getName() + "_helmet", new ArmorItem(armorMaterial, EquipmentSlot.HEAD, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.CHESTPLATE = register(false, toolMaterial.getName() + "_chestplate", new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.LEGGINGS = register(false, toolMaterial.getName() + "_leggings", new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-        this.BOOTS = register(false, toolMaterial.getName() + "_boots", new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
-    }
-
-    private Item register(boolean tool, String id, Item item) {
-        Registry.register(Registry.ITEM, Motherlode.id(id), item);
-        if(tool) MotherlodeItems.handheldItemModelList.add(item);
-        else MotherlodeItems.defaultItemModelList.add(item);
-        return item;
+        this.HELMET = register(toolMaterial.getName() + "_helmet", ItemModel.DEFAULT, new ArmorItem(armorMaterial, EquipmentSlot.HEAD, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.CHESTPLATE = register(toolMaterial.getName() + "_chestplate", ItemModel.DEFAULT, new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.LEGGINGS = register(toolMaterial.getName() + "_leggings", ItemModel.DEFAULT, new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
+        this.BOOTS = register(toolMaterial.getName() + "_boots", ItemModel.DEFAULT, new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(Motherlode.ARMOUR_AND_TOOLS)));
     }
 
 }

@@ -2,77 +2,55 @@ package motherlode.core.registry;
 
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
+import motherlode.core.api.BlockProperties;
 import motherlode.core.block.*;
-import motherlode.core.block.DefaultPlantBlock;
+import motherlode.core.block.defaults.*;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import static motherlode.core.registry.MotherlodeBlockProperties.*;
 
+@SuppressWarnings("unused")
 public class MotherlodeBlocks {
-    public static final ArrayList<Block> defaultStateList = new ArrayList<>();
-    public static final ArrayList<Block> defaultRotatableStateList = new ArrayList<>();
-    public static final ArrayList<Block> defaultModelList = new ArrayList<>();
-    public static final ArrayList<Block> defaultPlantModelList = new ArrayList<>();
-    public static final ArrayList<Block> thickCrossModelList = new ArrayList<>();
-    public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
-    public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
-    public static final ArrayList<Block> defaultLootTableList = new ArrayList<>();
-    public static final Map<StairsBlock, Boolean> usesStairModel = new LinkedHashMap<>();
-    public static final Map<SlabBlock, Boolean> usesSlabModel = new LinkedHashMap<>();
-    public static final ArrayList<Block> usesPillarModel = new ArrayList<>();
-    public static final ArrayList<Block> usesPaintableModel = new ArrayList<>();
-    public static final ArrayList<DefaultShovelableBlock> shovelableBlocks = new ArrayList<>();
 
-    public static final ArrayList<Block> cutouts = new ArrayList<>();
-    public static final ArrayList<Block> grassColored = new ArrayList<>();
-    public static final ArrayList<Block> foliageColored = new ArrayList<>();
+    public static final Block COPPER_ORE = register("copper_ore", ORE(true), new DefaultOreBlock(3, 7, 12, 3, 11, 64, 1));
+    public static final Block SILVER_ORE = register("silver_ore", ORE(true), new DefaultOreBlock(2));
+    public static final Block CHARITE_ORE = register("charite_ore", ORE(false), new DefaultOreBlock(3));
+    public static final Block ECHERITE_ORE = register("echerite_ore", ORE(true), new DefaultOreBlock(4));
+    public static final Block TITANIUM_ORE = register("titanium_ore", ORE(true), new DefaultOreBlock(5));
+    public static final Block ADAMANTITE_ORE = register("adamantite_ore", ORE(true), new DefaultOreBlock(6));
+    public static final Block AMETHYST_ORE = register("amethyst_ore", ORE(false), new DefaultOreBlock(2));
+    public static final Block HOWLITE_ORE = register("howlite_ore", ORE(false), new DefaultOreBlock(2));
+    public static final Block RUBY_ORE = register("ruby_ore", ORE(false), new DefaultOreBlock(2));
+    public static final Block SAPPHIRE_ORE = register("sapphire_ore", ORE(false), new DefaultOreBlock(2));
+    public static final Block TOPAZ_ORE = register("topaz_ore", ORE(false), new DefaultOreBlock(2));
+    public static final Block ONYX_ORE = register("onyx_ore", ORE(false), new DefaultOreBlock(2));
 
-    public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, 1));
-    public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, 2));
-    public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(false, 3));
-    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, 4));
-    public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, 5));
-    public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, 6));
-    public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(false, 2));
-    public static final Block HOWLITE_ORE = register("howlite_ore", new DefaultOreBlock(false, 2));
-    public static final Block RUBY_ORE = register("ruby_ore", new DefaultOreBlock(false, 2));
-    public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(false, 2));
-    public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(false, 2));
-    public static final Block ONYX_ORE = register("onyx_ore", new DefaultOreBlock(false, 2));
+    public static final Block COPPER_BLOCK = register("copper_block", DEFAULT, BlockGenerator.mineral(1));
+    public static final Block SILVER_BLOCK = register("silver_block", DEFAULT, BlockGenerator.mineral(2));
+    public static final Block CHARITE_BLOCK = register("charite_block", DEFAULT, BlockGenerator.mineral(3));
+    public static final Block ECHERITE_BLOCK = register("echerite_block", DEFAULT, BlockGenerator.mineral(4));
+    public static final Block TITANIUM_BLOCK = register("titanium_block", DEFAULT, BlockGenerator.mineral(5));
+    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", DEFAULT, BlockGenerator.mineral(6));
+    public static final Block AMETHYST_BLOCK = register("amethyst_block", DEFAULT, BlockGenerator.mineral(2));
+    public static final Block HOWLITE_BLOCK = register("howlite_block", DEFAULT, BlockGenerator.mineral(2));
+    public static final Block RUBY_BLOCK = register("ruby_block", DEFAULT, BlockGenerator.mineral(2));
+    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", DEFAULT, BlockGenerator.mineral(2));
+    public static final Block TOPAZ_BLOCK = register("topaz_block", DEFAULT, BlockGenerator.mineral(2));
+    public static final Block ONYX_BLOCK = register("onyx_block", DEFAULT, BlockGenerator.mineral(2));
 
-    public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1));
-    public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2));
-    public static final Block CHARITE_BLOCK = register("charite_block", mineralBlock(3));
-    public static final Block ECHERITE_BLOCK = register("echerite_block", mineralBlock(4));
-    public static final Block TITANIUM_BLOCK = register("titanium_block", mineralBlock(5));
-    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", mineralBlock(6));
-    public static final Block AMETHYST_BLOCK = register("amethyst_block", mineralBlock(2));
-    public static final Block HOWLITE_BLOCK = register("howlite_block", mineralBlock(2));
-    public static final Block RUBY_BLOCK = register("ruby_block", mineralBlock(2));
-    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", mineralBlock(2));
-    public static final Block TOPAZ_BLOCK = register("topaz_block", mineralBlock(2));
-    public static final Block ONYX_BLOCK = register("onyx_block", mineralBlock(2));
-
-    public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
+    public static final Block MORTAR_BRICKS = register("mortar_bricks", PAINTABLE_WALL, new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
     public static final StoneBlocks LIMESTONE = StoneBlocks.newStone("limestone",false);
     public static final StoneBlocks GRAVESTONE = StoneBlocks.newStone("gravestone",true);
@@ -95,21 +73,16 @@ public class MotherlodeBlocks {
     public static final StoneBlocks BASALT = StoneBlocks.fromStone("basalt", null, Blocks.POLISHED_BASALT);
     public static final StoneBlocks SANDSTONE = StoneBlocks.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE);
 
-    public static final Block POT = register("pot", new PotBlock(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.GLASS).strength(2.0F, 2.0F)), (BlockItem) null);
-    public static final Item POT_ITEM = Registry.register(Registry.ITEM, Motherlode.id("pot"), new BlockItem(POT, new Item.Settings().group(Motherlode.ITEMS)));
-
-    public static final Block ROPE_BLOCK = register("rope", new RopeBlock(AbstractBlock.Settings.of(Material.PLANT)), (BlockItem) null);
-    public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(Motherlode.ITEMS)));
+    public static final Block POT = register("pot", MANUAL_CUTOUT(Motherlode.ITEMS), new PotBlock());
+    public static final Block ROPE = register("rope", MANUAL_CUTOUT(Motherlode.ITEMS), new RopeBlock());
   
-    public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(true, false, true, true, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)));
+    public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", MANUAL_MODEL, new RedstoneTransmitterBlock());
 
-    public static final Block SLIGHTLY_ROCKY_DIRT = register("slightly_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
-    public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
-    public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
+    public static final Block SLIGHTLY_ROCKY_DIRT = register("slightly_rocky_dirt", SHOVELABLE, BlockGenerator.rockyDirt());
+    public static final Block ROCKY_DIRT = register("rocky_dirt", SHOVELABLE, BlockGenerator.rockyDirt());
+    public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", SHOVELABLE, BlockGenerator.rockyDirt());
 
-    public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
-        defaultStateList.add(block);
-        defaultItemModelList.add(block);
+    public static final Block DIRT_PATH = register("dirt_path", MANUAL_MODEL, new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) ->
         UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
             BlockPos pos = hit.getBlockPos();
             if(player.getStackInHand(hand).getItem() instanceof ShovelItem && world.getBlockState(pos).getBlock() == Blocks.DIRT && world.getBlockState(pos.up()).isAir() && hit.getSide() != Direction.DOWN) {
@@ -118,64 +91,47 @@ public class MotherlodeBlocks {
                 return ActionResult.SUCCESS;
             }
             return ActionResult.PASS;
-        });
-    });
+        }));
 
-    public static final Block SPROUTS = register("sprouts", new DefaultPlantBlock(4, false, false, "sprouts_0", FabricBlockSettings.copy(Blocks.GRASS)));
-    public static final Block DRACAENA = register("dracaena", new DefaultPlantBlock(10, true, true, FabricBlockSettings.copy(Blocks.GRASS)));
-    public static final Block PHILODENDRON = register("philodendron", new DefaultPlantBlock(10, true, true, FabricBlockSettings.copy(Blocks.GRASS)));
+    public static final Block SPROUTS = register("sprouts", PLANT(false), new DefaultPlantBlock(4, "sprouts_0", FabricBlockSettings.copy(Blocks.GRASS)));
+    public static final Block DRACAENA = register("dracaena", PLANT(true), new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)));
+    public static final Block PHILODENDRON = register("philodendron", PLANT(true), new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)));
 
-    public static final Block MOSS = register("moss", new MossBlock(FabricBlockSettings.copy(Blocks.GRASS)));
+    public static final Block MOSS = register("moss", MANUAL_CUTOUT(Motherlode.BLOCKS), new MossBlock());
 
-    public static final Block WATERPLANT = register("waterplant", new WaterplantBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)));
-    public static final Block REEDS = register("reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "reeds"); });
-    public static final Block CATTAIL_REEDS = register("cattail_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "cattail_reeds"); });
-    public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "dry_reeds"); });
+    public static final Block WATERPLANT = register("waterplant", MANUAL_CUTOUT_LOOT_TABLE, new WaterplantBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)));
+    public static final Block REEDS = register("reeds", REED, new ReedsBlock());
+    public static final Block CATTAIL_REEDS = register("cattail_reeds", REED, new ReedsBlock());
+    public static final Block DRY_REEDS = register("dry_reeds", REED, new ReedsBlock());
+
+    public static final Block ACACIA_PLATFORM = register("acacia_platform", PLATFORM, BlockGenerator.platform());
+    public static final Block BIRCH_PLATFORM = register("birch_platform", PLATFORM, BlockGenerator.platform());
+    public static final Block DARK_OAK_PLATFORM = register("dark_oak_platform", PLATFORM, BlockGenerator.platform());
+    public static final Block JUNGLE_PLATFORM = register("jungle_platform", PLATFORM, BlockGenerator.platform());
+    public static final Block OAK_PLATFORM = register("oak_platform", PLATFORM, BlockGenerator.platform());
+    public static final Block SPRUCE_PLATFORM = register("spruce_platform", PLATFORM, BlockGenerator.platform());
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }
 
-    private static Block mineralBlock(int miningLevel) {
-        return new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel)); 
-    }
-    
-    static <T extends Block> T register(String name, T block, Item.Settings settings) {
-        return register(name, block, new BlockItem(block, settings));
+    public static <T extends Block> T register(String id, BlockProperties properties, T block, Processor<Block> processor) {
+        processor.accept(block);
+        return register(id, properties, block);
     }
 
-    public static <T extends Block> T register(String name, T block) {
-        return register(name, block, new Item.Settings().group(Motherlode.BLOCKS));
-    }
+    public static <T extends Block> T register(String id, BlockProperties properties, T block) {
+        T b = Registry.register(Registry.BLOCK, Motherlode.id(id), block);
 
-    public static <T extends Block> T register(String name, T block, Processor<T> p) {
-        p.accept(block);
-        return register(name, block, new Item.Settings().group(Motherlode.BLOCKS));
-    }
+        if (properties != null) {
+            if (Motherlode.isClient)
+                MotherlodeAssets.register(properties, id, b);
 
-    static <T extends Block> T register(String name, T block, Function<T, BlockItem> itemFactory) {
-        return register(name, block, itemFactory.apply(block));
-    }
+            if (properties.itemSettings != null)
+                Registry.register(Registry.ITEM, Motherlode.id(id), new BlockItem(b, properties.itemSettings));
 
-    static <T extends Block, J extends DefaultBlock> T register(String name, T block, BlockItem item) {
-        T b = Registry.register(Registry.BLOCK, Motherlode.id(name), block);
-        if (item != null) {
-            MotherlodeItems.register(name, item);
-        }
-        if (block instanceof DefaultBlock) {
-            DefaultBlock defaultBlock = (DefaultBlock)block;
-            if (defaultBlock.hasDefaultState()){
-                defaultStateList.add(defaultBlock);
-            }
-            if (defaultBlock.hasDefaultModel()){
-                defaultModelList.add(defaultBlock);
-            }
-            if (defaultBlock.hasDefaultItemModel()) {
-                defaultItemModelList.add(defaultBlock);
-            }
-            if (defaultBlock.hasDefaultLootTable()) {
-                defaultLootTableList.add(defaultBlock);
-            }
+            if (properties.defaultLootTable)
+                MotherlodeData.defaultLootTable.add(id);
         }
         return b;
     }

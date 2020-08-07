@@ -1,15 +1,20 @@
 package motherlode.core;
 
 import motherlode.core.registry.*;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
+import java.io.IOException;
+
 public class Motherlode implements ModInitializer {
-    private static final String MODID = "motherlode";
+    public static final String MODID = "motherlode";
+    public static final boolean isClient = FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
 
     @Override
     public void onInitialize() {
@@ -17,17 +22,19 @@ public class Motherlode implements ModInitializer {
         MotherlodeBlocks.init();
         MotherlodeItems.init();
         MotherlodeBlockEntities.init();
-        MotherlodeEnchantments.init();
         MotherlodeFeatures.init();
         MotherlodeStructures.init();
         MotherlodeBiomes.init();
         MotherlodeSounds.init();
-        MotherlodeFluids.init();
         MotherlodeTags.init();
         MotherlodeScreenHandlers.init();
         MotherlodePotions.init();
 
-        MotherlodeData.register();
+        try {
+            MotherlodeData.register();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         MotherlodeFeatures.register();
     }
 

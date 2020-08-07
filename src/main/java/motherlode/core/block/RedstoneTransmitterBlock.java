@@ -1,11 +1,9 @@
 package motherlode.core.block;
 
+import motherlode.core.block.defaults.DefaultShapedBlock;
 import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
 import motherlode.core.util.ShapeUtilities;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -24,22 +22,8 @@ public class RedstoneTransmitterBlock extends DefaultShapedBlock implements Bloc
     public static final Box REDSTONE_TRANSMITTER_TORCH_SHAPE = new Box(0, 0.5, 0, 2F / 16F, 1, 2F / 16F);
     public static final VoxelShape REDSTONE_TRANSMITTER_SHAPE = VoxelShapes.union(VoxelShapes.cuboid(0, 0, 0, 1, 0.5, 1), VoxelShapes.cuboid(REDSTONE_TRANSMITTER_TORCH_SHAPE), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.EAST), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.SOUTH), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.WEST));
 
-    public RedstoneTransmitterBlock(Settings settings) {
-        this(true, true, true, true, settings);
-    }
-
-    public RedstoneTransmitterBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, Settings settings) {
-        super(REDSTONE_TRANSMITTER_SHAPE, hasDefaultState, hasDefaultModel, hasDefaultItemModel, hasDefaultLootTable, settings);
-    }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return shape;
-    }
-
-    @Override
-    public Block getBlockInstance() {
-        return this;
+    public RedstoneTransmitterBlock() {
+        super(REDSTONE_TRANSMITTER_SHAPE, AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F));
     }
 
     @Override

@@ -2,8 +2,10 @@ package motherlode.core.block;
 
 import com.google.common.collect.Maps;
 import motherlode.core.registry.MotherlodeBlocks;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
@@ -24,10 +26,9 @@ public class MossBlock extends Block {
 
     private static final Map<Direction, VoxelShape> SHAPES = Maps.newHashMap();
 
-    public MossBlock(Settings settings) {
-        super(settings);
+    public MossBlock() {
+        super(FabricBlockSettings.copy(Blocks.GRASS));
         this.setDefaultState(getDefaultState().with(SIDE, Direction.DOWN));
-        MotherlodeBlocks.cutouts.add(this);
     }
 
     @Override

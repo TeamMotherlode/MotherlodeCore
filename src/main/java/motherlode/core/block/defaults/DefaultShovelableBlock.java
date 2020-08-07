@@ -1,6 +1,5 @@
-package motherlode.core.block;
+package motherlode.core.block.defaults;
 
-import motherlode.core.Motherlode;
 import motherlode.core.registry.MotherlodeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,16 +21,15 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class DefaultShovelableBlock extends DefaultBlock {
+public class DefaultShovelableBlock extends Block {
 
     public static final BooleanProperty SHOVELED;
     public final boolean isRotatable;
     private final SoundEvent shovelSound;
 
     public DefaultShovelableBlock(boolean rotatable, SoundEvent shovelSound, Settings settings) {
-        super(false, false, true, true, settings);
+        super(settings);
         this.setDefaultState(getDefaultState().with(SHOVELED, false));
-        MotherlodeBlocks.shovelableBlocks.add(this);
         this.isRotatable = rotatable;
         this.shovelSound = shovelSound;
     }
@@ -43,11 +41,6 @@ public class DefaultShovelableBlock extends DefaultBlock {
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return state.with(SHOVELED, world.getBlockState(pos).get(SHOVELED) && world.getBlockState(pos.up()).isAir());
-    }
-
-    @Override
-    public Block getBlockInstance() {
-        return this;
     }
 
     @Override

@@ -1,18 +1,15 @@
 package motherlode.core.block;
 
-import motherlode.core.Motherlode;
+import motherlode.core.api.BlockProperties;
+import motherlode.core.assets.BlockModel;
+import motherlode.core.block.defaults.DefaultStairsBlock;
+import motherlode.core.registry.MotherlodeBlockProperties;
 import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodeItems;
 import net.minecraft.block.*;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StoneBlocks {
 
@@ -75,30 +72,22 @@ public class StoneBlocks {
         for (Block block : ALL) {
             String id = Registry.BLOCK.getId(block).getPath() + "_stairs";
             if (!IGNORE.contains(id)) {
-                StairsBlock stairBlock = Registry.register(Registry.BLOCK,Motherlode.id(id), new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS));
+                boolean newStone = !Registry.BLOCK.getId(block).getNamespace().equals("minecraft");
+                StairsBlock stairBlock = MotherlodeBlocks.register(id, MotherlodeBlockProperties.STAIRS(newStone), new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS));
                 STAIRS.put(block, stairBlock);
-                MotherlodeItems.register(id, new BlockItem(stairBlock, new Item.Settings().group(Motherlode.BLOCKS)));
-                MotherlodeBlocks.usesStairModel.put(stairBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));
-                MotherlodeBlocks.defaultItemModelList.add(stairBlock);
             }
         }
 
-        PILLAR = pillar ? Registry.register(Registry.BLOCK,Motherlode.id(baseID + "_pillar"), new PillarBlock(BLOCK_SETTINGS)) : null;
-        if (pillar) {
-            MotherlodeItems.register(baseID + "_pillar", new BlockItem(PILLAR, new Item.Settings().group(Motherlode.BLOCKS)));
-            MotherlodeBlocks.usesPillarModel.add(PILLAR);
-            MotherlodeBlocks.defaultItemModelList.add(PILLAR);
+        PILLAR = pillar ? MotherlodeBlocks.register(baseID + "_pillar", MotherlodeBlockProperties.PILLAR, new PillarBlock(BLOCK_SETTINGS)) : null;
+        if (pillar)
             ALL.add(PILLAR);
-        }
 
         for (Block block : ALL) {
             String id = Registry.BLOCK.getId(block).getPath() + "_slab";
             if (!IGNORE.contains(id)) {
-                SlabBlock slabBlock = Registry.register(Registry.BLOCK,Motherlode.id(id), new SlabBlock(BLOCK_SETTINGS));
+                boolean newStone = !Registry.BLOCK.getId(block).getNamespace().equals("minecraft");
+                SlabBlock slabBlock = MotherlodeBlocks.register(id, MotherlodeBlockProperties.SLAB(newStone), new SlabBlock(BLOCK_SETTINGS));
                 SLABS.put(block, slabBlock);
-                MotherlodeItems.register(id, new BlockItem(slabBlock, new Item.Settings().group(Motherlode.BLOCKS)));
-                MotherlodeBlocks.usesSlabModel.put(slabBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));
-                MotherlodeBlocks.defaultItemModelList.add(slabBlock);
             }
         }
 
@@ -128,8 +117,16 @@ public class StoneBlocks {
         return variant < 'a' || variant > 'a' + CARVED.length ? null : CARVED[variant - 'a'];
     }
 
-    static DefaultBlock register(String id) {
-        return MotherlodeBlocks.register(id, new DefaultBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    static Block register(String id) {
+        return register(id, MotherlodeBlockProperties.DEFAULT);
+    }
+
+    static Block register(String id, BlockProperties prop) {
+        return MotherlodeBlocks.register(id, prop, new Block(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
+    }
+
+    private static AbstractMap.SimpleEntry<BlockModel, Boolean> model(BlockModel model, boolean bool) {
+        return new AbstractMap.SimpleEntry<>(model, bool);
     }
 
 }

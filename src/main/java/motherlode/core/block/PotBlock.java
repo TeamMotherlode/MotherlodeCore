@@ -2,11 +2,13 @@ package motherlode.core.block;
 
 import java.util.Random;
 
+import motherlode.core.block.defaults.DefaultShapedBlock;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
@@ -27,8 +29,8 @@ public class PotBlock extends DefaultShapedBlock {
     public static final EnumProperty<PotColor> COLOR = EnumProperty.of("color", PotColor.class);
 
 
-    public PotBlock(Settings settings) {
-        super(POT_SHAPE, false, false, false, false, settings);
+    public PotBlock() {
+        super(POT_SHAPE, FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.GLASS).strength(2.0F, 2.0F));
         this.setDefaultState(this.stateManager.getDefaultState().with(PATTERN, 0).with(COLOR, PotColor.WHITE));
     }
 

@@ -1,4 +1,4 @@
-package motherlode.core.block;
+package motherlode.core.block.defaults;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 import motherlode.core.api.OreProperties;
 
-public class DefaultOreBlock extends DefaultBlock implements OreProperties{
+public class DefaultOreBlock extends Block implements OreProperties{
     public final int minExperience;
     public final int maxExperience;
     public final int veinSize;
@@ -25,13 +25,12 @@ public class DefaultOreBlock extends DefaultBlock implements OreProperties{
     public final int maxY;
 
 
-    public DefaultOreBlock(boolean hasDefaultLootTable, int miningLevel) {
-        this(hasDefaultLootTable, 0, 0, 8, 1, 0, 50, miningLevel);
+    public DefaultOreBlock(int miningLevel) {
+        this(0, 0, 8, 1, 0, 50, miningLevel);
     }
     
-    public DefaultOreBlock(boolean hasDefaultLootTable, int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY,  int miningLevel) {
-        super(true, true, true, hasDefaultLootTable,
-                FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
+    public DefaultOreBlock(int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY,  int miningLevel) {
+        super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
 
         this.minExperience = minExperience;
         this.maxExperience = maxExperience;
@@ -59,11 +58,6 @@ public class DefaultOreBlock extends DefaultBlock implements OreProperties{
                 this.dropExperience(world, pos, i);
             }
         }
-    }
-
-    @Override
-    public Block getBlockInstance() {
-        return this;
     }
 
     @Override
