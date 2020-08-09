@@ -6,14 +6,15 @@
 	"defaultRequire": 1
   },
   "client": [
-	"potions.ModelPredicateProviderRegistryMixin"
+    "BackgroundRendererMixin"
   ],
   "mixins": [
-	"ServerWorldMixin",
-	"potions.BrewingRecipeRegistryMixin",
-	"potions.EntityMixin",
-	"potions.PotionEntityMixin",
-	"potions.PotionItemMixin",
-	"potions.PotionUtilsMixin"
+    "ServerWorldMixin",
+    "StructureFeatureAccessor",
+    "potions.BrewingRecipeRegistryMixin",
+    "potions.EntityMixin",
+    "potions.PotionEntityMixin",
+    "potions.PotionItemMixin",
+    "potions.PotionUtilsMixin"
   ]
 }

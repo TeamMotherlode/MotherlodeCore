@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "pattern=0": {
+            "model": "motherlode:block/pot_blank"
+        },
+        "pattern=1": {
+            "model": "motherlode:block/pot_overlay_1"
+        }
+    }
+}

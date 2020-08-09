@@ -4,8 +4,10 @@ import motherlode.core.Motherlode;
 import motherlode.core.MotherlodeMaterials;
 import motherlode.core.item.DefaultGemItem;
 import motherlode.core.item.DefaultItem;
+import motherlode.core.item.DefaultMusicDiscItem;
 import motherlode.core.item.MaterialToolsAndArmor;
 import net.minecraft.item.Item;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -15,13 +17,20 @@ import java.util.ArrayList;
 public class MotherlodeItems {
 
     public static final ArrayList<Item> defaultItemModelList = new ArrayList<>();
+    public static final ArrayList<Item> handheldItemModelList = new ArrayList<>();
 
     public static final Item COPPER_INGOT = register("copper_ingot", new DefaultItem(newSettings()));
+    public static final Item COPPER_NUGGET = register("copper_nugget", new DefaultItem(newSettings()));
     public static final Item SILVER_INGOT = register("silver_ingot", new DefaultItem(newSettings()));
+    public static final Item SILVER_NUGGET = register("silver_nugget", new DefaultItem(newSettings()));
     public static final Item CHARITE_CRYSTAL = register("charite_crystal", new DefaultItem(newSettings()));
+    public static final Item CHARITE_POWDER = register("charite_powder", new DefaultItem(newSettings()));
     public static final Item ECHERITE_INGOT = register("echerite_ingot", new DefaultItem(newSettings()));
+    public static final Item ECHERITE_NUGGET = register("echerite_nugget", new DefaultItem(newSettings()));
     public static final Item TITANIUM_INGOT = register("titanium_ingot", new DefaultItem(newSettings()));
+    public static final Item TITANIUM_NUGGET = register("titanium_nugget", new DefaultItem(newSettings()));
     public static final Item ADAMANTITE_INGOT = register("adamantite_ingot", new DefaultItem(newSettings()));
+    public static final Item ADAMANTITE_NUGGET = register("adamantite_nugget", new DefaultItem(newSettings()));
     public static final Item AMETHYST = register("amethyst", new DefaultGemItem(0xF989FF, newSettings()));
     public static final Item HOWLITE = register("howlite", new DefaultGemItem(0xFFFFFF, newSettings()));
     public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, newSettings()));
@@ -38,10 +47,15 @@ public class MotherlodeItems {
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
+        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.asItem());
     }
 
     static Item.Settings newSettings() {
         return new Item.Settings().group(Motherlode.ITEMS);
+    }
+
+    public static DefaultMusicDiscItem registerDisc(String name, SoundEvent soundEvent) {
+        return register(name, new DefaultMusicDiscItem(soundEvent));
     }
 
     public static <T extends Item> T register(String name, T item) {

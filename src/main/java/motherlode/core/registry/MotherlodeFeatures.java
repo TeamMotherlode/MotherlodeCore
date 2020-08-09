@@ -2,18 +2,20 @@ package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultOreBlock;
+import motherlode.core.world.feature.MarshFeature;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.block.Block;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.decorator.NoiseHeightmapDecoratorConfig;
+import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.Target;
+import net.minecraft.world.gen.placer.SimpleBlockPlacer;
+import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 
@@ -21,6 +23,9 @@ import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
  * @author Indigo Amann
  */
 public class MotherlodeFeatures {
+
+	public static final Feature<DefaultFeatureConfig> MARSH = register("marsh", new MarshFeature());
+
 	public static void init() {
 		// CALLED TO MAINTAIN REGISTRY ORDER
 	}
@@ -39,12 +44,16 @@ public class MotherlodeFeatures {
 	}
 
 	public static void addToBiome(Biome biome) {
-		if(biome.getCategory() == Category.NETHER){
+		Category category = biome.getCategory();
+		if(category == Category.PLAINS || category == Category.FOREST || category == Category.SAVANNA || category == Category.SWAMP || category == Category.TAIGA || category == Category.EXTREME_HILLS || category == Category.JUNGLE) {
+			biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
+		}
+		if(category == Category.NETHER){
 			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.CHARITE_ORE);
 			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.ECHERITE_ORE);
 			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.ADAMANTITE_ORE);
 		}
-		else if(biome.getCategory() == Category.THEEND){
+		else if(category == Category.THEEND){
 
 		}
 		else{
