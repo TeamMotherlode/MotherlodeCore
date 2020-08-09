@@ -28,7 +28,7 @@ public class MotherlodeClient implements ClientModInitializer {
 
 		// Sprite Registry
 		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register(((spriteAtlasTexture, registry) -> {
-			registry.register(Motherlode.id("block/diamond_block_mini"));
+			registry.register(Motherlode.id("block/transmitter_gem"));
 		}));
 	}
 }

@@ -28,7 +28,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     ArrayList<WSprite> gems = new ArrayList<>();
@@ -44,7 +43,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WPlainPanel panel = new WPlainPanel();
 
-        WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeTags.Items.GEMS)));
+        WItemSlot grid = WItemSlot.of(blockInventory, 0, 2, 2).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeTags.Items.GEMS)));
         panel.add(grid, 36, 17);
 
         WSprite transmitter = new WSprite(Motherlode.id("textures/gui/container/transmitter_disconnected.png"));
@@ -53,19 +52,19 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         World world = getWorld(context);
         BlockPos pos = getBlockPos(context);
 
-        AtomicBoolean isOn = new AtomicBoolean(world.getBlockState(pos).get(Properties.POWER) > 0);
+        boolean isOn = world.getBlockState(pos).get(Properties.POWER) > 0;
 
         currEntity = (RedstoneTransmitterBlockEntity) world.getBlockEntity(pos);
 
-        WSpriteButton transmitButton = new WSpriteButton(Motherlode.id(isOn.get() ? "textures/gui/container/transmitter_signal_on.png" : "textures/gui/container/transmitter_signal_off.png"));
-        transmitButton.setFocusedImage(Motherlode.id(isOn.get() ? "textures/gui/container/transmitter_signal_focused_on.png" : "textures/gui/container/transmitter_signal_focused_off.png"));
+        WSpriteButton transmitButton = new WSpriteButton(Motherlode.id(isOn ? "textures/gui/container/transmitter_signal_on.png" : "textures/gui/container/transmitter_signal_off.png"));
+        transmitButton.setFocusedImage(Motherlode.id(isOn ? "textures/gui/container/transmitter_signal_focused_on.png" : "textures/gui/container/transmitter_signal_focused_off.png"));
         if(currEntity.getReceiver()) {
-            transmitButton.setImage(getImage(false, isOn.get(), false));
-            transmitButton.setFocusedImage(getImage(true, isOn.get(), false));
+            transmitButton.setImage(getImage(false, isOn, false));
+            transmitButton.setFocusedImage(getImage(true, isOn, false));
             transmitButton.setTooltip(new LiteralText("Receiver"));
         } else {
-            transmitButton.setImage(getImage(false, isOn.get(), true));
-            transmitButton.setFocusedImage(getImage(true, isOn.get(), true));
+            transmitButton.setImage(getImage(false, isOn, true));
+            transmitButton.setFocusedImage(getImage(true, isOn, true));
             transmitButton.setTooltip(new LiteralText("Transmitter"));
         }
 
@@ -81,26 +80,26 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
             }
 
             if(currEntity.getReceiver()) {
-                transmitButton.setImage(getImage(false, isOn.get(), false));
-                transmitButton.setFocusedImage(getImage(true, isOn.get(), false));
+                transmitButton.setImage(getImage(false, isOn, false));
+                transmitButton.setFocusedImage(getImage(true, isOn, false));
                 transmitButton.setTooltip(new LiteralText("Receiver"));
             } else {
-                transmitButton.setImage(getImage(false, isOn.get(), true));
-                transmitButton.setFocusedImage(getImage(true, isOn.get(), true));
+                transmitButton.setImage(getImage(false, isOn, true));
+                transmitButton.setFocusedImage(getImage(true, isOn, true));
                 transmitButton.setTooltip(new LiteralText("Transmitter"));
             }
         });
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 4; i++) {
             WSprite gem = new WSprite(Motherlode.id("textures/gui/container/gem.png"));
-            panel.add(gem, 38 + (i * 18 - ((i / 3) * 54)), 21 + ((i / 3) * 18), 14, 11);
+            panel.add(gem, 38 + (i * 18 - ((i / 2) * 36)), 21 + ((i / 2) * 18), 14, 11);
             gems.add(gem);
 
             WSprite miniGemTop = new WSprite(Motherlode.id("textures/gui/container/white.png"));
-            panel.add(miniGemTop, 112 + (i * 4 - ((i / 3) * 12)), 20 + ((i / 3) * 4), 1, 1);
+            panel.add(miniGemTop, 120 - ((i % 2) * 8), 20 + ((i / 2) * 8), 1, 1);
 
             WSprite miniGemBottom = new WSprite(Motherlode.id("textures/gui/container/white.png"));
-            panel.add(miniGemBottom, 112 + (i * 4 - ((i / 3) * 12)), 59 + ((i / 3) * 4), 1, 1);
+            panel.add(miniGemBottom, 120 - ((i % 2) * 8), 59 + ((i / 2) * 8), 1, 1);
 
             miniGemsTop.add(miniGemTop);
             miniGemsBottom.add(miniGemBottom);

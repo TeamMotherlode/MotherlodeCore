@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -35,10 +36,11 @@ public class RedstoneTransmitterBlock extends DefaultShapedBlock implements Bloc
 	public static final VoxelShape REDSTONE_TRANSMITTER_SHAPE = VoxelShapes.union(VoxelShapes.cuboid(0, 0, 0, 1, 0.5, 1), VoxelShapes.cuboid(REDSTONE_TRANSMITTER_TORCH_SHAPE), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.EAST), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.SOUTH), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.WEST));
 
 	public static final IntProperty POWER = Properties.POWER;
+	public static final BooleanProperty RECEIVER = BooleanProperty.of("receiver");
 
 	public RedstoneTransmitterBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, Settings settings) {
 		super(REDSTONE_TRANSMITTER_SHAPE, hasDefaultState, hasDefaultModel, hasDefaultItemModel, hasDefaultLootTable, settings);
-		this.setDefaultState(this.getDefaultState().with(POWER, 0));
+		this.setDefaultState(this.getDefaultState().with(POWER, 0).with(RECEIVER, false));
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class RedstoneTransmitterBlock extends DefaultShapedBlock implements Bloc
 
 	@Override
 	public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-		return state.get(POWER);
+		return state.get(RECEIVER) ? state.get(POWER) : 0;
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class RedstoneTransmitterBlock extends DefaultShapedBlock implements Bloc
 
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-		builder.add(POWER);
+		builder.add(POWER).add(RECEIVER);
 	}
 
 	@Override
