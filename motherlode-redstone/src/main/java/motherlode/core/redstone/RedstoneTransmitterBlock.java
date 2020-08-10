@@ -1,6 +1,6 @@
-package motherlode.core.block;
+package motherlode.core.redstone;
 
-import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
+import motherlode.core.block.DefaultShapedBlock;
 import motherlode.core.util.ShapeUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;

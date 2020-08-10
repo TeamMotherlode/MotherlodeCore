@@ -1,4 +1,4 @@
-package motherlode.core.gui;
+package motherlode.core.redstone.gui;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
@@ -24,7 +24,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     ArrayList<WSprite> miniGemsBottom = new ArrayList<>();
 
     public RedstoneTransmitterGuiDescription(int syncId, PlayerInventory inventory, ScreenHandlerContext context) {
-        super(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, syncId, inventory, getBlockInventory(context), getBlockPropertyDelegate(context));
+        super(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, syncId, inventory, SyncedGuiDescription.getBlockInventory(context), SyncedGuiDescription.getBlockPropertyDelegate(context));
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);

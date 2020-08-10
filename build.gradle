@@ -36,19 +36,18 @@ allprojects {
         artifacts {
             dev file: file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar"), type: "jar", builtBy: remapJar
         }
+        processResources {
 
-    }
-    processResources {
+            inputs.property "version", project.version
 
-        inputs.property "version", project.version
+            from(sourceSets.main.resources.srcDirs) {
+                include "fabric.mod.json"
+                expand "version": project.version
+            }
 
-        from(sourceSets.main.resources.srcDirs) {
-            include "fabric.mod.json"
-            expand "version": project.version
-        }
-
-        from(sourceSets.main.resources.srcDirs) {
-            exclude "fabric.mod.json"
+            from(sourceSets.main.resources.srcDirs) {
+                exclude "fabric.mod.json"
+            }
         }
     }
     task sourcesJar(type: Jar, dependsOn: classes) {

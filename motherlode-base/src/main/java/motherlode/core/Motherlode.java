@@ -16,7 +16,6 @@ public class Motherlode implements ModInitializer {
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
         MotherlodeItems.init();
-        MotherlodeBlockEntities.init();
         MotherlodeEnchantments.init();
         MotherlodeFeatures.init();
         MotherlodeStructures.init();
@@ -24,7 +23,6 @@ public class Motherlode implements ModInitializer {
         MotherlodeSounds.init();
         MotherlodeFluids.init();
         MotherlodeTags.init();
-        MotherlodeScreenHandlers.init();
 
         MotherlodeData.register();
         MotherlodeFeatures.register();

@@ -1,7 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
-import motherlode.core.gui.RedstoneTransmitterGuiDescription;
+import motherlode.core.redstone.gui.RedstoneTransmitterGuiDescription;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;

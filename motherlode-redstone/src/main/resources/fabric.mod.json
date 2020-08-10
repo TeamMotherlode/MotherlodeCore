@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-redstone",
+  "version": "${version}",
+
+  "name": "Motherlode Redstone",
+  "description": "",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore"
+  },
+
+  "license": "MIT License",
+  "icon": "assets/motherlode/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.core.redstone.MotherlodeRedstoneMod"
+    ],
+    "client": [
+      "motherlode.core.redstone.MotherlodeRedstoneClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-redstone.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

@@ -12,3 +12,4 @@ rootProject.name = "MotherlodeCore"
 
 include 'motherlode-base'
 include 'motherlode-potions'
+include 'motherlode-redstone'

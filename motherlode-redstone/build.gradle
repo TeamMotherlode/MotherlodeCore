@@ -1,0 +1,16 @@
+version = "1.0.0+$rootProject.minecraft_version"
+
+repositories {
+    maven {
+        name = "CottonMC"
+        url = "https://server.bbkr.space/artifactory/libs-release"
+    }
+}
+dependencies {
+
+    modCompile project(path: ":motherlode-base", configuration: "dev")
+    modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
+
+    modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
+    include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
+}
