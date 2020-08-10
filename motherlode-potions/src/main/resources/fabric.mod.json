@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-potions",
+  "version": "${version}",
+
+  "name": "Motherlode Potions",
+  "description": "",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore"
+  },
+
+  "license": "MIT License",
+  "icon": "assets/motherlode/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.core.potions.MotherlodePotionsMod"
+    ],
+    "client": [
+      "motherlode.core.potions.MotherlodePotionsClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-potions.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

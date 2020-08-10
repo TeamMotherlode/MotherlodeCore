@@ -11,3 +11,4 @@ pluginManagement {
 rootProject.name = "MotherlodeCore"
 
 include 'motherlode-base'
+include 'motherlode-potions'

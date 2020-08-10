@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "motherlode.core.potions.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+  ],
+  "mixins": [
+    "BrewingRecipeRegistryMixin",
+    "EntityMixin",
+    "PotionEntityMixin",
+    "PotionItemMixin",
+    "PotionUtilsMixin"
+  ]
+}

@@ -9,11 +9,6 @@
     "BackgroundRendererMixin"
   ],
   "mixins": [
-    "StructureFeatureAccessor",
-    "potions.BrewingRecipeRegistryMixin",
-    "potions.EntityMixin",
-    "potions.PotionEntityMixin",
-    "potions.PotionItemMixin",
-    "potions.PotionUtilsMixin"
+    "StructureFeatureAccessor"
   ]
 }

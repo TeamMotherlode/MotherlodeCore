@@ -2,14 +2,12 @@ package motherlode.core.registry;
 
 import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.Artifice;
-
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultShovelableBlock;
-import motherlode.core.block.stateproperty.BlockDyeColor;
 import motherlode.core.block.PotBlock;
-import motherlode.core.registry.MotherlodePotions.PotionModelInfo;
+import motherlode.core.block.stateproperty.BlockDyeColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -18,6 +16,7 @@ import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
@@ -200,32 +199,6 @@ public class MotherlodeAssets {
                 );
             }
 
-            for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
-                if (!info.useDefaultModel)
-                    pack.addItemModel(Motherlode.id("potions/" + info.model), (model) -> model
-                        .parent(new Identifier("item/generated"))
-                        .texture("layer0", Motherlode.id("item/potions/" + info.model)));
-            }
-
-            pack.addItemModel(Motherlode.id("potions/default"), (model) -> model
-                .parent(new Identifier("item/generated"))
-                .texture("layer0", new Identifier("item/potion_overlay"))
-                .texture("layer1", new Identifier("item/potion")));
-
-            pack.addItemModel(new Identifier("potion"), (model) -> {
-                 model.parent(new Identifier("item/generated"));
-                 model.texture("layer0", new Identifier("item/potion"));
-                 model.texture("layer1", new Identifier("item/potion_overlay"));
-
-                 for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
-                     if (info.model == null || info.useDefaultModel)
-                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/default")) );
-                     else
-                         model.override( override -> floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id("item/potions/" + info.model)) );
-
-                 }
-             });
-
             pack.addBlockState(Motherlode.id("pot"), state -> {
                 for (int i = 0; i <= PotBlock.maxPattern; i++) {
                     int ii = i;
@@ -291,7 +264,7 @@ public class MotherlodeAssets {
         });
     }
 
-    private static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
+    public static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
 	    override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
 	    return override;
     }

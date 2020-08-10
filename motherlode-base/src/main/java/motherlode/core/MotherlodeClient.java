@@ -1,12 +1,10 @@
 package motherlode.core;
 
 import motherlode.core.block.PotBlock;
-import motherlode.core.block.PotColor;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.gui.RedstoneTransmitterScreen;
 import motherlode.core.registry.MotherlodeAssets;
 import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodePotions;
 import motherlode.core.registry.MotherlodeScreenHandlers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -19,14 +17,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.resource.GrassColormapResourceSupplier;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.BlockRenderView;
-import net.minecraft.world.level.ColorResolver;
-import net.minecraft.client.render.RenderLayer;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeClient implements ClientModInitializer {
@@ -53,11 +45,6 @@ public class MotherlodeClient implements ClientModInitializer {
 		}
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
 			BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
-
-		FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
-			MotherlodePotions.PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
-			return potion == null ? 1 : potion.predicateValue;
-		});
 
 		FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), ( itemStack,  _world,  _entity) -> itemStack.getCount() / 100F);
 

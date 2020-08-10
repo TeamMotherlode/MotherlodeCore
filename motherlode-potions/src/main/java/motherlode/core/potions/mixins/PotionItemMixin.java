@@ -1,5 +1,6 @@
-package motherlode.core.mixins.potions;
+package motherlode.core.potions.mixins;
 
+import com.sun.scenario.Settings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
