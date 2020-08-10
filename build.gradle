@@ -1,76 +1,51 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
-	id 'maven-publish'
+    id 'fabric-loom' version '0.4-SNAPSHOT' apply false
+    id 'maven-publish'
 }
+version = "${project.mod_version}+${project.minecraft_version}"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version+ "+" +project.minecraft_version
-group = project.maven_group
+allprojects {
 
-repositories {
-	maven {
-		name = "CottonMC"
-		url = "https://server.bbkr.space/artifactory/libs-release"
-	}
-    jcenter()
-}
+    apply plugin: 'fabric-loom'
+    apply plugin: 'maven-publish'
 
-minecraft {
-}
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
-dependencies {
-    minecraft "com.mojang:minecraft:1.16.1"
-    mappings "net.fabricmc:yarn:1.16.1+build.1:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.8.8+build.202"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.13.1+build.370-1.16"
+    group = project.maven_group
 
-	modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
-	include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
+    dependencies {
+        minecraft "com.mojang:minecraft:${project.minecraft_version}"
+        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
-	include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
-}
-processResources {
-	inputs.property "version", project.version
+        modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	from(sourceSets.main.resources.srcDirs) {
-		include "fabric.mod.json"
-		expand "version": project.version
-	}
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
-	}
-}
+        repositories {
+            jcenter()
+        }
+        jar {
+            from "LICENSE"
+        }
+        processResources {
+            inputs.property "version", project.version
 
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-}
+            from(sourceSets.main.resources.srcDirs) {
+                include "fabric.mod.json"
+                expand "version": project.version
+            }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
-	from sourceSets.main.allSource
-
-}
-
-jar {
-	from "LICENSE"
-}
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	repositories {
-	}
+            from(sourceSets.main.resources.srcDirs) {
+                exclude "fabric.mod.json"
+            }
+        }
+        task sourcesJar(type: Jar, dependsOn: classes) {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+        tasks.withType(JavaCompile) {
+            options.encoding = "UTF-8"
+        }
+    }
 }
