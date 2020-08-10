@@ -1,17 +1,14 @@
 plugins {
     id 'fabric-loom' version '0.4-SNAPSHOT' apply false
-    id 'maven-publish'
 }
 version = "${project.mod_version}+${project.minecraft_version}"
-
 
 allprojects {
 
     apply plugin: 'fabric-loom'
-    apply plugin: 'maven-publish'
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     group = project.maven_group
 
@@ -21,33 +18,52 @@ allprojects {
         modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
         modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    }
+    configurations {
+        dev
+    }
+    repositories {
+        jcenter()
+    }
+    jar {
+        classifier = "dev"
+    }
+    afterEvaluate {
+        remapJar {
+            input = file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar")
+            archiveName = "${archivesBaseName}-${version}.jar"
+        }
+        artifacts {
+            dev file: file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar"), type: "jar", builtBy: remapJar
+        }
 
-        repositories {
-            jcenter()
-        }
-        jar {
-            from "LICENSE"
-        }
-        afterEvaluate {
-            processResources {
-                inputs.property "version", project.version
+    }
+    processResources {
 
-                from(sourceSets.main.resources.srcDirs) {
-                    include "fabric.mod.json"
-                    expand "version": project.version
-                }
+        inputs.property "version", project.version
 
-                from(sourceSets.main.resources.srcDirs) {
-                    exclude "fabric.mod.json"
-                }
-            }
+        from(sourceSets.main.resources.srcDirs) {
+            include "fabric.mod.json"
+            expand "version": project.version
         }
-        task sourcesJar(type: Jar, dependsOn: classes) {
-            classifier = 'sources'
-            from sourceSets.main.allSource
+
+        from(sourceSets.main.resources.srcDirs) {
+            exclude "fabric.mod.json"
         }
-        tasks.withType(JavaCompile) {
-            options.encoding = "UTF-8"
+    }
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+}
+jar {
+    from "LICENSE"
+}
+dependencies {
+    afterEvaluate {
+        subprojects.each {
+            compile project(path: ":${it.name}", configuration: "dev")
+            include project(":${it.name}")
         }
     }
 }

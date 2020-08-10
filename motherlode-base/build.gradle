@@ -1,5 +1,4 @@
-archivesBaseName = "motherlode-base"
-version = "0.1.3"
+version = "0.1.3+$rootProject.minecraft_version"
 
 repositories {
     maven {
