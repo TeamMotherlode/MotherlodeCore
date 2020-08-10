@@ -28,16 +28,18 @@ allprojects {
         jar {
             from "LICENSE"
         }
-        processResources {
-            inputs.property "version", project.version
+        afterEvaluate {
+            processResources {
+                inputs.property "version", project.version
 
-            from(sourceSets.main.resources.srcDirs) {
-                include "fabric.mod.json"
-                expand "version": project.version
-            }
+                from(sourceSets.main.resources.srcDirs) {
+                    include "fabric.mod.json"
+                    expand "version": project.version
+                }
 
-            from(sourceSets.main.resources.srcDirs) {
-                exclude "fabric.mod.json"
+                from(sourceSets.main.resources.srcDirs) {
+                    exclude "fabric.mod.json"
+                }
             }
         }
         task sourcesJar(type: Jar, dependsOn: classes) {

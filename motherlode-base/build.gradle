@@ -1,6 +1,12 @@
 archivesBaseName = "motherlode-base"
 version = "0.1.3"
 
+repositories {
+    maven {
+        name = "CottonMC"
+        url = "https://server.bbkr.space/artifactory/libs-release"
+    }
+}
 dependencies {
     modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
     include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
