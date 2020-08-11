@@ -10,6 +10,7 @@
   ],
   "mixins": [
     "StructureFeatureAccessor",
+    "ServerWorldMixin",
     "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
     "potions.PotionEntityMixin",
