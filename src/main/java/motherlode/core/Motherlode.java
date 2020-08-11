@@ -39,6 +39,7 @@ public class Motherlode implements ModInitializer {
 
         MotherlodeData.register();
         MotherlodeFeatures.register();
+        MotherlodeSpreadRecipes.register();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
