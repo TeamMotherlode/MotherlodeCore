@@ -11,6 +11,7 @@
   "mixins": [
     "StructureFeatureAccessor",
     "ServerWorldMixin",
+    "ThreadedAnvilChunkStorageMixin",
     "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
     "potions.PotionEntityMixin",
