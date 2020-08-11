@@ -1,6 +1,12 @@
 package motherlode.core;
 
+import motherlode.core.enderinvasion.EnderInvasionComponent;
+import motherlode.core.enderinvasion.EnderInvasionComponentImpl;
+import motherlode.core.enderinvasion.EnderInvasionState;
 import motherlode.core.registry.*;
+import nerdhub.cardinal.components.api.ComponentRegistry;
+import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -11,8 +17,12 @@ import net.minecraft.util.Identifier;
 public class Motherlode implements ModInitializer {
     private static final String MODID = "motherlode";
 
+
+
     @Override
     public void onInitialize() {
+
+        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(ENDER_INVASION_STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
         MotherlodeItems.init();
@@ -46,6 +56,9 @@ public class Motherlode implements ModInitializer {
     public static final ItemGroup MUSIC = FabricItemGroupBuilder.create( id("music"))
             .icon(() -> new ItemStack(Items.MUSIC_DISC_CAT))
             .build();
+
+    public static final ComponentType<EnderInvasionComponent> ENDER_INVASION_STATE =
+            ComponentRegistry.INSTANCE.registerIfAbsent(id("state"), EnderInvasionComponent.class);
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);

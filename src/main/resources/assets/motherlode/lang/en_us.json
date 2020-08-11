@@ -238,5 +238,7 @@
     "item.motherlode.adamantite_helmet": "Adamantite Helmet",
     "item.motherlode.adamantite_chestplate": "Adamantite Chestplate",
     "item.motherlode.adamantite_leggings": "Adamantite Leggings",
-    "item.motherlode.adamantite_boots": "Adamantite Boots"
+    "item.motherlode.adamantite_boots": "Adamantite Boots",
+
+    "enderinvasion.motherlode.start": "The ender invasion has begun ..."
 }

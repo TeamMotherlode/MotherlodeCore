@@ -3,7 +3,6 @@ package motherlode.core.registry;
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
 import motherlode.core.block.*;
-import motherlode.core.block.DefaultPlantBlock;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -17,7 +16,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class MotherlodeBlocks {
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, 1));
     public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, 2));
     public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(false, 3));
-    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, 4));
+    public static final Block ECHERITE_ORE = register("echerite_ore", new EcheriteOreBlock(true, 4));
     public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, 5));
     public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, 6));
     public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(false, 2));
