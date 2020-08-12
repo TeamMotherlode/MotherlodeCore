@@ -129,7 +129,11 @@ public class StoneBlocks {
     }
 
     static DefaultBlock register(String id) {
-        return MotherlodeBlocks.register(id, new DefaultBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F)));
-    }
 
+        DefaultBlock b = new DefaultBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F));
+        Registry.register(Registry.BLOCK, Motherlode.id(id), b);
+        MotherlodeItems.register(id, new BlockItem(b, new Item.Settings().group(Motherlode.BLOCKS)));
+
+        return b;
+    }
 }

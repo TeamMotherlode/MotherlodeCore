@@ -21,9 +21,9 @@ public class MotherlodeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		MotherlodeAssets.register();
-    	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
-		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
+    	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE.get(), RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT.get(), RenderLayer.getTranslucent());
+		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT.get());
 		
     		for(Block block : MotherlodeBlocks.cutouts) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
@@ -39,11 +39,11 @@ public class MotherlodeClient implements ClientModInitializer {
 			ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getDefaultColor(), block);
 		}
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-			BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
+			BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT.get());
 
 		FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), ( itemStack,  _world,  _entity) -> itemStack.getCount() / 100F);
 
-		FabricModelPredicateProviderRegistry.register(MotherlodeBlocks.POT_ITEM, new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
+		FabricModelPredicateProviderRegistry.register(MotherlodeBlocks.POT.getItem(), new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
 			CompoundTag tag = itemStack.getTag();
 			if (tag == null || !tag.contains("BlockStateTag"))
 				return 0;

@@ -29,7 +29,7 @@ public class Motherlode implements ModInitializer {
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
-		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE))
+		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE.getItem()))
 		.build();
 
     public static final ItemGroup ITEMS = FabricItemGroupBuilder.create( id("items"))
@@ -44,7 +44,8 @@ public class Motherlode implements ModInitializer {
             .icon(() -> new ItemStack(Items.MUSIC_DISC_CAT))
             .build();
 
+    public static Identifier id(String namespace, String name) { return new Identifier(namespace, name); }
     public static Identifier id(String name) {
-        return new Identifier(MODID, name);
+        return id(MODID, name);
     }
 }

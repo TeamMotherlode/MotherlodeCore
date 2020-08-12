@@ -17,10 +17,14 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
+
+    public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
 
 	public static void init() {
     }
@@ -61,9 +65,9 @@ public class MotherlodeAssets {
                     .parent(Motherlode.id("block/"+blockId))
                 );
             }
-            for(Block block : MotherlodeBlocks.flatItemModelList.keySet()) {
+            for(Block block : flatItemModelList.keySet()) {
                 String itemId = Registry.BLOCK.getId(block).getPath();
-                String texture = MotherlodeBlocks.flatItemModelList.get(block).get();
+                String texture = flatItemModelList.get(block).get();
                 pack.addItemModel(Motherlode.id(itemId), state -> state
                         .parent(new Identifier("item/generated"))
                         .texture("layer0", Motherlode.id("block/"+texture))
