@@ -8,6 +8,7 @@ import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
 import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -21,8 +22,7 @@ public class Motherlode implements ModInitializer {
     @Override
     public void onInitialize() {
 
-        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(ENDER_INVASION_STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
-        ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(ENDER_INVASION_CHUNK_STATE, new EnderInvasionChunkComponentImpl(EnderInvasionChunkState.PRE_ECHERITE)));
+        initializeEnderInvasion();
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
         MotherlodeItems.init();
@@ -40,6 +40,13 @@ public class Motherlode implements ModInitializer {
         MotherlodeData.register();
         MotherlodeFeatures.register();
         MotherlodeSpreadRecipes.register();
+    }
+    private  void initializeEnderInvasion() {
+
+        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(ENDER_INVASION_STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
+        ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(ENDER_INVASION_CHUNK_STATE, new EnderInvasionChunkComponentImpl(EnderInvasionChunkState.PRE_ECHERITE)));
+
+        ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionUtil::convertChunk);
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
