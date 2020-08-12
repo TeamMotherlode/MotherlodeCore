@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-building-blocks",
+  "version": "${version}",
+
+  "name": "Motherlode Building Blocks",
+  "description": "",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-building-blocks"
+  },
+
+  "license": "MIT License",
+  "icon": "assets/motherlode/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.core.buildingblocks.MotherlodeBuildingBlocksMod"
+    ],
+    "client": [
+      "motherlode.core.buildingblocks.MotherlodeBuildingBlocksClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-building-blocks.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

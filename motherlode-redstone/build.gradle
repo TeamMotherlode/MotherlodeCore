@@ -1,4 +1,4 @@
-version = "1.0.0+$rootProject.minecraft_version"
+version = "1.0.0+$project.minecraft_version"
 
 repositories {
     maven {

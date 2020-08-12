@@ -3,5 +3,4 @@ version = "1.0.0+$project.minecraft_version"
 dependencies {
 
     modCompile project(path: ":motherlode-base", configuration: "dev")
-    modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 }
