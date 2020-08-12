@@ -1,7 +1,5 @@
 package motherlode.core.registry;
 
-import java.util.ArrayList;
-
 import motherlode.core.Motherlode;
 import motherlode.core.MotherlodeMaterials;
 import motherlode.core.item.DefaultGemItem;
@@ -11,6 +9,8 @@ import motherlode.core.item.MaterialToolsAndArmor;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayList;
 
 public class MotherlodeItems {
 
@@ -45,7 +45,7 @@ public class MotherlodeItems {
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
-        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.asItem());
+        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.getItem());
     }
 
     static Item.Settings newSettings() {

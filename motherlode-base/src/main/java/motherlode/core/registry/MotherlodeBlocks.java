@@ -35,7 +35,7 @@ public enum MotherlodeBlocks {
     AMETHYST_ORE("amethyst_ore", new DefaultOreBlock(false, 2)),
     HOWLITE_ORE("howlite_ore", new DefaultOreBlock(false, 2)),
     RUBY_ORE("ruby_ore", new DefaultOreBlock(false, 2)),
-    SAPPHIRE_OREr("sapphire_ore", new DefaultOreBlock(false, 2)),
+    SAPPHIRE_ORE("sapphire_ore", new DefaultOreBlock(false, 2)),
     TOPAZ_ORE("topaz_ore", new DefaultOreBlock(false, 2)),
     ONYX_ORE("onyx_ore", new DefaultOreBlock(false, 2)),
     

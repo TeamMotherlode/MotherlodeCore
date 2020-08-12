@@ -1,21 +1,21 @@
 package motherlode.core.block;
 
 import motherlode.core.api.ArtificeProperties;
+import motherlode.core.registry.MotherlodeAssets;
 import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodeItems;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.PlantBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -29,7 +29,7 @@ public class DefaultPlantBlock extends PlantBlock implements ArtificeProperties 
         if(useDefaultModel) MotherlodeBlocks.defaultPlantModelList.add(this);
         MotherlodeBlocks.cutouts.add(this);
         MotherlodeBlocks.grassColored.add(this);
-        MotherlodeBlocks.flatItemModelList.put(this, textureName.apply(this));
+        MotherlodeAssets.flatItemModelList.put(this, textureName.apply(this));
     }
 
     public DefaultPlantBlock(int height, boolean useDefaultState, boolean useDefaultModel, Settings settings) {

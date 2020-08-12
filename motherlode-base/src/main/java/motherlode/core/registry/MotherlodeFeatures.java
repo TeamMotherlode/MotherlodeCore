@@ -46,24 +46,24 @@ public class MotherlodeFeatures {
 	public static void addToBiome(Biome biome) {
 		Category category = biome.getCategory();
 		if(category == Category.PLAINS || category == Category.FOREST || category == Category.SAVANNA || category == Category.SWAMP || category == Category.TAIGA || category == Category.EXTREME_HILLS || category == Category.JUNGLE) {
-			biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
+			biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBlocks.SPROUTS.get().getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
 		}
 		if(category == Category.NETHER){
-			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.CHARITE_ORE);
-			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.ECHERITE_ORE);
-			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.ADAMANTITE_ORE);
+			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.CHARITE_ORE.get());
+			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.ECHERITE_ORE.get());
+			addOre(biome, Target.NETHERRACK, MotherlodeBlocks.ADAMANTITE_ORE.get());
 		}
 		else if(category == Category.THEEND){
 
 		}
 		else{
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.COPPER_ORE);
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.SILVER_ORE);
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.TITANIUM_ORE);
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.AMETHYST_ORE);
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.RUBY_ORE);
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.SAPPHIRE_ORE);
-			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.TOPAZ_ORE);
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.COPPER_ORE.get());
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.SILVER_ORE.get());
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.TITANIUM_ORE.get());
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.AMETHYST_ORE.get());
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.RUBY_ORE.get());
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.SAPPHIRE_ORE.get());
+			addOre(biome, Target.NATURAL_STONE, MotherlodeBlocks.TOPAZ_ORE.get());
 		}
 	}
 	
