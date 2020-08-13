@@ -11,7 +11,10 @@ import java.util.Random;
 
 public class EnderInvasionUtil {
 
-    public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    private static final double NOISE_THRESHOLD = 0.75;
+    private static final double NOISE_SCALE = 0.002;
+
+   public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         // TODO add functionality (block spread)
     }
@@ -23,10 +26,6 @@ public class EnderInvasionUtil {
             return;
         if (!(Motherlode.ENDER_INVASION_CHUNK_STATE.get(chunk).value() == EnderInvasionChunkState.PRE_ECHERITE)) return;
 
-        BlockPos blockPos;
-        BlockState state;
-        SpreadRecipe recipe;
-
         int maxY = chunk.getHighestNonEmptySectionYOffset() * 16;
 
         for (int x = 0; x < 16; x++) {
@@ -35,11 +34,14 @@ public class EnderInvasionUtil {
 
                 for (int z = 0; z < 16; z++) {
 
-                    blockPos = new BlockPos(chunk.getPos().x * 16 + x, y, chunk.getPos().z * 16 + z);
-                    state = chunk.getBlockState(blockPos);
-                    recipe = SpreadingBlocksManager.SPREAD.getRecipe(state.getBlock());
+                    BlockPos pos = new BlockPos(chunk.getPos().x * 16 + x, y, chunk.getPos().z * 16 + z);
+
+                    if(SimplexNoise.noise(pos.getX() * NOISE_SCALE, pos.getY() * NOISE_SCALE, pos.getZ() * NOISE_SCALE) < NOISE_THRESHOLD) continue;
+
+                    BlockState state = chunk.getBlockState(pos);
+                    SpreadRecipe recipe = SpreadingBlocksManager.SPREAD.getRecipe(state.getBlock());
                     if (recipe == null) continue;
-                    chunk.setBlockState(blockPos, recipe.convert(state), false);
+                    chunk.setBlockState(pos, recipe.convert(state), false);
                 }
             }
         }
