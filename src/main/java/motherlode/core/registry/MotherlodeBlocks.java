@@ -105,7 +105,7 @@ public class MotherlodeBlocks {
     public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
     public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
 
-    public static final Block END_GRASS_BLOCK = register("end_grass_block", new DefaultBlock(FabricBlockSettings.copy(Blocks.GRASS_BLOCK)));
+    public static final Block END_GRASS_BLOCK = register("end_grass_block", new DefaultBlock(true, false, true, true, FabricBlockSettings.copy(Blocks.GRASS_BLOCK)));
 
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
