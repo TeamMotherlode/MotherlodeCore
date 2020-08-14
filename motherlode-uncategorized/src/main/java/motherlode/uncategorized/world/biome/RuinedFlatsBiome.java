@@ -1,7 +1,7 @@
 package motherlode.uncategorized.world.biome;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.uncategorized.registry.MotherlodeBlocks;
 import motherlode.uncategorized.registry.MotherlodeFeatures;
 import motherlode.uncategorized.registry.MotherlodeStructures;

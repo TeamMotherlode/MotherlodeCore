@@ -1,6 +1,6 @@
 package motherlode.uncategorized.registry;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.uncategorized.world.biome.RuinedEdgeBiome;
 import motherlode.uncategorized.world.biome.RuinedFlatsBiome;
 import net.fabricmc.fabric.api.biomes.v1.OverworldBiomes;

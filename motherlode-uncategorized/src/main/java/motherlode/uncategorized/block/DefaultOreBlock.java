@@ -1,5 +1,6 @@
 package motherlode.uncategorized.block;
 
+import motherlode.base.api.OreProperties;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -13,8 +14,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.Random;
-
-import motherlode.uncategorized.api.OreProperties;
 
 public class DefaultOreBlock extends DefaultBlock implements OreProperties{
     public final int minExperience;

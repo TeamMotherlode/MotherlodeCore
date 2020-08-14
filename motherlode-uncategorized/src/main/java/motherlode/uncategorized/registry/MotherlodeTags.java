@@ -1,6 +1,6 @@
 package motherlode.uncategorized.registry;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;

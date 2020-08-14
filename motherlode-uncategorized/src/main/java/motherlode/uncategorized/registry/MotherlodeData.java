@@ -2,8 +2,7 @@ package motherlode.uncategorized.registry;
 
 import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
-
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
 

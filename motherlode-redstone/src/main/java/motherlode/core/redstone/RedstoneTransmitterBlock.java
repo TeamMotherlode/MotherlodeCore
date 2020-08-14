@@ -1,7 +1,7 @@
 package motherlode.core.redstone;
 
-import motherlode.core.block.DefaultShapedBlock;
-import motherlode.core.util.ShapeUtilities;
+import motherlode.uncategorized.block.DefaultShapedBlock;
+import motherlode.uncategorized.util.ShapeUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

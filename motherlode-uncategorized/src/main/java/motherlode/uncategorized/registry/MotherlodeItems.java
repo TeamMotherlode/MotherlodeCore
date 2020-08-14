@@ -1,7 +1,8 @@
 package motherlode.uncategorized.registry;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.uncategorized.MotherlodeMaterials;
+import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.item.DefaultGemItem;
 import motherlode.uncategorized.item.DefaultItem;
 import motherlode.uncategorized.item.DefaultMusicDiscItem;
@@ -49,7 +50,7 @@ public class MotherlodeItems {
     }
 
     static Item.Settings newSettings() {
-        return new Item.Settings().group(Motherlode.ITEMS);
+        return new Item.Settings().group(MotherlodeUncategorized.ITEMS);
     }
 
     public static DefaultMusicDiscItem registerDisc(String name, SoundEvent soundEvent) {

@@ -1,7 +1,9 @@
 package motherlode.uncategorized.registry;
 
+import motherlode.base.api.ArtificeProcessor;
 import com.swordglowsblue.artifice.api.util.Processor;
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
+import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.block.*;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -94,10 +96,10 @@ public class MotherlodeBlocks {
     public static final StoneBlocks SANDSTONE = StoneBlocks.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE);
 
     public static final Block POT = register("pot", new PotBlock(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.GLASS).strength(2.0F, 2.0F)), (BlockItem) null);
-    public static final Item POT_ITEM = Registry.register(Registry.ITEM, Motherlode.id("pot"), new BlockItem(POT, new Item.Settings().group(Motherlode.ITEMS)));
+    public static final Item POT_ITEM = Registry.register(Registry.ITEM, Motherlode.id("pot"), new BlockItem(POT, new Item.Settings().group(MotherlodeUncategorized.ITEMS)));
 
     public static final Block ROPE_BLOCK = register("rope", new RopeBlock(AbstractBlock.Settings.of(Material.PLANT)), (BlockItem) null);
-    public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(Motherlode.ITEMS)));
+    public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(MotherlodeUncategorized.ITEMS)));
 
     public static final Block SLIGHTLY_ROCKY_DIRT = register("slightly_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
     public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
@@ -106,6 +108,7 @@ public class MotherlodeBlocks {
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
         defaultItemModelList.add(block);
+
         UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
             BlockPos pos = hit.getBlockPos();
             if(player.getStackInHand(hand).getItem() instanceof ShovelItem && world.getBlockState(pos).getBlock() == Blocks.DIRT && world.getBlockState(pos.up()).isAir() && hit.getSide() != Direction.DOWN) {
@@ -141,12 +144,16 @@ public class MotherlodeBlocks {
     }
 
     public static <T extends Block> T register(String name, T block) {
-        return register(name, block, new Item.Settings().group(Motherlode.BLOCKS));
+        return register(name, block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS));
+    }
+
+    public static <T extends Block> T register(String name, T block, ArtificeProcessor p) {
+        return register(name, block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS));
     }
 
     public static <T extends Block> T register(String name, T block, Processor<T> p) {
         p.accept(block);
-        return register(name, block, new Item.Settings().group(Motherlode.BLOCKS));
+        return register(name, block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS));
     }
 
     static <T extends Block> T register(String name, T block, Function<T, BlockItem> itemFactory) {

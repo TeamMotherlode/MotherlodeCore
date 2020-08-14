@@ -1,9 +1,10 @@
 package motherlode.core.registry;
 
+import motherlode.core.redstone.RedstoneTransmitterBlock;
+import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
-import motherlode.core.redstone.RedstoneTransmitterBlock;
 
 public class MotherlodeRedstoneBlocks {
 

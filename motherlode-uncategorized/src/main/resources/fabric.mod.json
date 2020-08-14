@@ -20,10 +20,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "motherlode.uncategorized.Motherlode"
+      "motherlode.uncategorized.MotherlodeUncategorized"
     ],
     "client": [
-      "motherlode.uncategorized.MotherlodeClient"
+      "motherlode.uncategorized.MotherlodeUncategorizedClient"
     ]
   },
   "mixins": [

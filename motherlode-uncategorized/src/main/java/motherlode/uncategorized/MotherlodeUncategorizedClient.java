@@ -17,7 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class MotherlodeClient implements ClientModInitializer {
+public class MotherlodeUncategorizedClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		MotherlodeAssets.register();

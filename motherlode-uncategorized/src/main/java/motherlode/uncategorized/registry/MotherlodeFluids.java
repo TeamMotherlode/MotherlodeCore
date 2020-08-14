@@ -1,6 +1,6 @@
 package motherlode.uncategorized.registry;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.registry.Registry;
 

@@ -1,6 +1,7 @@
 package motherlode.uncategorized.block;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
+import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.registry.MotherlodeBlocks;
 import motherlode.uncategorized.registry.MotherlodeItems;
 import net.minecraft.block.*;
@@ -75,17 +76,17 @@ public class StoneBlocks {
         for (Block block : ALL) {
             String id = Registry.BLOCK.getId(block).getPath() + "_stairs";
             if (!IGNORE.contains(id)) {
-                StairsBlock stairBlock = Registry.register(Registry.BLOCK,Motherlode.id(id), new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS));
+                StairsBlock stairBlock = Registry.register(Registry.BLOCK, Motherlode.id(id), new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS));
                 STAIRS.put(block, stairBlock);
-                MotherlodeItems.register(id, new BlockItem(stairBlock, new Item.Settings().group(Motherlode.BLOCKS)));
+                MotherlodeItems.register(id, new BlockItem(stairBlock, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
                 MotherlodeBlocks.usesStairModel.put(stairBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));
                 MotherlodeBlocks.defaultItemModelList.add(stairBlock);
             }
         }
 
-        PILLAR = pillar ? Registry.register(Registry.BLOCK,Motherlode.id(baseID + "_pillar"), new PillarBlock(BLOCK_SETTINGS)) : null;
+        PILLAR = pillar ? Registry.register(Registry.BLOCK, Motherlode.id(baseID + "_pillar"), new PillarBlock(BLOCK_SETTINGS)) : null;
         if (pillar) {
-            MotherlodeItems.register(baseID + "_pillar", new BlockItem(PILLAR, new Item.Settings().group(Motherlode.BLOCKS)));
+            MotherlodeItems.register(baseID + "_pillar", new BlockItem(PILLAR, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
             MotherlodeBlocks.usesPillarModel.add(PILLAR);
             MotherlodeBlocks.defaultItemModelList.add(PILLAR);
             ALL.add(PILLAR);
@@ -94,9 +95,9 @@ public class StoneBlocks {
         for (Block block : ALL) {
             String id = Registry.BLOCK.getId(block).getPath() + "_slab";
             if (!IGNORE.contains(id)) {
-                SlabBlock slabBlock = Registry.register(Registry.BLOCK,Motherlode.id(id), new SlabBlock(BLOCK_SETTINGS));
+                SlabBlock slabBlock = Registry.register(Registry.BLOCK, Motherlode.id(id), new SlabBlock(BLOCK_SETTINGS));
                 SLABS.put(block, slabBlock);
-                MotherlodeItems.register(id, new BlockItem(slabBlock, new Item.Settings().group(Motherlode.BLOCKS)));
+                MotherlodeItems.register(id, new BlockItem(slabBlock, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
                 MotherlodeBlocks.usesSlabModel.put(slabBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));
                 MotherlodeBlocks.defaultItemModelList.add(slabBlock);
             }
@@ -132,7 +133,7 @@ public class StoneBlocks {
 
         DefaultBlock b = new DefaultBlock(AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F));
         Registry.register(Registry.BLOCK, Motherlode.id(id), b);
-        MotherlodeItems.register(id, new BlockItem(b, new Item.Settings().group(Motherlode.BLOCKS)));
+        MotherlodeItems.register(id, new BlockItem(b, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
 
         return b;
     }

@@ -1,6 +1,6 @@
 package motherlode.uncategorized.block;
 
-import motherlode.uncategorized.api.ArtificeProperties;
+import motherlode.base.api.ArtificeProperties;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 

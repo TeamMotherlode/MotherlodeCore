@@ -1,23 +1,24 @@
 package motherlode.base.api;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
 
 @FunctionalInterface
-public interface ArtificeProcessor<T> extends BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, T> {
+public interface ArtificeProcessor extends BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> {
 
-    default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, T t) {
+    default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
 
-        accept(pack, t);
+        accept(pack, id);
         return pack;
     }
-    default ArtificeProcessor<T> after(BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, T> before) {
+    default ArtificeProcessor after(BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> before) {
 
-        return (pack, t) -> {
+        return (pack, id) -> {
 
-            before.accept(pack, t);
-            this.accept(pack, t);
+            before.accept(pack, id);
+            this.accept(pack, id);
         };
     }
 }

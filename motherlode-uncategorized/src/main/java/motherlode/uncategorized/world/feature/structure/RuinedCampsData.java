@@ -2,7 +2,7 @@ package motherlode.uncategorized.world.feature.structure;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import net.minecraft.structure.pool.LegacySinglePoolElement;
 import net.minecraft.structure.pool.StructurePool;
 import net.minecraft.structure.pool.StructurePoolBasedGenerator;

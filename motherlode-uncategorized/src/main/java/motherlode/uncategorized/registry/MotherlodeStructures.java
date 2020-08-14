@@ -1,6 +1,6 @@
 package motherlode.uncategorized.registry;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.uncategorized.mixins.StructureFeatureAccessor;
 import motherlode.uncategorized.world.feature.structure.CampGenerator;
 import motherlode.uncategorized.world.feature.structure.CampStructureFeature;

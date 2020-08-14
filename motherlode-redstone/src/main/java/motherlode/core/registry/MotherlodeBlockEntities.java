@@ -1,6 +1,6 @@
 package motherlode.core.registry;
 
-import motherlode.core.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.core.redstone.RedstoneTransmitterBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
