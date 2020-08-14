@@ -1,6 +1,6 @@
 package motherlode.core.registry;
 
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.core.potions.ThornsEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
