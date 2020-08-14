@@ -56,23 +56,23 @@ public class RopeBlock extends DefaultBlock {
 
     private static boolean isSupportedByRope(WorldView worldView, BlockPos blockpos) {
         BlockState state = worldView.getBlockState(blockpos);
-        if (state.isOf(MotherlodeBlocks.ROPE.get()))
-            return worldView.getBlockState(blockpos).get(CONNECTED) == WireConnection.NONE && worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE.get());
+        if (state.isOf(MotherlodeBlocks.ROPE_BLOCK))
+            return worldView.getBlockState(blockpos).get(CONNECTED) == WireConnection.NONE && worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK);
 
-        return worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE.get());
+        return worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK);
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final ItemStack itemStack = player.getStackInHand(hand);
-        if (itemStack.getItem() != MotherlodeBlocks.ROPE.getItem())
+        if (itemStack.getItem() != MotherlodeBlocks.ROPE_ITEM)
             return ActionResult.PASS;
 
-        while (world.getBlockState(pos).isOf(MotherlodeBlocks.ROPE.get()))
+        while (world.getBlockState(pos).isOf(MotherlodeBlocks.ROPE_BLOCK))
             pos = pos.offset(Direction.DOWN);
 
         if (world.getBlockState(pos).isOf(Blocks.AIR)) {
-            world.setBlockState(pos, MotherlodeBlocks.ROPE.get().getDefaultState());
+            world.setBlockState(pos, MotherlodeBlocks.ROPE_BLOCK.getDefaultState());
             if (!player.abilities.creativeMode)
                 itemStack.decrement(1);
             return ActionResult.SUCCESS;
@@ -122,13 +122,13 @@ public class RopeBlock extends DefaultBlock {
         if (connected == WireConnection.SIDE && world.getBlockState(pos.offset(state.get(FACING))).isOf(Blocks.AIR))
             return Blocks.AIR.getDefaultState();
 
-        if (connected == WireConnection.NONE && !world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE.get()))
+        if (connected == WireConnection.NONE && !world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK))
             return Blocks.AIR.getDefaultState();
 
-        if (connected != WireConnection.NONE && world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE.get()))
+        if (connected != WireConnection.NONE && world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK))
             state = state.with(CONNECTED, WireConnection.NONE);
 
-        return state.with(BOTTOM, !world.getBlockState(pos.offset(Direction.DOWN)).isOf(MotherlodeBlocks.ROPE.get()));
+        return state.with(BOTTOM, !world.getBlockState(pos.offset(Direction.DOWN)).isOf(MotherlodeBlocks.ROPE_BLOCK));
     }
 
     @Override

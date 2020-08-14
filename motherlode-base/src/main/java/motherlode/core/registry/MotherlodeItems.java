@@ -45,7 +45,7 @@ public class MotherlodeItems {
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
-        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.getItem());
+        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.asItem());
     }
 
     static Item.Settings newSettings() {
