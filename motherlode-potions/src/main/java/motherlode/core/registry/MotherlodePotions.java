@@ -1,6 +1,6 @@
 package motherlode.core.registry;
 
-import motherlode.core.Motherlode;
+import motherlode.uncategorized.Motherlode;
 import motherlode.core.potions.ThornsEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+;
 
 public class MotherlodePotions {
 

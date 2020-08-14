@@ -1,8 +1,8 @@
 package motherlode.core.potions;
 
 import com.swordglowsblue.artifice.api.Artifice;
-import motherlode.core.Motherlode;
-import motherlode.core.registry.MotherlodeAssets;
+import motherlode.uncategorized.Motherlode;
+import motherlode.uncategorized.registry.MotherlodeAssets;
 import motherlode.core.registry.MotherlodePotions;
 import net.minecraft.util.Identifier;
 

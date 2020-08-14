@@ -1,4 +1,4 @@
-version = "1.0.0+$project.minecraft_version"
+version = "0.1.3+$project.minecraft_version"
 
 repositories {
     maven {
@@ -7,10 +7,10 @@ repositories {
     }
 }
 dependencies {
-
     modApi project(path: ":motherlode-base", configuration: "dev")
 
     modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
+    include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 
     modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
     include "io.github.cottonmc:LibGui:2.0.1+1.16.1"

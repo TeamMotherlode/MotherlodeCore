@@ -2,5 +2,5 @@ version = "1.0.0+$project.minecraft_version"
 
 dependencies {
 
-    modCompile project(path: ":motherlode-base", configuration: "dev")
+    modApi project(path: ":motherlode-base", configuration: "dev")
 }

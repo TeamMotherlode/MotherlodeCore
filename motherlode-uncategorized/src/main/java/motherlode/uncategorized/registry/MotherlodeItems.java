@@ -1,0 +1,67 @@
+package motherlode.uncategorized.registry;
+
+import motherlode.uncategorized.Motherlode;
+import motherlode.uncategorized.MotherlodeMaterials;
+import motherlode.uncategorized.item.DefaultGemItem;
+import motherlode.uncategorized.item.DefaultItem;
+import motherlode.uncategorized.item.DefaultMusicDiscItem;
+import motherlode.uncategorized.item.MaterialToolsAndArmor;
+import net.minecraft.item.Item;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayList;
+
+public class MotherlodeItems {
+
+    public static final ArrayList<Item> defaultItemModelList = new ArrayList<>();
+    public static final ArrayList<Item> handheldItemModelList = new ArrayList<>();
+
+    public static final Item COPPER_INGOT = register("copper_ingot", new DefaultItem(newSettings()));
+    public static final Item COPPER_NUGGET = register("copper_nugget", new DefaultItem(newSettings()));
+    public static final Item SILVER_INGOT = register("silver_ingot", new DefaultItem(newSettings()));
+    public static final Item SILVER_NUGGET = register("silver_nugget", new DefaultItem(newSettings()));
+    public static final Item CHARITE_CRYSTAL = register("charite_crystal", new DefaultItem(newSettings()));
+    public static final Item CHARITE_POWDER = register("charite_powder", new DefaultItem(newSettings()));
+    public static final Item ECHERITE_INGOT = register("echerite_ingot", new DefaultItem(newSettings()));
+    public static final Item ECHERITE_NUGGET = register("echerite_nugget", new DefaultItem(newSettings()));
+    public static final Item TITANIUM_INGOT = register("titanium_ingot", new DefaultItem(newSettings()));
+    public static final Item TITANIUM_NUGGET = register("titanium_nugget", new DefaultItem(newSettings()));
+    public static final Item ADAMANTITE_INGOT = register("adamantite_ingot", new DefaultItem(newSettings()));
+    public static final Item ADAMANTITE_NUGGET = register("adamantite_nugget", new DefaultItem(newSettings()));
+    public static final Item AMETHYST = register("amethyst", new DefaultGemItem(0xF989FF, newSettings()));
+    public static final Item HOWLITE = register("howlite", new DefaultGemItem(0xFFFFFF, newSettings()));
+    public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, newSettings()));
+    public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
+    public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
+    public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, newSettings()));
+
+    public static final MaterialToolsAndArmor COPPER = new MaterialToolsAndArmor(MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR);
+    public static final MaterialToolsAndArmor SILVER = new MaterialToolsAndArmor(MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR);
+    public static final MaterialToolsAndArmor CHARITE = new MaterialToolsAndArmor(MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR);
+    public static final MaterialToolsAndArmor ECHERITE = new MaterialToolsAndArmor(MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR);
+    public static final MaterialToolsAndArmor TITANIUM = new MaterialToolsAndArmor(MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR);
+    public static final MaterialToolsAndArmor ADAMANTITE = new MaterialToolsAndArmor(MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR);
+
+    public static void init() {
+        // CALLED TO MAINTAIN REGISTRY ORDER
+        defaultItemModelList.add(MotherlodeBlocks.SPROUTS.asItem());
+    }
+
+    static Item.Settings newSettings() {
+        return new Item.Settings().group(Motherlode.ITEMS);
+    }
+
+    public static DefaultMusicDiscItem registerDisc(String name, SoundEvent soundEvent) {
+        return register(name, new DefaultMusicDiscItem(soundEvent));
+    }
+
+    public static <T extends Item> T register(String name, T item) {
+        if (item instanceof DefaultItem){
+            if (((DefaultItem) item).hasDefaultItemModel()){
+                defaultItemModelList.add(item);
+            }
+        }
+        return Registry.register(Registry.ITEM, Motherlode.id(name), item);
+    }
+}

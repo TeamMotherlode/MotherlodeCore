@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "motherlode-base",
+  "id": "motherlode-uncategorized",
   "version": "${version}",
 
-  "name": "Motherlode Base",
+  "name": "Motherlode Uncategorized",
   "description": "",
   "authors": [
     "Team Motherlode"
@@ -11,23 +11,23 @@
   "contact": {
     "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
-    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-base"
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-uncategorized"
   },
 
   "license": "MIT License",
-  "icon": "assets/motherlode-base/icon.png",
+  "icon": "assets/motherlode/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "motherlode.base.Motherlode"
+      "motherlode.uncategorized.Motherlode"
     ],
     "client": [
-      "motherlode.base.Motherlode"
+      "motherlode.uncategorized.MotherlodeClient"
     ]
   },
   "mixins": [
-    "motherlode-base.mixins.json"
+    "motherlode-uncategorized.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4",
