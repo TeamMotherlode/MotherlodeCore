@@ -1,4 +1,4 @@
-package motherlode.uncategorized.api;
+package motherlode.base.api;
 
 import net.minecraft.block.Block;
 

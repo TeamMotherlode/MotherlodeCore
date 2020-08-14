@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
-import motherlode.uncategorized.Motherlode;
+import motherlode.base.Motherlode;
 import motherlode.uncategorized.block.DefaultShovelableBlock;
 import motherlode.uncategorized.block.PotBlock;
 import motherlode.uncategorized.block.stateproperty.BlockDyeColor;
@@ -29,7 +29,7 @@ public class MotherlodeAssets {
 	public static void init() {
     }
     public static void register(){
-        Artifice.registerAssets(Motherlode.id("client_pack"), pack -> {
+        Artifice.registerAssets(Motherlode.id("resource_pack"), pack -> {
             for(Block block : MotherlodeBlocks.defaultStateList) {
                 String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addBlockState(Motherlode.id(blockId), state -> state 

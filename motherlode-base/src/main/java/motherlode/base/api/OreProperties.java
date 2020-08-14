@@ -1,4 +1,4 @@
-package motherlode.uncategorized.api;
+package motherlode.base.api;
 
 public interface OreProperties {
     int veinSize(); 
