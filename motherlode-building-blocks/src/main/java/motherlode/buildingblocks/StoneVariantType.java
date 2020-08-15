@@ -41,7 +41,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
     public final Map<Block, Block> SLABS = new HashMap<>();
     public final Map<Identifier, Block> CARVED;
 
-    public final List<Block> ALL = new ArrayList<>();
+    public final Map<Identifier, Block> ALL = new HashMap<>();
 
     public static StoneVariantType newStone(String baseID, boolean rubble) {
         return new StoneVariantType(baseID, true, true, true, rubble, null, null, null);
@@ -71,23 +71,25 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
         TILES = get();
         TILES_SMALL = get();
 
-        ALL.add(BASE);
-        if (newStoneType) ALL.add(COBBLE);
-        if (rubble) ALL.add(RUBBLE);
-        if (polished) ALL.add(POLISHED);
-        ALL.add(BRICKS);
-        ALL.add(BRICKS_SMALL);
-        ALL.add(HERRINGBONE);
-        ALL.add(TILES);
-        ALL.add(TILES_SMALL);
+        ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id), BASE);
+        if (newStoneType) ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_cobble"), COBBLE);
+        if (rubble) ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_rubble"), RUBBLE);
+        if (polished) ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID,  "polished_" + id), POLISHED);
+        ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_bricks"), BRICKS);
+        ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_bricks_small"), BRICKS_SMALL);
+        ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_herringbone"), HERRINGBONE);
+        ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_tiles"), TILES);
+        ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_tiles_small"), TILES_SMALL);
 
-        for (Block block : ALL) {
-            if(block == null) continue;
-            String stairsId = Registry.BLOCK.getId(block).getPath() + "_stairs";
+        Map<Identifier, Block> temp = new HashMap<>();
+
+        for (Map.Entry<Identifier, Block> entry : ALL.entrySet()) {
+            String stairsId = entry.getKey().getPath() + "_stairs";
             if (!IGNORE.contains(stairsId)) {
                 StairsBlock stairBlock = new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS);
-                STAIRS.put(block, stairBlock);
-                MotherlodeBlocks.usesStairModel.put(stairBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));
+                STAIRS.put(entry.getValue(), stairBlock);
+                temp.put(Motherlode.id(entry.getKey().getNamespace(), stairsId), stairBlock);
+                MotherlodeBlocks.usesStairModel.put(stairBlock, !entry.getKey().getNamespace().equals("minecraft"));
                 MotherlodeBlocks.defaultItemModelList.add(stairBlock);
             }
         }
@@ -96,19 +98,20 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
         if (pillar) {
             MotherlodeBlocks.usesPillarModel.add(PILLAR);
             MotherlodeBlocks.defaultItemModelList.add(PILLAR);
-            ALL.add(PILLAR);
+            ALL.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_pillar"), PILLAR);
         }
 
-        for (Block block : ALL) {
-            if(block == null) continue;
-            String slabId = Registry.BLOCK.getId(block).getPath() + "_slab";
+        for (Map.Entry<Identifier, Block> entry : ALL.entrySet()) {
+            String slabId = entry.getKey().getPath() + "_slab";
             if (!IGNORE.contains(slabId)) {
                 SlabBlock slabBlock = new SlabBlock(BLOCK_SETTINGS);
-                SLABS.put(block, slabBlock);
-                MotherlodeBlocks.usesSlabModel.put(slabBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));
+                SLABS.put(entry.getValue(), slabBlock);
+                temp.put(Motherlode.id(entry.getKey().getNamespace(), slabId), slabBlock);
+                MotherlodeBlocks.usesSlabModel.put(slabBlock, !entry.getKey().getNamespace().equals("minecraft"));
                 MotherlodeBlocks.defaultItemModelList.add(slabBlock);
             }
         }
+
 
         Map<Identifier, Block> carved = new HashMap<>();
         for (char variant = 'a'; variant < 'z'; variant++) {
@@ -118,40 +121,24 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
             carved.put(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, carvedId), get());
         }
         CARVED = carved;
-        ALL.addAll(carved.values());
-        ALL.addAll(STAIRS.values());
-        ALL.addAll(SLABS.values());
+        ALL.putAll(temp);
+        temp.clear();
+        ALL.putAll(carved);
     }
 
     @Override
     public Block[] variants() {
-        return ALL.toArray(new Block[ALL.size()]);
+        return ALL.values().toArray(new Block[ALL.size()]);
     }
 
     @Override
     public void register(Identifier id) {
 
-        if (BASE != null && NEW_STONE_TYPE) register(id, BASE);
-        if (COBBLE != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_cobble"), COBBLE);
-        if (RUBBLE != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_rubble"), RUBBLE);
-        if (POLISHED != null && NEW_POLISHED) register(Motherlode.id(id.getNamespace(), "polished" + id.getPath()), POLISHED);
-        if (BRICKS != null && NEW_BRICKS) register(Motherlode.id(id.getNamespace(), id.getPath() + "_bricks"), BRICKS);
-        if (BRICKS_SMALL != null)
-            register(Motherlode.id(id.getNamespace(), id.getPath() + "_bricks_small"), BRICKS_SMALL);
-        if (HERRINGBONE != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_herringbone"), HERRINGBONE);
-        if (TILES != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_tiles"), TILES);
-        if (TILES_SMALL != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_tiles_small"), TILES_SMALL);
-        if (PILLAR != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_pillar"), PILLAR);
+        for(Map.Entry<Identifier, Block> entry: ALL.entrySet()) {
 
-        for(Map.Entry<Block, Block> entry: STAIRS.entrySet()) {
-
-            register(Motherlode.id(id.getNamespace(), Registry.BLOCK.getId(entry.getKey()).getPath() + "_stairs"), entry.getValue());
-        }
-        for(Map.Entry<Block, Block> entry: SLABS.entrySet()) {
-
-            register(Motherlode.id(id.getNamespace(), Registry.BLOCK.getId(entry.getKey()).getPath() + "_slab"), entry.getValue());
-        }
-        for(Map.Entry<Identifier, Block> entry: CARVED.entrySet()) {
+            if(entry.getValue() == BASE && !NEW_STONE_TYPE) continue;
+            if(entry.getValue() == BRICKS && !NEW_BRICKS) continue;
+            if(entry.getValue() == POLISHED && !NEW_POLISHED) continue;
 
             register(entry.getKey(), entry.getValue());
         }
