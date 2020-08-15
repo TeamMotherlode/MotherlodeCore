@@ -1,4 +1,4 @@
-package motherlode.core.redstone.gui;
+package motherlode.redstone.gui;
 
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
 import net.minecraft.entity.player.PlayerEntity;

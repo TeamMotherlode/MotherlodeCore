@@ -1,4 +1,4 @@
-package motherlode.core.redstone.gui;
+package motherlode.redstone.gui;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
@@ -6,8 +6,8 @@ import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import motherlode.base.Motherlode;
+import motherlode.redstone.registry.MotherlodeScreenHandlers;
 import motherlode.uncategorized.item.DefaultGemItem;
-import motherlode.core.registry.MotherlodeScreenHandlers;
 import motherlode.uncategorized.registry.MotherlodeTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

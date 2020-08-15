@@ -15,15 +15,15 @@
   },
 
   "license": "MIT License",
-  "icon": "assets/motherlode/icon.png",
+  "icon": "assets/motherlode-redstone/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "motherlode.core.redstone.MotherlodeRedstoneMod"
+      "motherlode.redstone.MotherlodeRedstoneMod"
     ],
     "client": [
-      "motherlode.core.redstone.MotherlodeRedstoneClient"
+      "motherlode.redstone.MotherlodeRedstoneClient"
     ]
   },
   "mixins": [

@@ -1,8 +1,8 @@
-package motherlode.core.redstone;
+package motherlode.redstone;
 
-import motherlode.core.redstone.gui.RedstoneTransmitterGuiDescription;
-import motherlode.core.redstone.gui.RedstoneTransmitterScreen;
-import motherlode.core.registry.MotherlodeScreenHandlers;
+import motherlode.redstone.gui.RedstoneTransmitterGuiDescription;
+import motherlode.redstone.gui.RedstoneTransmitterScreen;
+import motherlode.redstone.registry.MotherlodeScreenHandlers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 

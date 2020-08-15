@@ -1,4 +1,4 @@
-package motherlode.core.redstone;
+package motherlode.redstone;
 
 import motherlode.uncategorized.block.DefaultShapedBlock;
 import motherlode.uncategorized.util.ShapeUtilities;

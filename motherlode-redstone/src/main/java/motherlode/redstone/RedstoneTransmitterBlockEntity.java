@@ -1,8 +1,8 @@
-package motherlode.core.redstone;
+package motherlode.redstone;
 
 import motherlode.uncategorized.inventory.DefaultInventory;
-import motherlode.core.redstone.gui.RedstoneTransmitterGuiDescription;
-import motherlode.core.registry.MotherlodeBlockEntities;
+import motherlode.redstone.gui.RedstoneTransmitterGuiDescription;
+import motherlode.redstone.registry.MotherlodeBlockEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
