@@ -1,4 +1,4 @@
-package motherlode.core.buildingblocks;
+package motherlode.buildingblocks;
 
 import net.fabricmc.api.ClientModInitializer;
 

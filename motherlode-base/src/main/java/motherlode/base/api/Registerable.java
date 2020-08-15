@@ -5,5 +5,5 @@ import net.minecraft.util.Identifier;
 @FunctionalInterface
 public interface Registerable<T> {
 
-    T register(Identifier identifier);
+    void register(Identifier identifier);
 }

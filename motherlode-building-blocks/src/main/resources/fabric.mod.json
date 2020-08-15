@@ -14,15 +14,18 @@
   },
 
   "license": "MIT License",
-  "icon": "assets/motherlode/icon.png",
+  "icon": "assets/motherlode-building-blocks/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "motherlode.core.buildingblocks.MotherlodeBuildingBlocksMod"
+      "motherlode.buildingblocks.MotherlodeBuildingBlocksMod"
     ],
     "client": [
-      "motherlode.core.buildingblocks.MotherlodeBuildingBlocksClient"
+      "motherlode.buildingblocks.MotherlodeBuildingBlocksClient"
+    ],
+    "motherlode:assets": [
+      "motherlode.buildingblocks.MotherlodeBuildingBlocksMod"
     ]
   },
   "mixins": [
