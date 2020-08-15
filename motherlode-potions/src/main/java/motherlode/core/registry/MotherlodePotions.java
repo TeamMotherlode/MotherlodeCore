@@ -1,6 +1,7 @@
 package motherlode.core.registry;
 
 import motherlode.base.Motherlode;
+import motherlode.core.potions.MotherlodePotionsMod;
 import motherlode.core.potions.ThornsEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -36,7 +37,7 @@ public class MotherlodePotions {
     }
 
     private static StatusEffect register(String id, StatusEffect entry) {
-        return Registry.register(Registry.STATUS_EFFECT, Motherlode.id(id), entry);
+        return Registry.register(Registry.STATUS_EFFECT, Motherlode.id(MotherlodePotionsMod.MODID, id), entry);
     }
 
     private static Potion register(String name, Potion potion) {

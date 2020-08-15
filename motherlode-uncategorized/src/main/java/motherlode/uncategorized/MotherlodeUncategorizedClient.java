@@ -1,7 +1,6 @@
 package motherlode.uncategorized;
 
 import motherlode.uncategorized.block.PotBlock;
-import motherlode.uncategorized.registry.MotherlodeAssets;
 import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -20,8 +19,7 @@ import net.minecraft.util.Identifier;
 public class MotherlodeUncategorizedClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		MotherlodeAssets.register();
-    	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
 		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
 		

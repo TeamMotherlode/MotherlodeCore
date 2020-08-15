@@ -14,7 +14,7 @@
   },
 
   "license": "MIT License",
-  "icon": "assets/motherlode/icon.png",
+  "icon": "assets/motherlode-potions/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -23,6 +23,9 @@
     ],
     "client": [
       "motherlode.core.potions.MotherlodePotionsClient"
+    ],
+    "motherlode:assets": [
+      "motherlode.core.potions.MotherlodePotionsAssets"
     ]
   },
   "mixins": [

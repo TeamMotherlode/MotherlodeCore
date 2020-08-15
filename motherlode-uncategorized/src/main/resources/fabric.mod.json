@@ -24,6 +24,9 @@
     ],
     "client": [
       "motherlode.uncategorized.MotherlodeUncategorizedClient"
+    ],
+    "motherlode:assets": [
+      "motherlode.uncategorized.registry.MotherlodeAssets"
     ]
   },
   "mixins": [
