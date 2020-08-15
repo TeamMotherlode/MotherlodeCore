@@ -24,6 +24,9 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
     private static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
 
     private final String ID;
+    private final boolean NEW_STONE_TYPE;
+    private final boolean NEW_BRICKS;
+    private final boolean NEW_POLISHED;
     public final Block BASE;
     public final Block COBBLE;
     public final Block RUBBLE;
@@ -55,11 +58,14 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
     private StoneVariantType(String id, boolean newStoneType, boolean polished, boolean pillar, boolean rubble, Block baseBlock, Block polishedBlock, Block bricksBlock) {
 
         ID = id;
+        NEW_STONE_TYPE = newStoneType;
         BASE = baseBlock != null ? baseBlock : newStoneType ? get() : Registry.BLOCK.get(new Identifier(id));
         COBBLE = newStoneType ? get() : null;
         RUBBLE = rubble ? get() : null;
         POLISHED = polished ? polishedBlock != null ? polishedBlock : get() : null;
+        NEW_POLISHED = polished? polishedBlock != null : false;
         BRICKS = bricksBlock == null ? get() : bricksBlock;
+        NEW_BRICKS = bricksBlock != null;
         BRICKS_SMALL = get();
         HERRINGBONE = get();
         TILES = get();
@@ -76,6 +82,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
         ALL.add(TILES_SMALL);
 
         for (Block block : ALL) {
+            if(block == null) continue;
             String stairsId = Registry.BLOCK.getId(block).getPath() + "_stairs";
             if (!IGNORE.contains(stairsId)) {
                 StairsBlock stairBlock = new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS);
@@ -93,6 +100,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
         }
 
         for (Block block : ALL) {
+            if(block == null) continue;
             String slabId = Registry.BLOCK.getId(block).getPath() + "_slab";
             if (!IGNORE.contains(slabId)) {
                 SlabBlock slabBlock = new SlabBlock(BLOCK_SETTINGS);
@@ -123,11 +131,11 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
     @Override
     public void register(Identifier id) {
 
-        if (BASE != null) register(id, BASE);
+        if (BASE != null && NEW_STONE_TYPE) register(id, BASE);
         if (COBBLE != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_cobble"), COBBLE);
         if (RUBBLE != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_rubble"), RUBBLE);
-        if (POLISHED != null) register(Motherlode.id(id.getNamespace(), "polished" + id.getPath()), POLISHED);
-        if (BRICKS != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_bricks"), BRICKS);
+        if (POLISHED != null && NEW_POLISHED) register(Motherlode.id(id.getNamespace(), "polished" + id.getPath()), POLISHED);
+        if (BRICKS != null && NEW_BRICKS) register(Motherlode.id(id.getNamespace(), id.getPath() + "_bricks"), BRICKS);
         if (BRICKS_SMALL != null)
             register(Motherlode.id(id.getNamespace(), id.getPath() + "_bricks_small"), BRICKS_SMALL);
         if (HERRINGBONE != null) register(Motherlode.id(id.getNamespace(), id.getPath() + "_herringbone"), HERRINGBONE);
