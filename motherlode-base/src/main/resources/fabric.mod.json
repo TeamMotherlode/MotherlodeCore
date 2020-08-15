@@ -23,7 +23,7 @@
       "motherlode.base.Motherlode"
     ],
     "client": [
-      "motherlode.base.Motherlode"
+      "motherlode.base.MotherlodeClient"
     ]
   },
   "mixins": [

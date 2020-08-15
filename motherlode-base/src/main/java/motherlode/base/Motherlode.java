@@ -1,20 +1,14 @@
 package motherlode.base;
 
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
-public class Motherlode implements ModInitializer, ClientModInitializer {
+public class Motherlode implements ModInitializer {
 
     public static final String MODID = "motherlode";
 
     @Override
     public void onInitialize() {
-
-        // TODO
-    }
-    @Override
-    public void onInitializeClient() {
 
         // TODO
     }
