@@ -35,10 +35,6 @@ public class MotherlodeUncategorized implements ModInitializer {
             .icon(() -> new ItemStack(MotherlodeItems.COPPER_INGOT))
             .build();
 
-    public static final ItemGroup ARMOUR_AND_TOOLS = FabricItemGroupBuilder.create(Motherlode.id("armor_and_tools"))
-            .icon(() -> new ItemStack(MotherlodeItems.COPPER.HELMET))
-            .build();
-
     public static final ItemGroup MUSIC = FabricItemGroupBuilder.create(Motherlode.id("music"))
             .icon(() -> new ItemStack(Items.MUSIC_DISC_CAT))
             .build();

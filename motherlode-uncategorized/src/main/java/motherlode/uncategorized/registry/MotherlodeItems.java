@@ -6,7 +6,6 @@ import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.item.DefaultGemItem;
 import motherlode.uncategorized.item.DefaultItem;
 import motherlode.uncategorized.item.DefaultMusicDiscItem;
-import motherlode.uncategorized.item.MaterialToolsAndArmor;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.registry.Registry;
@@ -36,13 +35,6 @@ public class MotherlodeItems {
     public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
     public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
     public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, newSettings()));
-
-    public static final MaterialToolsAndArmor COPPER = new MaterialToolsAndArmor(MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR);
-    public static final MaterialToolsAndArmor SILVER = new MaterialToolsAndArmor(MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR);
-    public static final MaterialToolsAndArmor CHARITE = new MaterialToolsAndArmor(MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR);
-    public static final MaterialToolsAndArmor ECHERITE = new MaterialToolsAndArmor(MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR);
-    public static final MaterialToolsAndArmor TITANIUM = new MaterialToolsAndArmor(MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR);
-    public static final MaterialToolsAndArmor ADAMANTITE = new MaterialToolsAndArmor(MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR);
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
