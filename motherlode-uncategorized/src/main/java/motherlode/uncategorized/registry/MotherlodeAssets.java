@@ -12,8 +12,6 @@ import motherlode.uncategorized.block.stateproperty.BlockDyeColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -89,46 +87,6 @@ public class MotherlodeAssets implements MotherlodeAssetsEntryPoint {
             );
         }
 
-        for (Map.Entry<SlabBlock, Boolean> entry : MotherlodeBlocks.usesSlabModel.entrySet()) {
-            String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
-            String texId = blockId.replace("_slab", "").replace("_pillar", "_pillar_side");
-            String namespace = entry.getValue() ? "motherlode" : "minecraft";
-            for (String variant : new String[]{"_top", ""}) {
-                pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
-                        .parent(new Identifier("block/slab" + variant))
-                        .texture("top", new Identifier(namespace, "block/" + texId))
-                        .texture("bottom", new Identifier(namespace, "block/" + texId))
-                        .texture("side", new Identifier(namespace, "block/" + texId))
-                );
-            }
-            pack.addBlockModel(Motherlode.id(blockId + "_double"), model -> model
-                    .parent(new Identifier("block/cube_column"))
-                    .texture("end", new Identifier(namespace, "block/" + texId))
-                    .texture("side", new Identifier(namespace, "block/" + texId))
-            );
-            pack.addBlockState(Motherlode.id(blockId), builder -> builder
-                    .variant("type=top", settings -> settings.model(Motherlode.id("block/" + blockId + "_top")))
-                    .variant("type=bottom", settings -> settings.model(Motherlode.id("block/" + blockId)))
-                    .variant("type=double", settings -> settings.model(Motherlode.id("block/" + blockId + "_double")))
-            );
-        }
-
-        for (Map.Entry<StairsBlock, Boolean> entry : MotherlodeBlocks.usesStairModel.entrySet()) {
-            String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
-            String texId = blockId.replace("_stairs", "");
-            String namespace = entry.getValue() ? "motherlode" : "minecraft";
-            for (int i = 0; i < 3; i++) {
-                int ii = i;
-                pack.addBlockModel(Motherlode.id(blockId + modelStrings[i]), model -> model
-                        .parent(new Identifier("block/" + (ii == 0 ? "" : ii == 1 ? "inner_" : "outer_") + "stairs"))
-                        .texture("top", new Identifier(namespace, "block/" + texId))
-                        .texture("bottom", new Identifier(namespace, "block/" + texId))
-                        .texture("side", new Identifier(namespace, "block/" + texId))
-                );
-            }
-            pack.addBlockState(Motherlode.id(blockId), builder -> stairBlockState(builder, blockId));
-        }
-
         for (DefaultShovelableBlock block : MotherlodeBlocks.shovelableBlocks) {
             String blockId = Registry.BLOCK.getId(block).getPath();
             pack.addBlockState(Motherlode.id(blockId), state -> {
@@ -153,22 +111,6 @@ public class MotherlodeAssets implements MotherlodeAssetsEntryPoint {
                     .texture("top", Motherlode.id("block/" + blockId))
                     .texture("side", Motherlode.id("block/" + blockId))
                     .texture("bottom", Motherlode.id("block/" + blockId))
-            );
-        }
-
-        for (Block block : MotherlodeBlocks.usesPillarModel) {
-            String blockId = Registry.BLOCK.getId(block).getPath();
-            for (String variant : new String[]{"", "_horizontal"}) {
-                pack.addBlockModel(Motherlode.id(blockId + variant), model -> model
-                        .parent(new Identifier("block/cube_column" + variant))
-                        .texture("end", Motherlode.id("block/" + blockId + "_top"))
-                        .texture("side", Motherlode.id("block/" + blockId + "_side"))
-                );
-            }
-            pack.addBlockState(Motherlode.id(blockId), builder -> builder
-                    .variant("axis=x", settings -> settings.model(Motherlode.id("block/" + blockId + "_horizontal")).rotationX(90).rotationY(90))
-                    .variant("axis=y", settings -> settings.model(Motherlode.id("block/" + blockId)))
-                    .variant("axis=z", settings -> settings.model(Motherlode.id("block/" + blockId + "_horizontal")).rotationX(90))
             );
         }
 

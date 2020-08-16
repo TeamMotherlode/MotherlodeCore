@@ -26,10 +26,10 @@ public class MotherlodeBuildingBlocks {
     public static final StoneVariantType ICE =  register(StoneVariantType.fromBlock("ice", null));
 
     public static final StoneVariantType STONE =  register(StoneVariantType.fromStone("stone", Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE));
-    public static final StoneVariantType GRANTITE =  register(StoneVariantType.fromStone("granite", null, Blocks.POLISHED_GRANITE));
+    public static final StoneVariantType GRANITE =  register(StoneVariantType.fromStone("granite", null, Blocks.POLISHED_GRANITE));
     public static final StoneVariantType DIORITE =  register(StoneVariantType.fromStone("diorite", null, Blocks.POLISHED_DIORITE));
     public static final StoneVariantType ANDESITE =  register(StoneVariantType.fromStone("andesite", null, Blocks.POLISHED_ANDESITE));
-    public static final StoneVariantType BLACK_STONE =  register(StoneVariantType.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE));
+    public static final StoneVariantType BLACKSTONE =  register(StoneVariantType.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE));
     public static final StoneVariantType BASALT =  register(StoneVariantType.fromStone("basalt", null, Blocks.POLISHED_BASALT));
     public static final StoneVariantType SANDSTONE =  register(StoneVariantType.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE));
 
