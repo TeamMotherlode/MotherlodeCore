@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "motherlode",
-  "name": "Motherlode Core",
+  "name": "Motherlode",
   "version": "${version}",
   "environment": "*",
   "license": "MIT License",
