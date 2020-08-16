@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-ores-tools-armor",
+  "version": "${version}",
+
+  "name": "Motherlode Ores, Tools, & Armor",
+  "description": "",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-ores-tools-armor"
+  },
+
+  "license": "MIT License",
+  "icon": "assets/motherlode-ores-tools-armor/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.orestoolsarmor.MotherlodeOresToolsArmorMod"
+    ],
+    "client": [
+      "motherlode.orestoolsarmor.MotherlodeOresToolsArmorClient"
+    ],
+    "motherlode:assets": [
+      "motherlode.orestoolsarmor.MotherlodeOresToolsArmorMod"
+    ]
+  },
+  "mixins": [
+    "motherlode-ores-tools-armor.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}
