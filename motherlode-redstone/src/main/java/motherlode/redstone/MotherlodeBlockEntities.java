@@ -1,4 +1,4 @@
-package motherlode.redstone.registry;
+package motherlode.redstone;
 
 import motherlode.base.Motherlode;
 import motherlode.redstone.MotherlodeRedstoneMod;

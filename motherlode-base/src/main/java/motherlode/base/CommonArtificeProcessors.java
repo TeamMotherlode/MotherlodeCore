@@ -22,18 +22,21 @@ public class CommonArtificeProcessors {
                 .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
     };
-    public static final ArtificeProcessor FULL_BLOCK = BLOCK_ITEM.after((pack, id) -> {
+    public static final ArtificeProcessor DEFAULT_BLOCK_STATE = (pack, id) -> {
 
         pack.addBlockState(id, state -> state
                 .variant("", settings -> settings
                         .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
                 )
         );
+    };
+    public static final ArtificeProcessor FULL_BLOCK = BLOCK_ITEM.after(DEFAULT_BLOCK_STATE.andThen((pack, id) -> {
+
         pack.addBlockModel(id, state -> state
                 .parent(new Identifier("block/cube_all"))
                 .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    });
+    }));
     public static final ArtificeProcessor PLANT = (pack, id) -> {
 
        pack.addBlockModel(id, state -> state

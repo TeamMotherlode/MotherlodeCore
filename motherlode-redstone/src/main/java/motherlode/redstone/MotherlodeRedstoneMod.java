@@ -1,11 +1,12 @@
 package motherlode.redstone;
 
-import motherlode.redstone.registry.MotherlodeBlockEntities;
-import motherlode.redstone.registry.MotherlodeRedstoneBlocks;
-import motherlode.redstone.registry.MotherlodeScreenHandlers;
+import motherlode.redstone.MotherlodeBlockEntities;
+import motherlode.redstone.MotherlodeRedstoneBlocks;
+import motherlode.redstone.MotherlodeScreenHandlers;
+import motherlode.base.api.MotherlodeAssetsEntryPoint;
 import net.fabricmc.api.ModInitializer;
 
-public class MotherlodeRedstoneMod implements ModInitializer {
+public class MotherlodeRedstoneMod implements ModInitializer, MotherlodeAssetsEntryPoint {
 
     public static final String MODID = "motherlode-redstone";
 
@@ -15,5 +16,13 @@ public class MotherlodeRedstoneMod implements ModInitializer {
         MotherlodeRedstoneBlocks.init();
         MotherlodeBlockEntities.init();
         MotherlodeScreenHandlers.init();
+    }
+    @Override
+    public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
+
+        for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeRedstoneBlocks.ARTIFICE_PROCESSORS.entrySet()) {
+
+            entry.getValue().accept(pack, entry.getKey());
+        }
     }
 }
