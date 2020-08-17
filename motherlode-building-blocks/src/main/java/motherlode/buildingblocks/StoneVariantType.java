@@ -10,6 +10,7 @@ import motherlode.uncategorized.block.DefaultStairsBlock;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -143,7 +144,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
     private static void register(Identifier id, Block block) {
 
         Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
+        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
     }
 
     @Override

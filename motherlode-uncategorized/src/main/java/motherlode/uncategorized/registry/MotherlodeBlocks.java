@@ -36,9 +36,6 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
     public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
     public static final ArrayList<Block> defaultLootTableList = new ArrayList<>();
-    public static final Map<StairsBlock, Boolean> usesStairModel = new LinkedHashMap<>();
-    public static final Map<SlabBlock, Boolean> usesSlabModel = new LinkedHashMap<>();
-    public static final ArrayList<Block> usesPillarModel = new ArrayList<>();
     public static final ArrayList<Block> usesPaintableModel = new ArrayList<>();
     public static final ArrayList<DefaultShovelableBlock> shovelableBlocks = new ArrayList<>();
 
@@ -142,7 +139,7 @@ public class MotherlodeBlocks {
     static <T extends Block, J extends DefaultBlock> T register(String name, T block, BlockItem item) {
         T b = Registry.register(Registry.BLOCK, Motherlode.id(name), block);
         if (item != null) {
-            MotherlodeItems.register(name, item);
+            Registry.register(Registry.ITEM, Motherlode.id(name), new BlockItem(block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
         }
         if (block instanceof DefaultBlock) {
             DefaultBlock defaultBlock = (DefaultBlock)block;

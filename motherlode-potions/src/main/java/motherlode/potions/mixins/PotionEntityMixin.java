@@ -1,4 +1,4 @@
-package motherlode.core.potions.mixins;
+package motherlode.potions.mixins;
 
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;

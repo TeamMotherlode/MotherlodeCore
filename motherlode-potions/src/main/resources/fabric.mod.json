@@ -19,13 +19,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "motherlode.core.potions.MotherlodePotionsMod"
+      "motherlode.potions.MotherlodePotionsMod"
     ],
     "client": [
-      "motherlode.core.potions.MotherlodePotionsClient"
+      "motherlode.potions.MotherlodePotionsClient"
     ],
     "motherlode:assets": [
-      "motherlode.core.potions.MotherlodePotionsAssets"
+      "motherlode.potions.MotherlodePotionsAssets"
     ]
   },
   "mixins": [

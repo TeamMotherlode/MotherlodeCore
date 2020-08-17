@@ -1,5 +1,6 @@
-package motherlode.uncategorized.item;
+package motherlode.orestoolsarmor.item;
 
+import motherlode.uncategorized.item.DefaultItem;
 import net.minecraft.item.Item;
 
 public class DefaultGemItem extends DefaultItem {

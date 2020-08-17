@@ -3,17 +3,14 @@ package motherlode.redstone;
 import motherlode.base.CommonArtificeProcessors;
 import motherlode.base.Motherlode;
 import motherlode.base.api.ArtificeProcessor;
-import motherlode.redstone.MotherlodeRedstoneMod;
-import motherlode.redstone.RedstoneTransmitterBlock;
-import motherlode.uncategorized.MotherlodeUncategorized;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +27,7 @@ public class MotherlodeRedstoneBlocks {
 
         Identifier id = Motherlode.id(MotherlodeRedstoneMod.MODID, name);
         Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS)));
+        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.REDSTONE)));
         ARTIFICE_PROCESSORS.put(id, p);
         return block;
     }

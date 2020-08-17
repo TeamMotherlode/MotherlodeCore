@@ -1,4 +1,4 @@
-package motherlode.uncategorized.item;
+package motherlode.orestoolsarmor.item;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;

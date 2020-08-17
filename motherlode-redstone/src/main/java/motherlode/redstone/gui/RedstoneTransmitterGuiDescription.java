@@ -8,7 +8,7 @@ import io.github.cottonmc.cotton.gui.widget.WSprite;
 import motherlode.base.Motherlode;
 import motherlode.redstone.MotherlodeRedstoneMod;
 import motherlode.redstone.MotherlodeScreenHandlers;
-import motherlode.uncategorized.item.DefaultGemItem;
+import motherlode.orestoolsarmor.item.DefaultGemItem;
 import motherlode.uncategorized.registry.MotherlodeTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

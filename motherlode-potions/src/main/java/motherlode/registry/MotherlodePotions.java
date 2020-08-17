@@ -1,8 +1,8 @@
-package motherlode.core.registry;
+package motherlode.registry;
 
 import motherlode.base.Motherlode;
-import motherlode.core.potions.MotherlodePotionsMod;
-import motherlode.core.potions.ThornsEffect;
+import motherlode.potions.MotherlodePotionsMod;
+import motherlode.potions.ThornsEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-;
 
 public class MotherlodePotions {
 
@@ -142,7 +140,7 @@ public class MotherlodePotions {
         public PotionModelInfo(String model, float predicateValue) {
             this.model = model;
             this.predicateValue = predicateValue;
-            this.useDefaultModel = getClass().getResourceAsStream("/assets/motherlode/textures/item/potions/" + model + ".png") == null;
+            this.useDefaultModel = getClass().getResourceAsStream("/assets/" + MotherlodePotionsMod.MODID + "/textures/item/potions/" + model + ".png") == null;
         }
 
         @Override

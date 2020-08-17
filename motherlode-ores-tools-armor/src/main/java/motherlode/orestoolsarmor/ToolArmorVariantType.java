@@ -5,8 +5,7 @@ import motherlode.base.CommonArtificeProcessors;
 import motherlode.base.Motherlode;
 import motherlode.base.api.ArtificeProcessor;
 import motherlode.base.api.RegisterableVariantType;
-import motherlode.uncategorized.MotherlodeUncategorized;
-import motherlode.uncategorized.item.DefaultToolMaterial;
+import motherlode.orestoolsarmor.item.DefaultToolMaterial;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -32,15 +31,15 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Arti
     public ToolArmorVariantType(Identifier id, DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
 
         this.PICKAXE = new MaterialPickaxe(toolMaterial);
-        this.SWORD = new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
+        this.SWORD = new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(ItemGroup.COMBAT));
         this.AXE = new MaterialAxe(toolMaterial);
-        this.SHOVEL = new ShovelItem(toolMaterial, 1.5F, 3.0F, new Item.Settings().maxCount(1).group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
+        this.SHOVEL = new ShovelItem(toolMaterial, 1.5F, 3.0F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
         this.HOE = new MaterialHoe(toolMaterial);
 
-        this.HELMET = new ArmorItem(armorMaterial, EquipmentSlot.HEAD, new Item.Settings().group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
-        this.CHESTPLATE = new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
-        this.LEGGINGS = new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
-        this.BOOTS = new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
+        this.HELMET = new ArmorItem(armorMaterial, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT));
+        this.CHESTPLATE = new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT));
+        this.LEGGINGS = new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT));
+        this.BOOTS = new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT));
 
         ALL.put(this.PICKAXE, Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"));
         ALL.put(this.SWORD, Motherlode.id(id.getNamespace(), id.getPath() + "_sword"));
@@ -86,18 +85,18 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Arti
 
 class MaterialPickaxe extends PickaxeItem {
     public MaterialPickaxe(DefaultToolMaterial material) {
-        super(material, 1, -2.8F, new Item.Settings().maxCount(1).group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
+        super(material, 1, -2.8F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
 
 class MaterialAxe extends AxeItem {
     public MaterialAxe(DefaultToolMaterial material) {
-        super(material, 6, -3.1F, new Item.Settings().maxCount(1).group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
+        super(material, 6, -3.1F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
 
 class MaterialHoe extends HoeItem {
     public MaterialHoe(DefaultToolMaterial material) {
-        super(material, -2, -1F, new Item.Settings().maxCount(1).group(MotherlodeUncategorized.ARMOUR_AND_TOOLS));
+        super(material, -2, -1F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }

@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "motherlode.core.potions.mixins",
+  "package": "motherlode.potions.mixins",
   "compatibilityLevel": "JAVA_8",
   "injectors": {
     "defaultRequire": 1

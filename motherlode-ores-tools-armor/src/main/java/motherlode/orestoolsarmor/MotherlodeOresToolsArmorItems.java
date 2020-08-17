@@ -4,10 +4,10 @@ import motherlode.base.CommonArtificeProcessors;
 import motherlode.base.Motherlode;
 import motherlode.base.api.ArtificeProcessor;
 import motherlode.base.api.Registerable;
-import motherlode.uncategorized.MotherlodeMaterials;
-import motherlode.uncategorized.MotherlodeUncategorized;
-import motherlode.uncategorized.item.DefaultGemItem;
+import motherlode.orestoolsarmor.item.MotherlodeMaterials;
+import motherlode.orestoolsarmor.item.DefaultGemItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class MotherlodeOresToolsArmorItems {
     
     public static final Map<Identifier, ArtificeProcessor> ARTIFICE_PROCESSORS = new HashMap<>();
-    private static Item.Settings SETTINGS = new Item.Settings().group(MotherlodeUncategorized.ITEMS);
+    private static Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final Item COPPER_INGOT = register("copper_ingot");
     public static final Item COPPER_NUGGET = register("copper_nugget");

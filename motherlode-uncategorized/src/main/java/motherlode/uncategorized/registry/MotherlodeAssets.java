@@ -72,20 +72,6 @@ public class MotherlodeAssets implements MotherlodeAssetsEntryPoint {
                     .texture("layer0", Motherlode.id("block/" + texture))
             );
         }
-        for (Item item : MotherlodeItems.defaultItemModelList) {
-            String itemId = Registry.ITEM.getId(item).getPath();
-            pack.addItemModel(Motherlode.id(itemId), state -> state
-                    .parent(new Identifier("item/generated"))
-                    .texture("layer0", Motherlode.id("item/" + itemId))
-            );
-        }
-        for (Item item : MotherlodeItems.handheldItemModelList) {
-            String itemId = Registry.ITEM.getId(item).getPath();
-            pack.addItemModel(Motherlode.id(itemId), state -> state
-                    .parent(new Identifier("item/handheld"))
-                    .texture("layer0", Motherlode.id("item/" + itemId))
-            );
-        }
 
         for (DefaultShovelableBlock block : MotherlodeBlocks.shovelableBlocks) {
             String blockId = Registry.BLOCK.getId(block).getPath();

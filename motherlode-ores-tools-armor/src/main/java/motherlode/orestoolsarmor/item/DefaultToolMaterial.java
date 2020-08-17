@@ -1,4 +1,4 @@
-package motherlode.uncategorized.item;
+package motherlode.orestoolsarmor.item;
 
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;

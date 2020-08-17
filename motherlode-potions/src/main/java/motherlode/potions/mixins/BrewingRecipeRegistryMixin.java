@@ -1,6 +1,6 @@
-package motherlode.core.potions.mixins;
+package motherlode.potions.mixins;
 
-import motherlode.core.registry.MotherlodePotions;
+import motherlode.registry.MotherlodePotions;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;

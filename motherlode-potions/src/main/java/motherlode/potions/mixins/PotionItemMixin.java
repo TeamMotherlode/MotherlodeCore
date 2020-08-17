@@ -1,4 +1,4 @@
-package motherlode.core.potions.mixins;
+package motherlode.potions.mixins;
 
 import com.sun.scenario.Settings;
 import net.minecraft.item.Item;

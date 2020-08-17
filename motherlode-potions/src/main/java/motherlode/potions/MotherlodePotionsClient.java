@@ -1,6 +1,6 @@
-package motherlode.core.potions;
+package motherlode.potions;
 
-import motherlode.core.registry.MotherlodePotions;
+import motherlode.registry.MotherlodePotions;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.item.Items;
