@@ -23,12 +23,15 @@ public class DefaultPlantBlock extends PlantBlock implements ArtificeProperties 
     private final int height;
 
     public DefaultPlantBlock(int height, boolean useDefaultState, boolean useDefaultModel, Function<Block, Supplier<String>> textureName, Settings settings) {
+        this(height, useDefaultState, useDefaultModel, true, textureName, settings);
+    }
+    public DefaultPlantBlock(int height, boolean useDefaultState, boolean useDefaultModel, boolean grassColored, Function<Block, Supplier<String>> textureName, Settings settings) {
         super(settings);
         this.height = height;
         if(useDefaultState) MotherlodeBlocks.defaultStateList.add(this);
         if(useDefaultModel) MotherlodeBlocks.defaultPlantModelList.add(this);
         MotherlodeBlocks.cutouts.add(this);
-        MotherlodeBlocks.grassColored.add(this);
+        if(grassColored) MotherlodeBlocks.grassColored.add(this);
         MotherlodeBlocks.flatItemModelList.put(this, textureName.apply(this));
     }
 
@@ -43,6 +46,12 @@ public class DefaultPlantBlock extends PlantBlock implements ArtificeProperties 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return isHoldingShovelOrSword(context) ? VoxelShapes.empty() : Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, height, 14.0D);
+    }
+
+    @Override
+    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
+
+        return super.canPlantOnTop(floor, world, pos) || floor.isOf(MotherlodeBlocks.END_GRASS_BLOCK);
     }
 
     @Override

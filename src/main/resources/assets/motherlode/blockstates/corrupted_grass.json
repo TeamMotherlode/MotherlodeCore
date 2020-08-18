@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "motherlode:block/corrupted_grass_00"
+      },
+      {
+        "model": "motherlode:block/corrupted_grass_01"
+      },
+      {
+        "model": "motherlode:block/corrupted_grass_02"
+      },
+      {
+        "model": "motherlode:block/corrupted_grass_03"
+      }
+    ]
+  }
+}

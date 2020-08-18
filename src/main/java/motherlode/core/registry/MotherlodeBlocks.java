@@ -106,6 +106,15 @@ public class MotherlodeBlocks {
     public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
 
     public static final Block END_GRASS_BLOCK = register("end_grass_block", new DefaultBlock(true, false, true, true, FabricBlockSettings.copy(Blocks.GRASS_BLOCK)));
+    public static final Block CORRUPTED_DIRT = register("corrupted_dirt", new DefaultBlock(true, true, true, true, FabricBlockSettings.copy(Blocks.DIRT)));
+    public static final Block CORRUPTED_GRASS = register("corrupted_grass", new DefaultPlantBlock(12, false, false, "corrupted_grass_02", FabricBlockSettings.copy(Blocks.GRASS)));
+    public static final Block WITHERED_LOG = register("withered_log", logBlock(MaterialColor.GRAY, MaterialColor.BLACK), block -> {
+
+        defaultItemModelList.add(block);
+        defaultLootTableList.add(block);
+    });
+    public static final Block END_FOAM = register("end_foam", new DefaultBlock(true, true, true, true, FabricBlockSettings.copy(Blocks.BUBBLE_CORAL_BLOCK)));
+    public static final Block END_CAP = register("end_cap", new DefaultPlantBlock(6, false, false, "end_cap_00", FabricBlockSettings.copy(Blocks.BROWN_MUSHROOM)));
 
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
@@ -138,6 +147,11 @@ public class MotherlodeBlocks {
 
     private static Block mineralBlock(int miningLevel) {
         return new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel)); 
+    }
+    private static PillarBlock logBlock(MaterialColor topMaterialColor, MaterialColor sideMaterialColor) {
+        return new PillarBlock(FabricBlockSettings.of(Material.WOOD, (blockState) -> {
+            return blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMaterialColor : sideMaterialColor;
+        }).strength(2.0F).sounds(BlockSoundGroup.WOOD));
     }
     
     static <T extends Block> T register(String name, T block, Item.Settings settings) {
