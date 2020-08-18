@@ -114,7 +114,7 @@ public class MotherlodeBlocks {
         defaultLootTableList.add(block);
     });
     public static final Block END_FOAM = register("end_foam", new DefaultBlock(true, true, true, true, FabricBlockSettings.copy(Blocks.BUBBLE_CORAL_BLOCK)));
-    public static final Block END_CAP = register("end_cap", new DefaultPlantBlock(6, false, false, "end_cap_00", FabricBlockSettings.copy(Blocks.BROWN_MUSHROOM)));
+    public static final Block END_CAP = register("end_cap", new DefaultPlantBlock(6, false, false, "endcap_01", FabricBlockSettings.copy(Blocks.BROWN_MUSHROOM)));
 
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
