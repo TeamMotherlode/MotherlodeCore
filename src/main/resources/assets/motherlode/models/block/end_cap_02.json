@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "motherlode:block/endcap_02"
+    "cross": "motherlode:block/end_cap_02"
   }
 }
