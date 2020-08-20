@@ -65,7 +65,7 @@ public class EnderInvasionUtil {
         if (noise >= END_FOAM_NOISE_THRESHOLD && checkEndFoam(chunk, pos))
             chunk.setBlockState(pos, MotherlodeBlocks.END_FOAM.getDefaultState(), false);
 
-        if (world.getLightLevel(pos) < 15 && noise >= END_CAP_NOISE_THRESHOLD && chunk.getBlockState(pos.down()).isOf(MotherlodeBlocks.END_GRASS_BLOCK)) {
+        if (world.getLightLevel(pos) < 15 && noise >= END_CAP_NOISE_THRESHOLD && chunk.getBlockState(pos.down()).isOf(MotherlodeBlocks.CORRUPTED_DIRT)) {
             chunk.setBlockState(pos, MotherlodeBlocks.END_CAP.getDefaultState(), false);
         }
     }
@@ -76,7 +76,7 @@ public class EnderInvasionUtil {
         for (int i = 3; i > 0; i--) {
 
             BlockPos blockPos = pos.down(i);
-            if (chunk.getBlockState(blockPos).isOf(MotherlodeBlocks.END_GRASS_BLOCK)) {
+            if (chunk.getBlockState(blockPos).isOf(MotherlodeBlocks.CORRUPTED_DIRT)) {
                 ground = true;
                 continue;
             }

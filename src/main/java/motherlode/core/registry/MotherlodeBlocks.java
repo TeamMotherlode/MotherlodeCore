@@ -105,7 +105,6 @@ public class MotherlodeBlocks {
     public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
     public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
 
-    public static final Block END_GRASS_BLOCK = register("end_grass_block", new DefaultBlock(true, false, true, true, FabricBlockSettings.copy(Blocks.GRASS_BLOCK)));
     public static final Block CORRUPTED_DIRT = register("corrupted_dirt", new DefaultBlock(true, true, true, true, FabricBlockSettings.copy(Blocks.DIRT)));
     public static final Block CORRUPTED_GRASS = register("corrupted_grass", new DefaultPlantBlock(12, false, false, "corrupted_grass_02", FabricBlockSettings.copy(Blocks.GRASS)));
     public static final Block WITHERED_LOG = register("withered_log", logBlock(MaterialColor.GRAY, MaterialColor.BLACK), block -> {
@@ -149,9 +148,7 @@ public class MotherlodeBlocks {
         return new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel)); 
     }
     private static PillarBlock logBlock(MaterialColor topMaterialColor, MaterialColor sideMaterialColor) {
-        return new PillarBlock(FabricBlockSettings.of(Material.WOOD, (blockState) -> {
-            return blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMaterialColor : sideMaterialColor;
-        }).strength(2.0F).sounds(BlockSoundGroup.WOOD));
+        return new PillarBlock(FabricBlockSettings.of(Material.WOOD, blockState -> blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMaterialColor : sideMaterialColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
     }
     
     static <T extends Block> T register(String name, T block, Item.Settings settings) {

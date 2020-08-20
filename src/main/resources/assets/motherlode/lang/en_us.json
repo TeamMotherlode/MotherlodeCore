@@ -175,9 +175,8 @@
     "block.motherlode.sandstone_slab": "Sandstone Slab",
     "block.motherlode.sandstone_stairs": "Sandstone Stairs",
 
-    "block.motherlode.end_grass_block": "End Grass Block",
     "block.motherlode.corrupted_dirt": "Corrupted Dirt",
-    "block.motherlode.end_grass": "End Grass",
+    "block.motherlode.corrupted_grass": "Corrupted Grass",
     "block.motherlode.withered_log": "Withered Log",
     "block.motherlode.end_foam": "End Foam",
     "block.motherlode.end_cap": "End Cap",

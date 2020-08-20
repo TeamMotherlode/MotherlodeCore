@@ -51,7 +51,7 @@ public class DefaultPlantBlock extends PlantBlock implements ArtificeProperties 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
 
-        return super.canPlantOnTop(floor, world, pos) || floor.isOf(MotherlodeBlocks.END_GRASS_BLOCK);
+        return super.canPlantOnTop(floor, world, pos) || floor.isOf(MotherlodeBlocks.CORRUPTED_DIRT);
     }
 
     @Override
