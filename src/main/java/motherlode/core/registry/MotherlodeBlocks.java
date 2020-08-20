@@ -2,11 +2,13 @@ package motherlode.core.registry;
 
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
+import motherlode.core.api.ArtificeProperties;
 import motherlode.core.block.*;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
@@ -17,6 +19,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,6 +118,13 @@ public class MotherlodeBlocks {
     public static final Block END_FOAM = register("end_foam", new DefaultBlock(true, true, true, true, true, FabricBlockSettings.copy(Blocks.SLIME_BLOCK)));
     public static final Block END_CAP = register("end_cap", new DefaultPlantBlock(6, false, false, "end_cap_01", FabricBlockSettings.copy(Blocks.BROWN_MUSHROOM)));
 
+    public static final Block WITHERED_OAK_LEAVES = register("withered_oak_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_DARK_OAK_LEAVES = register("withered_dark_oak_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_BIRCH_LEAVES = register("withered_birch_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_SPRUCE_LEAVES = register("withered_spruce_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_JUNGLE_LEAVES = register("withered_jungle_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_ACACIA_LEAVES = register("withered_acacia_leaves", leavesBlock(MaterialColor.PURPLE));
+
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
         defaultItemModelList.add(block);
@@ -150,6 +160,16 @@ public class MotherlodeBlocks {
     private static PillarBlock logBlock(MaterialColor topMaterialColor, MaterialColor sideMaterialColor) {
         return new PillarBlock(FabricBlockSettings.of(Material.WOOD, blockState -> blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMaterialColor : sideMaterialColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
     }
+
+    private static LeavesBlock leavesBlock(MaterialColor color) {
+        return new DefaultLeavesBlock(FabricBlockSettings.of(Material.LEAVES, color).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(MotherlodeBlocks::canSpawnOnLeaves).suffocates(MotherlodeBlocks::never).blockVision(MotherlodeBlocks::never));
+    }
+    private static Boolean canSpawnOnLeaves(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
+        return type == EntityType.OCELOT || type == EntityType.PARROT;
+    }
+    private static boolean never(BlockState state, BlockView world, BlockPos pos) {
+        return false;
+    }
     
     static <T extends Block> T register(String name, T block, Item.Settings settings) {
         return register(name, block, new BlockItem(block, settings));
@@ -173,19 +193,19 @@ public class MotherlodeBlocks {
         if (item != null) {
             MotherlodeItems.register(name, item);
         }
-        if (block instanceof DefaultBlock) {
-            DefaultBlock defaultBlock = (DefaultBlock)block;
-            if (defaultBlock.hasDefaultState()){
-                defaultStateList.add(defaultBlock);
+        if (block instanceof ArtificeProperties) {
+            ArtificeProperties properties = (ArtificeProperties) block;
+            if (properties.hasDefaultState()){
+                defaultStateList.add(block);
             }
-            if (defaultBlock.hasDefaultModel()){
-                defaultModelList.add(defaultBlock);
+            if (properties.hasDefaultModel()){
+                defaultModelList.add(block);
             }
-            if (defaultBlock.hasDefaultItemModel()) {
-                defaultItemModelList.add(defaultBlock);
+            if (properties.hasDefaultItemModel()) {
+                defaultItemModelList.add(block);
             }
-            if (defaultBlock.hasDefaultLootTable()) {
-                defaultLootTableList.add(defaultBlock);
+            if (properties.hasDefaultLootTable()) {
+                defaultLootTableList.add(block);
             }
         }
         return b;
