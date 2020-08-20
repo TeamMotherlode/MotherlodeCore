@@ -2,6 +2,7 @@ package motherlode.core.enderinvasion;
 
 import motherlode.core.Motherlode;
 import motherlode.core.registry.MotherlodeBlocks;
+import motherlode.core.registry.MotherlodeTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -83,7 +84,7 @@ public class EnderInvasionUtil {
             if (chunk.getBlockState(blockPos).isOf(MotherlodeBlocks.END_FOAM)) continue;
 
             if (ground) {
-                if (chunk.getBlockState(blockPos).isAir() || chunk.getBlockState(pos.down(i)).isOf(MotherlodeBlocks.CORRUPTED_GRASS))
+                if (chunk.getBlockState(blockPos).isAir() || MotherlodeTags.Blocks.END_FOAM_REPLACEABLE.contains(MotherlodeBlocks.END_FOAM))
                     chunk.setBlockState(blockPos, MotherlodeBlocks.END_FOAM.getDefaultState(), false);
                 else return false;
             }

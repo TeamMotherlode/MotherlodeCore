@@ -33,6 +33,7 @@ public class MotherlodeTags {
 	public static class Blocks {
 
 		public static final Tag<Block> SPREADABLE = register("spreadable");
+		public static final Tag<Block> END_FOAM_REPLACEABLE = register("end_foam_replaceable");
 
 		public static Tag<Block> register(String name) {
 			return TagRegistry.block(Motherlode.id(name));
