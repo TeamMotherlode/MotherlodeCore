@@ -15,13 +15,19 @@ public class MotherlodeOresToolsArmorMod implements ModInitializer, MotherlodeAs
     @Override
     public void onInitialize() {
 
+        MotherlodeOresToolsArmorBlocks.init();
         MotherlodeOresToolsArmorItems.init();
+        MotherlodeOresToolsArmorFeatures.register();
     }
 
     @Override
     public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
 
         for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeOresToolsArmorItems.ARTIFICE_PROCESSORS.entrySet()) {
+
+            entry.getValue().accept(pack, entry.getKey());
+        }
+        for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeOresToolsArmorBlocks.ARTIFICE_PROCESSORS.entrySet()) {
 
             entry.getValue().accept(pack, entry.getKey());
         }

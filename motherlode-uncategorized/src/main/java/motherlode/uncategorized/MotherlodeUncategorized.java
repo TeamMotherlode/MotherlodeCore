@@ -15,8 +15,8 @@ public class MotherlodeUncategorized implements ModInitializer {
     public void onInitialize() {
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
+        MotherlodeFeatures.register();
         MotherlodeEnchantments.init();
-        MotherlodeFeatures.init();
         MotherlodeStructures.init();
         MotherlodeBiomes.init();
         MotherlodeSounds.init();
@@ -24,11 +24,10 @@ public class MotherlodeUncategorized implements ModInitializer {
         MotherlodeTags.init();
 
         MotherlodeData.register();
-        MotherlodeFeatures.register();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create(Motherlode.id("blocks"))
-		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE.asItem()))
+		.icon(() -> new ItemStack(Blocks.IRON_ORE.asItem()))
 		.build();
 
     public static final ItemGroup ITEMS = FabricItemGroupBuilder.create(Motherlode.id("items"))

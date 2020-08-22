@@ -69,7 +69,7 @@ public class MotherlodeOresToolsArmorItems {
         ARTIFICE_PROCESSORS.put(id, p);
         register.register(id);
     }
-    private static final Registerable<Item> registerItem(Item item) {
+    private static Registerable<Item> registerItem(Item item) {
 
         return id -> Registry.register(Registry.ITEM, id, item);
     }
