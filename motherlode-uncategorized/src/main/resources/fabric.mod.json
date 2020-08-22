@@ -41,6 +41,7 @@
   "suggests": {
     "flamingo": "*"
   },
+  "description": "Everything that hasn't been moved to a module yet.",
   "custom": {
     "modmenu:parent": "motherlode"
   }

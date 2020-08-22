@@ -40,6 +40,7 @@
   "suggests": {
     "flamingo": "*"
   },
+  "description": "Adds a few new potions and changes vanilla potions' textures.",
   "custom": {
     "modmenu:parent": "motherlode"
   }

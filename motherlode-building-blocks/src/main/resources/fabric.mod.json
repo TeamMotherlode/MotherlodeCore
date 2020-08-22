@@ -40,6 +40,7 @@
   "suggests": {
     "flamingo": "*"
   },
+  "description": "Adds many new blocks for builders to use.",
   "custom": {
     "modmenu:parent": "motherlode"
   }

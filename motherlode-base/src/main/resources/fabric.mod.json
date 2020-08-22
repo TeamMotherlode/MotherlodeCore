@@ -38,6 +38,7 @@
   "suggests": {
     "flamingo": "*"
   },
+  "description": "Base API used by Motherlode's other modules.",
   "custom": {
     "modmenu:parent": "motherlode"
   }
