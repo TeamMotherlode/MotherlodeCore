@@ -6,103 +6,107 @@ package motherlode.core.entities.model;
 
 
 import motherlode.core.entities.ArmadilloEntity;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
+import software.bernie.geckolib.animation.model.AnimatedEntityModel;
+import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
+import software.bernie.geckolib.forgetofabric.ResourceLocation;
 
-public class ArmadilloModel extends EntityModel<ArmadilloEntity> {
-    private final ModelPart Tail;
-    private final ModelPart LegBackLeft;
-    private final ModelPart EarRight;
-    private final ModelPart BodyBack;
-    private final ModelPart Head;
-    private final ModelPart EarLeft;
-    private final ModelPart MainBody;
-    private final ModelPart LegFrontLeft;
-    //back right leg
-    private final ModelPart LegBackLeft_1;
-    //front right leg
-    private final ModelPart LegFrontLeft_1;
+public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
 
-    public ArmadilloModel() {
+
+    private final AnimatedModelRenderer Tail;
+    private final AnimatedModelRenderer LegBackLeft;
+    private final AnimatedModelRenderer BodyBack;
+    private final AnimatedModelRenderer Head;
+    private final AnimatedModelRenderer EarLeft;
+    private final AnimatedModelRenderer EarRight;
+    private final AnimatedModelRenderer MainBody;
+    private final AnimatedModelRenderer LegFrontLeft;
+    private final AnimatedModelRenderer LegBackLeft_1;
+    private final AnimatedModelRenderer LegFrontLeft_1;
+
+    public ArmadilloModel()
+    {
         textureWidth = 64;
         textureHeight = 32;
+        Tail = new AnimatedModelRenderer(this);
+        Tail.setRotationPoint(0.0F, 19.5F, 9.0F);
+        Tail.setTextureOffset(1, 25).addBox(-0.5F, -0.5F, 0.0F, 1.0F, 1.0F, 4.0F, 0.0F, false);
+        Tail.setModelRendererName("Tail");
+        this.registerModelRenderer(Tail);
 
-        Tail = new ModelPart(this);
-        Tail.setPivot(0.0F, 2.5F, 10.5F);
-        Tail.setTextureOffset(1, 25).addCuboid(-0.5F, -0.5F, 0.3F, 1.0F, 1.0F, 4.0F, 0.0F, false);
+        LegBackLeft = new AnimatedModelRenderer(this);
+        LegBackLeft.setRotationPoint(2.7F, 19.5F, 4.5F);
+        LegBackLeft.setTextureOffset(0, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, true);
+        LegBackLeft.setModelRendererName("LegBackLeft");
+        this.registerModelRenderer(LegBackLeft);
 
-        LegBackLeft = new ModelPart(this);
-        LegBackLeft.setPivot(2.3F, 2.5F, 6.5F);
-        LegBackLeft.setTextureOffset(0, 0).addCuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, true);
+        BodyBack = new AnimatedModelRenderer(this);
+        BodyBack.setRotationPoint(0.0F, 17.5F, 3.5F);
+        BodyBack.setTextureOffset(11, 18).addBox(-3.5F, -3.5F, -1.5F, 7.0F, 7.0F, 7.0F, 0.0F, false);
+        BodyBack.setModelRendererName("BodyBack");
+        this.registerModelRenderer(BodyBack);
 
-        EarRight = new ModelPart(this);
-        EarRight.setPivot(0.0F, 2.1F, -4.0F);
-        setRotationAngle(EarRight, 0.0F, 0.0F, 0.1707F);
-        EarRight.setTextureOffset(0, 16).addCuboid(0.4F, -4.8F, -1.0F, 2.0F, 2.0F, 0.0F, 0.0F, true);
+        Head = new AnimatedModelRenderer(this);
+        Head.setRotationPoint(0.0F, 17.1F, -6.0F);
+        Head.setTextureOffset(0, 16).addBox(-2.0F, -1.0F, -5.0F, 4.0F, 4.0F, 5.0F, 0.0F, false);
+        Head.setModelRendererName("Head");
+        this.registerModelRenderer(Head);
 
-        BodyBack = new ModelPart(this);
-        BodyBack.setPivot(0.0F, 0.5F, 3.5F);
-        BodyBack.setTextureOffset(11, 18).addCuboid(-3.5F, -3.5F, 0.3F, 7.0F, 7.0F, 7.0F, 0.0F, false);
-
-        Head = new ModelPart(this);
-        Head.setPivot(0.0F, 2.1F, -4.0F);
-        Head.setTextureOffset(0, 16).addCuboid(-2.0F, -3.0F, -5.0F, 4.0F, 4.0F, 5.0F, 0.0F, false);
-
-        EarLeft = new ModelPart(this);
-        EarLeft.setPivot(0.0F, 2.1F, -4.0F);
+        EarLeft = new AnimatedModelRenderer(this);
+        EarLeft.setRotationPoint(-1.0F, -1.0F, -1.0F);
+        Head.addChild(EarLeft);
         setRotationAngle(EarLeft, 0.0F, 0.0F, -0.1707F);
-        EarLeft.setTextureOffset(0, 16).addCuboid(-2.4F, -4.8F, -1.0F, 2.0F, 2.0F, 0.0F, 0.0F, false);
+        EarLeft.setTextureOffset(0, 16).addBox(-1.9241F, -1.6737F, 0.0F, 2.0F, 2.0F, 0.0F, 0.0F, false);
+        EarLeft.setModelRendererName("EarLeft");
+        this.registerModelRenderer(EarLeft);
 
-        MainBody = new ModelPart(this);
-        MainBody.setPivot(0.0F, 0.0F, 0.0F);
-        MainBody.setTextureOffset(0, 0).addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+        EarRight = new AnimatedModelRenderer(this);
+        EarRight.setRotationPoint(1.0F, -1.0F, -1.0F);
+        Head.addChild(EarRight);
+        setRotationAngle(EarRight, 0.0F, 0.0F, 0.1707F);
+        EarRight.setTextureOffset(0, 16).addBox(-0.0759F, -1.6737F, 0.0F, 2.0F, 2.0F, 0.0F, 0.0F, true);
+        EarRight.setModelRendererName("EarRight");
+        this.registerModelRenderer(EarRight);
 
-        LegFrontLeft = new ModelPart(this);
-        LegFrontLeft.setPivot(2.8F, 2.5F, -2.0F);
-        LegFrontLeft.setTextureOffset(0, 0).addCuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, true);
+        MainBody = new AnimatedModelRenderer(this);
+        MainBody.setRotationPoint(0.0F, 17.0F, -1.0F);
+        MainBody.setTextureOffset(0, 0).addBox(-4.0F, -4.0F, -5.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+        MainBody.setModelRendererName("MainBody");
+        this.registerModelRenderer(MainBody);
 
-        LegBackLeft_1 = new ModelPart(this);
-        LegBackLeft_1.setPivot(-2.7F, 2.5F, 6.5F);
-        LegBackLeft_1.setTextureOffset(0, 0).addCuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+        LegFrontLeft = new AnimatedModelRenderer(this);
+        LegFrontLeft.setRotationPoint(2.8F, 19.5F, -4.0F);
+        LegFrontLeft.setTextureOffset(0, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, true);
+        LegFrontLeft.setModelRendererName("LegFrontLeft");
+        this.registerModelRenderer(LegFrontLeft);
 
-        LegFrontLeft_1 = new ModelPart(this);
-        LegFrontLeft_1.setPivot(-2.8F, 2.5F, -2.0F);
-        LegFrontLeft_1.setTextureOffset(0, 0).addCuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+        LegBackLeft_1 = new AnimatedModelRenderer(this);
+        LegBackLeft_1.setRotationPoint(-2.7F, 19.5F, 4.5F);
+        LegBackLeft_1.setTextureOffset(0, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+        LegBackLeft_1.setModelRendererName("LegBackLeft_1");
+        this.registerModelRenderer(LegBackLeft_1);
+
+        LegFrontLeft_1 = new AnimatedModelRenderer(this);
+        LegFrontLeft_1.setRotationPoint(-2.8F, 19.5F, -4.0F);
+        LegFrontLeft_1.setTextureOffset(0, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, 0.0F, false);
+        LegFrontLeft_1.setModelRendererName("LegFrontLeft_1");
+        this.registerModelRenderer(LegFrontLeft_1);
+
+        this.rootBones.add(Tail);
+        this.rootBones.add(LegBackLeft);
+        this.rootBones.add(BodyBack);
+        this.rootBones.add(Head);
+        this.rootBones.add(MainBody);
+        this.rootBones.add(LegFrontLeft);
+        this.rootBones.add(LegBackLeft_1);
+        this.rootBones.add(LegFrontLeft_1);
     }
 
     @Override
-    public void setAngles(ArmadilloEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        this.Head.pitch = headPitch * 0.017453292F;
-        this.Head.yaw = headYaw * 0.017453292F;
-        this.MainBody.pitch = 1.5707964F;
-        this.LegBackLeft_1.pitch = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
-        this.LegBackLeft.pitch = MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
-        this.LegFrontLeft_1.pitch = MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
-        this.LegFrontLeft.pitch = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
+    public ResourceLocation getAnimationFileLocation()
+    {
+        return new ResourceLocation("motherlode", "animations/armadillo.animations.json");
     }
 
 
-    @Override
-    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-        Tail.render(matrixStack, buffer, packedLight, packedOverlay);
-        LegBackLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-        EarRight.render(matrixStack, buffer, packedLight, packedOverlay);
-        BodyBack.render(matrixStack, buffer, packedLight, packedOverlay);
-        Head.render(matrixStack, buffer, packedLight, packedOverlay);
-        EarLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-        MainBody.render(matrixStack, buffer, packedLight, packedOverlay);
-        LegFrontLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-        LegBackLeft_1.render(matrixStack, buffer, packedLight, packedOverlay);
-        LegFrontLeft_1.render(matrixStack, buffer, packedLight, packedOverlay);
-    }
-
-
-    public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
-        modelRenderer.pitch = x;
-        modelRenderer.yaw = y;
-        modelRenderer.roll = z;
-    }
 }

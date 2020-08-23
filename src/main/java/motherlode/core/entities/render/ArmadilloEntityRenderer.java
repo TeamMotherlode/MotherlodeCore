@@ -18,9 +18,9 @@ public class ArmadilloEntityRenderer extends MobEntityRenderer<ArmadilloEntity, 
         return new Identifier("motherlode","textures/entity/armadillo/armadillo.png");
     }
 
-    protected void scale(ArmadilloEntity armadilloEntity, MatrixStack matrixStack, float f) {
-        super.scale(armadilloEntity, matrixStack, f);
-        matrixStack.scale(0.8F, 0.8F, 0.8F);
-        matrixStack.translate(0.0D, 0.9D, 0.0D);
+    protected void setupTransforms(ArmadilloEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.setupTransforms(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks);
     }
+
+
 }
