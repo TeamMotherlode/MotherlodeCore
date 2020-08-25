@@ -2,14 +2,10 @@ package motherlode.redstone;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.api.ArtificeProcessor;
-import motherlode.redstone.MotherlodeBlockEntities;
-import motherlode.redstone.MotherlodeRedstoneBlocks;
-import motherlode.redstone.MotherlodeScreenHandlers;
 import motherlode.base.api.MotherlodeAssetsEntryPoint;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-
-import java.util.Map;
+import net.minecraft.util.Pair;
 
 public class MotherlodeRedstoneMod implements ModInitializer, MotherlodeAssetsEntryPoint {
 
@@ -25,9 +21,9 @@ public class MotherlodeRedstoneMod implements ModInitializer, MotherlodeAssetsEn
     @Override
     public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
 
-        for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeRedstoneBlocks.ARTIFICE_PROCESSORS.entrySet()) {
+        for(Pair<Identifier, ArtificeProcessor> entry: MotherlodeRedstoneBlocks.ARTIFICE_PROCESSORS) {
 
-            entry.getValue().accept(pack, entry.getKey());
+            entry.getRight().accept(pack, entry.getLeft());
         }
     }
 }

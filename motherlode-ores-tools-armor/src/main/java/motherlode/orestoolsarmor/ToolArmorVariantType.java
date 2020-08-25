@@ -9,9 +9,11 @@ import motherlode.orestoolsarmor.item.DefaultToolMaterial;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ToolArmorVariantType implements RegisterableVariantType<Item>, ArtificeProcessor {
 
@@ -26,7 +28,7 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Arti
     public final Item LEGGINGS;
     public final Item BOOTS;
 
-    private final Map<Item, Identifier> ALL = new HashMap<>();
+    private final List<Pair<Identifier, Item>> ALL = new ArrayList<>();
 
     public ToolArmorVariantType(Identifier id, DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
 
@@ -41,45 +43,39 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Arti
         this.LEGGINGS = new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT));
         this.BOOTS = new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT));
 
-        ALL.put(this.PICKAXE, Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"));
-        ALL.put(this.SWORD, Motherlode.id(id.getNamespace(), id.getPath() + "_sword"));
-        ALL.put(this.AXE, Motherlode.id(id.getNamespace(), id.getPath() + "_axe"));
-        ALL.put(this.SHOVEL, Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"));
-        ALL.put(this.HOE, Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), this.PICKAXE));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), this.SWORD));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), this.AXE));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"), this.SHOVEL));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), this.HOE));
 
-        ALL.put(this.HELMET, Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"));
-        ALL.put(this.CHESTPLATE, Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"));
-        ALL.put(this.LEGGINGS, Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"));
-        ALL.put(this.BOOTS, Motherlode.id(id.getNamespace(), id.getPath() + "_boots"));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"), this.HELMET));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"), this.CHESTPLATE));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"), this.LEGGINGS));
+        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_boots"), this.BOOTS));
     }
 
     @Override
     public void register(Identifier identifier) {
 
-        for(Map.Entry<Item, Identifier> entry: ALL.entrySet()) {
+        for(Pair<Identifier, Item> entry: ALL) {
 
-            Registry.register(Registry.ITEM, entry.getValue(), entry.getKey());
+            Registry.register(Registry.ITEM, entry.getLeft(), entry.getRight());
         }
     }
 
     @Override
     public Item[] variants() {
-        return ALL.keySet().toArray(new Item[ALL.size()]);
+        return ALL.stream().map(Pair::getRight).collect(Collectors.toList()).toArray(new Item[ALL.size()]);
     }
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
 
-        CommonArtificeProcessors.HANDHELD_ITEM_MODEL.accept(pack, ALL.get(PICKAXE));
-        CommonArtificeProcessors.HANDHELD_ITEM_MODEL.accept(pack, ALL.get(SWORD));
-        CommonArtificeProcessors.HANDHELD_ITEM_MODEL.accept(pack, ALL.get(AXE));
-        CommonArtificeProcessors.HANDHELD_ITEM_MODEL.accept(pack, ALL.get(SHOVEL));
-        CommonArtificeProcessors.HANDHELD_ITEM_MODEL.accept(pack, ALL.get(HOE));
+        for(Pair<Identifier, Item> entry: ALL) {
 
-        CommonArtificeProcessors.DEFAULT_ITEM_MODEL.accept(pack, ALL.get(HELMET));
-        CommonArtificeProcessors.DEFAULT_ITEM_MODEL.accept(pack, ALL.get(CHESTPLATE));
-        CommonArtificeProcessors.DEFAULT_ITEM_MODEL.accept(pack, ALL.get(LEGGINGS));
-        CommonArtificeProcessors.DEFAULT_ITEM_MODEL.accept(pack, ALL.get(BOOTS));
+            CommonArtificeProcessors.DEFAULT_ITEM_MODEL.accept(pack, entry.getLeft());
+        }
     }
 }
 

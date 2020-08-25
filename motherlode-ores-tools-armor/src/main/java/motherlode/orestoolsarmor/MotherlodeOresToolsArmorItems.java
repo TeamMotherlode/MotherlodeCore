@@ -4,18 +4,19 @@ import motherlode.base.CommonArtificeProcessors;
 import motherlode.base.Motherlode;
 import motherlode.base.api.ArtificeProcessor;
 import motherlode.base.api.Registerable;
-import motherlode.orestoolsarmor.item.MotherlodeMaterials;
 import motherlode.orestoolsarmor.item.DefaultGemItem;
+import motherlode.orestoolsarmor.item.MotherlodeMaterials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MotherlodeOresToolsArmorItems {
-    
-    public static final Map<Identifier, ArtificeProcessor> ARTIFICE_PROCESSORS = new HashMap<>();
+
+    public static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
     private static Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final Item COPPER_INGOT = register("copper_ingot");
@@ -66,7 +67,7 @@ public class MotherlodeOresToolsArmorItems {
     public static void register(String name, Registerable<Item> register, ArtificeProcessor p) {
 
         Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
-        ARTIFICE_PROCESSORS.put(id, p);
+        ARTIFICE_PROCESSORS.add(new Pair<>(id, p));
         register.register(id);
     }
     private static Registerable<Item> registerItem(Item item) {

@@ -5,8 +5,7 @@ import motherlode.base.api.ArtificeProcessor;
 import motherlode.base.api.MotherlodeAssetsEntryPoint;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-
-import java.util.Map;
+import net.minecraft.util.Pair;
 
 public class MotherlodeOresToolsArmorMod implements ModInitializer, MotherlodeAssetsEntryPoint {
 
@@ -23,13 +22,13 @@ public class MotherlodeOresToolsArmorMod implements ModInitializer, MotherlodeAs
     @Override
     public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
 
-        for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeOresToolsArmorItems.ARTIFICE_PROCESSORS.entrySet()) {
+        for(Pair<Identifier, ArtificeProcessor> entry: MotherlodeOresToolsArmorItems.ARTIFICE_PROCESSORS) {
 
-            entry.getValue().accept(pack, entry.getKey());
+            entry.getRight().accept(pack, entry.getLeft());
         }
-        for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeOresToolsArmorBlocks.ARTIFICE_PROCESSORS.entrySet()) {
+        for(Pair<Identifier, ArtificeProcessor> entry: MotherlodeOresToolsArmorBlocks.ARTIFICE_PROCESSORS) {
 
-            entry.getValue().accept(pack, entry.getKey());
+            entry.getRight().accept(pack, entry.getLeft());
         }
     }
 }

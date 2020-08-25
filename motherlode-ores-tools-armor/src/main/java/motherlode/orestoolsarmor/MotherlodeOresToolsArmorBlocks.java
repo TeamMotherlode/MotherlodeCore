@@ -12,13 +12,15 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MotherlodeOresToolsArmorBlocks {
 
-    public static final Map<Identifier, ArtificeProcessor> ARTIFICE_PROCESSORS = new HashMap<>();
+    public static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
+    private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final DefaultOreBlock COPPER_ORE = register("copper_ore", new DefaultOreBlock(3, 7, 12, 3, 11, 64, false, 1));
     public static final DefaultOreBlock SILVER_ORE = register("silver_ore", new DefaultOreBlock(2));
@@ -54,10 +56,9 @@ public class MotherlodeOresToolsArmorBlocks {
 
         Registry.register(Registry.BLOCK, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), block);
         Registry.register(Registry.ITEM, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), new BlockItem(block, BLOCK_ITEM_SETTINGS));
-        ARTIFICE_PROCESSORS.put(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.FULL_BLOCK);
+        ARTIFICE_PROCESSORS.add(new Pair<>(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.FULL_BLOCK));
         return block;
     }
-    private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static void init() {
 

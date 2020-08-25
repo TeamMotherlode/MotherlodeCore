@@ -5,8 +5,7 @@ import motherlode.base.api.ArtificeProcessor;
 import motherlode.base.api.MotherlodeAssetsEntryPoint;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-
-import java.util.Map;
+import net.minecraft.util.Pair;
 
 public class MotherlodeBuildingBlocksMod implements ModInitializer, MotherlodeAssetsEntryPoint {
 
@@ -21,9 +20,9 @@ public class MotherlodeBuildingBlocksMod implements ModInitializer, MotherlodeAs
     @Override
     public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
 
-        for(Map.Entry<Identifier, ArtificeProcessor> entry: MotherlodeBuildingBlocks.ARTIFICE_PROCESSORS.entrySet()) {
+        for(Pair<Identifier, ArtificeProcessor> entry: MotherlodeBuildingBlocks.ARTIFICE_PROCESSORS) {
 
-            entry.getValue().accept(pack, entry.getKey());
+            entry.getRight().accept(pack, entry.getLeft());
         }
     }
 }
