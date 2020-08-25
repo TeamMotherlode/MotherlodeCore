@@ -13,7 +13,7 @@ public class MotherlodeBuildingBlocks {
     static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
 
     public static final StoneVariantType LIMESTONE = register(StoneVariantType.newStone("limestone",false));
-    public static final StoneVariantType GRAVESTONE = register( StoneVariantType.newStone("gravestone",true));
+    public static final StoneVariantType GRAVESTONE = register(StoneVariantType.newStone("gravestone",true));
     public static final StoneVariantType JASPER =  register(StoneVariantType.newStone("jasper",false));
     public static final StoneVariantType MARBLE =  register(StoneVariantType.newStone("marble",false));
     public static final StoneVariantType SLATE =  register(StoneVariantType.newStone("slate",false));
