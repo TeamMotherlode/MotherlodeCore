@@ -5,16 +5,18 @@ import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 import motherlode.base.Motherlode;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class MotherlodeData {
     
     public void init(){
+        // Called to load the class
     }
 
     public static void register(){
-        Artifice.registerData(Motherlode.id("server_pack"), pack -> {
+        Artifice.registerData(Motherlode.id("data_pack"), pack -> {
            for(Block block : MotherlodeBlocks.defaultLootTableList){
-                String blockId = block.getTranslationKey().replace("block.motherlode.","");
+                String blockId = Registry.BLOCK.getId(block).getPath();
                 pack.addLootTable(Motherlode.id("blocks/"+blockId), table -> table
                 .type(new Identifier("minecraft:block"))
                 .pool(pool -> pool

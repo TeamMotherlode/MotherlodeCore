@@ -2,7 +2,6 @@ package motherlode.uncategorized.registry;
 
 import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.base.Motherlode;
 import motherlode.base.api.MotherlodeAssetsEntryPoint;
@@ -12,10 +11,8 @@ import motherlode.uncategorized.block.stateproperty.BlockDyeColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -198,36 +195,5 @@ public class MotherlodeAssets implements MotherlodeAssetsEntryPoint {
     public static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
         override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
         return override;
-    }
-
-
-    private static final String[] facings = new String[]{"east", "north", "south", "west"};
-    private static final String[] halfs = new String[]{"bottom", "top"};
-    private static final String[] shapes = new String[]{"inner_left", "inner_right", "outer_left", "outer_right", "straight"};
-    private static final String[] modelStrings = new String[]{"", "_inner", "_outer"};
-
-    // models: 0 = "", 1 = "_inner", 2 = "_outer" | xs & ys: # = # * 90
-    private static final int[] models = new int[]{1, 1, 2, 2, 0, 1, 1, 2, 2, 0};
-    private static final int[] xs = new int[]{0, 0, 0, 0, 0, 2, 2, 2, 2, 2};
-    private static final int[] ys = new int[]{3, 0, 3, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2};
-
-    private static void stairBlockState(BlockStateBuilder builder, String id) {
-        int i = 0;
-        for (String facing : facings) {
-            int j = 0;
-            for (String half : halfs) {
-                for (String shape : shapes) {
-                    int jj = j;
-                    int ii = i;
-                    builder.variant("facing=" + facing + ",half=" + half + ",shape=" + shape, settings ->
-                            settings.model(Motherlode.id("block/" + id + modelStrings[models[jj]]))
-                                    .rotationX(xs[jj] * 90)
-                                    .rotationY(ys[ii] * 90)
-                                    .uvlock(xs[jj] != 0 || ys[ii] != 0));
-                    i++;
-                    j++;
-                }
-            }
-        }
     }
 }

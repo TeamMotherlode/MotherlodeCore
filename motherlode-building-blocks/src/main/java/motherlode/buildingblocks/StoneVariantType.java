@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class StoneVariantType implements RegisterableVariantType<Block>, ArtificeProcessor {
@@ -149,6 +148,10 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
     }
 
+    private static final ArtificeProcessor block = CommonArtificeProcessors.DEFAULT_BLOCK_STATE.andThen(CommonArtificeProcessors.DEFAULT_BLOCK_MODEL);
+    private static final ArtificeProcessor stair = CommonArtificeProcessors.STAIR.andThen(CommonArtificeProcessors.BLOCK_ITEM);
+    private static final ArtificeProcessor slab = CommonArtificeProcessors.SLAB.andThen(CommonArtificeProcessors.BLOCK_ITEM);
+
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier identifier) {
 
@@ -160,15 +163,13 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
 
             if(PILLAR != entry.getRight()) {
 
-                CommonArtificeProcessors.FULL_BLOCK.accept(pack, entry.getLeft());
+                block.accept(pack, entry.getLeft());
             }
             else {
 
                 CommonArtificeProcessors.PILLAR.accept(pack, entry.getLeft());
             }
         }
-        BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> stair = CommonArtificeProcessors.STAIR.andThen(CommonArtificeProcessors.BLOCK_ITEM);
-        BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> slab = CommonArtificeProcessors.SLAB.andThen(CommonArtificeProcessors.BLOCK_ITEM);
 
         for(Map.Entry<Block, Block> entry: STAIRS.entrySet()) {
 

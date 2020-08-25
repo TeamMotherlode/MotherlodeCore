@@ -56,7 +56,7 @@ public class MotherlodeOresToolsArmorBlocks {
 
         Registry.register(Registry.BLOCK, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), block);
         Registry.register(Registry.ITEM, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), new BlockItem(block, BLOCK_ITEM_SETTINGS));
-        ARTIFICE_PROCESSORS.add(new Pair<>(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.FULL_BLOCK));
+        ARTIFICE_PROCESSORS.add(new Pair<>(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.DEFAULT_BLOCK));
         return block;
     }
 

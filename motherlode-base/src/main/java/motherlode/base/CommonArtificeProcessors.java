@@ -22,6 +22,7 @@ public class CommonArtificeProcessors {
                 .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
     };
+
     public static final ArtificeProcessor DEFAULT_BLOCK_STATE = (pack, id) -> {
 
         pack.addBlockState(id, state -> state
@@ -30,13 +31,17 @@ public class CommonArtificeProcessors {
                 )
         );
     };
-    public static final ArtificeProcessor FULL_BLOCK = BLOCK_ITEM.after(DEFAULT_BLOCK_STATE.andThen((pack, id) -> {
+
+    public static final ArtificeProcessor DEFAULT_BLOCK_MODEL = (pack, id) -> {
 
         pack.addBlockModel(id, state -> state
                 .parent(new Identifier("block/cube_all"))
                 .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    }));
+    };
+
+    public static final ArtificeProcessor DEFAULT_BLOCK = DEFAULT_BLOCK_STATE.andThen(DEFAULT_BLOCK_MODEL).andThen(BLOCK_ITEM);
+
     public static final ArtificeProcessor PLANT = (pack, id) -> {
 
        pack.addBlockModel(id, state -> state
@@ -44,6 +49,7 @@ public class CommonArtificeProcessors {
                 .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
     };
+
     public static final ArtificeProcessor THICK_CROSS = (pack, id) -> {
 
         pack.addBlockModel(id, state -> state
@@ -51,6 +57,7 @@ public class CommonArtificeProcessors {
                 .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
     };
+
     public static final ArtificeProcessor FLAT_ITEM_MODEL = (pack, id) -> {
 
         pack.addItemModel(id, state -> state
@@ -58,6 +65,7 @@ public class CommonArtificeProcessors {
                 .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
     };
+
     public static final ArtificeProcessor DEFAULT_ITEM_MODEL = (pack, id) -> {
 
         pack.addItemModel(id, state -> state
@@ -65,6 +73,7 @@ public class CommonArtificeProcessors {
                 .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
         );
     };
+
     public static final ArtificeProcessor HANDHELD_ITEM_MODEL = (pack, id) -> {
 
         pack.addItemModel(id, state -> state
@@ -72,6 +81,7 @@ public class CommonArtificeProcessors {
                 .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
         );
     };
+
     public static final ArtificeProcessor PILLAR = (pack, id) -> {
 
         for (String variant : new String[]{"", "_horizontal"}) {
@@ -102,6 +112,7 @@ public class CommonArtificeProcessors {
         }
         pack.addBlockState(id, builder -> stairBlockState(builder, id));
     };
+
     private static void stairBlockState(BlockStateBuilder builder, Identifier id) {
         int i = 0;
         for (String facing : facings) {
@@ -121,6 +132,7 @@ public class CommonArtificeProcessors {
             }
         }
     }
+
     public static final ArtificeProcessor SLAB = (pack, id) -> {
 
         String texId = id.getPath().replace("_slab", "").replace("_pillar", "_pillar_side");
