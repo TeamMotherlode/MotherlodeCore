@@ -1,6 +1,6 @@
-package motherlode.uncategorized.world.feature.structure;
+package motherlode.biomes.world.feature.structure;
 
-import motherlode.uncategorized.registry.MotherlodeStructures;
+import motherlode.biomes.world.MotherlodeStructures;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.structure.PoolStructurePiece;
 import net.minecraft.structure.StructureManager;

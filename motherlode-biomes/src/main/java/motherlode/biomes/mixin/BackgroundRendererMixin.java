@@ -1,7 +1,7 @@
-package motherlode.uncategorized.mixins;
+package motherlode.biomes.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import motherlode.uncategorized.world.biome.AbstractFoggyBiome;
+import motherlode.biomes.world.AbstractFoggyBiome;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.fluid.Fluids;

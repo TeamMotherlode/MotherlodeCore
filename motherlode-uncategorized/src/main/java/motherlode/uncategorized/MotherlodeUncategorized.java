@@ -15,10 +15,7 @@ public class MotherlodeUncategorized implements ModInitializer {
     public void onInitialize() {
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
-        MotherlodeFeatures.register();
         MotherlodeEnchantments.init();
-        MotherlodeStructures.init();
-        MotherlodeBiomes.init();
         MotherlodeSounds.init();
         MotherlodeFluids.init();
         MotherlodeTags.init();

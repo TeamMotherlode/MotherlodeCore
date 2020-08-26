@@ -1,4 +1,4 @@
-package motherlode.uncategorized.world.feature.structure;
+package motherlode.biomes.world.feature.structure;
 
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureStart;

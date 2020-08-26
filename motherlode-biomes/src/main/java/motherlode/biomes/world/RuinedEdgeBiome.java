@@ -1,4 +1,4 @@
-package motherlode.uncategorized.world.biome;
+package motherlode.biomes.world;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -7,8 +7,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-
-import java.awt.*;
 
 public class RuinedEdgeBiome extends Biome {
     public RuinedEdgeBiome() {

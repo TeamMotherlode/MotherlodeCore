@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-biomes",
+  "version": "${version}",
+
+  "name": "Motherlode Biomes",
+  "description": "",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-biomes"
+  },
+
+  "license": "MIT License",
+  "icon": "assets/motherlode-biomes/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.biomes.MotherlodeBiomesMod"
+    ],
+    "client": [
+      "motherlode.biomes.MotherlodeBiomesClient"
+    ],
+    "motherlode:assets": [
+      "motherlode.biomes.MotherlodeBiomesMod"
+    ]
+  },
+  "mixins": [
+    "motherlode-biomes.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "description": "Adds some new biomes to the world.",
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

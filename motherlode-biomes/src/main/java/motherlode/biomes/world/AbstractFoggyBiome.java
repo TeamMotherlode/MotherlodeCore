@@ -1,4 +1,4 @@
-package motherlode.uncategorized.world.biome;
+package motherlode.biomes.world;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.world.biome.Biome;

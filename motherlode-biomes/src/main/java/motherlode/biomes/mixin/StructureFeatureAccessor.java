@@ -1,4 +1,4 @@
-package motherlode.uncategorized.mixins;
+package motherlode.biomes.mixin;
 
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.StructureFeature;

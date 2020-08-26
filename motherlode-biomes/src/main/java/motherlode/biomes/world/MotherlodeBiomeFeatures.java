@@ -1,7 +1,8 @@
-package motherlode.uncategorized.registry;
+package motherlode.biomes.world;
 
 import motherlode.base.Motherlode;
-import motherlode.uncategorized.world.feature.MarshFeature;
+import motherlode.biomes.world.feature.MarshFeature;
+import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -21,12 +22,12 @@ import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
 /**
  * @author Indigo Amann
  */
-public class MotherlodeFeatures {
+public class MotherlodeBiomeFeatures {
 
     public static final Feature<DefaultFeatureConfig> MARSH = register("marsh", new MarshFeature());
 
     public static void register() {
-        Registry.BIOME.forEach(MotherlodeFeatures::addToBiome);
+        Registry.BIOME.forEach(MotherlodeBiomeFeatures::addToBiome);
         RegistryEntryAddedCallback.event(Registry.BIOME).register((i, identifier, biome) -> addToBiome(biome));
     }
 

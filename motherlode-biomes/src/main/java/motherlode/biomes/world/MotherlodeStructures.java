@@ -1,10 +1,11 @@
-package motherlode.uncategorized.registry;
+package motherlode.biomes.world;
 
 import motherlode.base.Motherlode;
-import motherlode.uncategorized.mixins.StructureFeatureAccessor;
-import motherlode.uncategorized.world.feature.structure.CampGenerator;
-import motherlode.uncategorized.world.feature.structure.CampStructureFeature;
-import motherlode.uncategorized.world.feature.structure.RuinedCampsData;
+import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.mixin.StructureFeatureAccessor;
+import motherlode.biomes.world.feature.structure.CampGenerator;
+import motherlode.biomes.world.feature.structure.CampStructureFeature;
+import motherlode.biomes.world.feature.structure.RuinedCampsData;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.GenerationStep;
@@ -20,12 +21,12 @@ public class MotherlodeStructures {
         RuinedCampsData.init();
     }
 
-    static StructureFeature register(String name, GenerationStep.Feature genStep, StructureFeature entry) {
+    static StructureFeature<StructurePoolFeatureConfig> register(String name, GenerationStep.Feature genStep, StructureFeature<StructurePoolFeatureConfig> entry) {
         StructureFeature.STRUCTURES.put(name, entry);
         StructureFeatureAccessor.getStructureGenStepMap().put(entry, genStep);
-        return Registry.register(Registry.STRUCTURE_FEATURE, Motherlode.id(name), entry);
+        return Registry.register(Registry.STRUCTURE_FEATURE, Motherlode.id(MotherlodeBiomesMod.MODID, name), entry);
     }
     static StructurePieceType register(String name, StructurePieceType entry) {
-        return Registry.register(Registry.STRUCTURE_PIECE, Motherlode.id(name), entry);
+        return Registry.register(Registry.STRUCTURE_PIECE, Motherlode.id(MotherlodeBiomesMod.MODID, name), entry);
     }
 }

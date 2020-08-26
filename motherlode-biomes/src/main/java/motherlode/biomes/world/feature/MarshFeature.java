@@ -1,4 +1,4 @@
-package motherlode.uncategorized.world.feature;
+package motherlode.biomes.world.feature;
 
 import motherlode.uncategorized.block.ReedsBlock;
 import motherlode.uncategorized.registry.MotherlodeBlocks;
