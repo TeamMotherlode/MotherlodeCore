@@ -3,6 +3,7 @@ package motherlode.orestoolsarmor;
 import motherlode.base.CommonArtificeProcessors;
 import motherlode.base.Motherlode;
 import motherlode.base.api.ArtificeProcessor;
+import motherlode.orestoolsarmor.MotherlodeOreBlock.Dimension;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
@@ -22,18 +23,18 @@ public class MotherlodeOresToolsArmorBlocks {
     public static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
-    public static final DefaultOreBlock COPPER_ORE = register("copper_ore", new DefaultOreBlock(3, 7, 12, 3, 11, 64, false, 1));
-    public static final DefaultOreBlock SILVER_ORE = register("silver_ore", new DefaultOreBlock(2));
-    public static final DefaultOreBlock CHARITE_ORE = register("charite_ore", new DefaultOreBlock(3, true));
-    public static final DefaultOreBlock ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock( 4, true));
-    public static final DefaultOreBlock TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(5));
-    public static final DefaultOreBlock ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(6));
-    public static final DefaultOreBlock AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(2));
-    public static final DefaultOreBlock HOWLITE_ORE = register("howlite_ore", new DefaultOreBlock(2));
-    public static final DefaultOreBlock RUBY_ORE = register("ruby_ore", new DefaultOreBlock(2));
-    public static final DefaultOreBlock SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(2));
-    public static final DefaultOreBlock TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(2));
-    public static final DefaultOreBlock ONYX_ORE = register("onyx_ore", new DefaultOreBlock(2));
+    public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(3, 7, 12, 3, 11, 64, Dimension.OVERWORLD, 1));
+    public static final MotherlodeOreBlock SILVER_ORE = register("silver_ore", new MotherlodeOreBlock(2));
+    public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(3, Dimension.NETHER));
+    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock( 4, Dimension.NETHER));
+    public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(5));
+    public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(6));
+    public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(2));
+    public static final MotherlodeOreBlock HOWLITE_ORE = register("howlite_ore", new MotherlodeOreBlock(2));
+    public static final MotherlodeOreBlock RUBY_ORE = register("ruby_ore", new MotherlodeOreBlock(2));
+    public static final MotherlodeOreBlock SAPPHIRE_ORE = register("sapphire_ore", new MotherlodeOreBlock(2));
+    public static final MotherlodeOreBlock TOPAZ_ORE = register("topaz_ore", new MotherlodeOreBlock(2));
+    public static final MotherlodeOreBlock ONYX_ORE = register("onyx_ore", new MotherlodeOreBlock(2));
 
     public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1));
     public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2));
