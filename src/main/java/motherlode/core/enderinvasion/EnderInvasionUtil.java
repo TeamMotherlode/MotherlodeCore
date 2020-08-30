@@ -12,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.condition.LootConditionType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
@@ -28,6 +29,9 @@ public class EnderInvasionUtil {
     private static final double END_FOAM_NOISE_THRESHOLD = 0.9;
     private static final double DECORATION_NOISE_SCALE = 0.05;
 
+    private static SimplexNoiseSampler NOISE_GENERATOR;
+    private static long NOISE_GENERATOR_SEED;
+
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         // TODO add functionality (block spread)
@@ -42,6 +46,12 @@ public class EnderInvasionUtil {
 
         int maxY = chunk.getHighestNonEmptySectionYOffset() * 16;
 
+        if(NOISE_GENERATOR == null || NOISE_GENERATOR_SEED != world.getSeed()) {
+
+            NOISE_GENERATOR = new SimplexNoiseSampler(new Random(world.getSeed()));
+            NOISE_GENERATOR_SEED = world.getSeed();
+        }
+
         for (int x = 0; x < 16; x++) {
 
             for (int y = 0; y < maxY; y++) {
@@ -50,7 +60,7 @@ public class EnderInvasionUtil {
 
                     BlockPos pos = new BlockPos(chunk.getPos().x * 16 + x, y, chunk.getPos().z * 16 + z);
 
-                    if (SimplexNoise.noise(pos.getX() * NOISE_SCALE, pos.getY() * NOISE_SCALE, pos.getZ() * NOISE_SCALE) < NOISE_THRESHOLD)
+                    if (NOISE_GENERATOR.method_22416(pos.getX() * NOISE_SCALE, pos.getY() * NOISE_SCALE, pos.getZ() * NOISE_SCALE) < NOISE_THRESHOLD)
                         continue;
 
                     BlockState state = chunk.getBlockState(pos);
@@ -70,7 +80,7 @@ public class EnderInvasionUtil {
     public static void generateDecoration(ServerWorld world, WorldChunk chunk, BlockPos pos) {
 
         if (!chunk.getBlockState(pos).isAir() && !chunk.getBlockState(pos).isOf(MotherlodeBlocks.CORRUPTED_GRASS)) return;
-        double noise = SimplexNoise.noise(pos.getX() * DECORATION_NOISE_SCALE, pos.getY() * DECORATION_NOISE_SCALE, pos.getZ() * DECORATION_NOISE_SCALE);
+        double noise = NOISE_GENERATOR.method_22416(pos.getX() * DECORATION_NOISE_SCALE, pos.getY() * DECORATION_NOISE_SCALE, pos.getZ() * DECORATION_NOISE_SCALE);
 
         if (noise >= END_FOAM_NOISE_THRESHOLD && checkEndFoam(chunk, pos))
             chunk.setBlockState(pos, MotherlodeBlocks.END_FOAM.getDefaultState(), false);
