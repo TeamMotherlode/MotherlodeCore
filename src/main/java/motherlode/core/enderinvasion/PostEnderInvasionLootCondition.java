@@ -1,0 +1,49 @@
+package motherlode.core.enderinvasion;
+
+import com.google.common.collect.ImmutableSet;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import motherlode.core.Motherlode;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.condition.LootConditionType;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameter;
+import net.minecraft.util.JsonSerializer;
+import java.util.Set;
+
+public class PostEnderInvasionLootCondition implements LootCondition {
+    private static final PostEnderInvasionLootCondition INSTANCE = new PostEnderInvasionLootCondition();
+
+    private PostEnderInvasionLootCondition() {
+    }
+
+    public LootConditionType getType() {
+        return EnderInvasionUtil.POST_ENDER_INVASION_LOOT_CONDITION;
+    }
+
+    public Set<LootContextParameter<?>> getRequiredParameters() {
+        return ImmutableSet.of();
+    }
+
+    public boolean test(LootContext lootContext) {
+        return Motherlode.ENDER_INVASION_STATE.get(lootContext.getWorld().getLevelProperties()).value()
+                .ordinal() >= EnderInvasionState.ENDER_INVASION.ordinal();
+    }
+
+    public static LootCondition.Builder builder() {
+        return () -> INSTANCE;
+    }
+
+    public static class Serializer implements JsonSerializer<PostEnderInvasionLootCondition> {
+        public Serializer() {
+        }
+
+        public void toJson(JsonObject jsonObject, PostEnderInvasionLootCondition postEnderInvasionLootCondition, JsonSerializationContext jsonSerializationContext) {
+        }
+
+        public PostEnderInvasionLootCondition fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext) {
+            return PostEnderInvasionLootCondition.INSTANCE;
+        }
+    }
+}

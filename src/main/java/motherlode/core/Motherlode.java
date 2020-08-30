@@ -37,10 +37,15 @@ public class Motherlode implements ModInitializer {
         MotherlodeScreenHandlers.init();
         MotherlodePotions.init();
 
+        EnderInvasionUtil.changeEnderPearlTrade();
+
         MotherlodeData.register();
         MotherlodeFeatures.register();
         MotherlodeSpreadRecipes.register();
     }
+
+    private static final Identifier PIGLIN_BARTERING_LOOT_TABLE_ID = new Identifier("minecraft", "gameplay/piglin_bartering");
+
     private  void initializeEnderInvasion() {
 
         LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(ENDER_INVASION_STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
