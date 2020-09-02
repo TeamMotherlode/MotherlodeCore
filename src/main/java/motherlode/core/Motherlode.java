@@ -1,11 +1,13 @@
 package motherlode.core;
 
+import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
+import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentInitializer;
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
+import dev.onyxstudios.cca.api.v3.level.LevelComponentFactoryRegistry;
+import dev.onyxstudios.cca.api.v3.level.LevelComponentInitializer;
 import motherlode.core.enderinvasion.*;
 import motherlode.core.registry.*;
-import nerdhub.cardinal.components.api.ComponentRegistry;
-import nerdhub.cardinal.components.api.ComponentType;
-import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
-import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
@@ -14,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
-public class Motherlode implements ModInitializer {
+public class Motherlode implements ModInitializer, LevelComponentInitializer, ChunkComponentInitializer {
     private static final String MODID = "motherlode";
 
 
@@ -46,10 +48,7 @@ public class Motherlode implements ModInitializer {
 
     private static final Identifier PIGLIN_BARTERING_LOOT_TABLE_ID = new Identifier("minecraft", "gameplay/piglin_bartering");
 
-    private  void initializeEnderInvasion() {
-
-        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(ENDER_INVASION_STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
-        ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(ENDER_INVASION_CHUNK_STATE, new EnderInvasionChunkComponentImpl(EnderInvasionChunkState.PRE_ECHERITE)));
+    private void initializeEnderInvasion() {
 
         ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionUtil::convertChunk);
     }
@@ -70,11 +69,23 @@ public class Motherlode implements ModInitializer {
             .icon(() -> new ItemStack(Items.MUSIC_DISC_CAT))
             .build();
 
-    public static final ComponentType<EnderInvasionComponent> ENDER_INVASION_STATE =
-            ComponentRegistry.INSTANCE.registerIfAbsent(id("enderinvasion_state"), EnderInvasionComponent.class);
+    public static final ComponentKey<EnderInvasionComponent> ENDER_INVASION_STATE =
+            ComponentRegistryV3.INSTANCE.getOrCreate(id("enderinvasion_state"), EnderInvasionComponent.class);
 
-    public static final ComponentType<EnderInvasionChunkComponent> ENDER_INVASION_CHUNK_STATE =
-            ComponentRegistry.INSTANCE.registerIfAbsent(id("enderinvasion_chunk_state"), EnderInvasionChunkComponent.class);
+    public static final ComponentKey<EnderInvasionChunkComponent> ENDER_INVASION_CHUNK_STATE =
+            ComponentRegistryV3.INSTANCE.getOrCreate(id("enderinvasion_chunk_state"), EnderInvasionChunkComponent.class);
+
+    @Override
+    public void registerLevelComponentFactories(LevelComponentFactoryRegistry registry) {
+
+        registry.register(ENDER_INVASION_STATE, levelProperties -> new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE));
+    }
+
+    @Override
+    public void registerChunkComponentFactories(ChunkComponentFactoryRegistry registry) {
+
+        registry.register(ENDER_INVASION_CHUNK_STATE, chunk -> new EnderInvasionChunkComponentImpl(EnderInvasionChunkState.PRE_ECHERITE));
+    }
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);

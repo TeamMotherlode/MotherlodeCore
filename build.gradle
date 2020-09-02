@@ -38,7 +38,7 @@ dependencies {
 	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
 	include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
 
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
+	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-level:${project.cardinal_components_version}"
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-chunk:${project.cardinal_components_version}"
 	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
