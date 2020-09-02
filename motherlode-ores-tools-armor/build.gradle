@@ -2,8 +2,8 @@ version = "1.0.0+$project.minecraft_version"
 
 dependencies {
 
-    modApi project(path: ":motherlode-base", configuration: "dev")
-    modCompile project(path: ":motherlode-uncategorized", configuration: "dev")
+    compile project(path: ":motherlode-base", configuration: "dev")
+    compile project(path: ":motherlode-uncategorized", configuration: "dev")
 
     modCompile "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 }

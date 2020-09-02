@@ -8,9 +8,9 @@ repositories {
 }
 dependencies {
 
-    modApi project(path: ":motherlode-base", configuration: "dev")
-    modCompile project(path: ":motherlode-uncategorized", configuration: "dev")
-    modCompile project(path: ":motherlode-ores-tools-armor", configuration: "dev")
+    compile project(path: ":motherlode-base", configuration: "dev")
+    compile project(path: ":motherlode-uncategorized", configuration: "dev")
+    compile project(path: ":motherlode-ores-tools-armor", configuration: "dev")
 
     modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 
