@@ -1,4 +1,4 @@
-package motherlode.uncategorized.block;
+package motherlode.biomes.block;
 
 import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.block.Block;

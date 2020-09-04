@@ -11,6 +11,7 @@ public class MotherlodeBiomesMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        MotherlodeBiomesBlocks.init();
         MotherlodeBiomes.init();
         MotherlodeBiomeFeatures.register();
         MotherlodeStructures.init();

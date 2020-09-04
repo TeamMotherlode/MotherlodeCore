@@ -1,7 +1,7 @@
 package motherlode.biomes.world.feature;
 
-import motherlode.uncategorized.block.ReedsBlock;
-import motherlode.uncategorized.registry.MotherlodeBlocks;
+import motherlode.biomes.MotherlodeBiomesBlocks;
+import motherlode.biomes.block.ReedsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
@@ -14,7 +14,6 @@ import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-
 import java.util.Random;
 
 public class MarshFeature extends Feature<DefaultFeatureConfig> {
@@ -47,16 +46,16 @@ public class MarshFeature extends Feature<DefaultFeatureConfig> {
                         BlockPos mpos = pos.add(x, 0, z);
                         int r = random.nextInt(9);
                         if (r == 1) {
-                            serverWorldAccess.setBlockState(mpos, MotherlodeBlocks.WATERPLANT.getDefaultState(), 2);
+                            serverWorldAccess.setBlockState(mpos, MotherlodeBiomesBlocks.WATERPLANT.getDefaultState(), 2);
                         } else if (r == 2) {
                             serverWorldAccess.setBlockState(mpos, Blocks.SEAGRASS.getDefaultState(), 2);
                         } else if (r == 3) {
                             int s = random.nextInt(6);
                             int t = random.nextInt(6);
                             Block k;
-                            if(s == 1 || s == 2) k = MotherlodeBlocks.REEDS;
-                            else if(s == 3 || s == 4 || s == 5) k = MotherlodeBlocks.CATTAIL_REEDS;
-                            else k = MotherlodeBlocks.DRY_REEDS;
+                            if(s == 1 || s == 2) k = MotherlodeBiomesBlocks.REEDS;
+                            else if(s == 3 || s == 4 || s == 5) k = MotherlodeBiomesBlocks.CATTAIL_REEDS;
+                            else k = MotherlodeBiomesBlocks.DRY_REEDS;
                             if(t == 1 || t == 2) {
                                 serverWorldAccess.setBlockState(mpos, k.getDefaultState().with(ReedsBlock.TYPE, ReedsBlock.Type.WATERLOGGED), 2);
                             } else if(t == 3 || t == 4 || t == 5) {

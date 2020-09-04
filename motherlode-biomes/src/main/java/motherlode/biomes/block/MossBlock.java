@@ -1,4 +1,4 @@
-package motherlode.uncategorized.block;
+package motherlode.biomes.block;
 
 import com.google.common.collect.Maps;
 import motherlode.uncategorized.registry.MotherlodeBlocks;

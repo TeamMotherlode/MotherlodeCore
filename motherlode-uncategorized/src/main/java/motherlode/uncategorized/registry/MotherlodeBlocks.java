@@ -1,13 +1,12 @@
 package motherlode.uncategorized.registry;
 
-import motherlode.base.api.ArtificeProcessor;
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.base.Motherlode;
+import motherlode.base.api.ArtificeProcessor;
 import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.block.*;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -19,10 +18,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -51,10 +48,6 @@ public class MotherlodeBlocks {
     public static final Block ROPE_BLOCK = register("rope", new RopeBlock(AbstractBlock.Settings.of(Material.PLANT)), (BlockItem) null);
     public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(MotherlodeUncategorized.ITEMS)));
 
-    public static final Block SLIGHTLY_ROCKY_DIRT = register("slightly_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
-    public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
-    public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
-
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
         defaultItemModelList.add(block);
@@ -69,18 +62,6 @@ public class MotherlodeBlocks {
             return ActionResult.PASS;
         });
     });
-
-    public static final Block SPROUTS = register("sprouts", new DefaultPlantBlock(4, false, false, "sprouts_0", FabricBlockSettings.copy(Blocks.GRASS)));
-    public static final Block DRACAENA = register("dracaena", new DefaultPlantBlock(10, true, true, FabricBlockSettings.copy(Blocks.GRASS)));
-    public static final Block PHILODENDRON = register("philodendron", new DefaultPlantBlock(10, true, true, FabricBlockSettings.copy(Blocks.GRASS)));
-
-    public static final Block MOSS = register("moss", new MossBlock(FabricBlockSettings.copy(Blocks.GRASS)));
-
-    public static final Block WATERPLANT = register("waterplant", new WaterplantBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)));
-    public static final Block REEDS = register("reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "reeds"); });
-    public static final Block CATTAIL_REEDS = register("cattail_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "cattail_reeds"); });
-    public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "dry_reeds"); });
-
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
     }

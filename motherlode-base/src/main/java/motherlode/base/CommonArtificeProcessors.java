@@ -23,6 +23,30 @@ public class CommonArtificeProcessors {
         );
     };
 
+    public static final ArtificeProcessor FLAT_ITEM_MODEL = (pack, id) -> {
+
+        pack.addItemModel(id, state -> state
+                .parent(new Identifier("item/generated"))
+                .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+        );
+    };
+
+    public static final ArtificeProcessor DEFAULT_ITEM_MODEL = (pack, id) -> {
+
+        pack.addItemModel(id, state -> state
+                .parent(new Identifier("item/generated"))
+                .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
+        );
+    };
+
+    public static final ArtificeProcessor HANDHELD_ITEM_MODEL = (pack, id) -> {
+
+        pack.addItemModel(id, state -> state
+                .parent(new Identifier("item/handheld"))
+                .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
+        );
+    };
+
     public static final ArtificeProcessor DEFAULT_BLOCK_STATE = (pack, id) -> {
 
         pack.addBlockState(id, state -> state
@@ -58,29 +82,7 @@ public class CommonArtificeProcessors {
         );
     };
 
-    public static final ArtificeProcessor FLAT_ITEM_MODEL = (pack, id) -> {
 
-        pack.addItemModel(id, state -> state
-                .parent(new Identifier("item/generated"))
-                .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
-        );
-    };
-
-    public static final ArtificeProcessor DEFAULT_ITEM_MODEL = (pack, id) -> {
-
-        pack.addItemModel(id, state -> state
-                .parent(new Identifier("item/generated"))
-                .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
-        );
-    };
-
-    public static final ArtificeProcessor HANDHELD_ITEM_MODEL = (pack, id) -> {
-
-        pack.addItemModel(id, state -> state
-                .parent(new Identifier("item/handheld"))
-                .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
-        );
-    };
 
     public static final ArtificeProcessor PILLAR = (pack, id) -> {
 
