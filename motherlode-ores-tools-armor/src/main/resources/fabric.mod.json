@@ -23,9 +23,6 @@
     ],
     "client": [
       "motherlode.orestoolsarmor.MotherlodeOresToolsArmorClient"
-    ],
-    "motherlode:assets": [
-      "motherlode.orestoolsarmor.MotherlodeOresToolsArmorMod"
     ]
   },
   "mixins": [

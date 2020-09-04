@@ -24,9 +24,6 @@
     ],
     "client": [
       "motherlode.redstone.MotherlodeRedstoneClient"
-    ],
-    "motherlode:assets": [
-      "motherlode.redstone.MotherlodeRedstoneMod"
     ]
   },
   "mixins": [

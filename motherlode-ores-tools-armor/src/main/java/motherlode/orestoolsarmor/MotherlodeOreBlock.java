@@ -1,6 +1,5 @@
 package motherlode.orestoolsarmor;
 
-import com.swordglowsblue.artifice.api.util.Processor;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Material;
@@ -13,11 +12,11 @@ import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class MotherlodeOreBlock extends OreBlock implements Processor<Biome> {
+public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome> {
 
     private final int minExperience;
     private final int maxExperience;

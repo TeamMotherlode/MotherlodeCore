@@ -2,7 +2,7 @@ package motherlode.orestoolsarmor;
 
 import motherlode.base.CommonArtificeProcessors;
 import motherlode.base.Motherlode;
-import motherlode.base.api.ArtificeProcessor;
+import motherlode.base.api.MotherlodeAssets;
 import motherlode.orestoolsarmor.MotherlodeOreBlock.Dimension;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -12,15 +12,10 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MotherlodeOresToolsArmorBlocks {
 
-    public static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(3, 7, 12, 3, 11, 64, Dimension.OVERWORLD, 1));
@@ -57,7 +52,7 @@ public class MotherlodeOresToolsArmorBlocks {
 
         Registry.register(Registry.BLOCK, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), block);
         Registry.register(Registry.ITEM, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), new BlockItem(block, BLOCK_ITEM_SETTINGS));
-        ARTIFICE_PROCESSORS.add(new Pair<>(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.DEFAULT_BLOCK));
+        MotherlodeAssets.addProcessor(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.DEFAULT_BLOCK);
         return block;
     }
 

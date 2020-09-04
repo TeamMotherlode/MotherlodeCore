@@ -23,9 +23,6 @@
     ],
     "client": [
       "motherlode.buildingblocks.MotherlodeBuildingBlocksClient"
-    ],
-    "motherlode:assets": [
-      "motherlode.buildingblocks.MotherlodeBuildingBlocksMod"
     ]
   },
   "mixins": [

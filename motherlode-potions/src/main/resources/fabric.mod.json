@@ -23,9 +23,6 @@
     ],
     "client": [
       "motherlode.potions.MotherlodePotionsClient"
-    ],
-    "motherlode:assets": [
-      "motherlode.potions.MotherlodePotionsAssets"
     ]
   },
   "mixins": [

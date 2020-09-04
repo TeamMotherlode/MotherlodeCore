@@ -1,13 +1,8 @@
 package motherlode.buildingblocks;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import motherlode.base.api.ArtificeProcessor;
-import motherlode.base.api.MotherlodeAssetsEntryPoint;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 
-public class MotherlodeBuildingBlocksMod implements ModInitializer, MotherlodeAssetsEntryPoint {
+public class MotherlodeBuildingBlocksMod implements ModInitializer {
 
     public static final String MODID = "motherlode-building-blocks";
 
@@ -15,14 +10,5 @@ public class MotherlodeBuildingBlocksMod implements ModInitializer, MotherlodeAs
     public void onInitialize() {
 
         MotherlodeBuildingBlocks.init();
-    }
-
-    @Override
-    public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
-
-        for(Pair<Identifier, ArtificeProcessor> entry: MotherlodeBuildingBlocks.ARTIFICE_PROCESSORS) {
-
-            entry.getRight().accept(pack, entry.getLeft());
-        }
     }
 }

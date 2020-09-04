@@ -1,16 +1,11 @@
 package motherlode.buildingblocks;
 
 import motherlode.base.Motherlode;
-import motherlode.base.api.ArtificeProcessor;
+import motherlode.base.api.MotherlodeAssets;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MotherlodeBuildingBlocks {
-
-    static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
 
     public static final StoneVariantType LIMESTONE = register(StoneVariantType.newStone("limestone",false));
     public static final StoneVariantType GRAVESTONE = register(StoneVariantType.newStone("gravestone",true));
@@ -37,7 +32,7 @@ public class MotherlodeBuildingBlocks {
 
         Identifier id = Motherlode.id(MotherlodeBuildingBlocksMod.MODID, stone.getId());
         stone.register(id);
-        ARTIFICE_PROCESSORS.add(new Pair<>(id, stone));
+        MotherlodeAssets.addProcessor(id, stone);
         return stone;
     }
     public static void init() {

@@ -23,9 +23,6 @@
     ],
     "client": [
       "motherlode.biomes.MotherlodeBiomesClient"
-    ],
-    "motherlode:assets": [
-      "motherlode.biomes.MotherlodeBiomesMod"
     ]
   },
   "mixins": [
