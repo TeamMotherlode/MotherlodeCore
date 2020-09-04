@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,12 +55,12 @@ public class MotherlodeOresToolsArmorItems {
     }
     public static Item register(String name, Item item) {
 
-        register(name, item instanceof Registerable? (Registerable<Item>) item : registerItem(item), item instanceof ArtificeProcessor? (ArtificeProcessor) item : CommonArtificeProcessors.DEFAULT_ITEM_MODEL);
+        register(name, item instanceof Registerable? (Registerable<Item>) item : Registerable.item(item), item instanceof ArtificeProcessor? (ArtificeProcessor) item : CommonArtificeProcessors.DEFAULT_ITEM_MODEL);
         return item;
     }
     public static Item register(String name, Item item, ArtificeProcessor p) {
         
-        register(name, registerItem(item), p);
+        register(name, Registerable.item(item), p);
         return item;
     }
     public static void register(String name, Registerable<Item> register, ArtificeProcessor p) {
@@ -69,10 +68,6 @@ public class MotherlodeOresToolsArmorItems {
         Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
         ARTIFICE_PROCESSORS.add(new Pair<>(id, p));
         register.register(id);
-    }
-    private static Registerable<Item> registerItem(Item item) {
-
-        return id -> Registry.register(Registry.ITEM, id, item);
     }
     public static void init() {
 
