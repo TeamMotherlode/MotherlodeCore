@@ -40,8 +40,6 @@ public class MotherlodeUncategorizedClient implements ClientModInitializer {
 					BiomeColors.getFoliageColor(world, pos), block);
 			ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getDefaultColor(), block);
 		}
-		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-			BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
 
 		FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), ( itemStack,  _world,  _entity) -> itemStack.getCount() / 100F);
 
