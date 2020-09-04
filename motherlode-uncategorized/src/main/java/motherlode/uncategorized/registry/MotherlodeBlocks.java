@@ -32,7 +32,6 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> thickCrossModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
     public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
-    public static final ArrayList<Block> defaultLootTableList = new ArrayList<>();
     public static final ArrayList<Block> usesPaintableModel = new ArrayList<>();
     public static final ArrayList<DefaultShovelableBlock> shovelableBlocks = new ArrayList<>();
 
@@ -104,7 +103,7 @@ public class MotherlodeBlocks {
                 defaultItemModelList.add(defaultBlock);
             }
             if (defaultBlock.hasDefaultLootTable()) {
-                defaultLootTableList.add(defaultBlock);
+                Motherlode.addDefaultLootTable(Motherlode.id(name));
             }
         }
         return b;

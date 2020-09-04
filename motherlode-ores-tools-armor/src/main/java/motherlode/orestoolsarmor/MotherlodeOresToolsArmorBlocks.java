@@ -12,6 +12,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeOresToolsArmorBlocks {
@@ -50,9 +51,11 @@ public class MotherlodeOresToolsArmorBlocks {
 
     private static<T extends Block> T register(String name, T block) {
 
-        Registry.register(Registry.BLOCK, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), block);
-        Registry.register(Registry.ITEM, Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), new BlockItem(block, BLOCK_ITEM_SETTINGS));
-        MotherlodeAssets.addProcessor(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name), CommonArtificeProcessors.DEFAULT_BLOCK);
+        Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
+        Registry.register(Registry.BLOCK, id, block);
+        Registry.register(Registry.ITEM, id, new BlockItem(block, BLOCK_ITEM_SETTINGS));
+        MotherlodeAssets.addProcessor(id, CommonArtificeProcessors.DEFAULT_BLOCK);
+        Motherlode.addDefaultLootTable(id);
         return block;
     }
 

@@ -26,6 +26,7 @@ public class MotherlodeRedstoneBlocks {
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.REDSTONE)));
         MotherlodeAssets.addProcessor(id, p);
+        Motherlode.addDefaultLootTable(id);
         return block;
     }
 }

@@ -28,7 +28,6 @@ public class WaterplantBlock extends Block {
     public WaterplantBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getDefaultState().with(SOLID, true));
-        MotherlodeBlocks.defaultLootTableList.add(this);
         MotherlodeBlocks.cutouts.add(this);
     }
 

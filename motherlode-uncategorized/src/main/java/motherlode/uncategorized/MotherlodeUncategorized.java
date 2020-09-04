@@ -19,8 +19,6 @@ public class MotherlodeUncategorized implements ModInitializer {
         MotherlodeSounds.init();
         MotherlodeFluids.init();
         MotherlodeTags.init();
-
-        MotherlodeData.register();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create(Motherlode.id("blocks"))

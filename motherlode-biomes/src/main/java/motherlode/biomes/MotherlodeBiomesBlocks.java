@@ -50,6 +50,7 @@ public class MotherlodeBiomesBlocks {
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, BLOCK_ITEM_SETTINGS));
         if(p != null) MotherlodeAssets.addProcessor(id, p);
+        Motherlode.addDefaultLootTable(id);
 
         return block;
     }

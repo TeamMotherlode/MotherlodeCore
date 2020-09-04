@@ -33,6 +33,7 @@ public class MotherlodeBuildingBlocks {
         Identifier id = Motherlode.id(MotherlodeBuildingBlocksMod.MODID, stone.getId());
         stone.register(id);
         MotherlodeAssets.addProcessor(id, stone);
+        Motherlode.addDefaultLootTable(id);
         return stone;
     }
     public static void init() {
