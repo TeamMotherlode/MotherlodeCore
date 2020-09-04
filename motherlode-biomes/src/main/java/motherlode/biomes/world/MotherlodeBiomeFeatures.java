@@ -1,8 +1,8 @@
 package motherlode.biomes.world;
 
 import motherlode.base.Motherlode;
+import motherlode.biomes.MotherlodeBiomesBlocks;
 import motherlode.biomes.world.feature.MarshFeature;
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -41,7 +41,7 @@ public class MotherlodeBiomeFeatures {
     public static void addToBiome(Biome biome) {
         Category category = biome.getCategory();
         if (category == Category.PLAINS || category == Category.FOREST || category == Category.SAVANNA || category == Category.SWAMP || category == Category.TAIGA || category == Category.EXTREME_HILLS || category == Category.JUNGLE) {
-            biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
+            biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBiomesBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
         }
     }
 }

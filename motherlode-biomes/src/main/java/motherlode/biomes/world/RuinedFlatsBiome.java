@@ -2,8 +2,8 @@ package motherlode.biomes.world;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import motherlode.base.Motherlode;
+import motherlode.biomes.MotherlodeBiomesBlocks;
 import motherlode.biomes.MotherlodeBiomesMod;
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
@@ -17,7 +17,6 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -48,7 +47,7 @@ public class RuinedFlatsBiome extends AbstractFoggyBiome {
                         .parent(null)
         );
         this.addFeature(GenerationStep.Feature.LAKES, MotherlodeBiomeFeatures.MARSH.configure(new DefaultFeatureConfig()).createDecoratedFeature(Decorator.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceDecoratorConfig(5))));
-        this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
+        this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBiomesBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
         this.addStructureFeature(MotherlodeStructures.CAMP.configure(new StructurePoolFeatureConfig(Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/start"), 5)));
         DefaultBiomeFeatures.addLandCarvers(this);
         DefaultBiomeFeatures.addMineables(this);
