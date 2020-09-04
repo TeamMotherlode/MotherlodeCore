@@ -21,13 +21,14 @@ public class EnderInvasionComponentImpl implements EnderInvasionComponent {
         this.value = state;
     }
     @Override
-    public void readFromNbt(CompoundTag tag) {
+    public void fromTag(CompoundTag tag) {
 
         this.value = EnderInvasionState.values()[tag.getInt("value")];
     }
     @Override
-    public void writeToNbt(CompoundTag tag) {
+    public CompoundTag toTag(CompoundTag tag) {
 
         tag.putInt("value", value.ordinal());
+        return tag;
     }
 }

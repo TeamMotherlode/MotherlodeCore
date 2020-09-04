@@ -24,12 +24,6 @@
     ],
     "client": [
       "motherlode.core.MotherlodeClient"
-    ],
-    "cardinal-components-level": [
-      "motherlode.core.Motherlode"
-    ],
-    "cardinal-components-chunk": [
-      "motherlode.core.Motherlode"
     ]
   },
   "mixins": [
@@ -42,11 +36,5 @@
   },
   "suggests": {
     "flamingo": "*"
-  },
-  "custom": {
-    "cardinal-components": [
-      "motherlode:enderinvasion_state",
-      "motherlode:enderinvasion_chunk_state"
-    ]
   }
 }
