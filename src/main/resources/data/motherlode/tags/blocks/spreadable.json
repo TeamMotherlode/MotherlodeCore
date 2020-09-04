@@ -1,7 +1,10 @@
 {
   "replace": false,
   "values": [
-    "motherlode:end_grass_block",
-    "minecraft:end_stone"
+    "motherlode:corrupted_dirt",
+    "minecraft:end_stone",
+    "motherlode:corrupted_grass",
+    "motherlode:end_foam",
+    "motherlode:end_cap"
   ]
 }
