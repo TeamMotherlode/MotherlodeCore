@@ -61,7 +61,7 @@ public class EnderInvasion {
 
                 chunk.setBlockState(pos, recipe.convert(state), false);
             }
-            generateDecoration(world, chunk, pos, sampler.method_22416(pos.getX() * DECORATION_NOISE_SCALE, pos.getY() * DECORATION_NOISE_SCALE, pos.getZ() * DECORATION_NOISE_SCALE));
+            generateDecoration(world, chunk, pos, EnderInvasionHelper.getNoise(world, pos, DECORATION_NOISE_SCALE));
         });
     }
 
@@ -102,8 +102,8 @@ public class EnderInvasion {
         // TODO block spread
 
         if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION &&
-                world.getBlockState(pos.down()).isIn(MotherlodeTags.Blocks.SPREADABLE) &&
-                world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
+           EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
+           world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
 
             EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos);
         }

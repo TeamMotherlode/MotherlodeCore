@@ -8,10 +8,7 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.SpawnHelper;
@@ -32,12 +29,6 @@ public class EnderInvasionHelper {
 
         int maxY = chunk.getHighestNonEmptySectionYOffset() * 16;
 
-        if (NOISE_GENERATOR == null || NOISE_GENERATOR_SEED != world.getSeed()) {
-
-            NOISE_GENERATOR = new SimplexNoiseSampler(new Random(world.getSeed()));
-            NOISE_GENERATOR_SEED = world.getSeed();
-        }
-
         for (int x = 0; x < 16; x++) {
 
             for (int y = 0; y < maxY; y++) {
@@ -45,7 +36,7 @@ public class EnderInvasionHelper {
                 for (int z = 0; z < 16; z++) {
 
                     BlockPos pos = new BlockPos(chunk.getPos().x * 16 + x, y, chunk.getPos().z * 16 + z);
-                    double noise = NOISE_GENERATOR.method_22416(pos.getX() * EnderInvasion.NOISE_SCALE, pos.getY() * EnderInvasion.NOISE_SCALE, pos.getZ() * EnderInvasion.NOISE_SCALE);
+                    double noise = getNoise(world, pos, EnderInvasion.NOISE_SCALE);
 
                     if (noise < EnderInvasion.NOISE_THRESHOLD)
                         continue;
@@ -66,6 +57,21 @@ public class EnderInvasionHelper {
         if (EnderInvasion.STATE.get(world.getLevelProperties()).value() != EnderInvasionState.ENDER_INVASION)
             return false;
         return EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkState.PRE_ECHERITE;
+    }
+
+    public static SimplexNoiseSampler getNoiseSampler(ServerWorld world) {
+
+        if (NOISE_GENERATOR == null || NOISE_GENERATOR_SEED != world.getSeed()) {
+
+            NOISE_GENERATOR = new SimplexNoiseSampler(new Random(world.getSeed()));
+            NOISE_GENERATOR_SEED = world.getSeed();
+        }
+        return NOISE_GENERATOR;
+    }
+
+    public static double getNoise(ServerWorld world, Vec3i pos, double scale) {
+
+        return getNoiseSampler(world).method_22416(pos.getX() * scale, pos.getY() * scale, pos.getZ() * scale);
     }
 
     public static void spawnMobGroup(ServerWorld world, Chunk chunk, EntityType<? extends MobEntity> entityType, BlockPos pos) {
