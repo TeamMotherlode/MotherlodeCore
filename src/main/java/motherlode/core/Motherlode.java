@@ -1,14 +1,9 @@
 package motherlode.core;
 
-import motherlode.core.enderinvasion.*;
+import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.registry.*;
-import nerdhub.cardinal.components.api.ComponentRegistry;
-import nerdhub.cardinal.components.api.ComponentType;
-import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
-import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -22,7 +17,7 @@ public class Motherlode implements ModInitializer {
     @Override
     public void onInitialize() {
 
-        initializeEnderInvasion();
+        EnderInvasion.initializeEnderInvasion();
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
         MotherlodeItems.init();
@@ -37,22 +32,12 @@ public class Motherlode implements ModInitializer {
         MotherlodeScreenHandlers.init();
         MotherlodePotions.init();
 
-        EnderInvasionUtil.changeEnderPearlTrade();
-
         MotherlodeData.register();
         MotherlodeFeatures.register();
         MotherlodeSpreadRecipes.register();
     }
 
     private static final Identifier PIGLIN_BARTERING_LOOT_TABLE_ID = new Identifier("minecraft", "gameplay/piglin_bartering");
-
-    private  void initializeEnderInvasion() {
-
-        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(ENDER_INVASION_STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
-        ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(ENDER_INVASION_CHUNK_STATE, new EnderInvasionChunkComponentImpl(EnderInvasionChunkState.PRE_ECHERITE)));
-
-        ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionUtil::convertChunk);
-    }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
 		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE))
@@ -69,12 +54,6 @@ public class Motherlode implements ModInitializer {
     public static final ItemGroup MUSIC = FabricItemGroupBuilder.create( id("music"))
             .icon(() -> new ItemStack(Items.MUSIC_DISC_CAT))
             .build();
-
-    public static final ComponentType<EnderInvasionComponent> ENDER_INVASION_STATE =
-            ComponentRegistry.INSTANCE.registerIfAbsent(id("enderinvasion_state"), EnderInvasionComponent.class);
-
-    public static final ComponentType<EnderInvasionChunkComponent> ENDER_INVASION_CHUNK_STATE =
-            ComponentRegistry.INSTANCE.registerIfAbsent(id("enderinvasion_chunk_state"), EnderInvasionChunkComponent.class);
 
     public static Identifier id(String name) {
         return new Identifier(MODID, name);

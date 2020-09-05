@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import motherlode.core.Motherlode;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.condition.LootConditionType;
 import net.minecraft.loot.context.LootContext;
@@ -19,7 +18,7 @@ public class PostEnderInvasionLootCondition implements LootCondition {
     }
 
     public LootConditionType getType() {
-        return EnderInvasionUtil.POST_ENDER_INVASION_LOOT_CONDITION;
+        return EnderInvasion.POST_ENDER_INVASION_LOOT_CONDITION;
     }
 
     public Set<LootContextParameter<?>> getRequiredParameters() {
@@ -27,7 +26,7 @@ public class PostEnderInvasionLootCondition implements LootCondition {
     }
 
     public boolean test(LootContext lootContext) {
-        return Motherlode.ENDER_INVASION_STATE.get(lootContext.getWorld().getLevelProperties()).value()
+        return EnderInvasion.STATE.get(lootContext.getWorld().getLevelProperties()).value()
                 .ordinal() >= EnderInvasionState.ENDER_INVASION.ordinal();
     }
 

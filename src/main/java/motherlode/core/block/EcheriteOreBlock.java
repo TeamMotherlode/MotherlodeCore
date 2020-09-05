@@ -1,6 +1,6 @@
 package motherlode.core.block;
 
-import motherlode.core.Motherlode;
+import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.enderinvasion.EnderInvasionComponent;
 import motherlode.core.enderinvasion.EnderInvasionState;
 import net.minecraft.block.BlockState;
@@ -27,7 +27,7 @@ public class EcheriteOreBlock extends DefaultOreBlock {
 
         super.afterBreak(world, player, pos, state, blockEntity, stack);
 
-        EnderInvasionComponent component = Motherlode.ENDER_INVASION_STATE.get(world.getLevelProperties());
+        EnderInvasionComponent component = EnderInvasion.STATE.get(world.getLevelProperties());
 
         if(component.value() == EnderInvasionState.PRE_ECHERITE) {
 

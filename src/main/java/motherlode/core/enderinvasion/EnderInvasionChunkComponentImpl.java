@@ -44,6 +44,6 @@ public class EnderInvasionChunkComponentImpl implements EnderInvasionChunkCompon
     @Override
     public ComponentType<?> getComponentType() {
 
-        return Motherlode.ENDER_INVASION_CHUNK_STATE;
+        return EnderInvasion.CHUNK_STATE;
     }
 }
