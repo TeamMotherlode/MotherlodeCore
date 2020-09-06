@@ -4,6 +4,10 @@ import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
 import motherlode.core.api.ArtificeProperties;
 import motherlode.core.block.*;
+import motherlode.core.enderinvasion.EnderInvasion;
+import motherlode.core.enderinvasion.EnderInvasionComponent;
+import motherlode.core.enderinvasion.EnderInvasionState;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -15,12 +19,13 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -50,7 +55,23 @@ public class MotherlodeBlocks {
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, 1));
     public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, 2));
     public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(false, 3));
-    public static final Block ECHERITE_ORE = register("echerite_ore", new EcheriteOreBlock(true, 4));
+    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, 4), (Processor<Block>) block ->
+
+            PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, entity) -> {
+
+                if(!state.isOf(block)) return;
+
+                EnderInvasionComponent component = EnderInvasion.STATE.get(world.getLevelProperties());
+
+                if(component.value() == EnderInvasionState.PRE_ECHERITE) {
+
+                    component.setValue(EnderInvasionState.ENDER_INVASION);
+
+                    // Send chat message
+                    world.getPlayers().forEach(p -> player.sendMessage(new TranslatableText("enderinvasion.motherlode.start").formatted(Formatting.DARK_GREEN), false));
+                }
+            })
+    );
     public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, 5));
     public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, 6));
     public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(false, 2));
