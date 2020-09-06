@@ -9,14 +9,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class SpreadingBlocksManager {
+public class BlockSpreadManager {
 
-    public static final SpreadingBlocksManager SPREAD = new SpreadingBlocksManager();
-    public static final SpreadingBlocksManager PURIFICATION = new SpreadingBlocksManager();
+    public static final BlockSpreadManager SPREAD = new BlockSpreadManager();
+    public static final BlockSpreadManager PURIFICATION = new BlockSpreadManager();
 
     private final HashMap<Identifier, SpreadRecipe> recipes;
 
-    public SpreadingBlocksManager() {
+    public BlockSpreadManager() {
 
         this.recipes = new HashMap<>();
     }
@@ -25,7 +25,7 @@ public class SpreadingBlocksManager {
 
         recipes.put(recipe.getIdentifier(), recipe);
     }
-    public void addRecipes(SpreadingBlocksManager recipes) {
+    public void addRecipes(BlockSpreadManager recipes) {
 
         recipes.recipes.forEach((id, recipe) -> this.addRecipe(recipe));
     }
@@ -41,11 +41,11 @@ public class SpreadingBlocksManager {
         }
         return null;
     }
-    public static void addSimpleRecipe(SpreadingBlocksManager manager, Identifier identifier, Block input, Block result) {
+    public static void addSimpleRecipe(BlockSpreadManager manager, Identifier identifier, Block input, Block result) {
 
         addRecipe(manager, identifier, block -> block.equals(input), state -> result.getDefaultState());
     }
-    public static void addRecipe(SpreadingBlocksManager manager, Identifier identifier, Predicate<Block> isValidBlock, Function<BlockState, BlockState> convert) {
+    public static void addRecipe(BlockSpreadManager manager, Identifier identifier, Predicate<Block> isValidBlock, Function<BlockState, BlockState> convert) {
 
         manager.addRecipe(new SpreadRecipe(identifier, isValidBlock, convert));
     }

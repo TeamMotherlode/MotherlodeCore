@@ -1,5 +1,6 @@
 package motherlode.core.enderinvasion;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -8,10 +9,12 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.SpawnHelper;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
@@ -59,7 +62,7 @@ public class EnderInvasionHelper {
         return EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkState.PRE_ECHERITE;
     }
 
-    public static SimplexNoiseSampler getNoiseSampler(ServerWorld world) {
+    private static SimplexNoiseSampler getNoiseSampler(ServerWorld world) {
 
         if (NOISE_GENERATOR == null || NOISE_GENERATOR_SEED != world.getSeed()) {
 
@@ -74,6 +77,7 @@ public class EnderInvasionHelper {
         return getNoiseSampler(world).method_22416(pos.getX() * scale, pos.getY() * scale, pos.getZ() * scale);
     }
 
+    // Spawns a group of mobs
     public static void spawnMobGroup(ServerWorld world, Chunk chunk, EntityType<? extends MobEntity> entityType, BlockPos pos) {
 
         int i = pos.getY();
@@ -178,5 +182,36 @@ public class EnderInvasionHelper {
         }
     }
 
+    // Checks if a corrupted block can survive here
+    public static boolean canSurvive(WorldView world, BlockPos pos) {
+        BlockPos posUp = pos.up();
+        BlockState stateUp = world.getBlockState(posUp);
+        if(!world.getFluidState(posUp).isIn(FluidTags.WATER) && !stateUp.isSolidBlock(world, posUp)) return true;
 
+        for(Direction direction: Direction.values()) {
+
+            BlockPos pos2 = pos.add(direction.getVector());
+            if(world.getFluidState(pos2).isIn(FluidTags.WATER)) return false;
+        }
+        return true;
+    }
+
+    public static void spreadTo(BlockSpreadManager manager, ServerWorld world, BlockPos to) {
+
+        BlockState blockState = world.getBlockState(to);
+        Block block = blockState.getBlock();
+
+        SpreadRecipe recipe = manager.getRecipe(block);
+
+        if(recipe == null) return;
+
+        BlockState resultBlockState = recipe.convert(blockState);
+        world.setBlockState(to, resultBlockState);
+    }
+
+    // Returns a Vec3i where x and z can be from -1 to 1, and y can be from -2 to 2
+    public static Vec3i randomNearbyBlockPos(Random random) {
+
+        return new Vec3i(random.nextInt(3) - 1, random.nextInt(5) - 2, random.nextInt(3) - 1);
+    }
 }

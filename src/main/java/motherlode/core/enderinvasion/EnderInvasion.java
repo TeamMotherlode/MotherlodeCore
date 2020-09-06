@@ -17,7 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.dimension.DimensionType;
 import java.util.Random;
 
 public class EnderInvasion {
@@ -56,7 +58,7 @@ public class EnderInvasion {
         EnderInvasionEvents.CONVERT.register((world, chunk, pos, noise, sampler) -> {
 
             BlockState state = chunk.getBlockState(pos);
-            SpreadRecipe recipe = SpreadingBlocksManager.SPREAD.getRecipe(state.getBlock());
+            SpreadRecipe recipe = BlockSpreadManager.SPREAD.getRecipe(state.getBlock());
             if (recipe != null) {
 
                 chunk.setBlockState(pos, recipe.convert(state), false);
@@ -99,13 +101,35 @@ public class EnderInvasion {
         return ground;
     }
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        // TODO block spread
+        if(world.getDimension() != DimensionType.getOverworldDimensionType()) return;
+
+        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION)
+            spread(state, world, pos, random);
 
         if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION &&
            EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
            world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
 
             EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos);
+        }
+    }
+    public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+
+        if(!MotherlodeTags.Blocks.SPREADABLE.contains(state.getBlock())) return;
+
+        if (!EnderInvasionHelper.canSurvive(world, pos)) {
+
+            SpreadRecipe recipe = BlockSpreadManager.PURIFICATION.getRecipe(state.getBlock());
+            if(recipe == null) return;
+            world.setBlockState(pos, recipe.convert(state));
+            return;
+        }
+        if(world.getDifficulty() != Difficulty.HARD) return;
+
+        for (int i = 0; i < 3; i++) {
+
+            BlockPos blockPos = pos.add(EnderInvasionHelper.randomNearbyBlockPos(random));
+            EnderInvasionHelper.spreadTo(BlockSpreadManager.SPREAD, world, blockPos);
         }
     }
 }

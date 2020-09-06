@@ -1,6 +1,6 @@
 package motherlode.core.registry;
 
-import motherlode.core.enderinvasion.SpreadingBlocksManager;
+import motherlode.core.enderinvasion.BlockSpreadManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
@@ -8,10 +8,10 @@ import net.minecraft.block.PillarBlock;
 import net.minecraft.tag.BlockTags;
 
 import static motherlode.core.Motherlode.id;
-import static motherlode.core.enderinvasion.SpreadingBlocksManager.SPREAD;
-import static motherlode.core.enderinvasion.SpreadingBlocksManager.PURIFICATION;
-import static motherlode.core.enderinvasion.SpreadingBlocksManager.addRecipe;
-import static motherlode.core.enderinvasion.SpreadingBlocksManager.addSimpleRecipe;
+import static motherlode.core.enderinvasion.BlockSpreadManager.SPREAD;
+import static motherlode.core.enderinvasion.BlockSpreadManager.PURIFICATION;
+import static motherlode.core.enderinvasion.BlockSpreadManager.addRecipe;
+import static motherlode.core.enderinvasion.BlockSpreadManager.addSimpleRecipe;
 
 public class MotherlodeSpreadRecipes {
 
@@ -38,8 +38,15 @@ public class MotherlodeSpreadRecipes {
         addSimpleRecipe(PURIFICATION, id("corrupted_dirt_purification"), MotherlodeBlocks.CORRUPTED_DIRT, Blocks.DIRT);
         addSimpleRecipe(PURIFICATION, id("corrupted_grass_purification"), MotherlodeBlocks.CORRUPTED_GRASS, Blocks.GRASS);
         addSimpleRecipe(PURIFICATION, id("end_stone_purification"), Blocks.END_STONE, Blocks.STONE);
+
+        addLeavesRecipe(PURIFICATION, "withered_oak_leaves_purification", MotherlodeBlocks.WITHERED_OAK_LEAVES, Blocks.OAK_LEAVES);
+        addLeavesRecipe(PURIFICATION, "withered_dark_oak_leaves_purification", MotherlodeBlocks.WITHERED_DARK_OAK_LEAVES, Blocks.DARK_OAK_LEAVES);
+        addLeavesRecipe(PURIFICATION, "withered_spruce_leaves_purification", MotherlodeBlocks.WITHERED_SPRUCE_LEAVES, Blocks.SPRUCE_LEAVES);
+        addLeavesRecipe(PURIFICATION, "withered_birch_leaves_purification", MotherlodeBlocks.WITHERED_BIRCH_LEAVES, Blocks.BIRCH_LEAVES);
+        addLeavesRecipe(PURIFICATION, "withered_jungle_leaves_purification", MotherlodeBlocks.WITHERED_JUNGLE_LEAVES, Blocks.JUNGLE_LEAVES);
+        addLeavesRecipe(PURIFICATION, "withered_acacia_leaves_purification", MotherlodeBlocks.WITHERED_ACACIA_LEAVES, Blocks.ACACIA_LEAVES);
     }
-    private static void addLeavesRecipe(SpreadingBlocksManager manager, String name, Block from, Block to) {
+    private static void addLeavesRecipe(BlockSpreadManager manager, String name, Block from, Block to) {
 
         addRecipe(manager, id(name), from::equals, state -> to.getDefaultState()
                 .with(LeavesBlock.DISTANCE, state.get(LeavesBlock.DISTANCE))
