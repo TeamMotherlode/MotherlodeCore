@@ -47,8 +47,8 @@ public class EnderInvasion {
     public static final double END_FOAM_NOISE_THRESHOLD = 0.9;
     public static final double DECORATION_NOISE_SCALE = 0.05;
 
-    private static final double ENDERMAN_SPAWN_RATE_DAY = 0.075;
-    private static final double ENDERMAN_SPAWN_RATE_NIGHT = 0.1;
+    private static final double ENDERMAN_SPAWN_RATE_DAY   = 0.1;
+    private static final double ENDERMAN_SPAWN_RATE_NIGHT = 0.25;
 
     public static void initializeEnderInvasion() {
 
@@ -63,7 +63,7 @@ public class EnderInvasion {
         TradeOffers.PROFESSION_TO_LEVELED_TRADE.get(VillagerProfession.CLERIC).get(4)[2] =
                 new PostEnderInvasionSellItemFactory(Items.ENDER_PEARL, 5, 1, 15);
 
-        // Convert the chunk
+        // Convert blocks using BlockSpreadManager.SPREAD and generate decoration
         EnderInvasionEvents.CONVERT.register((world, chunk, pos, noise, sampler) -> {
 
             BlockState state = chunk.getBlockState(pos);
