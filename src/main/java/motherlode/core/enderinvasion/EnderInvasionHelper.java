@@ -1,8 +1,8 @@
 package motherlode.core.enderinvasion;
 
+import motherlode.core.mixins.SpawnHelperAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
@@ -10,15 +10,17 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.FluidTags;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
-import java.util.Objects;
 import java.util.Random;
 
 public class EnderInvasionHelper {
@@ -28,7 +30,7 @@ public class EnderInvasionHelper {
 
     public static void convertChunk(ServerWorld world, WorldChunk chunk) {
 
-        if(!shouldConvertChunk(world, chunk)) return;
+        if (!shouldConvertChunk(world, chunk)) return;
 
         int maxY = chunk.getHighestNonEmptySectionYOffset() * 16;
 
@@ -78,7 +80,17 @@ public class EnderInvasionHelper {
     }
 
     // Spawns a group of mobs
-    public static void spawnMobGroup(ServerWorld world, Chunk chunk, EntityType<? extends MobEntity> entityType, BlockPos pos) {
+    public static void spawnMobGroup(ServerWorld world, Chunk chunk, EntityType<? extends MobEntity> entityType, BlockPos pos, SpawnHelper.Info info) {
+
+        if (((SpawnHelperAccessor.Info) info).callIsBelowCap(entityType.getSpawnGroup())) {
+            spawn(world, chunk, entityType, pos, ((SpawnHelperAccessor.Info) info)::callTest, ((SpawnHelperAccessor.Info) info)::callRun);
+        }
+    }
+
+    private static void spawn(ServerWorld world, Chunk chunk, EntityType<? extends MobEntity> entityType, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner) {
+
+
+        if (!world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) return;
 
         int i = pos.getY();
 
@@ -101,22 +113,23 @@ public class EnderInvasionHelper {
                 PlayerEntity playerEntity = world.getClosestPlayer(d, i, e, -1.0D, false);
                 if (playerEntity != null) {
                     double f = playerEntity.squaredDistanceTo(d, i, e);
-                    if (isAcceptableSpawnPosition(world, chunk, mutable, f)) {
+                    if (SpawnHelperAccessor.isAcceptableSpawnPosition(world, chunk, mutable, f)) {
 
                         o = 1 + world.random.nextInt(4);
 
-                        if (canSpawn(world, entityType, mutable, f)) {
-                            MobEntity mobEntity = createMob(world, entityType);
+                        if (canSpawn(world, entityType, mutable, f) && checker.test(entityType, mutable, chunk)) {
+                            MobEntity mobEntity = SpawnHelperAccessor.createMob(world, entityType);
                             if (mobEntity == null) {
                                 return;
                             }
 
                             mobEntity.refreshPositionAndAngles(d, i, e, world.random.nextFloat() * 360.0F, 0.0F);
-                            if (isValidSpawn(world, mobEntity, f)) {
+                            if (SpawnHelperAccessor.isValidSpawn(world, mobEntity, f)) {
                                 mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.NATURAL, null, null);
                                 ++j;
                                 ++p;
                                 world.spawnEntity(mobEntity);
+                                runner.run(mobEntity, chunk);
                                 if (j >= mobEntity.getLimitPerChunk()) {
                                     return;
                                 }
@@ -132,19 +145,8 @@ public class EnderInvasionHelper {
         }
     }
 
-    // Methods needed to spawn the mob group that are private in SpawnHelper
-    private static boolean isAcceptableSpawnPosition(ServerWorld world, Chunk chunk, BlockPos.Mutable pos, double squaredDistance) {
-        if (squaredDistance <= 576.0D) {
-            return false;
-        } else if (world.getSpawnPos().isWithinDistance(new Vec3d(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D), 24.0D)) {
-            return false;
-        } else {
-            ChunkPos chunkPos = new ChunkPos(pos);
-            return Objects.equals(chunkPos, chunk.getPos()) || world.getChunkManager().shouldTickChunk(chunkPos);
-        }
-    }
     private static boolean canSpawn(ServerWorld world, EntityType<? extends MobEntity> entityType, BlockPos.Mutable pos, double squaredDistance) {
-        if (!entityType.isSpawnableFarFromPlayer() && squaredDistance > (double)(entityType.getSpawnGroup().getImmediateDespawnRange() * entityType.getSpawnGroup().getImmediateDespawnRange())) {
+        if (!entityType.isSpawnableFarFromPlayer() && squaredDistance > (double) (entityType.getSpawnGroup().getImmediateDespawnRange() * entityType.getSpawnGroup().getImmediateDespawnRange())) {
             return false;
         } else if (entityType.isSummonable()) {
             SpawnRestriction.Location location = SpawnRestriction.getLocation(entityType);
@@ -153,32 +155,10 @@ public class EnderInvasionHelper {
             } else if (!MobEntity.canMobSpawn(entityType, world, SpawnReason.NATURAL, pos, world.random)) {
                 return false;
             } else {
-                return world.doesNotCollide(entityType.createSimpleBoundingBox((double)pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D));
+                return world.doesNotCollide(entityType.createSimpleBoundingBox((double) pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D));
             }
         } else {
             return false;
-        }
-    }
-    private static MobEntity createMob(ServerWorld world, EntityType<?> type) {
-        try {
-            Entity entity = type.create(world);
-            if (!(entity instanceof MobEntity)) {
-                throw new IllegalStateException("Trying to spawn a non-mob: " + Registry.ENTITY_TYPE.getId(type));
-            } else {
-                return (MobEntity)entity;
-            }
-        } catch (Exception var4) {
-            System.err.println("Failed to create mob");
-            var4.printStackTrace(System.err);
-            return null;
-        }
-    }
-
-    private static boolean isValidSpawn(ServerWorld world, MobEntity entity, double squaredDistance) {
-        if (squaredDistance > (double)(entity.getType().getSpawnGroup().getImmediateDespawnRange() * entity.getType().getSpawnGroup().getImmediateDespawnRange()) && entity.canImmediatelyDespawn(squaredDistance)) {
-            return false;
-        } else {
-            return entity.canSpawn(world, SpawnReason.NATURAL) && entity.canSpawn(world);
         }
     }
 
@@ -186,12 +166,12 @@ public class EnderInvasionHelper {
     public static boolean canSurvive(WorldView world, BlockPos pos) {
         BlockPos posUp = pos.up();
         BlockState stateUp = world.getBlockState(posUp);
-        if(!world.getFluidState(posUp).isIn(FluidTags.WATER) && !stateUp.isSolidBlock(world, posUp)) return true;
+        if (!world.getFluidState(posUp).isIn(FluidTags.WATER) && !stateUp.isSolidBlock(world, posUp)) return true;
 
-        for(Direction direction: Direction.values()) {
+        for (Direction direction : Direction.values()) {
 
             BlockPos pos2 = pos.add(direction.getVector());
-            if(world.getFluidState(pos2).isIn(FluidTags.WATER)) return false;
+            if (world.getFluidState(pos2).isIn(FluidTags.WATER)) return false;
         }
         return true;
     }
@@ -203,7 +183,7 @@ public class EnderInvasionHelper {
 
         SpreadRecipe recipe = manager.getRecipe(block);
 
-        if(recipe == null) return;
+        if (recipe == null) return;
 
         BlockState resultBlockState = recipe.convert(blockState);
         world.setBlockState(to, resultBlockState);

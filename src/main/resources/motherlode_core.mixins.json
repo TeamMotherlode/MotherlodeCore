@@ -12,6 +12,8 @@
     "StructureFeatureAccessor",
     "ServerWorldMixin",
     "MobEntityMixin",
+    "SpawnHelperAccessor",
+    "SpawnHelperAccessor$Info",
     "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
     "potions.PotionEntityMixin",

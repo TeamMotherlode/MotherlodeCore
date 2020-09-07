@@ -1,5 +1,6 @@
 package motherlode.core.enderinvasion;
 
+import io.netty.buffer.Unpooled;
 import motherlode.core.Motherlode;
 import motherlode.core.registry.MotherlodeBlocks;
 import motherlode.core.registry.MotherlodeTags;
@@ -8,11 +9,16 @@ import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
 import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.loot.condition.LootConditionType;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
@@ -21,6 +27,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class EnderInvasion {
 
@@ -31,6 +38,8 @@ public class EnderInvasion {
             ComponentRegistry.INSTANCE.registerIfAbsent(Motherlode.id("enderinvasion_chunk_state"), EnderInvasionChunkComponent.class);
 
     public static final LootConditionType POST_ENDER_INVASION_LOOT_CONDITION = Registry.register(Registry.LOOT_CONDITION_TYPE, Motherlode.id("post_ender_invasion"), new LootConditionType(new PostEnderInvasionLootCondition.Serializer()));
+
+    public static final Identifier PLAY_PORTAL_PARTICLE_PACKET_ID = Motherlode.id("ender_invasion_portal_particle");
 
     public static final double NOISE_THRESHOLD = 0.75;
     public static final double NOISE_SCALE = 0.002;
@@ -103,19 +112,37 @@ public class EnderInvasion {
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
-        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION)
-            spread(state, world, pos, random);
+        if(state.isAir() && EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD) {
+
+            for(int i = 0; i < 3; i++) {
+
+                Stream<PlayerEntity> watchingPlayers = PlayerStream.watching(world, pos);
+                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+                passedData.writeBlockPos(pos);
+
+                passedData.writeDouble(random.nextDouble() * 2 - 1);
+                passedData.writeDouble(random.nextDouble() * 2 - 1);
+                passedData.writeDouble(random.nextDouble() * 2 - 1);
+
+                watchingPlayers.forEach(player ->
+                        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, passedData));
+            }
+        }
 
         if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION &&
-           EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
-           world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
+                EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
+                world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
 
-            EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos);
+            EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos, world.getChunkManager().getSpawnInfo());
+            return;
         }
+
+        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION)
+            spread(state, world, pos, random);
     }
     public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
-        if(!MotherlodeTags.Blocks.SPREADABLE.contains(state.getBlock())) return;
+        if(!state.isIn(MotherlodeTags.Blocks.SPREADABLE)) return;
 
         if (!EnderInvasionHelper.canSurvive(world, pos)) {
 
