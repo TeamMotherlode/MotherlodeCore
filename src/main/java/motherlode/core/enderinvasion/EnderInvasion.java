@@ -1,6 +1,5 @@
 package motherlode.core.enderinvasion;
 
-import io.netty.buffer.Unpooled;
 import motherlode.core.Motherlode;
 import motherlode.core.registry.MotherlodeBlocks;
 import motherlode.core.registry.MotherlodeTags;
@@ -9,14 +8,10 @@ import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
 import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.loot.condition.LootConditionType;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +22,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class EnderInvasion {
 
@@ -112,22 +106,7 @@ public class EnderInvasion {
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
-        if(state.isAir() && EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD) {
-
-            for(int i = 0; i < 3; i++) {
-
-                Stream<PlayerEntity> watchingPlayers = PlayerStream.watching(world, pos);
-                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
-                passedData.writeBlockPos(pos);
-
-                passedData.writeDouble(random.nextDouble() * 2 - 1);
-                passedData.writeDouble(random.nextDouble() * 2 - 1);
-                passedData.writeDouble(random.nextDouble() * 2 - 1);
-
-                watchingPlayers.forEach(player ->
-                        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, passedData));
-            }
-        }
+        EnderInvasionHelper.spawnParticles(world, state, pos, random);
 
         if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION &&
                 EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&

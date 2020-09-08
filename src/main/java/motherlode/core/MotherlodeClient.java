@@ -76,6 +76,7 @@ public class MotherlodeClient implements ClientModInitializer {
         ClientSidePacketRegistry.INSTANCE.register(EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, (packetContext, attachedData) -> {
 
             BlockPos pos = attachedData.readBlockPos();
+            double offsetY = attachedData.readDouble();
 
             double velocityX = attachedData.readDouble();
             double velocityY = attachedData.readDouble();
@@ -83,7 +84,7 @@ public class MotherlodeClient implements ClientModInitializer {
 
             packetContext.getTaskQueue().execute(() ->
                     MinecraftClient.getInstance().particleManager.addParticle(
-                            ParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ(), velocityX, velocityY, velocityZ));
+                            ParticleTypes.PORTAL, pos.getX(), pos.getY() + offsetY, pos.getZ(), velocityX, velocityY, velocityZ));
         });
     }
 }

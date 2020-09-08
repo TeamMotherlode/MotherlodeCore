@@ -1,6 +1,9 @@
 package motherlode.core.enderinvasion;
 
+import io.netty.buffer.Unpooled;
 import motherlode.core.mixins.SpawnHelperAccessor;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.server.PlayerStream;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
@@ -9,6 +12,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +27,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class EnderInvasionHelper {
 
@@ -197,5 +202,33 @@ public class EnderInvasionHelper {
     public static Vec3i randomNearbyBlockPos(Random random) {
 
         return new Vec3i(random.nextInt(3) - 1, random.nextInt(5) - 2, random.nextInt(3) - 1);
+    }
+
+    public static void spawnParticles(ServerWorld world, BlockState state, BlockPos pos, Random random) {
+
+        for(int i = 0; i < 4; i++) {
+
+            BlockPos blockPos = pos.add(random.nextInt(5) - 2, 0, random.nextInt(5) - 2);
+            BlockState blockState = world.getBlockState(blockPos);
+
+            if(!blockState.isAir() && !world.getBlockState(blockPos.up()).getMaterial().isSolid() &&
+                    EnderInvasionHelper.getNoise(world, blockPos, EnderInvasion.NOISE_SCALE) >= EnderInvasion.NOISE_THRESHOLD) {
+
+                for(int j = 0; j < 2; j++) {
+
+                    Stream<PlayerEntity> watchingPlayers = PlayerStream.watching(world, blockPos);
+                    PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+                    passedData.writeBlockPos(blockPos);
+                    passedData.writeDouble(random.nextDouble());
+
+                    passedData.writeDouble(random.nextDouble() * 2 - 1);
+                    passedData.writeDouble(random.nextDouble() * 3 + 0.1);
+                    passedData.writeDouble(random.nextDouble() * 2 - 1);
+
+                    watchingPlayers.forEach(player ->
+                            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, passedData));
+                }
+            }
+        }
     }
 }
