@@ -3,6 +3,7 @@ package motherlode.core.enderinvasion;
 import motherlode.core.mixins.SpawnHelperAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.SpawnRestriction;
@@ -99,43 +100,46 @@ public class EnderInvasionHelper {
             BlockPos.Mutable mutable = new BlockPos.Mutable();
             int j = 0;
 
-            int l = pos.getX();
-            int m = pos.getZ();
-            int o = MathHelper.ceil(world.random.nextFloat() * 4.0F);
-            int p = 0;
+            for(int k = 0; k < 3; k++) {
+                int l = pos.getX();
+                int m = pos.getZ();
+                EntityData entityData = null;
+                int o = MathHelper.ceil(world.random.nextFloat() * 4.0F);
+                int p = 0;
 
-            for (int q = 0; q < o; ++q) {
-                l += world.random.nextInt(6) - world.random.nextInt(6);
-                m += world.random.nextInt(6) - world.random.nextInt(6);
-                mutable.set(l, i, m);
-                double d = (double) l + 0.5D;
-                double e = (double) m + 0.5D;
-                PlayerEntity playerEntity = world.getClosestPlayer(d, i, e, -1.0D, false);
-                if (playerEntity != null) {
-                    double f = playerEntity.squaredDistanceTo(d, i, e);
-                    if (SpawnHelperAccessor.isAcceptableSpawnPosition(world, chunk, mutable, f)) {
+                for (int q = 0; q < o; q++) {
+                    l += world.random.nextInt(6) - world.random.nextInt(6);
+                    m += world.random.nextInt(6) - world.random.nextInt(6);
+                    mutable.set(l, i, m);
+                    double d = (double) l + 0.5D;
+                    double e = (double) m + 0.5D;
+                    PlayerEntity playerEntity = world.getClosestPlayer(d, i, e, -1.0D, false);
+                    if (playerEntity != null) {
+                        double f = playerEntity.squaredDistanceTo(d, i, e);
+                        if (SpawnHelperAccessor.isAcceptableSpawnPosition(world, chunk, mutable, f)) {
 
-                        o = 1 + world.random.nextInt(4);
+                            o = 1 + world.random.nextInt(4);
 
-                        if (canSpawn(world, entityType, mutable, f) && checker.test(entityType, mutable, chunk)) {
-                            MobEntity mobEntity = SpawnHelperAccessor.createMob(world, entityType);
-                            if (mobEntity == null) {
-                                return;
-                            }
-
-                            mobEntity.refreshPositionAndAngles(d, i, e, world.random.nextFloat() * 360.0F, 0.0F);
-                            if (SpawnHelperAccessor.isValidSpawn(world, mobEntity, f)) {
-                                mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.NATURAL, null, null);
-                                ++j;
-                                ++p;
-                                world.spawnEntity(mobEntity);
-                                runner.run(mobEntity, chunk);
-                                if (j >= mobEntity.getLimitPerChunk()) {
+                            if (canSpawn(world, entityType, mutable, f) && checker.test(entityType, mutable, chunk)) {
+                                MobEntity mobEntity = SpawnHelperAccessor.createMob(world, entityType);
+                                if (mobEntity == null) {
                                     return;
                                 }
 
-                                if (mobEntity.spawnsTooManyForEachTry(p)) {
-                                    break;
+                                mobEntity.refreshPositionAndAngles(d, i, e, world.random.nextFloat() * 360.0F, 0.0F);
+                                if (SpawnHelperAccessor.isValidSpawn(world, mobEntity, f)) {
+                                    entityData = mobEntity.initialize(world, world.getLocalDifficulty(mobEntity.getBlockPos()), SpawnReason.NATURAL, entityData, null);
+                                    ++j;
+                                    ++p;
+                                    world.spawnEntity(mobEntity);
+                                    runner.run(mobEntity, chunk);
+                                    if (j >= mobEntity.getLimitPerChunk()) {
+                                        return;
+                                    }
+
+                                    if (mobEntity.spawnsTooManyForEachTry(p)) {
+                                        break;
+                                    }
                                 }
                             }
                         }
