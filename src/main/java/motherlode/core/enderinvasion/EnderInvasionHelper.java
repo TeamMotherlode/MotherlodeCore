@@ -47,11 +47,11 @@ public class EnderInvasionHelper {
                     if (noise < EnderInvasion.NOISE_THRESHOLD)
                         continue;
 
-                    EnderInvasionEvents.CONVERT.invoker().convert(world, chunk, pos, noise, NOISE_GENERATOR);
+                    EnderInvasionEvents.CONVERT_BLOCK.invoker().convertBlock(world, chunk, pos, noise);
                 }
             }
         }
-        EnderInvasionEvents.AFTER_CONVERSION.invoker().afterConversion(world, chunk, NOISE_GENERATOR);
+        EnderInvasionEvents.AFTER_CHUNK_CONVERSION.invoker().afterConversion(world, chunk);
 
         EnderInvasion.CHUNK_STATE.get(chunk).setValue(EnderInvasionChunkState.GENERATION_DONE);
     }
