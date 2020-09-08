@@ -4,35 +4,34 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.world.chunk.WorldChunk;
 
 public class EnderInvasionEvents {
     /**
      * Called when a block can be converted.
      */
-    public static final Event<Convert> CONVERT = EventFactory.createArrayBacked(Convert.class, callbacks -> (world, chunk, pos, noise, sampler) -> {
-        for (Convert callback : callbacks) {
-            callback.convert(world, chunk, pos, noise, sampler);
+    public static final Event<ConvertBlock> CONVERT_BLOCK = EventFactory.createArrayBacked(ConvertBlock.class, callbacks -> (world, chunk, pos, noise) -> {
+        for (ConvertBlock callback : callbacks) {
+            callback.convertBlock(world, chunk, pos, noise);
         }
     });
     /**
      * Called after a chunk has been converted.
      */
-    public static final Event<AfterConversion> AFTER_CONVERSION = EventFactory.createArrayBacked(AfterConversion.class, callbacks -> (world, chunk, sampler) -> {
+    public static final Event<AfterConversion> AFTER_CHUNK_CONVERSION = EventFactory.createArrayBacked(AfterConversion.class, callbacks -> (world, chunk) -> {
         for (AfterConversion callback : callbacks) {
-            callback.afterConversion(world, chunk, sampler);
+            callback.afterConversion(world, chunk);
         }
     });
 
     @FunctionalInterface
-    public interface Convert {
+    public interface ConvertBlock {
 
-        void convert(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise, SimplexNoiseSampler sampler);
+        void convertBlock(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise);
     }
     @FunctionalInterface
     public interface AfterConversion {
 
-        void afterConversion(ServerWorld world, WorldChunk chunk, SimplexNoiseSampler sampler);
+        void afterConversion(ServerWorld world, WorldChunk chunk);
     }
 }

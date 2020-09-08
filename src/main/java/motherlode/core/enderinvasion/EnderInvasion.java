@@ -64,7 +64,7 @@ public class EnderInvasion {
                 new PostEnderInvasionSellItemFactory(Items.ENDER_PEARL, 5, 1, 15);
 
         // Convert blocks using BlockSpreadManager.SPREAD and generate decoration
-        EnderInvasionEvents.CONVERT.register((world, chunk, pos, noise, sampler) -> {
+        EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
 
             BlockState state = chunk.getBlockState(pos);
             SpreadRecipe recipe = BlockSpreadManager.SPREAD.getRecipe(state.getBlock());
