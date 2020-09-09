@@ -47,8 +47,8 @@ public class EnderInvasion {
     public static void initializeEnderInvasion() {
 
         // Register the components
-        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(STATE, new EnderInvasionComponentImpl(EnderInvasionState.PRE_ECHERITE)));
-        ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(CHUNK_STATE, new EnderInvasionChunkComponentImpl(EnderInvasionChunkState.PRE_ECHERITE)));
+        LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(STATE, new EnderInvasionComponent.Impl(EnderInvasionComponent.State.PRE_ECHERITE)));
+        ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(CHUNK_STATE, new EnderInvasionChunkComponent.Impl(EnderInvasionChunkComponent.State.PRE_ECHERITE)));
 
         // Call EnderInvasionHelper.convertChunk when a chunk gets loaded
         ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionHelper::convertChunk);
@@ -61,7 +61,7 @@ public class EnderInvasion {
         EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
 
             BlockState state = chunk.getBlockState(pos);
-            SpreadRecipe recipe = BlockSpreadManager.SPREAD.getRecipe(state.getBlock());
+            BlockRecipe recipe = BlockRecipeManager.SPREAD.getRecipe(state.getBlock());
             if (recipe != null) {
 
                 chunk.setBlockState(pos, recipe.convert(state), false);
@@ -106,9 +106,9 @@ public class EnderInvasion {
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
-        EnderInvasionHelper.spawnParticles(world, state, pos, random);
+        EnderInvasionHelper.spawnParticles(world, pos, random, 4, 2);
 
-        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION &&
+        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionComponent.State.ENDER_INVASION &&
                 EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
                 world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
 
@@ -116,7 +116,7 @@ public class EnderInvasion {
             return;
         }
 
-        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionState.ENDER_INVASION)
+        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionComponent.State.ENDER_INVASION)
             spread(state, world, pos, random);
     }
     public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -125,7 +125,7 @@ public class EnderInvasion {
 
         if (!EnderInvasionHelper.canSurvive(world, pos)) {
 
-            SpreadRecipe recipe = BlockSpreadManager.PURIFICATION.getRecipe(state.getBlock());
+            BlockRecipe recipe = BlockRecipeManager.PURIFICATION.getRecipe(state.getBlock());
             if(recipe == null) return;
             world.setBlockState(pos, recipe.convert(state));
             return;
@@ -135,7 +135,7 @@ public class EnderInvasion {
         for (int i = 0; i < 3; i++) {
 
             BlockPos blockPos = pos.add(EnderInvasionHelper.randomNearbyBlockPos(random));
-            EnderInvasionHelper.spreadTo(BlockSpreadManager.SPREAD, world, blockPos);
+            EnderInvasionHelper.spreadTo(BlockRecipeManager.SPREAD, world, blockPos);
         }
     }
 }

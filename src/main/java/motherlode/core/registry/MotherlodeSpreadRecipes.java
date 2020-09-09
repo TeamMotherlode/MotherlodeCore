@@ -1,6 +1,6 @@
 package motherlode.core.registry;
 
-import motherlode.core.enderinvasion.BlockSpreadManager;
+import motherlode.core.enderinvasion.BlockRecipeManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
@@ -8,10 +8,10 @@ import net.minecraft.block.PillarBlock;
 import net.minecraft.tag.BlockTags;
 
 import static motherlode.core.Motherlode.id;
-import static motherlode.core.enderinvasion.BlockSpreadManager.SPREAD;
-import static motherlode.core.enderinvasion.BlockSpreadManager.PURIFICATION;
-import static motherlode.core.enderinvasion.BlockSpreadManager.addRecipe;
-import static motherlode.core.enderinvasion.BlockSpreadManager.addSimpleRecipe;
+import static motherlode.core.enderinvasion.BlockRecipeManager.SPREAD;
+import static motherlode.core.enderinvasion.BlockRecipeManager.PURIFICATION;
+import static motherlode.core.enderinvasion.BlockRecipeManager.addRecipe;
+import static motherlode.core.enderinvasion.BlockRecipeManager.addSimpleRecipe;
 
 public class MotherlodeSpreadRecipes {
 
@@ -46,7 +46,7 @@ public class MotherlodeSpreadRecipes {
         addLeavesRecipe(PURIFICATION, "withered_jungle_leaves_purification", MotherlodeBlocks.WITHERED_JUNGLE_LEAVES, Blocks.JUNGLE_LEAVES);
         addLeavesRecipe(PURIFICATION, "withered_acacia_leaves_purification", MotherlodeBlocks.WITHERED_ACACIA_LEAVES, Blocks.ACACIA_LEAVES);
     }
-    private static void addLeavesRecipe(BlockSpreadManager manager, String name, Block from, Block to) {
+    private static void addLeavesRecipe(BlockRecipeManager manager, String name, Block from, Block to) {
 
         addRecipe(manager, id(name), from::equals, state -> to.getDefaultState()
                 .with(LeavesBlock.DISTANCE, state.get(LeavesBlock.DISTANCE))

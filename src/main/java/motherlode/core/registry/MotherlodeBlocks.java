@@ -6,7 +6,6 @@ import motherlode.core.api.ArtificeProperties;
 import motherlode.core.block.*;
 import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.enderinvasion.EnderInvasionComponent;
-import motherlode.core.enderinvasion.EnderInvasionState;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -63,9 +62,9 @@ public class MotherlodeBlocks {
 
                 EnderInvasionComponent component = EnderInvasion.STATE.get(world.getLevelProperties());
 
-                if(component.value() == EnderInvasionState.PRE_ECHERITE) {
+                if(component.value() == EnderInvasionComponent.State.PRE_ECHERITE) {
 
-                    component.setValue(EnderInvasionState.ENDER_INVASION);
+                    component.setValue(EnderInvasionComponent.State.ENDER_INVASION);
 
                     // Send chat message
                     world.getPlayers().forEach(p -> player.sendMessage(new TranslatableText("enderinvasion.motherlode.start").formatted(Formatting.DARK_GREEN), false));

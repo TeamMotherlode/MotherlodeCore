@@ -1,7 +1,7 @@
 package motherlode.core.mixins;
 
 import motherlode.core.enderinvasion.EnderInvasion;
-import motherlode.core.enderinvasion.EnderInvasionState;
+import motherlode.core.enderinvasion.EnderInvasionComponent;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +26,7 @@ public abstract class MobEntityMixin extends LivingEntity {
 
         if(type == EntityType.ENDERMAN) {
 
-            if(EnderInvasion.STATE.get(((WorldAccess) world).getLevelProperties()).value() == EnderInvasionState.PRE_ECHERITE) {
+            if(EnderInvasion.STATE.get(((WorldAccess) world).getLevelProperties()).value() == EnderInvasionComponent.State.PRE_ECHERITE) {
 
                 return false;
             }

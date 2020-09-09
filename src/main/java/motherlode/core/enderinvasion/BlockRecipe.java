@@ -7,13 +7,13 @@ import net.minecraft.util.Identifier;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class SpreadRecipe {
+public class BlockRecipe {
 
     private final Identifier identifier;
     private final Predicate<Block> isValidBlock;
     private final Function<BlockState, BlockState> convert;
 
-    public SpreadRecipe(Identifier identifier, Predicate<Block> isValidBlock, Function<BlockState, BlockState> convert) {
+    public BlockRecipe(Identifier identifier, Predicate<Block> isValidBlock, Function<BlockState, BlockState> convert) {
 
         this.identifier = identifier;
         this.isValidBlock = isValidBlock;
@@ -38,9 +38,9 @@ public class SpreadRecipe {
     public boolean equals(Object object) {
 
         if(this == object) return true;
-        if(!(object instanceof SpreadRecipe)) return false;
+        if(!(object instanceof BlockRecipe)) return false;
 
-        SpreadRecipe recipe = (SpreadRecipe) object;
+        BlockRecipe recipe = (BlockRecipe) object;
 
         return identifier.equals(recipe.identifier);
     }

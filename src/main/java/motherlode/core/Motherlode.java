@@ -12,8 +12,6 @@ import net.minecraft.util.Identifier;
 public class Motherlode implements ModInitializer {
     private static final String MODID = "motherlode";
 
-
-
     @Override
     public void onInitialize() {
 
@@ -36,8 +34,6 @@ public class Motherlode implements ModInitializer {
         MotherlodeFeatures.register();
         MotherlodeSpreadRecipes.register();
     }
-
-    private static final Identifier PIGLIN_BARTERING_LOOT_TABLE_ID = new Identifier("minecraft", "gameplay/piglin_bartering");
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
 		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE))

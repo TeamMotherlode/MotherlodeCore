@@ -58,16 +58,16 @@ public class EnderInvasionHelper {
         }
         EnderInvasionEvents.AFTER_CHUNK_CONVERSION.invoker().afterConversion(world, chunk);
 
-        EnderInvasion.CHUNK_STATE.get(chunk).setValue(EnderInvasionChunkState.GENERATION_DONE);
+        EnderInvasion.CHUNK_STATE.get(chunk).setValue(EnderInvasionChunkComponent.State.GENERATION_DONE);
     }
 
     public static boolean shouldConvertChunk(ServerWorld world, WorldChunk chunk) {
 
         if (world.getDimension() != DimensionType.getOverworldDimensionType())
             return false;
-        if (EnderInvasion.STATE.get(world.getLevelProperties()).value() != EnderInvasionState.ENDER_INVASION)
+        if (EnderInvasion.STATE.get(world.getLevelProperties()).value() != EnderInvasionComponent.State.ENDER_INVASION)
             return false;
-        return EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkState.PRE_ECHERITE;
+        return EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkComponent.State.PRE_ECHERITE;
     }
 
     private static SimplexNoiseSampler getNoiseSampler(ServerWorld world) {
@@ -185,12 +185,12 @@ public class EnderInvasionHelper {
         return true;
     }
 
-    public static void spreadTo(BlockSpreadManager manager, ServerWorld world, BlockPos to) {
+    public static void spreadTo(BlockRecipeManager manager, ServerWorld world, BlockPos to) {
 
         BlockState blockState = world.getBlockState(to);
         Block block = blockState.getBlock();
 
-        SpreadRecipe recipe = manager.getRecipe(block);
+        BlockRecipe recipe = manager.getRecipe(block);
 
         if (recipe == null) return;
 
@@ -204,9 +204,9 @@ public class EnderInvasionHelper {
         return new Vec3i(random.nextInt(3) - 1, random.nextInt(5) - 2, random.nextInt(3) - 1);
     }
 
-    public static void spawnParticles(ServerWorld world, BlockState state, BlockPos pos, Random random) {
+    public static void spawnParticles(ServerWorld world, BlockPos pos, Random random, int tries, int amount) {
 
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < tries; i++) {
 
             BlockPos blockPos = pos.add(random.nextInt(5) - 2, 0, random.nextInt(5) - 2);
             BlockState blockState = world.getBlockState(blockPos);
@@ -214,7 +214,7 @@ public class EnderInvasionHelper {
             if(!blockState.isAir() && !world.getBlockState(blockPos.up()).getMaterial().isSolid() &&
                     EnderInvasionHelper.getNoise(world, blockPos, EnderInvasion.NOISE_SCALE) >= EnderInvasion.NOISE_THRESHOLD) {
 
-                for(int j = 0; j < 2; j++) {
+                for(int j = 0; j < amount; j++) {
 
                     Stream<PlayerEntity> watchingPlayers = PlayerStream.watching(world, blockPos);
                     PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());

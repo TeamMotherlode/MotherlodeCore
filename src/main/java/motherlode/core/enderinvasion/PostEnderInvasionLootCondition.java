@@ -27,7 +27,7 @@ public class PostEnderInvasionLootCondition implements LootCondition {
 
     public boolean test(LootContext lootContext) {
         return EnderInvasion.STATE.get(lootContext.getWorld().getLevelProperties()).value()
-                .ordinal() >= EnderInvasionState.ENDER_INVASION.ordinal();
+                .ordinal() >= EnderInvasionComponent.State.ENDER_INVASION.ordinal();
     }
 
     public static LootCondition.Builder builder() {

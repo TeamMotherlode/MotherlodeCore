@@ -1,6 +1,5 @@
 package motherlode.core.enderinvasion;
 
-import motherlode.core.Motherlode;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -47,7 +46,7 @@ public class PostEnderInvasionSellItemFactory implements TradeOffers.Factory {
     public TradeOffer create(Entity entity, Random random) {
 
         if (EnderInvasion.STATE.get(entity.getEntityWorld().getLevelProperties()).value()
-                .ordinal() >= EnderInvasionState.ENDER_INVASION.ordinal())
+                .ordinal() >= EnderInvasionComponent.State.ENDER_INVASION.ordinal())
 
             return new TradeOffer(new ItemStack(Items.EMERALD, this.price), new ItemStack(this.sell.getItem(), this.count), this.maxUses, this.experience, this.multiplier);
 
