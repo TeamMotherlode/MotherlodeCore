@@ -1,4 +1,4 @@
-package motherlode.core.mixins;
+package motherlode.core.mixins.enderinvasion;
 
 import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.enderinvasion.EnderInvasionComponent;

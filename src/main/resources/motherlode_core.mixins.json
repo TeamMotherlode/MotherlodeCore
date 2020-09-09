@@ -10,8 +10,9 @@
   ],
   "mixins": [
     "StructureFeatureAccessor",
-    "ServerWorldMixin",
-    "MobEntityMixin",
+    "enderinvasion.ServerWorldMixin",
+    "enderinvasion.MobEntityMixin",
+    "enderinvasion.EnderDragonFightMixin",
     "SpawnHelperAccessor",
     "SpawnHelperAccessor$Info",
     "potions.BrewingRecipeRegistryMixin",
