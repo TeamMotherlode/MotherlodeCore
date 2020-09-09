@@ -15,6 +15,16 @@ public class EnderInvasionEvents {
             callback.convertBlock(world, chunk, pos, noise);
         }
     });
+
+    /**
+     * Called when a block can be converted back to its normal form.
+     */
+    public static final Event<ConvertBlock> PURIFY_BLOCK = EventFactory.createArrayBacked(ConvertBlock.class, callbacks -> (world, chunk, pos, noise) -> {
+        for (ConvertBlock callback : callbacks) {
+            callback.convertBlock(world, chunk, pos, noise);
+        }
+    });
+
     /**
      * Called after a chunk has been converted.
      */

@@ -26,7 +26,7 @@ import java.util.Random;
 public class EnderInvasion {
 
     public static final ComponentType<EnderInvasionComponent> STATE =
-        ComponentRegistry.INSTANCE.registerIfAbsent(Motherlode.id("enderinvasion_state"), EnderInvasionComponent.class);
+            ComponentRegistry.INSTANCE.registerIfAbsent(Motherlode.id("enderinvasion_state"), EnderInvasionComponent.class);
 
     public static final ComponentType<EnderInvasionChunkComponent> CHUNK_STATE =
             ComponentRegistry.INSTANCE.registerIfAbsent(Motherlode.id("enderinvasion_chunk_state"), EnderInvasionChunkComponent.class);
@@ -40,8 +40,9 @@ public class EnderInvasion {
     public static final double END_CAP_NOISE_THRESHOLD = 0.75;
     public static final double END_FOAM_NOISE_THRESHOLD = 0.9;
     public static final double DECORATION_NOISE_SCALE = 0.05;
+    public static final int INVASION_END_TIME = 216000;
 
-    private static final double ENDERMAN_SPAWN_RATE_DAY   = 0.1;
+    private static final double ENDERMAN_SPAWN_RATE_DAY = 0.1;
     private static final double ENDERMAN_SPAWN_RATE_NIGHT = 0.25;
 
     public static void initializeEnderInvasion() {
@@ -50,23 +51,32 @@ public class EnderInvasion {
         LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(STATE, new EnderInvasionComponent.Impl(EnderInvasionComponent.State.PRE_ECHERITE)));
         ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(CHUNK_STATE, new EnderInvasionChunkComponent.Impl(EnderInvasionChunkComponent.State.PRE_ECHERITE)));
 
-        // Call EnderInvasionHelper.convertChunk when a chunk gets loaded
-        ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionHelper::convertChunk);
-
         // Prevent clerics from selling ender pearls before the ender invasion has started
         TradeOffers.PROFESSION_TO_LEVELED_TRADE.get(VillagerProfession.CLERIC).get(4)[2] =
                 new PostEnderInvasionSellItemFactory(Items.ENDER_PEARL, 5, 1, 15);
 
-        // Convert blocks using BlockSpreadManager.SPREAD and generate decoration
+        // Call EnderInvasionHelper.convertChunk when a chunk gets loaded
+        ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionHelper::convertChunk);
+
+        // Convert blocks using BlockRecipeManager.SPREAD and generate decoration
         EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
 
             BlockState state = chunk.getBlockState(pos);
             BlockRecipe recipe = BlockRecipeManager.SPREAD.getRecipe(state.getBlock());
             if (recipe != null) {
-
                 chunk.setBlockState(pos, recipe.convert(state), false);
             }
             generateDecoration(world, chunk, pos, EnderInvasionHelper.getNoise(world, pos, DECORATION_NOISE_SCALE));
+        });
+
+        // Purify blocks using BlockRecipeManager.PURIFICATION
+        EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos, noise) -> {
+
+            BlockState state = chunk.getBlockState(pos);
+            BlockRecipe recipe = BlockRecipeManager.PURIFICATION.getRecipe(state.getBlock());
+            if (recipe != null) {
+                chunk.setBlockState(pos, recipe.convert(state), false);
+            }
         });
     }
 
@@ -103,34 +113,45 @@ public class EnderInvasion {
         }
         return ground;
     }
+
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if(world.getDimension() != DimensionType.getOverworldDimensionType()) return;
+        if (world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
-        EnderInvasionHelper.spawnParticles(world, pos, random, 4, 2);
 
-        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionComponent.State.ENDER_INVASION &&
-                EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
-                world.random.nextDouble() < (world.isNight()? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
+        switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
 
-            EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos, world.getChunkManager().getSpawnInfo());
-            return;
+            case ENDER_INVASION:
+                EnderInvasionHelper.spawnParticles(world, pos, random, 4, 2);
+
+                if (EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
+                        world.random.nextDouble() < (world.isNight() ? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
+
+                    EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos, world.getChunkManager().getSpawnInfo());
+                    break;
+                }
+                spread(state, world, pos, random);
+                break;
+
+            case POST_ENDER_DRAGON:
+                double noise = EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE);
+                if(noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, INVASION_END_TIME, NOISE_THRESHOLD))
+                    EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos, noise);
+                break;
         }
-
-        if(STATE.get(world.getLevelProperties()).value() == EnderInvasionComponent.State.ENDER_INVASION)
-            spread(state, world, pos, random);
     }
+
     public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
-        if(!state.isIn(MotherlodeTags.Blocks.SPREADABLE)) return;
+        if (!state.isIn(MotherlodeTags.Blocks.SPREADABLE)) return;
 
         if (!EnderInvasionHelper.canSurvive(world, pos)) {
 
             BlockRecipe recipe = BlockRecipeManager.PURIFICATION.getRecipe(state.getBlock());
-            if(recipe == null) return;
+            if (recipe == null) return;
             world.setBlockState(pos, recipe.convert(state));
             return;
         }
-        if(world.getDifficulty() != Difficulty.HARD) return;
+        if (world.getDifficulty() != Difficulty.HARD) return;
 
         for (int i = 0; i < 3; i++) {
 

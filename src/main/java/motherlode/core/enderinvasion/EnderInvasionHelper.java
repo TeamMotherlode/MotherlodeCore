@@ -36,7 +36,14 @@ public class EnderInvasionHelper {
 
     public static void convertChunk(ServerWorld world, WorldChunk chunk) {
 
-        if (!shouldConvertChunk(world, chunk)) return;
+        EnderInvasionComponent.State state = EnderInvasion.STATE.get(world.getLevelProperties()).value();
+
+        if (!shouldConvertChunk(world, chunk, state)) return;
+        if(state == EnderInvasionComponent.State.ENDER_INVASION &&
+        EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkComponent.State.GENERATION_DONE) return;
+
+        double noiseThreshold = state == EnderInvasionComponent.State.ENDER_INVASION? EnderInvasion.NOISE_THRESHOLD :
+                getPostEnderDragonNoiseThreshold(world, EnderInvasion.INVASION_END_TIME, EnderInvasion.NOISE_THRESHOLD);
 
         int maxY = chunk.getHighestNonEmptySectionYOffset() * 16;
 
@@ -49,8 +56,11 @@ public class EnderInvasionHelper {
                     BlockPos pos = new BlockPos(chunk.getPos().x * 16 + x, y, chunk.getPos().z * 16 + z);
                     double noise = getNoise(world, pos, EnderInvasion.NOISE_SCALE);
 
-                    if (noise < EnderInvasion.NOISE_THRESHOLD)
+                    if (noise < noiseThreshold) {
+                        if(state.ordinal() >= EnderInvasionComponent.State.POST_ENDER_DRAGON.ordinal())
+                            EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, chunk, pos, noise);
                         continue;
+                    }
 
                     EnderInvasionEvents.CONVERT_BLOCK.invoker().convertBlock(world, chunk, pos, noise);
                 }
@@ -61,13 +71,22 @@ public class EnderInvasionHelper {
         EnderInvasion.CHUNK_STATE.get(chunk).setValue(EnderInvasionChunkComponent.State.GENERATION_DONE);
     }
 
-    public static boolean shouldConvertChunk(ServerWorld world, WorldChunk chunk) {
+    public static boolean shouldConvertChunk(ServerWorld world, WorldChunk chunk, EnderInvasionComponent.State state) {
 
         if (world.getDimension() != DimensionType.getOverworldDimensionType())
             return false;
-        if (EnderInvasion.STATE.get(world.getLevelProperties()).value() != EnderInvasionComponent.State.ENDER_INVASION)
-            return false;
-        return EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkComponent.State.PRE_ECHERITE;
+        return state.ordinal() >= EnderInvasionComponent.State.ENDER_INVASION.ordinal();
+    }
+
+    public static double getPostEnderDragonNoiseThreshold(ServerWorld world, int time, double normalThreshold) {
+
+        if(time <= 0) return -1;
+        int endTick = EnderInvasion.STATE.get(world.getLevelProperties()).getInvasionEndTick();
+        int ticksPassed = world.getServer().getTicks() - endTick;
+        if(ticksPassed >= time) return -1;
+
+        double mark =  1 - (ticksPassed / (double) time);
+        return mark * (normalThreshold + 1) - 1;
     }
 
     private static SimplexNoiseSampler getNoiseSampler(ServerWorld world) {
