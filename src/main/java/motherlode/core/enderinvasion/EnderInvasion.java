@@ -107,6 +107,11 @@ public class EnderInvasion {
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
+        if (!EnderInvasionHelper.canSurvive(world, pos)) {
+            EnderInvasionHelper.convert(world, BlockRecipeManager.PURIFICATION, pos);
+            return;
+        }
+
         switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
 
             case ENDER_INVASION:
@@ -134,14 +139,6 @@ public class EnderInvasion {
     public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         if (!state.isIn(MotherlodeTags.Blocks.SPREADABLE)) return;
-
-        if (!EnderInvasionHelper.canSurvive(world, pos)) {
-
-            BlockRecipe recipe = BlockRecipeManager.PURIFICATION.getRecipe(state.getBlock());
-            if (recipe == null) return;
-            world.setBlockState(pos, recipe.convert(state));
-            return;
-        }
         if (world.getDifficulty() != Difficulty.HARD) return;
 
         for (int i = 0; i < 3; i++) {
