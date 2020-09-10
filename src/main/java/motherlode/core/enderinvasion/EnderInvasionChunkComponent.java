@@ -7,7 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 
 public interface EnderInvasionChunkComponent extends Component {
     enum State {
-        PRE_ECHERITE, GENERATION_DONE
+        UNAFFECTED, PRE_ECHERITE, ENDER_INVASION
     }
 
     State value();

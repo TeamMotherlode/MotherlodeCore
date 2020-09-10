@@ -117,7 +117,6 @@ public class EnderInvasion {
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
-
         switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
 
             case ENDER_INVASION:
@@ -133,6 +132,8 @@ public class EnderInvasion {
                 break;
 
             case POST_ENDER_DRAGON:
+                if(CHUNK_STATE.get(world.getChunk(pos)).value() == EnderInvasionChunkComponent.State.UNAFFECTED) break;
+
                 double noise = EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE);
                 if(noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, INVASION_END_TIME, NOISE_THRESHOLD))
                     EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos, noise);
