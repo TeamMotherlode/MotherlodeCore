@@ -231,13 +231,13 @@ public class EnderInvasionHelper {
         return true;
     }
 
-    public static void spreadTo(BlockRecipeManager manager, ServerWorld world, BlockPos to) {
+    public static void convert(ServerWorld world, BlockRecipeManager manager, BlockPos pos) {
 
-        BlockState state = world.getBlockState(to);
+        BlockState state = world.getBlockState(pos);
         Optional.of(state.getBlock())
                 .map(manager::getRecipe)
                 .map(recipe -> recipe.convert(state))
-                .ifPresent(convertedState -> world.setBlockState(to, convertedState));
+                .ifPresent(convertedState -> world.setBlockState(pos, convertedState));
     }
 
     // Returns a Vec3i where x and z can be from -1 to 1, and y can be from -2 to 2

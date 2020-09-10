@@ -61,23 +61,13 @@ public class EnderInvasion {
         // Convert blocks using BlockRecipeManager.SPREAD and generate decoration
         EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
 
-            BlockState state = chunk.getBlockState(pos);
-            BlockRecipe recipe = BlockRecipeManager.SPREAD.getRecipe(state.getBlock());
-            if (recipe != null) {
-                chunk.setBlockState(pos, recipe.convert(state), false);
-            }
+            EnderInvasionHelper.convert(world, BlockRecipeManager.SPREAD, pos);
             generateDecoration(world, chunk, pos, EnderInvasionHelper.getNoise(world, pos, DECORATION_NOISE_SCALE));
         });
 
         // Purify blocks using BlockRecipeManager.PURIFICATION
-        EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos, noise) -> {
-
-            BlockState state = chunk.getBlockState(pos);
-            BlockRecipe recipe = BlockRecipeManager.PURIFICATION.getRecipe(state.getBlock());
-            if (recipe != null) {
-                chunk.setBlockState(pos, recipe.convert(state), false);
-            }
-        });
+        EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos, noise) ->
+            EnderInvasionHelper.convert(world, BlockRecipeManager.PURIFICATION, pos));
     }
 
     public static void generateDecoration(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise) {
@@ -132,10 +122,10 @@ public class EnderInvasion {
                 break;
 
             case POST_ENDER_DRAGON:
-                if(CHUNK_STATE.get(world.getChunk(pos)).value() == EnderInvasionChunkComponent.State.UNAFFECTED) break;
+                if (CHUNK_STATE.get(world.getChunk(pos)).value() == EnderInvasionChunkComponent.State.UNAFFECTED) break;
 
                 double noise = EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE);
-                if(noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, INVASION_END_TIME, NOISE_THRESHOLD))
+                if (noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, INVASION_END_TIME, NOISE_THRESHOLD))
                     EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos, noise);
                 break;
         }
@@ -157,7 +147,7 @@ public class EnderInvasion {
         for (int i = 0; i < 3; i++) {
 
             BlockPos blockPos = pos.add(EnderInvasionHelper.randomNearbyBlockPos(random));
-            EnderInvasionHelper.spreadTo(BlockRecipeManager.SPREAD, world, blockPos);
+            EnderInvasionHelper.convert(world, BlockRecipeManager.SPREAD, blockPos);
         }
     }
 }
