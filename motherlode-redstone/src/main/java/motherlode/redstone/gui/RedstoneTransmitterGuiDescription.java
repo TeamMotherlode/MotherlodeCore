@@ -6,17 +6,16 @@ import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import motherlode.base.Motherlode;
+import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
+import motherlode.orestoolsarmor.item.DefaultGemItem;
 import motherlode.redstone.MotherlodeRedstoneMod;
 import motherlode.redstone.MotherlodeScreenHandlers;
-import motherlode.orestoolsarmor.item.DefaultGemItem;
-import motherlode.uncategorized.registry.MotherlodeTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.SlotActionType;
-
 import java.util.ArrayList;
 
 public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
@@ -32,7 +31,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WPlainPanel panel = new WPlainPanel();
 
-        WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeTags.Items.GEMS)));
+        WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)));
         panel.add(grid, 36, 22);
 
         WSprite transmitter = new WSprite(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/transmitter_disconnected.png"));
@@ -60,7 +59,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).getItem().isIn(MotherlodeTags.Items.GEMS)) {
+                if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
                     miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/white.png"));
 
@@ -102,7 +101,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).getItem().isIn(MotherlodeTags.Items.GEMS)) {
+                if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
                     miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeRedstoneMod.MODID, "textures/gui/container/white.png"));
 

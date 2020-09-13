@@ -24,7 +24,7 @@
                     }
                   }
                 ],
-                "name": "motherlode:topaz_ore"
+                "name": "motherlode-ores-tools-armor:sapphire_ore"
               },
               {
                 "type": "minecraft:item",
@@ -38,7 +38,7 @@
                     "function": "minecraft:explosion_decay"
                   }
                 ],
-                "name": "motherlode:topaz"
+                "name": "motherlode-ores-tools-armor:sapphire"
               }
             ]
           }

@@ -24,7 +24,7 @@
                     }
                   }
                 ],
-                "name": "motherlode:amethyst_ore"
+                "name": "motherlode-ores-tools-armor:onyx_ore"
               },
               {
                 "type": "minecraft:item",
@@ -38,7 +38,7 @@
                     "function": "minecraft:explosion_decay"
                   }
                 ],
-                "name": "motherlode:amethyst"
+                "name": "motherlode-ores-tools-armor:onyx"
               }
             ]
           }

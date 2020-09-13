@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 public class MotherlodeOresToolsArmorItems {
 
-    private static Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
+    private static final Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final Item COPPER_INGOT = register("copper_ingot");
     public static final Item COPPER_NUGGET = register("copper_nugget");

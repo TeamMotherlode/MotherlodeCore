@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:diamond",
+	"minecraft:emerald",
+    "motherlode-ores-tools-armor:amethyst",
+	"motherlode-ores-tools-armor:howlite",
+	"motherlode-ores-tools-armor:ruby",
+	"motherlode-ores-tools-armor:sapphire",
+    "motherlode-ores-tools-armor:topaz",
+    "motherlode-ores-tools-armor:onyx"
+  ]
+}

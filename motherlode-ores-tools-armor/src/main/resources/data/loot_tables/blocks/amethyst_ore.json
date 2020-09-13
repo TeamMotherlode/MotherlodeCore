@@ -24,7 +24,7 @@
                     }
                   }
                 ],
-                "name": "motherlode:sapphire_ore"
+                "name": "motherlode-ores-tools-armor:amethyst_ore"
               },
               {
                 "type": "minecraft:item",
@@ -38,7 +38,7 @@
                     "function": "minecraft:explosion_decay"
                   }
                 ],
-                "name": "motherlode:sapphire"
+                "name": "motherlode-ores-tools-armor:amethyst"
               }
             ]
           }

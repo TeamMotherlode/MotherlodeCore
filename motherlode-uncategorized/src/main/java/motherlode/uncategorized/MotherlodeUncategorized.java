@@ -13,12 +13,7 @@ public class MotherlodeUncategorized implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        MotherlodeEntities.init();
         MotherlodeBlocks.init();
-        MotherlodeEnchantments.init();
-        MotherlodeSounds.init();
-        MotherlodeFluids.init();
-        MotherlodeTags.init();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create(Motherlode.id("blocks"))
