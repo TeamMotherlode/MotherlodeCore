@@ -1,10 +1,10 @@
 {
 	"textures": {
-		"1": "motherlode:block/waterplant_middle",
-		"2": "motherlode:block/waterplant_stalk",
-		"3": "motherlode:block/waterplant_top",
-		"4": "motherlode:block/waterplant_bottom",
-		"particle": "motherlode:block/waterplant_middle"
+		"1": "motherlode-biomes:block/waterplant_middle",
+		"2": "motherlode-biomes:block/waterplant_stalk",
+		"3": "motherlode-biomes:block/waterplant_top",
+		"4": "motherlode-biomes:block/waterplant_bottom",
+		"particle": "motherlode-biomes:block/waterplant_middle"
 	},
 	"elements": [
 		{

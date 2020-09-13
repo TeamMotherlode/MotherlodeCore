@@ -2,19 +2,19 @@
   "variants": {
     "": [
       {
-        "model": "motherlode:block/sprouts_0"
+        "model": "motherlode-biomes:block/sprouts_0"
       },
       {
-        "model": "motherlode:block/sprouts_1"
+        "model": "motherlode-biomes:block/sprouts_1"
       },
       {
-        "model": "motherlode:block/sprouts_2"
+        "model": "motherlode-biomes:block/sprouts_2"
       },
       {
-        "model": "motherlode:block/sprouts_3"
+        "model": "motherlode-biomes:block/sprouts_3"
       },
 	  {
-        "model": "motherlode:block/sprouts_4"
+        "model": "motherlode-biomes:block/sprouts_4"
       }
     ]
   }

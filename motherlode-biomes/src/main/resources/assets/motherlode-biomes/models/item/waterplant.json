@@ -1,11 +1,11 @@
 {
 	"parent": "block/block",
 	"textures": {
-		"1": "motherlode:block/waterplant_middle_untinted",
-		"2": "motherlode:block/waterplant_stalk_untinted",
-		"3": "motherlode:block/waterplant_top_untinted",
-		"4": "motherlode:block/waterplant_bottom_untinted",
-		"particle": "motherlode:block/waterplant_middle_untinted"
+		"1": "motherlode-biomes:block/waterplant_middle_untinted",
+		"2": "motherlode-biomes:block/waterplant_stalk_untinted",
+		"3": "motherlode-biomes:block/waterplant_top_untinted",
+		"4": "motherlode-biomes:block/waterplant_bottom_untinted",
+		"particle": "motherlode-biomes:block/waterplant_middle_untinted"
 	},
 	"elements": [
 		{

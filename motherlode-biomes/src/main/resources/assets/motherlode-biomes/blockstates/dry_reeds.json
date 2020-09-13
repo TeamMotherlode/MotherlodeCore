@@ -1,28 +1,28 @@
 {
   "variants": {
 	"type=single": {
-	  "model": "motherlode:block/dry_reeds"
+	  "model": "motherlode-biomes:block/dry_reeds"
     },
 	"type=waterlogged": {
-	  "model": "motherlode:block/dry_reeds"
+	  "model": "motherlode-biomes:block/dry_reeds"
     },
 	"type=bottom": [
       {
-        "model": "motherlode:block/dry_reeds_bottom_0"
+        "model": "motherlode-biomes:block/dry_reeds_bottom_0"
       },
       {
-        "model": "motherlode:block/dry_reeds_bottom_1"
+        "model": "motherlode-biomes:block/dry_reeds_bottom_1"
       }
     ],
 	"type=middle": {
-	  "model": "motherlode:block/dry_reeds_middle"
+	  "model": "motherlode-biomes:block/dry_reeds_middle"
     },
     "type=top": [
       {
-        "model": "motherlode:block/dry_reeds_top_0"
+        "model": "motherlode-biomes:block/dry_reeds_top_0"
       },
       {
-        "model": "motherlode:block/dry_reeds_top_1"
+        "model": "motherlode-biomes:block/dry_reeds_top_1"
       }
     ]
   }

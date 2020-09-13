@@ -1,6 +1,6 @@
 {
-	"parent": "motherlode:block/thick_cross",
+	"parent": "motherlode-base:block/thick_cross",
 	"textures": {
-		"texture": "motherlode:block/reeds_bottom"
+		"texture": "motherlode-biomes:block/reeds_bottom"
 	}
 }
