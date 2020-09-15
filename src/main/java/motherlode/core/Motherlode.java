@@ -1,5 +1,7 @@
 package motherlode.core;
 
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -10,11 +12,13 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class Motherlode implements ModInitializer {
-    private static final String MODID = "motherlode";
+    public static final String MODID = "motherlode";
 
     @Override
     public void onInitialize() {
 
+        AutoConfig.register(MotherlodeConfig.class, JanksonConfigSerializer::new);
+        CONFIG = AutoConfig.getConfigHolder(MotherlodeConfig.class).getConfig();
         EnderInvasion.initializeEnderInvasion();
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
@@ -34,6 +38,8 @@ public class Motherlode implements ModInitializer {
         MotherlodeFeatures.register();
         MotherlodeSpreadRecipes.register();
     }
+
+    public static MotherlodeConfig CONFIG;
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))
 		.icon(() -> new ItemStack(MotherlodeBlocks.COPPER_ORE))

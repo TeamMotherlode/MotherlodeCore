@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
 import java.util.Random;
@@ -40,10 +39,6 @@ public class EnderInvasion {
     public static final double END_CAP_NOISE_THRESHOLD = 0.75;
     public static final double END_FOAM_NOISE_THRESHOLD = 0.9;
     public static final double DECORATION_NOISE_SCALE = 0.05;
-    public static final int INVASION_END_TIME = 216000;
-
-    private static final double ENDERMAN_SPAWN_RATE_DAY = 0.1;
-    private static final double ENDERMAN_SPAWN_RATE_NIGHT = 0.25;
 
     public static void initializeEnderInvasion() {
 
@@ -118,7 +113,7 @@ public class EnderInvasion {
                 EnderInvasionHelper.spawnParticles(world, pos, random, 4, 2);
 
                 if (EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
-                        world.random.nextDouble() < (world.isNight() ? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
+                        world.random.nextDouble() < (world.isNight() ? Motherlode.CONFIG.endermanSpawnRateNight : Motherlode.CONFIG.endermanSpawnRateDay)) {
 
                     EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos, world.getChunkManager().getSpawnInfo());
                     break;
@@ -130,7 +125,7 @@ public class EnderInvasion {
                 if (CHUNK_STATE.get(world.getChunk(pos)).value() == EnderInvasionChunkComponent.State.UNAFFECTED) break;
 
                 double noise = EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE);
-                if (noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, INVASION_END_TIME, NOISE_THRESHOLD))
+                if (noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, Motherlode.CONFIG.invasionEndTime, NOISE_THRESHOLD))
                     EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos, noise);
                 break;
         }
@@ -139,7 +134,7 @@ public class EnderInvasion {
     public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         if (!state.isIn(MotherlodeTags.Blocks.SPREADABLE)) return;
-        if (world.getDifficulty() != Difficulty.HARD) return;
+        if (world.getDifficulty().getId() < Motherlode.CONFIG.spreadDifficulty.getId()) return;
 
         for (int i = 0; i < 3; i++) {
 
