@@ -1,10 +1,10 @@
 package motherlode.base;
 
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
-import motherlode.base.api.ArtificeProcessor;
+import motherlode.base.api.AssetGenerator;
 import net.minecraft.util.Identifier;
 
-public class CommonArtificeProcessors {
+public class CommonAssets {
 
     private static final String[] facings = new String[]{"east", "north", "south", "west"};
     private static final String[] halfs = new String[]{"bottom", "top"};
@@ -16,75 +16,67 @@ public class CommonArtificeProcessors {
     private static final int[] xs = new int[]{0, 0, 0, 0, 0, 2, 2, 2, 2, 2};
     private static final int[] ys = new int[]{3, 0, 3, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2};
 
-    public static final ArtificeProcessor BLOCK_ITEM = (pack, id) -> {
+    public static final AssetGenerator BLOCK_ITEM = (pack, id) ->
 
         pack.addItemModel(id, state -> state
                 .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    };
 
-    public static final ArtificeProcessor FLAT_ITEM_MODEL = (pack, id) -> {
+    public static final AssetGenerator FLAT_ITEM_MODEL = (pack, id) ->
 
         pack.addItemModel(id, state -> state
                 .parent(new Identifier("item/generated"))
                 .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    };
 
-    public static final ArtificeProcessor DEFAULT_ITEM_MODEL = (pack, id) -> {
+    public static final AssetGenerator DEFAULT_ITEM_MODEL = (pack, id) ->
 
         pack.addItemModel(id, state -> state
                 .parent(new Identifier("item/generated"))
                 .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
         );
-    };
 
-    public static final ArtificeProcessor HANDHELD_ITEM_MODEL = (pack, id) -> {
+    public static final AssetGenerator HANDHELD_ITEM_MODEL = (pack, id) ->
 
         pack.addItemModel(id, state -> state
                 .parent(new Identifier("item/handheld"))
                 .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
         );
-    };
 
-    public static final ArtificeProcessor DEFAULT_BLOCK_STATE = (pack, id) -> {
+    public static final AssetGenerator DEFAULT_BLOCK_STATE = (pack, id) ->
 
         pack.addBlockState(id, state -> state
                 .variant("", settings -> settings
                         .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
                 )
         );
-    };
 
-    public static final ArtificeProcessor DEFAULT_BLOCK_MODEL = (pack, id) -> {
+    public static final AssetGenerator DEFAULT_BLOCK_MODEL = (pack, id) ->
 
         pack.addBlockModel(id, state -> state
                 .parent(new Identifier("block/cube_all"))
                 .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    };
 
-    public static final ArtificeProcessor DEFAULT_BLOCK = DEFAULT_BLOCK_STATE.andThen(DEFAULT_BLOCK_MODEL).andThen(BLOCK_ITEM);
+    public static final AssetGenerator DEFAULT_BLOCK = DEFAULT_BLOCK_STATE.andThen(DEFAULT_BLOCK_MODEL).andThen(BLOCK_ITEM);
 
-    public static final ArtificeProcessor PLANT = (pack, id) -> {
+    public static final AssetGenerator PLANT = (pack, id) ->
 
        pack.addBlockModel(id, state -> state
                 .parent(new Identifier("block/tinted_cross"))
                 .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    };
 
-    public static final ArtificeProcessor THICK_CROSS = (pack, id) -> {
+    public static final AssetGenerator THICK_CROSS = (pack, id) ->
 
         pack.addBlockModel(id, state -> state
                 .parent(Motherlode.id("block/thick_cross"))
                 .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
-    };
 
 
 
-    public static final ArtificeProcessor PILLAR = (pack, id) -> {
+    public static final AssetGenerator PILLAR = (pack, id) -> {
 
         for (String variant : new String[]{"", "_horizontal"}) {
             pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + variant), model -> model
@@ -100,7 +92,7 @@ public class CommonArtificeProcessors {
         );
     };
 
-    public static final ArtificeProcessor STAIR = (pack, id) -> {
+    public static final AssetGenerator STAIR = (pack, id) -> {
 
         String texId = id.getPath().replace("_stairs", "");
         for (int i = 0; i < 3; i++) {
@@ -135,7 +127,7 @@ public class CommonArtificeProcessors {
         }
     }
 
-    public static final ArtificeProcessor SLAB = (pack, id) -> {
+    public static final AssetGenerator SLAB = (pack, id) -> {
 
         String texId = id.getPath().replace("_slab", "").replace("_pillar", "_pillar_side");
         for (String variant : new String[]{"_top", ""}) {

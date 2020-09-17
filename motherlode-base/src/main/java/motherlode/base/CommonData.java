@@ -1,0 +1,39 @@
+package motherlode.base;
+
+import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
+import motherlode.base.api.DataGenerator;
+import net.minecraft.util.Identifier;
+import java.util.function.Function;
+
+public class CommonData {
+
+    public static final DataGenerator DEFAULT_BLOCK_LOOT_TABLE = (pack, id) -> {
+
+        pack.addLootTable(Motherlode.id(id.getNamespace(), "blocks/" + id.getPath()), table -> table
+                .type(new Identifier("minecraft:block"))
+                .pool(pool -> pool
+                        .rolls(1)
+                        .entry(entry -> entry
+                                .type(new Identifier("minecraft", "item"))
+                                .name(id)
+                        )
+                        .condition(new Identifier("minecraft", "survives_explosion"), TypedJsonBuilder::build
+                        )
+                )
+        );
+    };
+
+    public static final Function<Identifier, DataGenerator> ITEM_TAG = tagId -> (pack, id) -> {
+
+        pack.addItemTag(tagId, tag -> tag
+                .replace(false)
+                .value(id));
+    };
+
+    public static final Function<Identifier, DataGenerator> BLOCK_TAG = tagId -> ITEM_TAG.apply(tagId).after((pack, id) -> {
+
+        pack.addBlockTag(tagId, tag -> tag
+                .replace(false)
+                .value(id));
+    });
+}

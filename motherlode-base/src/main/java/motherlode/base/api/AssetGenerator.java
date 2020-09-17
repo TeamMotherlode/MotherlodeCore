@@ -2,19 +2,17 @@ package motherlode.base.api;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import net.minecraft.util.Identifier;
-
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-@FunctionalInterface
-public interface ArtificeProcessor extends BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> {
+public interface AssetGenerator extends BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> {
 
     default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
 
         accept(pack, id);
         return pack;
     }
-    default ArtificeProcessor after(BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> before) {
+    default AssetGenerator after(BiConsumer<? super ArtificeResourcePack.ClientResourcePackBuilder, ? super Identifier> before) {
         Objects.requireNonNull(before);
 
         return (pack, id) -> {
@@ -23,7 +21,8 @@ public interface ArtificeProcessor extends BiConsumer<ArtificeResourcePack.Clien
             this.accept(pack, id);
         };
     }
-    default ArtificeProcessor andThen(ArtificeProcessor after) {
+    @Override
+    default AssetGenerator andThen(BiConsumer<? super ArtificeResourcePack.ClientResourcePackBuilder, ? super Identifier> after) {
         Objects.requireNonNull(after);
 
         return (pack, id) -> {

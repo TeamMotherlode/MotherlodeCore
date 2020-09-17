@@ -1,9 +1,9 @@
 package motherlode.buildingblocks;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import motherlode.base.CommonArtificeProcessors;
+import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.ArtificeProcessor;
+import motherlode.base.api.AssetGenerator;
 import motherlode.base.api.RegisterableVariantType;
 import motherlode.uncategorized.block.DefaultStairsBlock;
 import net.minecraft.block.*;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StoneVariantType implements RegisterableVariantType<Block>, ArtificeProcessor {
+public class StoneVariantType implements RegisterableVariantType<Block>, AssetGenerator {
 
     private static final List<String> IGNORE = new ArrayList<>();
     private static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
@@ -148,9 +148,9 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
     }
 
-    private static final ArtificeProcessor block = CommonArtificeProcessors.DEFAULT_BLOCK_STATE.andThen(CommonArtificeProcessors.DEFAULT_BLOCK_MODEL);
-    private static final ArtificeProcessor stair = CommonArtificeProcessors.STAIR.andThen(CommonArtificeProcessors.BLOCK_ITEM);
-    private static final ArtificeProcessor slab = CommonArtificeProcessors.SLAB.andThen(CommonArtificeProcessors.BLOCK_ITEM);
+    private static final AssetGenerator block = CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.DEFAULT_BLOCK_MODEL);
+    private static final AssetGenerator stair = CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM);
+    private static final AssetGenerator slab = CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM);
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier identifier) {
@@ -159,7 +159,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
 
             if(STAIRS.containsValue(entry.getRight()) || SLABS.containsValue(entry.getRight())) continue;
 
-            CommonArtificeProcessors.BLOCK_ITEM.accept(pack, entry.getLeft());
+            CommonAssets.BLOCK_ITEM.accept(pack, entry.getLeft());
 
             if(PILLAR != entry.getRight()) {
 
@@ -167,7 +167,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, Artific
             }
             else {
 
-                CommonArtificeProcessors.PILLAR.accept(pack, entry.getLeft());
+                CommonAssets.PILLAR.accept(pack, entry.getLeft());
             }
         }
 

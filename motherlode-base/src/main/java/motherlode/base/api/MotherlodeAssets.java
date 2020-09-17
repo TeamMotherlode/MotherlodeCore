@@ -19,16 +19,16 @@ public class MotherlodeAssets {
         }
     });
 
-    private static final List<Pair<Identifier, ArtificeProcessor>> ARTIFICE_PROCESSORS = new ArrayList<>();
+    private static final List<Pair<Identifier, AssetGenerator>> ASSET_GENERATORS = new ArrayList<>();
 
-    public static void addProcessor(Identifier id, ArtificeProcessor p) {
+    public static void addGenerator(Identifier id, AssetGenerator p) {
 
-        ARTIFICE_PROCESSORS.add(new Pair<>(id, p));
+        ASSET_GENERATORS.add(new Pair<>(id, p));
     }
 
-    public static List<Pair<Identifier, ArtificeProcessor>> getProcessors() {
+    public static List<Pair<Identifier, AssetGenerator>> getGenerators() {
 
-        return ARTIFICE_PROCESSORS;
+        return ASSET_GENERATORS;
     }
 
     @FunctionalInterface

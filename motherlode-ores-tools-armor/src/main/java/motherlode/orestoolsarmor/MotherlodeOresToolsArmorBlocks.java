@@ -1,8 +1,10 @@
 package motherlode.orestoolsarmor;
 
-import motherlode.base.CommonArtificeProcessors;
+import motherlode.base.CommonAssets;
+import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.MotherlodeAssets;
+import motherlode.base.api.MotherlodeData;
 import motherlode.orestoolsarmor.MotherlodeOreBlock.Dimension;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -54,8 +56,8 @@ public class MotherlodeOresToolsArmorBlocks {
         Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, BLOCK_ITEM_SETTINGS));
-        MotherlodeAssets.addProcessor(id, CommonArtificeProcessors.DEFAULT_BLOCK);
-        Motherlode.addDefaultLootTable(id);
+        MotherlodeAssets.addGenerator(id, CommonAssets.DEFAULT_BLOCK);
+        MotherlodeData.addGenerator(id, CommonData.DEFAULT_BLOCK_LOOT_TABLE);
         return block;
     }
 

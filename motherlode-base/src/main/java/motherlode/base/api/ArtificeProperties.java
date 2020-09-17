@@ -2,6 +2,7 @@ package motherlode.base.api;
 
 import net.minecraft.block.Block;
 
+@Deprecated
 public interface ArtificeProperties {
     boolean hasDefaultState();
 
