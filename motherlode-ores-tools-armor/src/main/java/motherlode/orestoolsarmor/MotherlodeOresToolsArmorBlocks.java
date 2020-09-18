@@ -3,6 +3,7 @@ package motherlode.orestoolsarmor;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
+import motherlode.base.api.DataProcessor;
 import motherlode.base.api.Registerable;
 import motherlode.orestoolsarmor.MotherlodeOreBlock.Dimension;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -44,7 +45,7 @@ public class MotherlodeOresToolsArmorBlocks {
     public static final Block ONYX_BLOCK = register("onyx_block", mineralBlock(2));
 
     private static Block mineralBlock(int miningLevel) {
-        return new Block(FabricBlockSettings.of(Material.STONE, MaterialColor.IRON).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
+        return new MineralBlock(FabricBlockSettings.of(Material.STONE, MaterialColor.IRON).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
     }
 
     private static<T extends Block> T register(String name, T block) {
@@ -55,7 +56,8 @@ public class MotherlodeOresToolsArmorBlocks {
                 block,
                 null,
                 CommonAssets.DEFAULT_BLOCK,
-                CommonData.DEFAULT_BLOCK_LOOT_TABLE
+                block instanceof DataProcessor? ((DataProcessor) block).andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
+                        : CommonData.DEFAULT_BLOCK_LOOT_TABLE
         );
     }
 

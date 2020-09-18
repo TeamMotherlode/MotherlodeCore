@@ -3,16 +3,17 @@ package motherlode.base.api;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import net.minecraft.util.Identifier;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 
-public interface DataProcessor extends BiConsumer<ArtificeResourcePack.ServerResourcePackBuilder, Identifier> {
+public interface DataProcessor {
+
+    void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id);
 
     default ArtificeResourcePack.ServerResourcePackBuilder process(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
 
         accept(pack, id);
         return pack;
     }
-    default DataProcessor after(BiConsumer<? super ArtificeResourcePack.ServerResourcePackBuilder, ? super Identifier> before) {
+    default DataProcessor after(DataProcessor before) {
         Objects.requireNonNull(before);
 
         return (pack, id) -> {
@@ -21,8 +22,7 @@ public interface DataProcessor extends BiConsumer<ArtificeResourcePack.ServerRes
             this.accept(pack, id);
         };
     }
-    @Override
-    default DataProcessor andThen(BiConsumer<? super ArtificeResourcePack.ServerResourcePackBuilder, ? super Identifier> after) {
+    default DataProcessor andThen(DataProcessor after) {
         Objects.requireNonNull(after);
 
         return (pack, id) -> {

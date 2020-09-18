@@ -23,6 +23,8 @@ public class CommonData {
         );
     };
 
+    public static final String COMMON_NAMESPACE = "c";
+
     public static final Function<Identifier, DataProcessor> ITEM_TAG = tagId -> (pack, id) -> {
 
         pack.addItemTag(tagId, tag -> tag

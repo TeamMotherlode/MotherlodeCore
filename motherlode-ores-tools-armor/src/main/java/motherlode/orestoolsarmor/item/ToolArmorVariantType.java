@@ -1,11 +1,12 @@
-package motherlode.orestoolsarmor;
+package motherlode.orestoolsarmor.item;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.CommonAssets;
+import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.DataProcessor;
 import motherlode.base.api.RegisterableVariantType;
-import motherlode.orestoolsarmor.item.DefaultToolMaterial;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ToolArmorVariantType implements RegisterableVariantType<Item>, AssetProcessor {
+public class ToolArmorVariantType implements RegisterableVariantType<Item>, AssetProcessor, DataProcessor {
 
     public final Item PICKAXE;
     public final Item SWORD;
@@ -71,10 +72,16 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
-
         for(Pair<Identifier, Item> entry: ALL) {
-
             CommonAssets.DEFAULT_ITEM_MODEL.accept(pack, entry.getLeft());
+        }
+    }
+
+    @Override
+    public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
+        for(Pair<Identifier, Item> entry: ALL) {
+            CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, entry.getLeft().getPath()))
+                .accept(pack, entry.getLeft());
         }
     }
 }

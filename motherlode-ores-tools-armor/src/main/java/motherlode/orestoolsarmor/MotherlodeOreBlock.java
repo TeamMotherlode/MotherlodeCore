@@ -1,9 +1,14 @@
 package motherlode.orestoolsarmor;
 
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import motherlode.base.CommonData;
+import motherlode.base.Motherlode;
+import motherlode.base.api.DataProcessor;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
@@ -16,7 +21,7 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome> {
+public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, DataProcessor {
 
     private final int minExperience;
     private final int maxExperience;
@@ -56,12 +61,30 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome> {
     }
     @Override
     public void accept(Biome biome) {
-
         if(dimension.getBiomeCategory().test(biome.getCategory())) {
             biome.addFeature(dimension.getGenerationStepFeature(), Feature.ORE.configure(
              new OreFeatureConfig(dimension.getTarget(), getDefaultState(), this.veinSize)).createDecoratedFeature(Decorator.COUNT_RANGE.configure(
              new RangeDecoratorConfig(this.veinsPerChunk, this.minY, this.minY, this.maxY))));
         }
+    }
+
+    @Override
+    public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
+        Identifier commonId = Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath());
+
+        CommonData.BLOCK_TAG.apply(commonId).accept(pack, id);
+
+        pack.addSmeltingRecipe(id, recipe -> recipe
+                .ingredientTag(commonId)
+                .result(Motherlode.id(id.getNamespace(), id.getPath().replace("ore", "ingot")))
+                .experience(1)
+                .cookingTime(200));
+
+        pack.addBlastingRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_blasting"), recipe -> recipe
+                .ingredientTag(commonId)
+                .result(Motherlode.id(id.getNamespace(), id.getPath().replace("ore", "ingot")))
+                .experience(1)
+                .cookingTime(100));
     }
 
     public enum Dimension {
