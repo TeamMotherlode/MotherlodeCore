@@ -1,9 +1,10 @@
 package motherlode.biomes;
 
 import motherlode.base.CommonAssets;
+import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.RegisterBlock;
+import motherlode.base.api.Registerable;
 import motherlode.biomes.block.DefaultPlantBlock;
 import motherlode.biomes.block.MossBlock;
 import motherlode.biomes.block.ReedsBlock;
@@ -22,23 +23,31 @@ public class MotherlodeBiomesBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.DECORATIONS);
     private static final AssetProcessor DEFAULT_PROCESSOR = CommonAssets.FLAT_ITEM_MODEL.andThen(CommonAssets.PLANT);
 
-    public static final Block SLIGHTLY_ROCKY_DIRT = register(new RegisterBlock().name("slightly_rocky_dirt").block(new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM))).assets(CommonAssets.DEFAULT_BLOCK));
-    public static final Block ROCKY_DIRT = register(new RegisterBlock().name("rocky_dirt").block(new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM))).assets(CommonAssets.DEFAULT_BLOCK));
-    public static final Block VERY_ROCKY_DIRT = register(new RegisterBlock().name("very_rocky_dirt").block(new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM))).assets(CommonAssets.DEFAULT_BLOCK));
+    public static final Block SLIGHTLY_ROCKY_DIRT = register("slightly_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)), CommonAssets.DEFAULT_BLOCK);
+    public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)), CommonAssets.DEFAULT_BLOCK);
+    public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)), CommonAssets.DEFAULT_BLOCK);
 
-    public static final Block SPROUTS = register(new RegisterBlock().name("sprouts").block(new DefaultPlantBlock(4, FabricBlockSettings.copy(Blocks.GRASS))).assets(flatItemModel("sprouts_0")));
-    public static final Block DRACAENA = register(new RegisterBlock().name("dracaena").block(new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS))).assets(CommonAssets.FLAT_ITEM_MODEL));
-    public static final Block PHILODENDRON = register(new RegisterBlock().name("philodendron").block(new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS))).assets(CommonAssets.FLAT_ITEM_MODEL));
+    public static final Block SPROUTS = register("sprouts", new DefaultPlantBlock(4, FabricBlockSettings.copy(Blocks.GRASS)), flatItemModel("sprouts_0"));
+    public static final Block DRACAENA = register("dracaena", new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.FLAT_ITEM_MODEL);
+    public static final Block PHILODENDRON = register("philodendron", new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.FLAT_ITEM_MODEL);
 
-    public static final Block MOSS = register(new RegisterBlock().name("moss").block(new MossBlock(FabricBlockSettings.copy(Blocks.GRASS))).assets(CommonAssets.BLOCK_ITEM));
+    public static final Block MOSS = register("moss", new MossBlock(FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.BLOCK_ITEM);
 
-    public static final Block WATERPLANT = register(new RegisterBlock().name("waterplant").block(new WaterplantBlock(FabricBlockSettings.copy(Blocks.SEAGRASS))).assets(DEFAULT_PROCESSOR));
-    public static final Block REEDS = register(new RegisterBlock().name("reeds").block(new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS))).assets(CommonAssets.FLAT_ITEM_MODEL));
-    public static final Block CATTAIL_REEDS = register(new RegisterBlock().name("cattail_reeds").block(new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS))).assets(CommonAssets.FLAT_ITEM_MODEL));
-    public static final Block DRY_REEDS = register(new RegisterBlock().name("dry_reeds").block(new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS))).assets(CommonAssets.FLAT_ITEM_MODEL));
+    public static final Block WATERPLANT = register("waterplant", new WaterplantBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), null);
+    public static final Block REEDS = register("reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL);
+    public static final Block CATTAIL_REEDS = register("cattail_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL);
+    public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL);
 
-    private static Block register(RegisterBlock block) {
-        return block.register(MotherlodeBiomesMod.MODID, BLOCK_ITEM_SETTINGS);
+    private static Block register(String name, Block block, AssetProcessor p) {
+
+        return Motherlode.register(
+                Registerable.block(block, BLOCK_ITEM_SETTINGS),
+                Motherlode.id(MotherlodeBiomesMod.MODID, name),
+                block,
+                null,
+                p,
+                CommonData.DEFAULT_BLOCK_LOOT_TABLE
+        );
     }
 
     public static AssetProcessor flatItemModel(String textureName) {

@@ -1,12 +1,13 @@
 package motherlode.orestoolsarmor;
 
+import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.*;
+import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.Registerable;
 import motherlode.orestoolsarmor.item.DefaultGemItem;
 import motherlode.orestoolsarmor.item.MotherlodeMaterials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
 
 public class MotherlodeOresToolsArmorItems {
 
@@ -24,39 +25,52 @@ public class MotherlodeOresToolsArmorItems {
     public static final Item TITANIUM_NUGGET = register("titanium_nugget");
     public static final Item ADAMANTITE_INGOT = register("adamantite_ingot");
     public static final Item ADAMANTITE_NUGGET = register("adamantite_nugget");
-    public static final Item AMETHYST = register(new RegisterItem().name("amethyst").item(new DefaultGemItem(0xF989FF, SETTINGS)));
-    public static final Item HOWLITE = register(new RegisterItem().name("howlite").item(new DefaultGemItem(0xFFFFFF, SETTINGS)));
-    public static final Item RUBY = register(new RegisterItem().name("ruby").item(new DefaultGemItem(0xEA3E44, SETTINGS)));
-    public static final Item SAPPHIRE = register(new RegisterItem().name("sapphire").item(new DefaultGemItem(0x34A6DA, SETTINGS)));
-    public static final Item TOPAZ = register(new RegisterItem().name("topaz").item(new DefaultGemItem(0xFFC304, SETTINGS)));
-    public static final Item ONYX = register(new RegisterItem().name("onyx").item(new DefaultGemItem(0x302A3B, SETTINGS)));
+    public static final Item AMETHYST = register("amethyst", new DefaultGemItem(0xF989FF, SETTINGS));
+    public static final Item HOWLITE = register("howlite", new DefaultGemItem(0xFFFFFF, SETTINGS));
+    public static final Item RUBY = register("ruby", new DefaultGemItem(0xEA3E44, SETTINGS));
+    public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, SETTINGS));
+    public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, SETTINGS));
+    public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, SETTINGS));
 
-    public static final ToolArmorVariantType COPPER = registerVariantType("copper", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "copper"), MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR));
-    public static final ToolArmorVariantType SILVER = registerVariantType("silver", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "silver"), MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR));
-    public static final ToolArmorVariantType CHARITE = registerVariantType("charite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "charite"), MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR));
-    public static final ToolArmorVariantType ECHERITE = registerVariantType("echerite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "echerite"), MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR));
-    public static final ToolArmorVariantType TITANIUM = registerVariantType("titanium", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "titanium"), MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR));
-    public static final ToolArmorVariantType ADAMANTITE = registerVariantType("adamantite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "adamantite"), MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR));
+    public static final ToolArmorVariantType COPPER = register("copper", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "copper"), MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR));
+    public static final ToolArmorVariantType SILVER = register("silver", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "silver"), MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR));
+    public static final ToolArmorVariantType CHARITE = register("charite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "charite"), MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR));
+    public static final ToolArmorVariantType ECHERITE = register("echerite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "echerite"), MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR));
+    public static final ToolArmorVariantType TITANIUM = register("titanium", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "titanium"), MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR));
+    public static final ToolArmorVariantType ADAMANTITE = register("adamantite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "adamantite"), MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR));
 
     public static Item register(String name) {
-
-        return register(new RegisterItem().name(name).item(new Item(SETTINGS)));
+        Item item = new Item(SETTINGS);
+        return Motherlode.register(
+                Registerable.item(item),
+                Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name),
+                item,
+                null,
+                CommonAssets.DEFAULT_ITEM_MODEL,
+                null
+        );
     }
 
-    public static<T extends RegisterableVariantType<? extends Item>> T registerVariantType(String name, T type) {
-
-        Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
-        type.register(id);
-
-        if(type instanceof AssetProcessor) MotherlodeAssets.addAssets(id, (AssetProcessor) type);
-        if(type instanceof DataProcessor) MotherlodeAssets.addData(id, (DataProcessor) type);
-
-        return type;
+    public static Item register(String name, Item item) {
+        return Motherlode.register(
+                Registerable.item(item),
+                Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name),
+                item,
+                null,
+                CommonAssets.DEFAULT_ITEM_MODEL,
+                null
+        );
     }
 
-    public static Item register(RegisterItem item) {
-
-        return item.register(MotherlodeOresToolsArmorMod.MODID);
+    public static<T extends Registerable<?> & AssetProcessor> T register(String name, T item) {
+        return Motherlode.register(
+                item,
+                Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name),
+                item,
+                null,
+                item,
+                null
+        );
     }
 
     public static void init() {
