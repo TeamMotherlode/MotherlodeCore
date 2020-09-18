@@ -2,10 +2,7 @@ package motherlode.buildingblocks;
 
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.MotherlodeAssets;
-import motherlode.base.api.MotherlodeData;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.Identifier;
 
 public class MotherlodeBuildingBlocks {
 
@@ -32,11 +29,14 @@ public class MotherlodeBuildingBlocks {
 
     public static StoneVariantType register(StoneVariantType stone) {
 
-        Identifier id = Motherlode.id(MotherlodeBuildingBlocksMod.MODID, stone.getId());
-        stone.register(id);
-        MotherlodeAssets.addGenerator(id, stone);
-        MotherlodeData.addGenerator(id, CommonData.DEFAULT_BLOCK_LOOT_TABLE);
-        return stone;
+        return Motherlode.register(
+                stone,
+                Motherlode.id(MotherlodeBuildingBlocksMod.MODID, stone.getId()),
+                stone,
+                null,
+                stone,
+                CommonData.DEFAULT_BLOCK_LOOT_TABLE
+        );
     }
     public static void init() {
 

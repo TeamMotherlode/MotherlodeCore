@@ -3,15 +3,14 @@ package motherlode.base.api;
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.base.Motherlode;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 
 public class RegisterItem {
 
     private String name = null;
     private Item item = null;
     private Registerable<? super Item> registerable = null;
-    private AssetGenerator assetGenerator = null;
-    private DataGenerator dataGenerator = null;
+    private AssetProcessor assetProcessor = null;
+    private DataProcessor dataProcessor = null;
     private Processor<? super Item> processor = null;
 
     public RegisterItem() {
@@ -38,13 +37,13 @@ public class RegisterItem {
         return this;
     }
 
-    public RegisterItem assets(AssetGenerator generator) {
-        this.assetGenerator = generator;
+    public RegisterItem assets(AssetProcessor generator) {
+        this.assetProcessor = generator;
         return this;
     }
 
-    public RegisterItem data(DataGenerator generator) {
-        this.dataGenerator = generator;
+    public RegisterItem data(DataProcessor generator) {
+        this.dataProcessor = generator;
         return this;
     }
 
@@ -54,19 +53,12 @@ public class RegisterItem {
     }
 
     public Item register(String namespace) {
-        Registerable<? super Item> registerable;
-
-        if(this.registerable != null) registerable = this.registerable;
-        else registerable = Registerable.item(this.item);
-
-        Identifier id = Motherlode.id(namespace, this.name);
-
-        registerable.register(id);
-
-        if(this.processor != null) this.processor.accept(this.item);
-        if(this.assetGenerator != null) MotherlodeAssets.addGenerator(id, this.assetGenerator);
-        if(this.dataGenerator != null) MotherlodeData.addGenerator(id, this.dataGenerator);
-
-        return this.item;
+        return Motherlode.register(
+                this.registerable,
+                Motherlode.id(namespace, this.name),
+                this.item,
+                this.processor,
+                this.assetProcessor,
+                this.dataProcessor);
     }
 }

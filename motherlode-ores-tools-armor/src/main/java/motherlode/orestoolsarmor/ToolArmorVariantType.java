@@ -3,7 +3,7 @@ package motherlode.orestoolsarmor;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetGenerator;
+import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.RegisterableVariantType;
 import motherlode.orestoolsarmor.item.DefaultToolMaterial;
 import net.minecraft.entity.EquipmentSlot;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ToolArmorVariantType implements RegisterableVariantType<Item>, AssetGenerator {
+public class ToolArmorVariantType implements RegisterableVariantType<Item>, AssetProcessor {
 
     public final Item PICKAXE;
     public final Item SWORD;

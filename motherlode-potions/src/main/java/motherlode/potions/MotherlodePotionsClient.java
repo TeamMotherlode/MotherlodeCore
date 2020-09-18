@@ -2,6 +2,7 @@ package motherlode.potions;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.Motherlode;
+import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.MotherlodeAssets;
 import motherlode.registry.MotherlodePotions;
 import motherlode.registry.MotherlodePotions.PotionModelInfo;
@@ -11,19 +12,20 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 
-public class MotherlodePotionsClient implements ClientModInitializer {
+public class MotherlodePotionsClient implements ClientModInitializer, AssetProcessor {
 
     @Override
     public void onInitializeClient() {
 
-        MotherlodeAssets.EVENT.register(this::registerAssets);
+        MotherlodeAssets.addAssets(null, this);
 
         FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
             PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
             return potion == null ? 1 : potion.predicateValue;
         });
     }
-    public void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
+    @Override
+    public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
 
         for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
             if (!info.useDefaultModel)

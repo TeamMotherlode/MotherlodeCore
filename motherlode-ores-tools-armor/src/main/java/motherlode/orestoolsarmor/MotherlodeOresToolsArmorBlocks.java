@@ -3,19 +3,15 @@ package motherlode.orestoolsarmor;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.MotherlodeAssets;
-import motherlode.base.api.MotherlodeData;
+import motherlode.base.api.Registerable;
 import motherlode.orestoolsarmor.MotherlodeOreBlock.Dimension;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class MotherlodeOresToolsArmorBlocks {
 
@@ -53,12 +49,14 @@ public class MotherlodeOresToolsArmorBlocks {
 
     private static<T extends Block> T register(String name, T block) {
 
-        Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
-        Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, BLOCK_ITEM_SETTINGS));
-        MotherlodeAssets.addGenerator(id, CommonAssets.DEFAULT_BLOCK);
-        MotherlodeData.addGenerator(id, CommonData.DEFAULT_BLOCK_LOOT_TABLE);
-        return block;
+        return Motherlode.register(
+                Registerable.block(block, BLOCK_ITEM_SETTINGS),
+                Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name),
+                block,
+                null,
+                CommonAssets.DEFAULT_BLOCK,
+                CommonData.DEFAULT_BLOCK_LOOT_TABLE
+        );
     }
 
     public static void init() {

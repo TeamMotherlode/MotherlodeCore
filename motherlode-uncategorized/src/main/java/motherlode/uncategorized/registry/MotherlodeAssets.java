@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.base.Motherlode;
+import motherlode.base.api.AssetProcessor;
 import motherlode.uncategorized.block.DefaultShovelableBlock;
 import motherlode.uncategorized.block.PotBlock;
 import motherlode.uncategorized.block.stateproperty.BlockDyeColor;
@@ -17,11 +18,12 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
-public class MotherlodeAssets {
+public class MotherlodeAssets implements AssetProcessor {
 
     public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
 
-    public static void registerAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
+    @Override
+    public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
         for (Block block : MotherlodeBlocks.defaultStateList) {
             String blockId = Registry.BLOCK.getId(block).getPath();
             pack.addBlockState(Motherlode.id(blockId), state -> state

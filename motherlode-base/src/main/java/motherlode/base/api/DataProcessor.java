@@ -5,14 +5,14 @@ import net.minecraft.util.Identifier;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
-public interface AssetGenerator extends BiConsumer<ArtificeResourcePack.ClientResourcePackBuilder, Identifier> {
+public interface DataProcessor extends BiConsumer<ArtificeResourcePack.ServerResourcePackBuilder, Identifier> {
 
-    default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
+    default ArtificeResourcePack.ServerResourcePackBuilder process(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
 
         accept(pack, id);
         return pack;
     }
-    default AssetGenerator after(BiConsumer<? super ArtificeResourcePack.ClientResourcePackBuilder, ? super Identifier> before) {
+    default DataProcessor after(BiConsumer<? super ArtificeResourcePack.ServerResourcePackBuilder, ? super Identifier> before) {
         Objects.requireNonNull(before);
 
         return (pack, id) -> {
@@ -22,7 +22,7 @@ public interface AssetGenerator extends BiConsumer<ArtificeResourcePack.ClientRe
         };
     }
     @Override
-    default AssetGenerator andThen(BiConsumer<? super ArtificeResourcePack.ClientResourcePackBuilder, ? super Identifier> after) {
+    default DataProcessor andThen(BiConsumer<? super ArtificeResourcePack.ServerResourcePackBuilder, ? super Identifier> after) {
         Objects.requireNonNull(after);
 
         return (pack, id) -> {

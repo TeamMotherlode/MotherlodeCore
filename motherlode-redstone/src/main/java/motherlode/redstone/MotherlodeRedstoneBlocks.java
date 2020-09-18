@@ -3,17 +3,12 @@ package motherlode.redstone;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetGenerator;
-import motherlode.base.api.MotherlodeAssets;
-import motherlode.base.api.MotherlodeData;
+import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.Registerable;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class MotherlodeRedstoneBlocks {
 
@@ -22,13 +17,15 @@ public class MotherlodeRedstoneBlocks {
     public static void init() {
 
     }
-    private static Block register(String name, Block block, AssetGenerator p) {
+    private static Block register(String name, Block block, AssetProcessor p) {
 
-        Identifier id = Motherlode.id(MotherlodeRedstoneMod.MODID, name);
-        Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.REDSTONE)));
-        MotherlodeAssets.addGenerator(id, p);
-        MotherlodeData.addGenerator(id, CommonData.DEFAULT_BLOCK_LOOT_TABLE);
-        return block;
+        return Motherlode.register(
+                Registerable.block(block, ItemGroup.REDSTONE),
+                Motherlode.id(MotherlodeRedstoneMod.MODID, name),
+                block,
+                null,
+                p,
+                CommonData.DEFAULT_BLOCK_LOOT_TABLE
+        );
     }
 }

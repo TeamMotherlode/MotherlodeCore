@@ -1,13 +1,13 @@
 package motherlode.base;
 
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
-import motherlode.base.api.DataGenerator;
+import motherlode.base.api.DataProcessor;
 import net.minecraft.util.Identifier;
 import java.util.function.Function;
 
 public class CommonData {
 
-    public static final DataGenerator DEFAULT_BLOCK_LOOT_TABLE = (pack, id) -> {
+    public static final DataProcessor DEFAULT_BLOCK_LOOT_TABLE = (pack, id) -> {
 
         pack.addLootTable(Motherlode.id(id.getNamespace(), "blocks/" + id.getPath()), table -> table
                 .type(new Identifier("minecraft:block"))
@@ -23,14 +23,14 @@ public class CommonData {
         );
     };
 
-    public static final Function<Identifier, DataGenerator> ITEM_TAG = tagId -> (pack, id) -> {
+    public static final Function<Identifier, DataProcessor> ITEM_TAG = tagId -> (pack, id) -> {
 
         pack.addItemTag(tagId, tag -> tag
                 .replace(false)
                 .value(id));
     };
 
-    public static final Function<Identifier, DataGenerator> BLOCK_TAG = tagId -> ITEM_TAG.apply(tagId).after((pack, id) -> {
+    public static final Function<Identifier, DataProcessor> BLOCK_TAG = tagId -> ITEM_TAG.apply(tagId).after((pack, id) -> {
 
         pack.addBlockTag(tagId, tag -> tag
                 .replace(false)

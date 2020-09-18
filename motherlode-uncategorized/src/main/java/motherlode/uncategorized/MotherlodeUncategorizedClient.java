@@ -21,7 +21,7 @@ public class MotherlodeUncategorizedClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 
-		motherlode.base.api.MotherlodeAssets.EVENT.register(MotherlodeAssets::registerAssets);
+		motherlode.base.api.MotherlodeAssets.addAssets(null, new MotherlodeAssets());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());

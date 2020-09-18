@@ -48,8 +48,8 @@ public class MotherlodeOresToolsArmorItems {
         Identifier id = Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name);
         type.register(id);
 
-        if(type instanceof AssetGenerator) MotherlodeAssets.addGenerator(id, (AssetGenerator) type);
-        if(type instanceof DataGenerator) MotherlodeData.addGenerator(id, (DataGenerator) type);
+        if(type instanceof AssetProcessor) MotherlodeAssets.addAssets(id, (AssetProcessor) type);
+        if(type instanceof DataProcessor) MotherlodeAssets.addData(id, (DataProcessor) type);
 
         return type;
     }

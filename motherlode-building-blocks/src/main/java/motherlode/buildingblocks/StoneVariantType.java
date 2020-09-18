@@ -3,7 +3,7 @@ package motherlode.buildingblocks;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetGenerator;
+import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.RegisterableVariantType;
 import motherlode.uncategorized.block.DefaultStairsBlock;
 import net.minecraft.block.*;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StoneVariantType implements RegisterableVariantType<Block>, AssetGenerator {
+public class StoneVariantType implements RegisterableVariantType<Block>, AssetProcessor {
 
     private static final List<String> IGNORE = new ArrayList<>();
     private static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
@@ -148,9 +148,9 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetGe
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
     }
 
-    private static final AssetGenerator block = CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.DEFAULT_BLOCK_MODEL);
-    private static final AssetGenerator stair = CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM);
-    private static final AssetGenerator slab = CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM);
+    private static final AssetProcessor block = CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.DEFAULT_BLOCK_MODEL);
+    private static final AssetProcessor stair = CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM);
+    private static final AssetProcessor slab = CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM);
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier identifier) {

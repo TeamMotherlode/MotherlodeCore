@@ -3,8 +3,8 @@ package motherlode.uncategorized.registry;
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetGenerator;
-import motherlode.base.api.MotherlodeData;
+import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.MotherlodeAssets;
 import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.block.*;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -75,7 +75,7 @@ public class MotherlodeBlocks {
         return register(name, block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS));
     }
 
-    public static <T extends Block> T register(String name, T block, AssetGenerator p) {
+    public static <T extends Block> T register(String name, T block, AssetProcessor p) {
         return register(name, block, new Item.Settings().group(MotherlodeUncategorized.BLOCKS));
     }
 
@@ -105,7 +105,7 @@ public class MotherlodeBlocks {
                 defaultItemModelList.add(defaultBlock);
             }
             if (defaultBlock.hasDefaultLootTable()) {
-                MotherlodeData.addGenerator(Motherlode.id(name), CommonData.DEFAULT_BLOCK_LOOT_TABLE);
+                MotherlodeAssets.addData(Motherlode.id(name), CommonData.DEFAULT_BLOCK_LOOT_TABLE);
             }
         }
         return b;
