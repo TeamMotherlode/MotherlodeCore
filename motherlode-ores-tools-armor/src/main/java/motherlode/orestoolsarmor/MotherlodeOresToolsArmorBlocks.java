@@ -31,21 +31,21 @@ public class MotherlodeOresToolsArmorBlocks {
     public static final MotherlodeOreBlock TOPAZ_ORE = register("topaz_ore", new MotherlodeOreBlock(2));
     public static final MotherlodeOreBlock ONYX_ORE = register("onyx_ore", new MotherlodeOreBlock(2));
 
-    public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1));
-    public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2));
-    public static final Block CHARITE_BLOCK = register("charite_block", mineralBlock(3));
-    public static final Block ECHERITE_BLOCK = register("echerite_block", mineralBlock(4));
-    public static final Block TITANIUM_BLOCK = register("titanium_block", mineralBlock(5));
-    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", mineralBlock(6));
-    public static final Block AMETHYST_BLOCK = register("amethyst_block", mineralBlock(2));
-    public static final Block HOWLITE_BLOCK = register("howlite_block", mineralBlock(2));
-    public static final Block RUBY_BLOCK = register("ruby_block", mineralBlock(2));
-    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", mineralBlock(2));
-    public static final Block TOPAZ_BLOCK = register("topaz_block", mineralBlock(2));
-    public static final Block ONYX_BLOCK = register("onyx_block", mineralBlock(2));
+    public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1, "copper_ingot"));
+    public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2, "silver_ingot"));
+    public static final Block CHARITE_BLOCK = register("charite_block", mineralBlock(3, "charite_ingot"));
+    public static final Block ECHERITE_BLOCK = register("echerite_block", mineralBlock(4, "echerite_ingot"));
+    public static final Block TITANIUM_BLOCK = register("titanium_block", mineralBlock(5, "titanium_ingot"));
+    public static final Block ADAMANTITE_BLOCK = register("adamantite_block", mineralBlock(6, "adamantite_ingot"));
+    public static final Block AMETHYST_BLOCK = register("amethyst_block", mineralBlock(2, "amethyst"));
+    public static final Block HOWLITE_BLOCK = register("howlite_block", mineralBlock(2, "howlite"));
+    public static final Block RUBY_BLOCK = register("ruby_block", mineralBlock(2, "ruby"));
+    public static final Block SAPPHIRE_BLOCK = register("sapphire_block", mineralBlock(2, "sapphire"));
+    public static final Block TOPAZ_BLOCK = register("topaz_block", mineralBlock(2, "topaz"));
+    public static final Block ONYX_BLOCK = register("onyx_block", mineralBlock(2, "onyx"));
 
-    private static Block mineralBlock(int miningLevel) {
-        return new MineralBlock(FabricBlockSettings.of(Material.STONE, MaterialColor.IRON).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
+    private static Block mineralBlock(int miningLevel, String mineral) {
+        return new MineralBlock(FabricBlockSettings.of(Material.STONE, MaterialColor.IRON).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel), mineral);
     }
 
     private static<T extends Block> T register(String name, T block) {

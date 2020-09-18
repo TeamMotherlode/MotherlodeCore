@@ -1,7 +1,7 @@
 package motherlode.uncategorized;
 
 import motherlode.base.Motherlode;
-import motherlode.uncategorized.registry.*;
+import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Blocks;

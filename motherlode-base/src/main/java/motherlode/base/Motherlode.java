@@ -2,11 +2,9 @@ package motherlode.base;
 
 import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.util.Processor;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.DataProcessor;
-import motherlode.base.api.MotherlodeAssets;
-import motherlode.base.api.Registerable;
+import motherlode.base.api.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 public class Motherlode implements ModInitializer {
@@ -15,6 +13,9 @@ public class Motherlode implements ModInitializer {
 
     @Override
     public void onInitialize() {
+
+        FabricLoader.getInstance().getEntrypointContainers("motherlode:init", ModInitializer.class)
+            .forEach(container -> container.getEntrypoint().onInitialize());
 
         Artifice.registerData(Motherlode.id("data_pack"), pack -> 
             MotherlodeAssets.getData().forEach(pair -> 
