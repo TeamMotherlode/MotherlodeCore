@@ -20,6 +20,9 @@ public class IngotItem extends Item implements DataProcessor {
 
         Identifier nugget = Motherlode.id(id.getNamespace(), id.getPath().replace("ingot", "nugget"));
 
+        CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
+            .accept(pack, nugget);
+
         pack.addShapelessRecipe(nugget, recipe -> recipe
             .ingredientTag(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
             .result(nugget, 9));

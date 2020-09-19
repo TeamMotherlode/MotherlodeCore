@@ -79,7 +79,7 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
 
         Identifier mineral = Motherlode.id(id.getNamespace(), this.mineral);
 
-        pack.addSmeltingRecipe(mineral, recipe -> recipe
+        pack.addSmeltingRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_smelting"), recipe -> recipe
                 .ingredientTag(commonId)
                 .result(mineral)
                 .experience(1)

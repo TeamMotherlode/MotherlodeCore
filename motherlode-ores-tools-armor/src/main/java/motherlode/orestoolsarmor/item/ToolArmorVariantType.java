@@ -58,9 +58,7 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
     @Override
     public void register(Identifier identifier) {
-
         for(Pair<Identifier, Item> entry: ALL) {
-
             Registry.register(Registry.ITEM, entry.getLeft(), entry.getRight());
         }
     }
