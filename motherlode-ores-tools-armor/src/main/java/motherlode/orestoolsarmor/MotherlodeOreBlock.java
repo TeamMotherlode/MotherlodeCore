@@ -30,16 +30,17 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
     private final int minY;
     private final int maxY;
     private final Dimension dimension;
+    private final String mineral;
 
-    public MotherlodeOreBlock(int miningLevel) {
-        this(miningLevel, Dimension.OVERWORLD);
+    public MotherlodeOreBlock(int miningLevel, String mineral) {
+        this(miningLevel, Dimension.OVERWORLD, mineral);
     }
 
-    public MotherlodeOreBlock(int miningLevel, Dimension dimension) {
-        this(0, 0, 8, 1, 0, 50, dimension, miningLevel);
+    public MotherlodeOreBlock(int miningLevel, Dimension dimension, String mineral) {
+        this(0, 0, 8, 1, 0, 50, dimension, miningLevel, mineral);
     }
     
-    public MotherlodeOreBlock(int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY, Dimension dimension, int miningLevel) {
+    public MotherlodeOreBlock(int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY, Dimension dimension, int miningLevel, String mineral) {
         super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
 
         this.minExperience = minExperience;
@@ -51,6 +52,8 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
         this.maxY = maxY;
 
         this.dimension = dimension;
+
+        this.mineral = mineral;
     }
 
     protected int getExperienceWhenMined(Random random) {
@@ -74,15 +77,17 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
 
         CommonData.BLOCK_TAG.apply(commonId).accept(pack, id);
 
-        pack.addSmeltingRecipe(id, recipe -> recipe
+        Identifier mineral = Motherlode.id(id.getNamespace(), this.mineral);
+
+        pack.addSmeltingRecipe(mineral, recipe -> recipe
                 .ingredientTag(commonId)
-                .result(Motherlode.id(id.getNamespace(), id.getPath().replace("ore", "ingot")))
+                .result(mineral)
                 .experience(1)
                 .cookingTime(200));
 
-        pack.addBlastingRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_blasting"), recipe -> recipe
+        pack.addBlastingRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_blasting"), recipe -> recipe
                 .ingredientTag(commonId)
-                .result(Motherlode.id(id.getNamespace(), id.getPath().replace("ore", "ingot")))
+                .result(mineral)
                 .experience(1)
                 .cookingTime(100));
     }
