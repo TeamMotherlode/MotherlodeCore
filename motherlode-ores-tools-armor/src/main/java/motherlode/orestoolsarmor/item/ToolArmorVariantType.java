@@ -29,9 +29,11 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
     public final Item LEGGINGS;
     public final Item BOOTS;
 
+    private final String material;
+
     private final List<Pair<Identifier, Item>> ALL = new ArrayList<>();
 
-    public ToolArmorVariantType(Identifier id, DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
+    public ToolArmorVariantType(Identifier id, String material, DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
 
         this.PICKAXE = new MaterialPickaxe(toolMaterial);
         this.SWORD = new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(ItemGroup.COMBAT));
@@ -43,6 +45,8 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
         this.CHESTPLATE = new ArmorItem(armorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT));
         this.LEGGINGS = new ArmorItem(armorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT));
         this.BOOTS = new ArmorItem(armorMaterial, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT));
+
+        this.material = material;
 
         ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), this.PICKAXE));
         ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), this.SWORD));
@@ -81,6 +85,86 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
             CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, entry.getLeft().getPath()))
                 .accept(pack, entry.getLeft());
         }
+
+        Identifier material = Motherlode.id(CommonData.COMMON_NAMESPACE, this.material);
+        Identifier stick = Motherlode.id("minecraft", "stick");
+
+        // Pickaxe
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), recipe -> recipe
+          .pattern("***", " | ", " | ")
+          .ingredientTag('*', material)
+          .ingredientItem('|', stick)
+          .result(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), 1));
+
+        // Sword
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), recipe -> recipe
+            .pattern(" * ", "*", "|")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), 1));
+
+        // Axe
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), recipe -> recipe
+            .pattern("** ", "*| ", " | ")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), 1)
+            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_axe")));
+
+        // Axe reversed
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_axe_reversed"), recipe -> recipe
+            .pattern(" **", " |*", " | ")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), 1)
+            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_axe")));
+
+        // Shovel
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"), recipe -> recipe
+            .pattern("*", "|", "|")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"), 1));
+
+        // Hoe
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), recipe -> recipe
+            .pattern("** ", " | ", " | ")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), 1)
+            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe")));
+
+        // Hoe reversed
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe_reversed"), recipe -> recipe
+            .pattern(" **", " | ", " | ")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), 1)
+            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe")));
+
+        // Helmet
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"), recipe -> recipe
+            .pattern("***", "* *", "   ")
+            .ingredientTag('*', material)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"), 1));
+
+        // Chestplate
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"), recipe -> recipe
+            .pattern("* *", "***", "***")
+            .ingredientTag('*', material)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"), 1));
+
+        // Leggings
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"), recipe -> recipe
+            .pattern("* *", "* *", "***")
+            .ingredientTag('*', material)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"), 1));
+
+        // Boots
+        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_boots"), recipe -> recipe
+            .pattern("   ", "* *", "* *")
+            .ingredientTag('*', material)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_boots"), 1));
     }
 }
 
