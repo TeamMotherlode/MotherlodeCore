@@ -9,6 +9,5 @@
     "BackgroundRendererMixin"
   ],
   "mixins": [
-    "StructureFeatureAccessor"
   ]
 }

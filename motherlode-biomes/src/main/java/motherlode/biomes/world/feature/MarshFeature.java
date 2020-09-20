@@ -1,5 +1,6 @@
 package motherlode.biomes.world.feature;
 
+import com.mojang.serialization.Codec;
 import motherlode.biomes.MotherlodeBiomesBlocks;
 import motherlode.biomes.block.ReedsBlock;
 import net.minecraft.block.Block;
@@ -9,20 +10,19 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.gen.StructureAccessor;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import java.util.Random;
 
 public class MarshFeature extends Feature<DefaultFeatureConfig> {
-    public MarshFeature() {
-        super(DefaultFeatureConfig.CODEC);
+    public MarshFeature(Codec<DefaultFeatureConfig> config) {
+        super(config);
     }
 
     @Override
-    public boolean generate(ServerWorldAccess serverWorldAccess, StructureAccessor accessor, ChunkGenerator generator, Random random, BlockPos bpos, DefaultFeatureConfig config) {
+    public boolean generate(StructureWorldAccess serverWorldAccess, ChunkGenerator generator, Random random, BlockPos bpos, DefaultFeatureConfig config) {
         boolean b = false;
         BlockPos pos = serverWorldAccess.getTopPosition(Heightmap.Type.WORLD_SURFACE, bpos).down();
         boolean[][] replace = new boolean[24][24];

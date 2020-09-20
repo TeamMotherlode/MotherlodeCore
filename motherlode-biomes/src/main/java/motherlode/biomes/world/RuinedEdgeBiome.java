@@ -1,56 +1,44 @@
 package motherlode.biomes.world;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
+import net.minecraft.world.biome.GenerationSettings;
+import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
+import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 
-public class RuinedEdgeBiome extends Biome {
-    public RuinedEdgeBiome() {
-        super(
-                new Settings()
-                        .configureSurfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilder.GRASS_CONFIG)
-                        .precipitation(Precipitation.RAIN)
-                        .category(Category.NONE)
-                        .depth(0.125F)
-                        .scale(0.01F)
-                        .temperature(0.8F)
-                        .downfall(0.4F)
-                        .effects(
-                                new BiomeEffects.Builder()
-                                        .waterColor(0x003b4d)
-                                        .waterFogColor(0x002230)
-                                        .fogColor(12638463)
-                                        .moodSound(BiomeMoodSound.CAVE)
-                                        .build()
-                        )
-                        .parent(null)
-        );
-        DefaultBiomeFeatures.addLandCarvers(this);
-        DefaultBiomeFeatures.addMineables(this);
-        DefaultBiomeFeatures.addDefaultOres(this);
-        DefaultBiomeFeatures.addDefaultDisks(this);
-        DefaultBiomeFeatures.addDefaultMushrooms(this);
-        DefaultBiomeFeatures.addSprings(this);
-        DefaultBiomeFeatures.addFrozenTopLayer(this);
-        DefaultBiomeFeatures.addForestGrass(this);
-        DefaultBiomeFeatures.addMossyRocks(this);
-        this.addSpawn(SpawnGroup.AMBIENT, new SpawnEntry(EntityType.BAT, 10, 8, 8));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.SPIDER, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.ZOMBIE, 95, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.ZOMBIE_VILLAGER, 5, 1, 1));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.SKELETON, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.CREEPER, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.SLIME, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.ENDERMAN, 10, 1, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.WITCH, 10, 1, 1));
-    }
+public class RuinedEdgeBiome {
+    public static Biome create() {
+        SpawnSettings.Builder builder = new SpawnSettings.Builder();
+        DefaultBiomeFeatures.addBatsAndMonsters(builder);
+        GenerationSettings.Builder builder2 = new GenerationSettings.Builder().surfaceBuilder(ConfiguredSurfaceBuilders.GRASS);
 
-    @Override
-    public int getGrassColorAt(double x, double z) {
-        return 0x73bd53;
+        DefaultBiomeFeatures.addLandCarvers(builder2);
+        DefaultBiomeFeatures.addMineables(builder2);
+        DefaultBiomeFeatures.addDefaultOres(builder2);
+        DefaultBiomeFeatures.addDefaultDisks(builder2);
+        DefaultBiomeFeatures.addDefaultMushrooms(builder2);
+        DefaultBiomeFeatures.addSprings(builder2);
+        DefaultBiomeFeatures.addFrozenTopLayer(builder2);
+        DefaultBiomeFeatures.addForestGrass(builder2);
+        DefaultBiomeFeatures.addMossyRocks(builder2);
+
+        return new Biome.Builder()
+            .precipitation(Biome.Precipitation.RAIN)
+            .category(Biome.Category.NONE)
+            .depth(0.125F)
+            .scale(0.01F)
+            .temperature(0.8F)
+            .downfall(0.4F)
+            .effects(
+                new BiomeEffects.Builder()
+                    .grassColor(0x73bd53)
+                    .waterColor(0x003b4d)
+                    .waterFogColor(0x002230)
+                    .fogColor(12638463)
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .build()
+            ).spawnSettings(builder.build()).generationSettings(builder2.build()).build();
     }
 }

@@ -1,14 +1,14 @@
 package motherlode.orestoolsarmor;
 
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.world.biome.Biome;
 
 public class MotherlodeOresToolsArmorFeatures {
 
     public static void register() {
-        Registry.BIOME.forEach(MotherlodeOresToolsArmorFeatures::addToBiome);
-        RegistryEntryAddedCallback.event(Registry.BIOME).register((i, identifier, biome) -> addToBiome(biome));
+        BuiltinRegistries.BIOME.forEach(MotherlodeOresToolsArmorFeatures::addToBiome);
+        RegistryEntryAddedCallback.event(BuiltinRegistries.BIOME).register((i, identifier, biome) -> addToBiome(biome));
     }
 
     public static void addToBiome(Biome biome) {

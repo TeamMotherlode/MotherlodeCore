@@ -7,69 +7,66 @@ import motherlode.biomes.MotherlodeBiomesMod;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.sound.BiomeMoodSound;
+import net.minecraft.structure.pool.StructurePool;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
+import net.minecraft.world.biome.GenerationSettings;
+import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
+import net.minecraft.world.gen.decorator.CountNoiseDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.NoiseHeightmapDecoratorConfig;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
+import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import java.awt.*;
 import java.util.Random;
 
-public class RuinedFlatsBiome extends AbstractFoggyBiome {
+public class RuinedFlatsBiome {
 
     private static final SimplexNoiseSampler samplerA = new SimplexNoiseSampler(new Random(8086));
     private static final SimplexNoiseSampler samplerB = new SimplexNoiseSampler(new Random(2024));
     private static final SimplexNoiseSampler samplerC = new SimplexNoiseSampler(new Random(1492));
 
-    public RuinedFlatsBiome() {
-        super(
-                new Settings()
-                        .configureSurfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilder.GRASS_CONFIG)
-                        .precipitation(Precipitation.RAIN)
-                        .category(Category.NONE)
-                        .depth(0.125F)
-                        .scale(0.02F)
-                        .temperature(0.8F)
-                        .downfall(0.4F)
-                        .effects(
-                                new BiomeEffects.Builder()
-                                        .waterColor(0x003b4d)
-                                        .waterFogColor(0x002230)
-                                        .fogColor(0x8294ad)
-                                        .moodSound(BiomeMoodSound.CAVE)
-                                        .build()
-                        )
-                        .parent(null)
-        );
-        this.addFeature(GenerationStep.Feature.LAKES, MotherlodeBiomeFeatures.MARSH.configure(new DefaultFeatureConfig()).createDecoratedFeature(Decorator.CHANCE_HEIGHTMAP_DOUBLE.configure(new ChanceDecoratorConfig(5))));
-        this.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBiomesBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.field_24871).tries(96).build()).createDecoratedFeature(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new NoiseHeightmapDecoratorConfig(-0.8D, 5, 10))));
-        this.addStructureFeature(MotherlodeStructures.CAMP.configure(new StructurePoolFeatureConfig(Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/start"), 5)));
-        DefaultBiomeFeatures.addLandCarvers(this);
-        DefaultBiomeFeatures.addMineables(this);
-        DefaultBiomeFeatures.addDefaultOres(this);
-        DefaultBiomeFeatures.addDefaultDisks(this);
-        DefaultBiomeFeatures.addDefaultMushrooms(this);
-        DefaultBiomeFeatures.addSprings(this);
-        DefaultBiomeFeatures.addFrozenTopLayer(this);
-        DefaultBiomeFeatures.addForestGrass(this);
-        DefaultBiomeFeatures.addMossyRocks(this);
-        this.addSpawn(SpawnGroup.AMBIENT, new SpawnEntry(EntityType.BAT, 10, 8, 8));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.SPIDER, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.ZOMBIE, 95, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.ZOMBIE_VILLAGER, 5, 1, 1));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.SKELETON, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.CREEPER, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.SLIME, 100, 4, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.ENDERMAN, 10, 1, 4));
-        this.addSpawn(SpawnGroup.MONSTER, new SpawnEntry(EntityType.WITCH, 10, 1, 1));
+    public static Biome create() {
+        SpawnSettings.Builder builder = new SpawnSettings.Builder();
+        DefaultBiomeFeatures.addBatsAndMonsters(builder);
+        GenerationSettings.Builder builder2 = new GenerationSettings.Builder().surfaceBuilder(ConfiguredSurfaceBuilders.GRASS);
+
+        builder2.feature(GenerationStep.Feature.LAKES, MotherlodeBiomeFeatures.MARSH.configure(new DefaultFeatureConfig()).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(5))));
+        builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBiomesBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).tries(96).build()).decorate(Decorator.NOISE_HEIGHTMAP_DOUBLE.configure(new CountNoiseDecoratorConfig(-0.8D, 5, 10))));
+        builder2.structureFeature(MotherlodeStructures.CAMP.configure(new StructurePoolFeatureConfig(Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/start"), 5)));
+
+        DefaultBiomeFeatures.addLandCarvers(builder2);
+        DefaultBiomeFeatures.addMineables(builder2);
+        DefaultBiomeFeatures.addDefaultOres(builder2);
+        DefaultBiomeFeatures.addDefaultDisks(builder2);
+        DefaultBiomeFeatures.addDefaultMushrooms(builder2);
+        DefaultBiomeFeatures.addSprings(builder2);
+        DefaultBiomeFeatures.addFrozenTopLayer(builder2);
+        DefaultBiomeFeatures.addForestGrass(builder2);
+        DefaultBiomeFeatures.addMossyRocks(builder2);
+
+        return new Biome.Builder()
+            .precipitation(Biome.Precipitation.RAIN)
+            .category(Biome.Category.NONE)
+            .depth(0.125F)
+            .scale(0.02F)
+            .temperature(0.8F)
+            .downfall(0.4F)
+            .effects(
+                new BiomeEffects.Builder()
+                    .waterColor(0x003b4d)
+                    .waterFogColor(0x002230)
+                    .fogColor(0x8294ad)
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .build()
+            )
+            .spawnSettings(builder.build()).generationSettings(builder2.build()).build();
     }
 
-    @Override
     public int getGrassColorAt(double x, double z) {
         int red = (int)(((samplerA.sample(x/36, z/36)+1.0)/2)*22)+70;
         int green = (int)(((samplerB.sample(x/12, z/12)+1.0)/2)*30)+130;
@@ -78,18 +75,12 @@ public class RuinedFlatsBiome extends AbstractFoggyBiome {
         return c.getRGB();
     }
 
-    @Override
     public int getSkyColor() {
         return 0x8294ad;
     }
-
-
-    @Override
     public float getFogDensity(double posX, double posZ) {
         return 0.024f;
     }
-
-    @Override
     public GlStateManager.FogMode getFogMode() {
         return GlStateManager.FogMode.EXP2;
     }

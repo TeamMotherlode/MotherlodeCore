@@ -1,6 +1,5 @@
 version = "1.0.0+$project.minecraft_version"
 
 dependencies {
-    modApi "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
-    include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
+    include "com.lettuce.fudge:artifice:${project.artifice_version}"
 }
