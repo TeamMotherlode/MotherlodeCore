@@ -1,7 +1,6 @@
 package motherlode.core.enderinvasion;
 
 import io.netty.buffer.Unpooled;
-import motherlode.core.Motherlode;
 import motherlode.core.mixins.SpawnHelperAccessor;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.server.PlayerStream;
@@ -78,7 +77,7 @@ public class EnderInvasionHelper {
         EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
         if (chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED) return;
 
-        double noiseThreshold = getPostEnderDragonNoiseThreshold(world, Motherlode.CONFIG.invasionEndTime, EnderInvasion.NOISE_THRESHOLD);
+        double noiseThreshold = getPostEnderDragonNoiseThreshold(world, EnderInvasion.INVASION_END_TIME, EnderInvasion.NOISE_THRESHOLD);
         WrappedBoolean unaffected = new WrappedBoolean(true);
 
         forEachBlock(chunk, (c, pos) -> {
