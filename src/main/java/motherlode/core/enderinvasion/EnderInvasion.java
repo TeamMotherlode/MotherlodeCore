@@ -8,6 +8,7 @@ import nerdhub.cardinal.components.api.ComponentType;
 import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
 import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
@@ -52,7 +53,7 @@ public class EnderInvasion {
         LevelComponentCallback.EVENT.register((levelProperties, components) -> components.put(STATE, new EnderInvasionComponent.Impl(EnderInvasionComponent.State.PRE_ECHERITE)));
         ChunkComponentCallback.EVENT.register((chunk, components) -> components.put(CHUNK_STATE, new EnderInvasionChunkComponent.Impl(EnderInvasionChunkComponent.State.PRE_ECHERITE)));
 
-        // Prevent clerics from selling ender pearls before the ender invasion has started
+        // Prevents clerics from selling ender pearls before the ender invasion has started
         TradeOffers.PROFESSION_TO_LEVELED_TRADE.get(VillagerProfession.CLERIC).get(4)[2] =
                 new PostEnderInvasionSellItemFactory(Items.ENDER_PEARL, 5, 1, 15);
 
@@ -69,6 +70,15 @@ public class EnderInvasion {
         // Purify blocks using BlockRecipeManager.PURIFICATION
         EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos, noise) ->
             EnderInvasionHelper.convert(world, BlockRecipeManager.PURIFICATION, pos));
+
+        Identifier piglinBarteringLootTable = new Identifier("minecraft", "gameplay/piglin_bartering");
+
+        // Prevents piglins from trading ender pearls before the ender invasion has started
+        LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
+            if (piglinBarteringLootTable.equals(id)) {
+                setter.set(lootManager.getTable(Motherlode.id("gameplay/piglin_bartering")));
+            }
+        });
     }
 
     public static void generateDecoration(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise) {
