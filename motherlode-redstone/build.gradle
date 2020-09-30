@@ -12,6 +12,6 @@ dependencies {
     compile project(path: ":motherlode-uncategorized", configuration: "dev")
     compile project(path: ":motherlode-ores-tools-armor", configuration: "dev")
 
-    modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
-    include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
+    modImplementation "io.github.cottonmc:LibGui:3.0.0+1.16.3"
+    include "io.github.cottonmc:LibGui:3.0.0+1.16.3"
 }
