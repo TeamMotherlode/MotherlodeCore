@@ -1,4 +1,4 @@
-package motherlode.uncategorized.block;
+package motherlode.spelunky.block;
 
 import net.minecraft.util.StringIdentifiable;
 

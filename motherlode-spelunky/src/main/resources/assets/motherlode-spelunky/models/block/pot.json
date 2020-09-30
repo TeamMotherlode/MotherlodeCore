@@ -1,6 +1,6 @@
 {
 	"textures": {
-		"pot": "motherlode:block/pots/pot_blank",
+		"pot": "motherlode-spelunky:block/pots/pot_blank",
 		"particle": "#pot"
 	},
 	"elements": [

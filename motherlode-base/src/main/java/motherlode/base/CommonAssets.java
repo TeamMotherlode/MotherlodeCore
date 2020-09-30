@@ -1,6 +1,8 @@
 package motherlode.base;
 
+import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
+import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.base.api.AssetProcessor;
 import net.minecraft.util.Identifier;
 
@@ -149,4 +151,9 @@ public class CommonAssets {
                 .variant("type=double", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_double")))
         );
     };
+
+    public static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
+        override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
+        return override;
+    }
 }

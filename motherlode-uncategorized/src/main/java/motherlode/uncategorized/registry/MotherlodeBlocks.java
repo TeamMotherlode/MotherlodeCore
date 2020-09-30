@@ -6,14 +6,16 @@ import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.MotherlodeAssets;
 import motherlode.uncategorized.MotherlodeUncategorized;
-import motherlode.uncategorized.block.*;
+import motherlode.uncategorized.block.DefaultBlock;
+import motherlode.uncategorized.block.DefaultShovelableBlock;
+import motherlode.uncategorized.block.PaintableWallBlock;
+import motherlode.uncategorized.block.RopeBlock;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -42,9 +44,6 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> foliageColored = new ArrayList<>();
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
-
-    public static final Block POT = register("pot", new PotBlock(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.GLASS).strength(2.0F, 2.0F)), (BlockItem) null);
-    public static final Item POT_ITEM = Registry.register(Registry.ITEM, Motherlode.id("pot"), new BlockItem(POT, new Item.Settings().group(MotherlodeUncategorized.ITEMS)));
 
     public static final Block ROPE_BLOCK = register("rope", new RopeBlock(AbstractBlock.Settings.of(Material.PLANT)), (BlockItem) null);
     public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(MotherlodeUncategorized.ITEMS)));

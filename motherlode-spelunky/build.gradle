@@ -1,0 +1,5 @@
+version = "1.0.0+$project.minecraft_version"
+
+dependencies {
+    compile project(path: ":motherlode-base", configuration: "dev")
+}

@@ -6,7 +6,6 @@ import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.uncategorized.block.DefaultShovelableBlock;
-import motherlode.uncategorized.block.PotBlock;
 import motherlode.uncategorized.block.stateproperty.BlockDyeColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -127,17 +126,6 @@ public class MotherlodeAssets implements AssetProcessor {
             );
         }
 
-        pack.addBlockState(Motherlode.id("pot"), state -> {
-            for (int i = 0; i <= PotBlock.maxPattern; i++) {
-                int ii = i;
-                pack.addBlockModel(Motherlode.id("pot_with_overlay_" + i), model -> model
-                        .parent(Motherlode.id("block/pot"))
-                        .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
-                );
-                state.variant("pattern=" + i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
-            }
-        });
-
         pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
                 .parent(Motherlode.id("block/pot"))
                 .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
@@ -147,20 +135,6 @@ public class MotherlodeAssets implements AssetProcessor {
                 .display("firstperson_righthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(0F, 135F, 0F).translation(2, 2, -2))
                 .display("firstperson_lefthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(0F, 135F, 0F).translation(0, 5, 10))
         );
-
-        pack.addItemModel(Motherlode.id("pot"), model -> {
-            for (int i = 0; i <= PotBlock.maxPattern; i++) {
-                float pattern = i / 100F;
-                int ii = i;
-                model.override(override -> floatPredicate(override, "pot_pattern", pattern).model(Motherlode.id("item/pot_" + ii)));
-
-                pack.addItemModel(Motherlode.id("pot_" + ii), model2 -> model2
-                        .parent(Motherlode.id("item/pot_template"))
-                        .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
-                );
-
-            }
-        });
 
         int[] stackCounts = new int[]{0, 8, 16, 24, 32, 40, 48, 56, 64};
 
