@@ -1,9 +1,0 @@
-{
-  "example": {
-    "category": "records",
-    "sounds": [{
-      "name": "motherlode:example",
-      "stream": true
-    }]
-  }
-}

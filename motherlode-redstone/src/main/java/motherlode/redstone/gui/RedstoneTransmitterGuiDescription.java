@@ -9,7 +9,7 @@ import motherlode.base.Motherlode;
 import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
 import motherlode.orestoolsarmor.item.DefaultGemItem;
 import motherlode.redstone.MotherlodeRedstoneMod;
-import motherlode.redstone.MotherlodeScreenHandlers;
+import motherlode.redstone.MotherlodeRedstoneScreenHandlers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     ArrayList<WSprite> miniGemsBottom = new ArrayList<>();
 
     public RedstoneTransmitterGuiDescription(int syncId, PlayerInventory inventory, ScreenHandlerContext context) {
-        super(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, syncId, inventory, SyncedGuiDescription.getBlockInventory(context), SyncedGuiDescription.getBlockPropertyDelegate(context));
+        super(MotherlodeRedstoneScreenHandlers.REDSTONE_TRANSMITTER_TYPE, syncId, inventory, SyncedGuiDescription.getBlockInventory(context), SyncedGuiDescription.getBlockPropertyDelegate(context));
 
         WGridPanel root = new WGridPanel();
         setRootPanel(root);

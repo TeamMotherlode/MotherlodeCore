@@ -1,4 +1,4 @@
-package motherlode.uncategorized.block;
+package motherlode.buildingblocks.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;

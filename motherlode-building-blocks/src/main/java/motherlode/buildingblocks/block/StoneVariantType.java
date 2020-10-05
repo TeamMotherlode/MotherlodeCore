@@ -1,11 +1,11 @@
-package motherlode.buildingblocks;
+package motherlode.buildingblocks.block;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.RegisterableVariantType;
-import motherlode.uncategorized.block.DefaultStairsBlock;
+import motherlode.buildingblocks.MotherlodeBuildingBlocksMod;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

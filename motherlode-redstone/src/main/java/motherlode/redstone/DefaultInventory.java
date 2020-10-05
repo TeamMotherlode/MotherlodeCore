@@ -1,4 +1,4 @@
-package motherlode.uncategorized.inventory;
+package motherlode.redstone;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;

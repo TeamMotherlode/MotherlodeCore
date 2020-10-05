@@ -9,7 +9,6 @@ repositories {
 dependencies {
 
     compile project(path: ":motherlode-base", configuration: "dev")
-    compile project(path: ":motherlode-uncategorized", configuration: "dev")
     compile project(path: ":motherlode-ores-tools-armor", configuration: "dev")
 
     modImplementation "io.github.cottonmc:LibGui:3.0.0+1.16.3"

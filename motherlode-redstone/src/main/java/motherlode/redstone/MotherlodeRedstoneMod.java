@@ -11,6 +11,6 @@ public class MotherlodeRedstoneMod implements ModInitializer {
 
         MotherlodeRedstoneBlocks.init();
         MotherlodeBlockEntities.init();
-        MotherlodeScreenHandlers.init();
+        MotherlodeRedstoneScreenHandlers.init();
     }
 }

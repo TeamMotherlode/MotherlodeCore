@@ -1,8 +1,7 @@
 package motherlode.redstone;
 
 import motherlode.base.Motherlode;
-import motherlode.redstone.MotherlodeRedstoneMod;
-import motherlode.redstone.RedstoneTransmitterBlockEntity;
+import motherlode.redstone.block.RedstoneTransmitterBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;

@@ -2,6 +2,7 @@ package motherlode.buildingblocks;
 
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
+import motherlode.buildingblocks.block.StoneVariantType;
 import net.minecraft.block.Blocks;
 
 public class MotherlodeBuildingBlocks {

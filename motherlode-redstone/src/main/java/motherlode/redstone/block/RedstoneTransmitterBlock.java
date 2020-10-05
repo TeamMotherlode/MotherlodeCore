@@ -1,7 +1,5 @@
-package motherlode.redstone;
+package motherlode.redstone.block;
 
-import motherlode.uncategorized.block.DefaultShapedBlock;
-import motherlode.uncategorized.util.ShapeUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -20,26 +18,20 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class RedstoneTransmitterBlock extends DefaultShapedBlock implements BlockEntityProvider {
+public class RedstoneTransmitterBlock extends Block implements BlockEntityProvider {
     public static final Box REDSTONE_TRANSMITTER_TORCH_SHAPE = new Box(0, 0.5, 0, 2F / 16F, 1, 2F / 16F);
     public static final VoxelShape REDSTONE_TRANSMITTER_SHAPE = VoxelShapes.union(VoxelShapes.cuboid(0, 0, 0, 1, 0.5, 1), VoxelShapes.cuboid(REDSTONE_TRANSMITTER_TORCH_SHAPE), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.EAST), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.SOUTH), ShapeUtilities.getRotatedShape(REDSTONE_TRANSMITTER_TORCH_SHAPE, Direction.WEST));
 
-    public RedstoneTransmitterBlock(Settings settings) {
-        this(true, true, true, true, settings);
-    }
+    public final VoxelShape shape;
 
-    public RedstoneTransmitterBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, Settings settings) {
-        super(REDSTONE_TRANSMITTER_SHAPE, hasDefaultState, hasDefaultModel, hasDefaultItemModel, hasDefaultLootTable, settings);
+    public RedstoneTransmitterBlock(Settings settings) {
+        super(settings);
+        this.shape = REDSTONE_TRANSMITTER_SHAPE;
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return shape;
-    }
-
-    @Override
-    public Block getBlockInstance() {
-        return this;
     }
 
     @Override

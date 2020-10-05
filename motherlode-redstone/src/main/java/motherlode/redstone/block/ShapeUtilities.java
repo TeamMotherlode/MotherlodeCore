@@ -1,4 +1,4 @@
-package motherlode.uncategorized.util;
+package motherlode.redstone.block;
 
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
