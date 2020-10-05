@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "motherlode:block/rope_side",
-		"2": "motherlode:block/rope_bottom",
-		"3": "motherlode:block/rope_hook",
-		"particle": "motherlode:block/rope_bottom"
+		"1": "motherlode-spelunky:block/rope_side",
+		"2": "motherlode-spelunky:block/rope_bottom",
+		"3": "motherlode-spelunky:block/rope_hook",
+		"particle": "motherlode-spelunky:block/rope_bottom"
 	},
 	"elements": [
 		{

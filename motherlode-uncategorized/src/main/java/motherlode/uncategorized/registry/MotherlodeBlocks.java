@@ -9,10 +9,11 @@ import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.block.DefaultBlock;
 import motherlode.uncategorized.block.DefaultShovelableBlock;
 import motherlode.uncategorized.block.PaintableWallBlock;
-import motherlode.uncategorized.block.RopeBlock;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.GrassPathBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
@@ -44,9 +45,6 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> foliageColored = new ArrayList<>();
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
-
-    public static final Block ROPE_BLOCK = register("rope", new RopeBlock(AbstractBlock.Settings.of(Material.PLANT)), (BlockItem) null);
-    public static final Item ROPE_ITEM = Registry.register(Registry.ITEM, Motherlode.id("rope"), new BlockItem(ROPE_BLOCK, new Item.Settings().group(MotherlodeUncategorized.ITEMS)));
 
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);

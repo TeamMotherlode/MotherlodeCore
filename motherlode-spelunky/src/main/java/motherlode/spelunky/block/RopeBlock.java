@@ -1,11 +1,7 @@
-package motherlode.uncategorized.block;
+package motherlode.spelunky.block;
 
-import motherlode.uncategorized.registry.MotherlodeBlocks;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import motherlode.spelunky.MotherlodeSpelunkyBlocks;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.WireConnection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -26,20 +22,20 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
-public class RopeBlock extends DefaultBlock {
+public class RopeBlock extends Block {
     public static final EnumProperty<WireConnection> CONNECTED = EnumProperty.of("connected", WireConnection.class);
     public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
     public static final BooleanProperty BOTTOM = BooleanProperty.of("bottom");
 
-    private static final VoxelShape ROPE_SHAPE = createCuboidShape(6.5, 0.0, 6.5, 9.5, 16.0, 9.5);
-    private static final VoxelShape SHORT_ROPE_SHAPE = createCuboidShape(6.5, 0.0, 6.5, 9.5, 12.0, 9.5);
-    private static final VoxelShape HOOK_SHORT_SHAPE = createCuboidShape(7.0, 9.0, 7.0, 9.0, 13.0, 9.0);
-    private static final VoxelShape HOOK_LONG_TOP_SHAPE = createCuboidShape(7.0, 9.0, 7.0, 9.0, 16.0, 9.0);
-    private static final VoxelShape HOOK_LONG_SIDE_SHAPE_X = createCuboidShape(2.5, 9.0, 7.0, 13.5, 11.0, 9.0);
-    private static final VoxelShape HOOK_LONG_SIDE_SHAPE_Z = createCuboidShape(7.0, 9.0, 2.5, 9.0, 11.0, 13.5);
+    private static final VoxelShape ROPE_SHAPE = Block.createCuboidShape(6.5, 0.0, 6.5, 9.5, 16.0, 9.5);
+    private static final VoxelShape SHORT_ROPE_SHAPE = Block.createCuboidShape(6.5, 0.0, 6.5, 9.5, 12.0, 9.5);
+    private static final VoxelShape HOOK_SHORT_SHAPE = Block.createCuboidShape(7.0, 9.0, 7.0, 9.0, 13.0, 9.0);
+    private static final VoxelShape HOOK_LONG_TOP_SHAPE = Block.createCuboidShape(7.0, 9.0, 7.0, 9.0, 16.0, 9.0);
+    private static final VoxelShape HOOK_LONG_SIDE_SHAPE_X = Block.createCuboidShape(2.5, 9.0, 7.0, 13.5, 11.0, 9.0);
+    private static final VoxelShape HOOK_LONG_SIDE_SHAPE_Z = Block.createCuboidShape(7.0, 9.0, 2.5, 9.0, 11.0, 13.5);
 
     public RopeBlock(AbstractBlock.Settings settings) {
-        super(false, false, true, true, settings);
+        super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(CONNECTED, WireConnection.NONE).with(FACING, Direction.NORTH).with(BOTTOM, true));
     }
 
@@ -56,23 +52,23 @@ public class RopeBlock extends DefaultBlock {
 
     private static boolean isSupportedByRope(WorldView worldView, BlockPos blockpos) {
         BlockState state = worldView.getBlockState(blockpos);
-        if (state.isOf(MotherlodeBlocks.ROPE_BLOCK))
-            return worldView.getBlockState(blockpos).get(CONNECTED) == WireConnection.NONE && worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK);
+        if (state.isOf(MotherlodeSpelunkyBlocks.ROPE))
+            return worldView.getBlockState(blockpos).get(CONNECTED) == WireConnection.NONE && worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeSpelunkyBlocks.ROPE);
 
-        return worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK);
+        return worldView.getBlockState(blockpos.offset(Direction.UP)).isOf(MotherlodeSpelunkyBlocks.ROPE);
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         final ItemStack itemStack = player.getStackInHand(hand);
-        if (itemStack.getItem() != MotherlodeBlocks.ROPE_ITEM)
+        if (itemStack.getItem() != MotherlodeSpelunkyBlocks.ROPE.asItem())
             return ActionResult.PASS;
 
-        while (world.getBlockState(pos).isOf(MotherlodeBlocks.ROPE_BLOCK))
+        while (world.getBlockState(pos).isOf(MotherlodeSpelunkyBlocks.ROPE))
             pos = pos.offset(Direction.DOWN);
 
         if (world.getBlockState(pos).isOf(Blocks.AIR)) {
-            world.setBlockState(pos, MotherlodeBlocks.ROPE_BLOCK.getDefaultState());
+            world.setBlockState(pos, MotherlodeSpelunkyBlocks.ROPE.getDefaultState());
             if (!player.abilities.creativeMode)
                 itemStack.decrement(1);
             return ActionResult.SUCCESS;
@@ -122,13 +118,13 @@ public class RopeBlock extends DefaultBlock {
         if (connected == WireConnection.SIDE && world.getBlockState(pos.offset(state.get(FACING))).isOf(Blocks.AIR))
             return Blocks.AIR.getDefaultState();
 
-        if (connected == WireConnection.NONE && !world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK))
+        if (connected == WireConnection.NONE && !world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeSpelunkyBlocks.ROPE))
             return Blocks.AIR.getDefaultState();
 
-        if (connected != WireConnection.NONE && world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeBlocks.ROPE_BLOCK))
+        if (connected != WireConnection.NONE && world.getBlockState(pos.offset(Direction.UP)).isOf(MotherlodeSpelunkyBlocks.ROPE))
             state = state.with(CONNECTED, WireConnection.NONE);
 
-        return state.with(BOTTOM, !world.getBlockState(pos.offset(Direction.DOWN)).isOf(MotherlodeBlocks.ROPE_BLOCK));
+        return state.with(BOTTOM, !world.getBlockState(pos.offset(Direction.DOWN)).isOf(MotherlodeSpelunkyBlocks.ROPE));
     }
 
     @Override

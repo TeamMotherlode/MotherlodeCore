@@ -125,43 +125,6 @@ public class MotherlodeAssets implements AssetProcessor {
                     }
             );
         }
-
-        pack.addItemModel(Motherlode.id("pot_template"), model2 -> model2
-                .parent(Motherlode.id("block/pot"))
-                .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
-
-                .display("thirdperson_righthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(66F, 135F, 0F).translation(0, 4, 4))
-                .display("thirdperson_lefthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(66F, 135F, 0F).translation(0, 4, 4))
-                .display("firstperson_righthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(0F, 135F, 0F).translation(2, 2, -2))
-                .display("firstperson_lefthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(0F, 135F, 0F).translation(0, 5, 10))
-        );
-
-        int[] stackCounts = new int[]{0, 8, 16, 24, 32, 40, 48, 56, 64};
-
-        for (int stackCount : stackCounts) {
-            pack.addItemModel(Motherlode.id("rope" + stackCount), builder -> builder
-                    .parent(new Identifier("item/generated"))
-                    .texture("layer0", Motherlode.id("item/rope/rope" + stackCount))
-            );
-        }
-
-        pack.addItemModel(Motherlode.id("rope"), builder -> {
-            for (int stackCount : stackCounts)
-                builder.override(override -> floatPredicate(override, "stack_count", stackCount / 100F).model(Motherlode.id("item/rope" + stackCount)));
-        });
-
-        pack.addBlockState(Motherlode.id("rope"), builder -> {
-            String[] directions = new String[]{"south", "west", "north", "east"};
-            for (int i = 0; i < directions.length; i++) {
-                int ii = i;
-                builder.variant("bottom=false,connected=up,facing=" + directions[i], settings -> settings.model(Motherlode.id("block/rope_top")).rotationY(ii * 90));
-                builder.variant("bottom=true,connected=up,facing=" + directions[i], settings -> settings.model(Motherlode.id("block/rope_top_bottom")).rotationY(ii * 90));
-                builder.variant("bottom=false,connected=side,facing=" + directions[i], settings -> settings.model(Motherlode.id("block/rope_side")).rotationY(ii * 90));
-                builder.variant("bottom=true,connected=side,facing=" + directions[i], settings -> settings.model(Motherlode.id("block/rope_side_bottom")).rotationY(ii * 90));
-            }
-            builder.variant("bottom=false,connected=none", settings -> settings.model(Motherlode.id("block/rope")));
-            builder.variant("bottom=true,connected=none", settings -> settings.model(Motherlode.id("block/rope_bottom")));
-        });
     }
 
     public static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {

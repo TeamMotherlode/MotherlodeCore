@@ -15,9 +15,11 @@ public class MotherlodeSpelunkyClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeSpelunkyBlocks.POT, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeSpelunkyBlocks.ROPE, RenderLayer.getCutout());
+
         ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeSpelunkyBlocks.POT);
 
-        FabricModelPredicateProviderRegistry.register(MotherlodeSpelunkyBlocks.POT.asItem(), new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
+        FabricModelPredicateProviderRegistry.register(MotherlodeSpelunkyBlocks.POT.asItem(), new Identifier("pot_pattern"), (itemStack, world, entity) -> {
             CompoundTag tag = itemStack.getTag();
             if (tag == null || !tag.contains("BlockStateTag"))
                 return 0;
@@ -25,7 +27,9 @@ public class MotherlodeSpelunkyClient implements ClientModInitializer {
             if (tag == null || !tag.contains("pattern"))
                 return 0;
 
-            return Integer.parseInt(tag.getString("pattern")) / 100F;
+            return Integer.parseInt(tag.getString("pattern")) / 100f;
         });
+
+        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), (itemStack,  world,  entity) -> itemStack.getCount() / 100f);
     }
 }
