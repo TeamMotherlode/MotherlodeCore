@@ -1,8 +1,6 @@
-package motherlode.registry;
+package motherlode.potions;
 
 import motherlode.base.Motherlode;
-import motherlode.potions.MotherlodePotionsMod;
-import motherlode.potions.ThornsEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -12,7 +10,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.registry.Registry;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

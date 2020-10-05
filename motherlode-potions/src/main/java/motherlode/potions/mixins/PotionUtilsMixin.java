@@ -1,6 +1,6 @@
 package motherlode.potions.mixins;
 
-import motherlode.registry.MotherlodePotions;
+import motherlode.potions.MotherlodePotions;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionUtil;

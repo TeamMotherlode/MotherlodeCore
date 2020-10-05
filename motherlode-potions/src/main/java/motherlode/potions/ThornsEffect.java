@@ -1,6 +1,5 @@
 package motherlode.potions;
 
-import motherlode.registry.MotherlodePotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

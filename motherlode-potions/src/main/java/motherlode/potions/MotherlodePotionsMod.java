@@ -1,6 +1,5 @@
 package motherlode.potions;
 
-import motherlode.registry.MotherlodePotions;
 import net.fabricmc.api.ModInitializer;
 
 public class MotherlodePotionsMod implements ModInitializer {

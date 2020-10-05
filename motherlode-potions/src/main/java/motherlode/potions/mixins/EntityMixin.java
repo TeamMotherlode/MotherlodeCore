@@ -1,7 +1,7 @@
 package motherlode.potions.mixins;
 
 import motherlode.potions.ThornsEffect;
-import motherlode.registry.MotherlodePotions;
+import motherlode.potions.MotherlodePotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
