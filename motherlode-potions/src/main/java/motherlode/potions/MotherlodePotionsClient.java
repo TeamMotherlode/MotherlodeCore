@@ -1,6 +1,7 @@
 package motherlode.potions;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.MotherlodeAssets;
@@ -45,9 +46,9 @@ public class MotherlodePotionsClient implements ClientModInitializer, AssetProce
 
             for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
                 if (info.model == null || info.useDefaultModel)
-                    model.override(override -> motherlode.uncategorized.registry.MotherlodeAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodePotionsMod.MODID, "item/default")));
+                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodePotionsMod.MODID, "item/default")));
                 else
-                    model.override(override -> motherlode.uncategorized.registry.MotherlodeAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodePotionsMod.MODID, "item/" + info.model)));
+                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodePotionsMod.MODID, "item/" + info.model)));
 
             }
         });
