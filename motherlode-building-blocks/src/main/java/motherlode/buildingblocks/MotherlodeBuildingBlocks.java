@@ -69,7 +69,7 @@ public class MotherlodeBuildingBlocks {
           stone,
           null,
           stone,
-          CommonData.DEFAULT_BLOCK_LOOT_TABLE
+          stone
         );
     }
 

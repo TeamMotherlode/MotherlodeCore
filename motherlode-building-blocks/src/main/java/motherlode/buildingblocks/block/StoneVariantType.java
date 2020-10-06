@@ -2,8 +2,10 @@ package motherlode.buildingblocks.block;
 
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.CommonAssets;
+import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.DataProcessor;
 import motherlode.base.api.RegisterableVariantType;
 import motherlode.buildingblocks.MotherlodeBuildingBlocksMod;
 import net.minecraft.block.*;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StoneVariantType implements RegisterableVariantType<Block>, AssetProcessor {
+public class StoneVariantType implements RegisterableVariantType<Block>, AssetProcessor, DataProcessor {
 
     private static final List<String> IGNORE = new ArrayList<>();
     private static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
@@ -38,9 +40,11 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
     public final Map<Block, Block> STAIRS = new HashMap<>();
     public final Map<Block, Block> SLABS = new HashMap<>();
     public final Map<Identifier, Block> CARVED;
-
-    private final List<Pair<Identifier, Block>> TO_REGISTER = new ArrayList<>();
     public final List<Pair<Identifier, Block>> ALL = new ArrayList<>();
+
+    private final boolean newBase;
+    private final boolean newBricks;
+    private final boolean newPolished;
 
     public static StoneVariantType newStone(String baseID, boolean rubble) {
         return new StoneVariantType(baseID, true, true, true, rubble, null, null, null);
@@ -58,30 +62,27 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
 
         ID = id;
         BASE = baseBlock != null ? baseBlock : newStoneType ? get() : Registry.BLOCK.get(new Identifier(id));
+        this.newBase = newStoneType && baseBlock == null;
         COBBLE = newStoneType ? get() : null;
         RUBBLE = rubble ? get() : null;
         POLISHED = polished ? polishedBlock != null ? polishedBlock : get() : null;
+        this.newPolished = polished && polishedBlock == null;
         BRICKS = bricksBlock == null ? get() : bricksBlock;
+        this.newBricks = bricksBlock == null;
         BRICKS_SMALL = get();
         HERRINGBONE = get();
         TILES = get();
         TILES_SMALL = get();
 
         ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id), BASE));
-        if (polished) ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID,  "polished_" + id), POLISHED));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID,  "polished_" + id), POLISHED));
         ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_bricks"), BRICKS));
-        if (newStoneType) TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_cobble"), COBBLE));
-        if (rubble) TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_rubble"), RUBBLE));
-        TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_bricks_small"), BRICKS_SMALL));
-        TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_herringbone"), HERRINGBONE));
-        TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_tiles"), TILES));
-        TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_tiles_small"), TILES_SMALL));
-
-        ALL.addAll(TO_REGISTER);
-
-        if(baseBlock == null && newStoneType) TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id), BASE));
-        if(polishedBlock == null && polished) TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID,  "polished_" + id), POLISHED));
-        if(bricksBlock == null) TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID,  id + "_bricks"), BRICKS));
+        if (newStoneType) ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_cobble"), COBBLE));
+        if (rubble) ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_rubble"), RUBBLE));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_bricks_small"), BRICKS_SMALL));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_herringbone"), HERRINGBONE));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_tiles"), TILES));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_tiles_small"), TILES_SMALL));
 
         List<Pair<Identifier, Block>> temp = new ArrayList<>();
 
@@ -97,7 +98,6 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         PILLAR = pillar ? new PillarBlock(BLOCK_SETTINGS) : null;
         if (pillar) {
             ALL.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_pillar"), PILLAR));
-            TO_REGISTER.add(new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, id + "_pillar"), PILLAR));
         }
 
         for (Pair<Identifier, Block> entry : ALL) {
@@ -118,11 +118,9 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
             Pair<Identifier, Block> pair = new Pair<>(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, carvedId), get());
             carved.put(pair.getLeft(), pair.getRight());
             ALL.add(pair);
-            TO_REGISTER.add(pair);
         }
         CARVED = carved;
         ALL.addAll(temp);
-        TO_REGISTER.addAll(temp);
         temp.clear();
     }
 
@@ -134,9 +132,12 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
     @Override
     public void register(Identifier id) {
 
-        for(Pair<Identifier, Block> entry: TO_REGISTER) {
+        for(Pair<Identifier, Block> entry: ALL) {
 
             if(entry.getRight() == null) continue;
+            if(entry.getRight() == BASE && !newBase) continue;
+            if(entry.getRight() == BRICKS && !newBricks) continue;
+            if(entry.getRight() == POLISHED && !newPolished) continue;
 
             register(entry.getLeft(), entry.getRight());
         }
@@ -178,6 +179,20 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         for(Map.Entry<Block, Block> entry: SLABS.entrySet()) {
 
             slab.accept(pack, Registry.BLOCK.getId(entry.getValue()));
+        }
+    }
+
+    @Override
+    public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier identifier) {
+
+        for(Pair<Identifier, Block> entry: ALL) {
+
+            if(entry.getRight() == null) continue;
+            if(entry.getRight() == BASE && !newBase) continue;
+            if(entry.getRight() == BRICKS && !newBricks) continue;
+            if(entry.getRight() == POLISHED && !newPolished) continue;
+
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, entry.getLeft());
         }
     }
 
