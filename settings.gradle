@@ -11,10 +11,10 @@ pluginManagement {
 rootProject.name = "motherlode"
 
 include 'motherlode-base'
-include 'motherlode-uncategorized'
 // include 'motherlode-biomes'
 include 'motherlode-building-blocks'
 include 'motherlode-ores-tools-armor'
 include 'motherlode-potions'
 include 'motherlode-redstone'
 include 'motherlode-spelunky'
+include 'motherlode-vanilla-retextures'
