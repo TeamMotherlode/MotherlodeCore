@@ -8,7 +8,6 @@ import motherlode.base.api.MotherlodeAssets;
 import motherlode.uncategorized.MotherlodeUncategorized;
 import motherlode.uncategorized.block.DefaultBlock;
 import motherlode.uncategorized.block.DefaultShovelableBlock;
-import motherlode.uncategorized.block.PaintableWallBlock;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -24,27 +23,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class MotherlodeBlocks {
     public static final ArrayList<Block> defaultStateList = new ArrayList<>();
-    public static final ArrayList<Block> defaultRotatableStateList = new ArrayList<>();
     public static final ArrayList<Block> defaultModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultPlantModelList = new ArrayList<>();
     public static final ArrayList<Block> thickCrossModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
-    public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
-    public static final ArrayList<Block> usesPaintableModel = new ArrayList<>();
     public static final ArrayList<DefaultShovelableBlock> shovelableBlocks = new ArrayList<>();
-
-    public static final ArrayList<Block> cutouts = new ArrayList<>();
-    public static final ArrayList<Block> grassColored = new ArrayList<>();
-    public static final ArrayList<Block> foliageColored = new ArrayList<>();
-
-    public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);

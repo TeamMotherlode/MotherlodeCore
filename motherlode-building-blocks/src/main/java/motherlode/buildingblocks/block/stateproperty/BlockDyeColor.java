@@ -1,4 +1,4 @@
-package motherlode.uncategorized.block.stateproperty;
+package motherlode.buildingblocks.block.stateproperty;
 
 import net.minecraft.block.MaterialColor;
 import net.minecraft.util.DyeColor;

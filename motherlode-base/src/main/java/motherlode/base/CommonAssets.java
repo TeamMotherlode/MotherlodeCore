@@ -5,6 +5,7 @@ import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.base.api.AssetProcessor;
 import net.minecraft.util.Identifier;
+import java.util.function.Function;
 
 public class CommonAssets {
 
@@ -18,11 +19,12 @@ public class CommonAssets {
     private static final int[] xs = new int[]{0, 0, 0, 0, 0, 2, 2, 2, 2, 2};
     private static final int[] ys = new int[]{3, 0, 3, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2};
 
-    public static final AssetProcessor BLOCK_ITEM = (pack, id) ->
+    public static final Function<Identifier, AssetProcessor> BLOCK_ITEM_FUNCTION = modelId -> (pack, id) ->
+      pack.addItemModel(modelId, state -> state
+        .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+      );
 
-        pack.addItemModel(id, state -> state
-                .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
-        );
+    public static final AssetProcessor BLOCK_ITEM = (pack, id) -> BLOCK_ITEM_FUNCTION.apply(id).accept(pack, id);
 
     public static final AssetProcessor FLAT_ITEM_MODEL = (pack, id) ->
 

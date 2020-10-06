@@ -6,7 +6,6 @@ import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.uncategorized.block.DefaultShovelableBlock;
-import motherlode.uncategorized.block.stateproperty.BlockDyeColor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -91,38 +90,6 @@ public class MotherlodeAssets implements AssetProcessor {
                     .texture("top", Motherlode.id("block/" + blockId))
                     .texture("side", Motherlode.id("block/" + blockId))
                     .texture("bottom", Motherlode.id("block/" + blockId))
-            );
-        }
-
-        for (Block block : MotherlodeBlocks.usesPaintableModel) {
-            String blockId = Registry.BLOCK.getId(block).getPath();
-            pack.addBlockModel(Motherlode.id(blockId + "_base"), model -> model
-                    .parent(new Identifier("block/cube_all"))
-                    .texture("all", Motherlode.id("block/" + blockId + "_side"))
-            );
-            for (BlockDyeColor color : BlockDyeColor.values()) {
-                pack.addBlockModel(Motherlode.id(blockId + "_" + color.asString()), model -> model
-                        .parent(Motherlode.id("block/paintable_face"))
-                        .texture("texture", Motherlode.id("block/" + blockId + "_" + color.asString()))
-                );
-            }
-            pack.addBlockState(Motherlode.id(blockId), builder -> {
-                        builder.multipartCase(cases -> cases.apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_base"))));
-                        for (BlockDyeColor color : BlockDyeColor.values()) {
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString()))));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(90)));
-                            builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(180)));
-                            builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id("block/" + blockId + "_" + color.asString())).rotationY(270)));
-                        }
-                    }
             );
         }
     }
