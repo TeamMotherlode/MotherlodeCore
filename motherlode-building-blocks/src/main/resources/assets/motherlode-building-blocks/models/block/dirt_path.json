@@ -1,9 +1,9 @@
 {   "parent": "block/block",
     "textures": {
-        "particle": "motherlode:block/dirt_path_side",
-        "top": "motherlode:block/dirt_path_top",
-        "side": "motherlode:block/dirt_path_side",
-        "bottom": "block/dirt"
+        "particle": "motherlode-building-blocks:block/dirt_path_side",
+        "top": "motherlode-building-blocks:block/dirt_path_top",
+        "side": "motherlode-building-blocks:block/dirt_path_side",
+        "bottom": "minecraft:block/dirt"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

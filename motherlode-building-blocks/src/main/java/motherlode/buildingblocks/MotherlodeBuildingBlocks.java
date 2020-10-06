@@ -1,16 +1,26 @@
 package motherlode.buildingblocks;
 
+import com.swordglowsblue.artifice.api.util.Processor;
+import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.Registerable;
+import motherlode.buildingblocks.block.DefaultPathBlock;
 import motherlode.buildingblocks.block.PaintableWallBlock;
 import motherlode.buildingblocks.block.StoneVariantType;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 public class MotherlodeBuildingBlocks {
 
@@ -39,6 +49,18 @@ public class MotherlodeBuildingBlocks {
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
+    public static final Block DIRT_PATH = register("dirt_path", new DefaultPathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)),
+      CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM), block ->
+      UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
+          BlockPos pos = hit.getBlockPos();
+          if (player.getStackInHand(hand).getItem().isIn(FabricToolTags.SHOVELS) && world.getBlockState(pos).getBlock() == Blocks.DIRT && world.getBlockState(pos.up()).isAir() && hit.getSide() != Direction.DOWN) {
+              world.setBlockState(pos, block.getDefaultState());
+              world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
+              return ActionResult.SUCCESS;
+          }
+          return ActionResult.PASS;
+      }));
+
     private static StoneVariantType register(StoneVariantType stone) {
 
         return Motherlode.register(
@@ -51,21 +73,26 @@ public class MotherlodeBuildingBlocks {
         );
     }
 
-    private static<T extends Block> T register(String name, T block, AssetProcessor assets) {
+    private static <T extends Block> T register(String name, T block, AssetProcessor assets) {
+
+        return register(name, block, assets, null);
+    }
+
+    private static <T extends Block & AssetProcessor> T register(String name, T block) {
+
+        return register(name, block, block);
+    }
+
+    private static <T extends Block> T register(String name, T block, AssetProcessor assets, Processor<Block> p) {
 
         return Motherlode.register(
           Registerable.block(block, BLOCK_ITEM_SETTINGS),
           Motherlode.id(MotherlodeBuildingBlocksMod.MODID, name),
           block,
-          null,
+          p,
           assets,
           CommonData.DEFAULT_BLOCK_LOOT_TABLE
         );
-    }
-
-    private static<T extends Block & AssetProcessor> T register(String name, T block) {
-
-        return register(name, block, block);
     }
 
     public static void init() {
