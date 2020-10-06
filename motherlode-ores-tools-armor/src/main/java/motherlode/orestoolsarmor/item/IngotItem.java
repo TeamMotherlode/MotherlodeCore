@@ -9,8 +9,15 @@ import net.minecraft.util.Identifier;
 
 public class IngotItem extends Item implements DataProcessor {
 
+    private final String nugget;
+
     public IngotItem(Settings settings) {
+        this(settings, "nugget");
+    }
+
+    public IngotItem(Settings settings, String nugget) {
         super(settings);
+        this.nugget = nugget;
     }
 
     @Override
@@ -18,7 +25,7 @@ public class IngotItem extends Item implements DataProcessor {
         CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
             .accept(pack, id);
 
-        Identifier nugget = Motherlode.id(id.getNamespace(), id.getPath().replace("ingot", "nugget"));
+        Identifier nugget = Motherlode.id(id.getNamespace(), id.getPath().replace("ingot", this.nugget));
 
         CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
             .accept(pack, nugget);

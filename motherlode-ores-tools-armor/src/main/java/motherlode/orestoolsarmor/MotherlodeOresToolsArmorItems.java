@@ -22,6 +22,7 @@ public class MotherlodeOresToolsArmorItems {
     public static final Item SILVER_NUGGET = register("silver_nugget");
     public static final Item CHARITE_CRYSTAL = register("charite_crystal");
     public static final Item CHARITE_POWDER = register("charite_powder");
+    public static final Item CHARITE_INGOT = register("charite_ingot", new IngotItem(SETTINGS));
     public static final Item ECHERITE_INGOT = register("echerite_ingot", new IngotItem(SETTINGS));
     public static final Item ECHERITE_NUGGET = register("echerite_nugget");
     public static final Item TITANIUM_INGOT = register("titanium_ingot", new IngotItem(SETTINGS));
@@ -37,7 +38,7 @@ public class MotherlodeOresToolsArmorItems {
 
     public static final ToolArmorVariantType COPPER = register("copper", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "copper"), "copper_ingot", MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR));
     public static final ToolArmorVariantType SILVER = register("silver", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "silver"), "silver_ingot", MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR));
-    public static final ToolArmorVariantType CHARITE = register("charite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "charite"), "charite_crystal", MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR));
+    public static final ToolArmorVariantType CHARITE = register("charite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "charite"), "charite_ingot", MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR));
     public static final ToolArmorVariantType ECHERITE = register("echerite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "echerite"), "echerite_ingot", MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR));
     public static final ToolArmorVariantType TITANIUM = register("titanium", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "titanium"), "titanium_ingot", MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR));
     public static final ToolArmorVariantType ADAMANTITE = register("adamantite", new ToolArmorVariantType(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "adamantite"), "adamantite_ingot", MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR));
