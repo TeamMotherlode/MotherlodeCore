@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "motherlode-vanilla-retextures",
   "version": "${version}",
-
   "name": "Motherlode Vanilla Retextures",
   "description": "Changes some textures of Minecraft.\nWill probably become a resource pack later.",
   "authors": [
@@ -13,14 +12,13 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore/vanilla-retextures"
   },
-
   "license": "MIT License",
   "icon": "assets/motherlode-vanilla-retextures/icon.png",
-
   "environment": "*",
   "entrypoints": {
   },
   "mixins": [
+    "motherlode-vanilla-retextures.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4"

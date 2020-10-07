@@ -2,9 +2,8 @@
   "schemaVersion": 1,
   "id": "motherlode-base",
   "version": "${version}",
-
   "name": "Motherlode Base",
-  "description": "",
+  "description": "Base API used by Motherlode's other modules.",
   "authors": [
     "Team Motherlode"
   ],
@@ -13,10 +12,8 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-base"
   },
-
   "license": "MIT License",
   "icon": "assets/motherlode-base/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -38,7 +35,6 @@
   "suggests": {
     "flamingo": "*"
   },
-  "description": "Base API used by Motherlode's other modules.",
   "custom": {
     "modmenu:parent": "motherlode"
   }

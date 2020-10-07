@@ -6,25 +6,29 @@ import motherlode.biomes.world.feature.structure.CampGenerator;
 import motherlode.biomes.world.feature.structure.CampStructureFeature;
 import motherlode.biomes.world.feature.structure.RuinedCampsData;
 import net.minecraft.structure.StructurePieceType;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.world.gen.feature.StructurePoolFeatureConfig;
 
 public class MotherlodeStructures {
 
-    public static final StructureFeature<DefaultFeatureConfig> CAMP = register("camp", new CampStructureFeature(DefaultFeatureConfig.CODEC));
-    public static final ConfiguredStructureFeature<?, ?> CAMP_CONFIGURED = CAMP.configure(DefaultFeatureConfig.DEFAULT);
+    public static final StructureFeature<StructurePoolFeatureConfig> CAMP = register("camp", new CampStructureFeature(StructurePoolFeatureConfig.CODEC));
+    public static final ConfiguredStructureFeature<?, ?> CAMP_CONFIGURED = register("camp", CAMP.configure(new StructurePoolFeatureConfig(() -> RuinedCampsData.POOL, 5)));
     public static final StructurePieceType CAMP_PIECE = register("camp_piece", CampGenerator.CampPiece::new);
 
     public static void init() {
-        RuinedCampsData.init();
     }
 
-    static StructureFeature<DefaultFeatureConfig> register(String name, StructureFeature<DefaultFeatureConfig> entry) {
+    static StructureFeature<StructurePoolFeatureConfig> register(String name, StructureFeature<StructurePoolFeatureConfig> entry) {
         return Registry.register(Registry.STRUCTURE_FEATURE, Motherlode.id(MotherlodeBiomesMod.MODID, name), entry);
     }
     static StructurePieceType register(String name, StructurePieceType entry) {
         return Registry.register(Registry.STRUCTURE_PIECE, Motherlode.id(MotherlodeBiomesMod.MODID, name), entry);
+    }
+    private static <FC extends FeatureConfig, F extends StructureFeature<FC>> ConfiguredStructureFeature<FC, F> register(String id, ConfiguredStructureFeature<FC, F> configuredStructureFeature) {
+        return Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, id, configuredStructureFeature);
     }
 }

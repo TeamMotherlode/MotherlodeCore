@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "id": "motherlode",
   "name": "Motherlode",
+  "description": "Motherlode aims to expand the game's progression, making it take longer, but at the same time feel more engaging and fun. \nIt is separated into modules that add to different aspects of Minecraft.",
   "version": "${version}",
   "environment": "*",
   "license": "MIT License",
@@ -17,6 +18,5 @@
     "minecraft": "1.16.*",
     "fabricloader": ">=0.8.9",
     "fabric": "*"
-  },
-  "description": "Motherlode aims to expand the game's progression, making it take longer, but at the same time feel more engaging and fun. \nIt is separated into modules that add to different aspects of Minecraft."
+  }
 }

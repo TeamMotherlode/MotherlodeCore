@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "motherlode-potions",
   "version": "${version}",
-
   "name": "Motherlode Potions",
   "description": "Adds a few new potions and changes vanilla potions' textures.",
   "authors": [
@@ -34,7 +33,6 @@
     "motherlode-base": "*"
   },
   "suggests": {
-    "flamingo": "*"
   },
   "custom": {
     "modmenu:parent": "motherlode"

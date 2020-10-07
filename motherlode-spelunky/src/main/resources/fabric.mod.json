@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "motherlode-spelunky",
   "version": "${version}",
-
   "name": "Motherlode Spelunky",
   "description": "Adds new blocks and items related to exploring and adventuring.",
   "authors": [
@@ -13,10 +12,8 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-spelunky"
   },
-
   "license": "MIT License",
   "icon": "assets/motherlode-spelunky/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "motherlode:init": [

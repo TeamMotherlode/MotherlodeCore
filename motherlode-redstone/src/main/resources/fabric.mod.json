@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "motherlode-redstone",
   "version": "${version}",
-
   "name": "Motherlode Redstone",
   "description": "",
   "authors": [
@@ -13,7 +12,6 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore"
   },
-
   "license": "MIT License",
   "icon": "assets/motherlode-redstone/icon.png",
 

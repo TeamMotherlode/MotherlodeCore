@@ -1,6 +1,5 @@
 package motherlode.biomes.block;
 
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -17,7 +16,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-
 import java.util.Random;
 
 public class WaterplantBlock extends Block {
@@ -28,7 +26,6 @@ public class WaterplantBlock extends Block {
     public WaterplantBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getDefaultState().with(SOLID, true));
-        MotherlodeBlocks.cutouts.add(this);
     }
 
     @Override

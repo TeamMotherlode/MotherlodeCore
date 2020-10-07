@@ -1,6 +1,5 @@
 package motherlode.biomes.block;
 
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -28,7 +27,6 @@ public class ReedsBlock extends Block implements Waterloggable {
     public ReedsBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getDefaultState().with(TYPE, Type.SINGLE));
-        MotherlodeBlocks.cutouts.add(this);
     }
 
     @Override

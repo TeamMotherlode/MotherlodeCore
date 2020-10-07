@@ -7,7 +7,6 @@ repositories {
     }
 }
 dependencies {
-
     compile project(path: ":motherlode-base", configuration: "dev")
     compile project(path: ":motherlode-ores-tools-armor", configuration: "dev")
 

@@ -1,6 +1,5 @@
 package motherlode.biomes;
 
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.color.world.BiomeColors;

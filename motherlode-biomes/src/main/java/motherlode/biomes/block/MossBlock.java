@@ -1,7 +1,6 @@
 package motherlode.biomes.block;
 
 import com.google.common.collect.Maps;
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -27,7 +26,6 @@ public class MossBlock extends Block {
     public MossBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getDefaultState().with(SIDE, Direction.DOWN));
-        MotherlodeBlocks.cutouts.add(this);
     }
 
     @Override

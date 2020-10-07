@@ -2,9 +2,8 @@
   "schemaVersion": 1,
   "id": "motherlode-ores-tools-armor",
   "version": "${version}",
-
   "name": "Motherlode Ores, Tools, & Armor",
-  "description": "",
+  "description": "Adds several new tiers of ores, tools, weapons and armor.",
   "authors": [
     "Team Motherlode"
   ],
@@ -12,7 +11,6 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-ores-tools-armor"
   },
-
   "license": "MIT License",
   "icon": "assets/motherlode-ores-tools-armor/icon.png",
 
@@ -37,7 +35,6 @@
   "suggests": {
     "flamingo": "*"
   },
-  "description": "Adds several new tiers of ores, tools, weapons and armor.",
   "custom": {
     "modmenu:parent": "motherlode"
   }

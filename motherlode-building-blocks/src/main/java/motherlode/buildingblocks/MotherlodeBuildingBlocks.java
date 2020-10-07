@@ -1,10 +1,10 @@
 package motherlode.buildingblocks;
 
-import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.buildingblocks.block.DefaultPathBlock;
 import motherlode.buildingblocks.block.PaintableWallBlock;

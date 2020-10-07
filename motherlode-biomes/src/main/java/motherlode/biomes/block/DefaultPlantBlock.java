@@ -1,6 +1,5 @@
 package motherlode.biomes.block;
 
-import motherlode.uncategorized.registry.MotherlodeBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
@@ -20,8 +19,6 @@ public class DefaultPlantBlock extends PlantBlock {
     public DefaultPlantBlock(int height, Settings settings) {
         super(settings);
         this.height = height;
-        MotherlodeBlocks.cutouts.add(this);
-        MotherlodeBlocks.grassColored.add(this);
     }
 
     @Override
