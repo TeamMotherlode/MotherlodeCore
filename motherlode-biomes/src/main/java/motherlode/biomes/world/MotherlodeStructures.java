@@ -23,7 +23,7 @@ public class MotherlodeStructures {
 
         FabricStructureBuilder.create(Motherlode.id(MotherlodeBiomesMod.MODID, "camp"), CAMP)
           .step(GenerationStep.Feature.SURFACE_STRUCTURES)
-          .defaultConfig(32, 8, 12345)
+          .defaultConfig(8, 4, 12345)
           .superflatFeature(CONFIGURED_CAMP)
           .adjustsSurface()
           .register();
