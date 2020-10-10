@@ -29,12 +29,12 @@ public class MotherlodePotionsClient implements ClientModInitializer, AssetProce
 
         for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
             if (!info.useDefaultModel)
-                pack.addItemModel(Motherlode.id(MotherlodePotionsMod.MODID, "potions/" + info.model), (model) -> model
+                pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "potions/" + info.model), (model) -> model
                         .parent(new Identifier("item/generated"))
-                        .texture("layer0", Motherlode.id(MotherlodePotionsMod.MODID, "item/" + info.model)));
+                        .texture("layer0", Motherlode.id(MotherlodeModule.MODID, "item/" + info.model)));
         }
 
-        pack.addItemModel(Motherlode.id(MotherlodePotionsMod.MODID, "default"), (model) -> model
+        pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "default"), (model) -> model
                 .parent(new Identifier("item/generated"))
                 .texture("layer0", new Identifier("item/potion_overlay"))
                 .texture("layer1", new Identifier("item/potion")));
@@ -46,9 +46,9 @@ public class MotherlodePotionsClient implements ClientModInitializer, AssetProce
 
             for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
                 if (info.model == null || info.useDefaultModel)
-                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodePotionsMod.MODID, "item/default")));
+                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodeModule.MODID, "item/default")));
                 else
-                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodePotionsMod.MODID, "item/" + info.model)));
+                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodeModule.MODID, "item/" + info.model)));
 
             }
         });

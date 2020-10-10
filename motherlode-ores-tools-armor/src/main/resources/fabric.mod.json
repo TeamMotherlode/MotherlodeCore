@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "motherlode:init": [
-      "motherlode.orestoolsarmor.MotherlodeOresToolsArmorMod"
+      "motherlode.orestoolsarmor.MotherlodeModule"
     ],
     "client": [
       "motherlode.orestoolsarmor.MotherlodeOresToolsArmorClient"

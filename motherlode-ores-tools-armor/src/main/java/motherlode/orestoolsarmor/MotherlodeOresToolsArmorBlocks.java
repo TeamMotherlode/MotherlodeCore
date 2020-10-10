@@ -52,7 +52,7 @@ public class MotherlodeOresToolsArmorBlocks {
 
         return Motherlode.register(
                 Registerable.block(block, BLOCK_ITEM_SETTINGS),
-                Motherlode.id(MotherlodeOresToolsArmorMod.MODID, name),
+                Motherlode.id(MotherlodeModule.MODID, name),
                 block,
                 null,
                 CommonAssets.DEFAULT_BLOCK,

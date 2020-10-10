@@ -1,7 +1,7 @@
 package motherlode.biomes.world;
 
 import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.MotherlodeModule;
 import motherlode.biomes.world.feature.MarshFeature;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -26,11 +26,11 @@ public class MotherlodeBiomeFeatures {
     }
 
     public static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
-        return Registry.register(Registry.FEATURE, Motherlode.id(MotherlodeBiomesMod.MODID, name), feature);
+        return Registry.register(Registry.FEATURE, Motherlode.id(MotherlodeModule.MODID, name), feature);
     }
 
     public static <C extends SurfaceConfig, F extends SurfaceBuilder<C>> F register(String name, F surfaceBuilder) {
-        return Registry.register(Registry.SURFACE_BUILDER, Motherlode.id(MotherlodeBiomesMod.MODID, name), surfaceBuilder);
+        return Registry.register(Registry.SURFACE_BUILDER, Motherlode.id(MotherlodeModule.MODID, name), surfaceBuilder);
     }
     public static void addToBiome(Biome biome) {
         /* Category category = biome.getCategory();

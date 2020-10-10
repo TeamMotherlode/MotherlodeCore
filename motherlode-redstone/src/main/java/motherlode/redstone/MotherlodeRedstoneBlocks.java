@@ -22,7 +22,7 @@ public class MotherlodeRedstoneBlocks {
 
         return Motherlode.register(
                 Registerable.block(block, ItemGroup.REDSTONE),
-                Motherlode.id(MotherlodeRedstoneMod.MODID, name),
+                Motherlode.id(MotherlodeModule.MODID, name),
                 block,
                 null,
                 p,

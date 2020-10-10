@@ -65,7 +65,7 @@ public class MotherlodeBuildingBlocks {
 
         return Motherlode.register(
           stone,
-          Motherlode.id(MotherlodeBuildingBlocksMod.MODID, stone.getId()),
+          Motherlode.id(MotherlodeModule.MODID, stone.getId()),
           stone,
           null,
           stone,
@@ -87,7 +87,7 @@ public class MotherlodeBuildingBlocks {
 
         return Motherlode.register(
           Registerable.block(block, BLOCK_ITEM_SETTINGS),
-          Motherlode.id(MotherlodeBuildingBlocksMod.MODID, name),
+          Motherlode.id(MotherlodeModule.MODID, name),
           block,
           p,
           assets,

@@ -4,7 +4,7 @@ import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
-import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.MotherlodeModule;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -95,7 +95,7 @@ public class ShovelableBlock extends Block implements AssetProcessor {
           .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
         pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_shoveled"), state -> state
-          .parent(Motherlode.id(MotherlodeBiomesMod.MODID, "block/cube_lowered"))
+          .parent(Motherlode.id(MotherlodeModule.MODID, "block/cube_lowered"))
           .texture("top", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
           .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
           .texture("bottom", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))

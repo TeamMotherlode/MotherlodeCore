@@ -2,7 +2,7 @@ package motherlode.redstone;
 
 import net.fabricmc.api.ModInitializer;
 
-public class MotherlodeRedstoneMod implements ModInitializer {
+public class MotherlodeModule implements ModInitializer {
 
     public static final String MODID = "motherlode-redstone";
 

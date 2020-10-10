@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
-import motherlode.buildingblocks.MotherlodeBuildingBlocksMod;
+import motherlode.buildingblocks.MotherlodeModule;
 import motherlode.buildingblocks.block.stateproperty.BlockDyeColor;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -70,7 +70,7 @@ public class PaintableWallBlock extends Block implements AssetProcessor {
         );
         for (BlockDyeColor color: BlockDyeColor.values()) {
             pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_" + color.asString()), model -> model
-              .parent(Motherlode.id(MotherlodeBuildingBlocksMod.MODID, "block/paintable_face"))
+              .parent(Motherlode.id(MotherlodeModule.MODID, "block/paintable_face"))
               .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))
             );
         }

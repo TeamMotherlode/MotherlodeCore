@@ -30,7 +30,7 @@ public class MotherlodeSpelunkyBlocks {
     public static Block register(String name, Block block, AssetProcessor assets, DataProcessor data) {
         return Motherlode.register(
           Registerable.block(block, BLOCK_ITEM_SETTINGS),
-          Motherlode.id(MotherlodeSpelunkyMod.MODID, name),
+          Motherlode.id(MotherlodeModule.MODID, name),
           block,
           null,
           assets,

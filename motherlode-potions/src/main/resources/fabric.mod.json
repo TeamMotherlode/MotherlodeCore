@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "motherlode:init": [
-      "motherlode.potions.MotherlodePotionsMod"
+      "motherlode.potions.MotherlodeModule"
     ],
     "client": [
       "motherlode.potions.MotherlodePotionsClient"

@@ -32,7 +32,7 @@ public class MotherlodePotions {
     }
 
     private static StatusEffect register(String id, StatusEffect entry) {
-        return Registry.register(Registry.STATUS_EFFECT, Motherlode.id(MotherlodePotionsMod.MODID, id), entry);
+        return Registry.register(Registry.STATUS_EFFECT, Motherlode.id(MotherlodeModule.MODID, id), entry);
     }
 
     private static Potion register(String name, Potion potion) {
@@ -137,7 +137,7 @@ public class MotherlodePotions {
         public PotionModelInfo(String model, float predicateValue) {
             this.model = model;
             this.predicateValue = predicateValue;
-            this.useDefaultModel = getClass().getResourceAsStream("/assets/" + MotherlodePotionsMod.MODID + "/textures/item/potions/" + model + ".png") == null;
+            this.useDefaultModel = getClass().getResourceAsStream("/assets/" + MotherlodeModule.MODID + "/textures/item/potions/" + model + ".png") == null;
         }
 
         @Override

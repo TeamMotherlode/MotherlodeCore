@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 
 public class MotherlodeOresToolsArmorTags {
-    public static Tag<Item> GEMS = TagRegistry.item(Motherlode.id(MotherlodeOresToolsArmorMod.MODID, "gems"));
+    public static Tag<Item> GEMS = TagRegistry.item(Motherlode.id(MotherlodeModule.MODID, "gems"));
 
     public static void init() {
         // Called to load the class

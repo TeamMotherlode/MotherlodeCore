@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
     "motherlode:init": [
-      "motherlode.redstone.MotherlodeRedstoneMod"
+      "motherlode.redstone.MotherlodeModule"
     ],
     "client": [
       "motherlode.redstone.MotherlodeRedstoneClient"

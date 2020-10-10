@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "motherlode:init": [
-      "motherlode.buildingblocks.MotherlodeBuildingBlocksMod"
+      "motherlode.buildingblocks.MotherlodeModule"
     ],
     "client": [
       "motherlode.buildingblocks.MotherlodeBuildingBlocksClient"

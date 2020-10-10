@@ -1,7 +1,7 @@
 package motherlode.biomes.world.feature.structure;
 
 import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.MotherlodeModule;
 import motherlode.biomes.world.MotherlodeStructures;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.structure.*;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CampGenerator {
-    private static final Identifier CAMP_PIECE = Motherlode.id(MotherlodeBiomesMod.MODID, "camp_piece");
+    private static final Identifier CAMP_PIECE = Motherlode.id(MotherlodeModule.MODID, "camp_piece");
 
     public static void addPieces(StructureManager manager, BlockPos pos, BlockRotation rotation, List<StructurePiece> pieces) {
         pieces.add(new CampPiece(manager, pos, CAMP_PIECE, rotation));

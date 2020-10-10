@@ -1,7 +1,7 @@
 package motherlode.biomes.world;
 
 import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.MotherlodeModule;
 import motherlode.biomes.world.feature.structure.CampGenerator;
 import motherlode.biomes.world.feature.structure.CampStructureFeature;
 import motherlode.biomes.world.feature.structure.RuinedCampsData;
@@ -21,7 +21,7 @@ public class MotherlodeStructures {
 
     public static void init() {
 
-        FabricStructureBuilder.create(Motherlode.id(MotherlodeBiomesMod.MODID, "camp"), CAMP)
+        FabricStructureBuilder.create(Motherlode.id(MotherlodeModule.MODID, "camp"), CAMP)
           .step(GenerationStep.Feature.SURFACE_STRUCTURES)
           .defaultConfig(8, 4, 12345)
           .superflatFeature(CONFIGURED_CAMP)
@@ -30,6 +30,6 @@ public class MotherlodeStructures {
     }
 
     static StructurePieceType register(String name, StructurePieceType entry) {
-        return Registry.register(Registry.STRUCTURE_PIECE, Motherlode.id(MotherlodeBiomesMod.MODID, name), entry);
+        return Registry.register(Registry.STRUCTURE_PIECE, Motherlode.id(MotherlodeModule.MODID, name), entry);
     }
 }

@@ -3,7 +3,7 @@ package motherlode.biomes.world.feature.structure;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.MotherlodeModule;
 import net.minecraft.structure.pool.*;
 import net.minecraft.util.Identifier;
 
@@ -16,7 +16,7 @@ public class RuinedCampsData {
     static {
         POOL = StructurePools.register(
                 new StructurePool(
-                        Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/start"),
+                        Motherlode.id(MotherlodeModule.MODID, "camps/ruined/start"),
                         new Identifier("empty"),
                         ImmutableList.of(
                                 Pair.of(StructurePoolElement.method_30425("motherlode-biomes:camps/ruined/start/start_ground_0"), 1)
@@ -26,7 +26,7 @@ public class RuinedCampsData {
         );
         StructurePools.register(
                 new StructurePool(
-                        Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/ground"),
+                        Motherlode.id(MotherlodeModule.MODID, "camps/ruined/ground"),
                         new Identifier("empty"),
                         ImmutableList.of(
                           Pair.of(StructurePoolElement.method_30425("motherlode-biomes:camps/ruined/ground/ground_small_0"), 1)
@@ -36,7 +36,7 @@ public class RuinedCampsData {
         );
         StructurePools.register(
                 new StructurePool(
-                        Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/centers"),
+                        Motherlode.id(MotherlodeModule.MODID, "camps/ruined/centers"),
                         new Identifier("empty"),
                         ImmutableList.of(
                           Pair.of(StructurePoolElement.method_30425("motherlode-biomes:camps/ruined/centers/campfire_0"), 4),
@@ -48,7 +48,7 @@ public class RuinedCampsData {
         );
         StructurePools.register(
                 new StructurePool(
-                        Motherlode.id(MotherlodeBiomesMod.MODID, "camps/ruined/structures"),
+                        Motherlode.id(MotherlodeModule.MODID, "camps/ruined/structures"),
                         new Identifier("empty"),
                         ImmutableList.of(
                                 Pair.of(StructurePoolElement.method_30425("motherlode-biomes:camps/ruined/structures/build_0"), 3),

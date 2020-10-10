@@ -2,7 +2,7 @@ package motherlode.potions;
 
 import net.fabricmc.api.ModInitializer;
 
-public class MotherlodePotionsMod implements ModInitializer {
+public class MotherlodeModule implements ModInitializer {
 
     public static final String MODID = "motherlode-potions";
 

@@ -1,7 +1,7 @@
 package motherlode.biomes.world;
 
 import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeBiomesMod;
+import motherlode.biomes.MotherlodeModule;
 import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
 import net.fabricmc.fabric.api.biome.v1.OverworldClimate;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -22,7 +22,7 @@ public class MotherlodeBiomes {
     }
 
     private static RegistryKey<Biome> register(String name, Biome biome) {
-        RegistryKey<Biome> key = RegistryKey.of(Registry.BIOME_KEY, Motherlode.id(MotherlodeBiomesMod.MODID, name));
+        RegistryKey<Biome> key = RegistryKey.of(Registry.BIOME_KEY, Motherlode.id(MotherlodeModule.MODID, name));
         Registry.register(BuiltinRegistries.BIOME, key.getValue(), biome);
         return key;
     }

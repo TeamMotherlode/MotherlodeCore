@@ -65,7 +65,7 @@ public class MotherlodeBiomesBlocks {
 
         return Motherlode.register(
           Registerable.block(block, BLOCK_ITEM_SETTINGS),
-          Motherlode.id(MotherlodeBiomesMod.MODID, name),
+          Motherlode.id(MotherlodeModule.MODID, name),
           block,
           p,
           assets,

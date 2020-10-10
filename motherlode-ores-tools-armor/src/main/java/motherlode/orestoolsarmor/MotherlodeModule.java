@@ -2,7 +2,7 @@ package motherlode.orestoolsarmor;
 
 import net.fabricmc.api.ModInitializer;
 
-public class MotherlodeOresToolsArmorMod implements ModInitializer {
+public class MotherlodeModule implements ModInitializer {
 
     public static final String MODID = "motherlode-ores-tools-armor";
 
