@@ -31,7 +31,7 @@ allprojects {
         jcenter()
     }
     jar {
-        classifier = "dev"
+        classifier "dev"
     }
     afterEvaluate {
         remapJar {
@@ -42,7 +42,6 @@ allprojects {
             dev file: file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar"), type: "jar", builtBy: remapJar
         }
         processResources {
-
             inputs.property "version", project.version
 
             from(sourceSets.main.resources.srcDirs) {

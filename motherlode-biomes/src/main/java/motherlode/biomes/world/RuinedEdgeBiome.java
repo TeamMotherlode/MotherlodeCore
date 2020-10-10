@@ -25,20 +25,23 @@ public class RuinedEdgeBiome {
         DefaultBiomeFeatures.addMossyRocks(builder2);
 
         return new Biome.Builder()
-            .precipitation(Biome.Precipitation.RAIN)
-            .category(Biome.Category.NONE)
-            .depth(0.125F)
-            .scale(0.01F)
-            .temperature(0.8F)
-            .downfall(0.4F)
-            .effects(
-                new BiomeEffects.Builder()
-                    .grassColor(0x73bd53)
-                    .waterColor(0x003b4d)
-                    .waterFogColor(0x002230)
-                    .fogColor(12638463)
-                    .moodSound(BiomeMoodSound.CAVE)
-                    .build()
-            ).spawnSettings(builder.build()).generationSettings(builder2.build()).build();
+          .precipitation(Biome.Precipitation.RAIN)
+          .category(Biome.Category.NONE)
+          .depth(0.125F)
+          .scale(0.01F)
+          .temperature(0.8F)
+          .downfall(0.4F)
+          .effects(
+            new BiomeEffects.Builder()
+              .grassColor(0x73bd53)
+              .waterColor(0x003b4d)
+              .waterFogColor(0x002230)
+              .fogColor(12638463)
+              .skyColor(0x8294ad)
+              .moodSound(BiomeMoodSound.CAVE)
+              .build())
+          .spawnSettings(builder.build())
+          .generationSettings(builder2.build())
+          .build();
     }
 }

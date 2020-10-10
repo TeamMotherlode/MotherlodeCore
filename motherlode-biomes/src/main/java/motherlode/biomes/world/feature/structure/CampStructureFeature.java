@@ -23,11 +23,6 @@ public class CampStructureFeature extends StructureFeature<StructurePoolFeatureC
         return Start::new;
     }
 
-    @Override
-    public String getName() {
-        return "camp";
-    }
-
     public static class Start extends StructureStart<StructurePoolFeatureConfig> {
         public Start(StructureFeature<StructurePoolFeatureConfig> feature, int chunkX, int chunkZ, BlockBox box, int references,
                      long seed) {

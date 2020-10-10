@@ -35,7 +35,7 @@ public class RuinedFlatsBiome {
 
         builder2.feature(GenerationStep.Feature.LAKES, MotherlodeBiomeFeatures.MARSH.configure(new DefaultFeatureConfig()).decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(5))));
         builder2.feature(GenerationStep.Feature.VEGETAL_DECORATION, Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBiomesBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).tries(96).build()).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(-0.8D, 5, 10))));
-        builder2.structureFeature(MotherlodeStructures.CAMP_CONFIGURED);
+        builder2.structureFeature(MotherlodeStructures.CONFIGURED_CAMP);
 
         DefaultBiomeFeatures.addLandCarvers(builder2);
         DefaultBiomeFeatures.addMineables(builder2);
@@ -56,13 +56,16 @@ public class RuinedFlatsBiome {
           .downfall(0.4F)
           .effects(
             new BiomeEffects.Builder()
+              .grassColor(0x73bd53)
               .waterColor(0x003b4d)
               .waterFogColor(0x002230)
               .fogColor(0x8294ad)
+              .skyColor(0x8294ad)
               .moodSound(BiomeMoodSound.CAVE)
-              .build()
-          )
-          .spawnSettings(builder.build()).generationSettings(builder2.build()).build();
+              .build())
+          .spawnSettings(builder.build())
+          .generationSettings(builder2.build())
+          .build();
     }
 
     public int getGrassColorAt(double x, double z) {
@@ -71,10 +74,6 @@ public class RuinedFlatsBiome {
         int blue = (int) (((samplerC.sample(x / 30, z / 30) + 1.0) / 2) * 20) + 40;
         Color c = new Color(red, green, blue);
         return c.getRGB();
-    }
-
-    public int getSkyColor() {
-        return 0x8294ad;
     }
 
     public float getFogDensity(double posX, double posZ) {
