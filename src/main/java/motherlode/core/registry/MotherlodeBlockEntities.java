@@ -2,6 +2,7 @@ package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
 import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
+import motherlode.core.block.entity.ZapperTrapBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -11,6 +12,7 @@ import java.util.function.Supplier;
 
 public class MotherlodeBlockEntities {
 	public static BlockEntityType<RedstoneTransmitterBlockEntity> REDSTONE_TRANSMITTER = register("redstone_transmitter", RedstoneTransmitterBlockEntity::new, MotherlodeBlocks.REDSTONE_TRANSMITTER);
+	public static BlockEntityType<ZapperTrapBlockEntity> ZAPPER_TRAP = register("trap_zapper", ZapperTrapBlockEntity::new, MotherlodeBlocks.TRAP_ZAPPER);
 
 	public static void init() {
 		// CALLED TO MAINTAIN REGISTRY ORDER

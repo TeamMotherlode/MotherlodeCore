@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "powered=false": {
+            "model": "motherlode:block/trap_zapper"
+        },
+        "powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed"
+        }
+    }
+}

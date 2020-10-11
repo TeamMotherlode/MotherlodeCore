@@ -133,6 +133,7 @@ public class MotherlodeBlocks {
     public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "dry_reeds"); });
 
     public static final Block TRAP_CUTTER = register("trap_cutter", new CutterTrapBlock(FabricBlockSettings.copy(Blocks.DISPENSER).nonOpaque()));
+    public static final Block TRAP_ZAPPER = register("trap_zapper", new ZapperTrapBlock(FabricBlockSettings.copy(Blocks.DISPENSER).nonOpaque()));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
