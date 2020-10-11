@@ -1,5 +1,6 @@
 package motherlode.core.network.packet.s2c;
 
+import motherlode.core.util.PositionUtilities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -40,20 +41,12 @@ public class ZapS2CPacket implements Packet<ClientPlayPacketListener> {
         buf.writeDouble(this.target.getZ());
     }
 
-    private Vec3d fromLerpedPosition(Vec3d start, Vec3d end, float delta) {
-        double d = MathHelper.lerp(delta, start.x, end.x);
-        double e = MathHelper.lerp(delta, start.y, end.y);
-        double f = MathHelper.lerp(delta, start.z, end.z);
-        return new Vec3d(d, e, f);
-    }
-
     @Environment(EnvType.CLIENT)
     @Override
     public void apply(ClientPlayPacketListener listener) {
+        Vec3d from = new Vec3d(this.origin.getX() + 0.5f, this.origin.getY() + 0.85f, this.origin.getZ() + 0.5f);
         for(float i = 0; i < 1.f; i += 0.05f){
-            Vec3d lerped = fromLerpedPosition(
-                    new Vec3d(this.origin.getX() + 0.5f, this.origin.getY() + 0.5f, this.origin.getZ() + 0.5f),
-                    this.target, i);
+            Vec3d lerped = PositionUtilities.fromLerpedPosition(from, this.target, i);
                     MinecraftClient.getInstance().particleManager.addParticle(
                             ParticleTypes.ENCHANTED_HIT, lerped.x, lerped.y, lerped.z,
                             0.D, 0.D, 0.D);

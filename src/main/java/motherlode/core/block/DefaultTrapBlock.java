@@ -39,6 +39,18 @@ public class DefaultTrapBlock extends Block implements ArtificeProperties {
         }
     }
 
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        super.onPlaced(world, pos, state, placer, itemStack);
+        boolean gettingPower = world.isReceivingRedstonePower(pos);
+        if (gettingPower) {
+            if(canDeploy(state, world, pos)){
+                world.setBlockState(pos, state.with(POWERED, true), 4);
+                world.addSyncedBlockEvent(pos, this, 0, 1);
+            }
+        }
+    }
+
     public boolean onSyncedBlockEvent(BlockState state, World world, BlockPos pos, int type, int data) {
         world.setBlockState(pos, state.with(POWERED, data == 1));
         return true;
