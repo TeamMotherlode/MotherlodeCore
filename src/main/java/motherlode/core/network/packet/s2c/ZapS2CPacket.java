@@ -1,5 +1,7 @@
 package motherlode.core.network.packet.s2c;
 
+import motherlode.core.particle.ZapParticle;
+import motherlode.core.particle.ZapParticleEffect;
 import motherlode.core.util.PositionUtilities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -45,11 +47,6 @@ public class ZapS2CPacket implements Packet<ClientPlayPacketListener> {
     @Override
     public void apply(ClientPlayPacketListener listener) {
         Vec3d from = new Vec3d(this.origin.getX() + 0.5f, this.origin.getY() + 0.85f, this.origin.getZ() + 0.5f);
-        for(float i = 0; i < 1.f; i += 0.05f){
-            Vec3d lerped = PositionUtilities.fromLerpedPosition(from, this.target, i);
-                    MinecraftClient.getInstance().particleManager.addParticle(
-                            ParticleTypes.ENCHANTED_HIT, lerped.x, lerped.y, lerped.z,
-                            0.D, 0.D, 0.D);
-        }
+        MinecraftClient.getInstance().particleManager.addParticle(new ZapParticle(MinecraftClient.getInstance().world, from, this.target));
     }
 }

@@ -4,10 +4,7 @@ import motherlode.core.block.PotBlock;
 import motherlode.core.block.PotColor;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.gui.RedstoneTransmitterScreen;
-import motherlode.core.registry.MotherlodeAssets;
-import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodePotions;
-import motherlode.core.registry.MotherlodeScreenHandlers;
+import motherlode.core.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -74,7 +71,7 @@ public class MotherlodeClient implements ClientModInitializer {
 
 			return Integer.parseInt(tag.getString("pattern")) / 100F;
 		});
-
+		MotherlodeParticles.init();
 
 	}
 }
