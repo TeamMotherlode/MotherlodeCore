@@ -21,7 +21,6 @@ public class MotherlodeParticles {
     private static <T extends ParticleEffect> void registerComplex(String name, ParticleType<T> type,
                                                                    ParticleFactoryRegistry.PendingParticleFactory<T> factory){
         Registry.register(Registry.PARTICLE_TYPE, Motherlode.id(name), type);
-        ParticleFactoryRegistry particleFactoryRegistry = ParticleFactoryRegistry.getInstance();
         ParticleFactoryRegistry.getInstance().register(type, factory);
     }
 }

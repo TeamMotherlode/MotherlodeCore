@@ -7,7 +7,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.util.math.Vec3d;
@@ -61,11 +60,6 @@ public class ZapParticleEffect implements ParticleEffect {
 
     private final Vec3d source;
     private final Vec3d target;
-
-    public ZapParticleEffect(Vec3d source, Vec3d target) {
-        this.source = source;
-        this.target = target;
-    }
 
     public ZapParticleEffect(double sx, double sy, double sz, double tx, double ty, double tz){
         this.source = new Vec3d(sx, sy, sz);

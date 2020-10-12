@@ -44,6 +44,7 @@ public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
     private static final int ZAP_DELAY_MAXIMUM = 10;
     private static final int ZAP_RADIUS_CONNECTION = 8;
     private static final int RAYCAST_GRANULARITY = 10;
+    private static final int ZAP_DAMAGE = 4;
 
     private int zap_delay = ZAP_DELAY_MAXIMUM;
 
@@ -107,7 +108,7 @@ public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
 
         caught.forEach(entity -> {
             if(entity instanceof LivingEntity)
-                entity.damage(DamageSource.GENERIC, 4);
+                entity.damage(DamageSource.GENERIC, ZAP_DAMAGE);
         });
     }
 }

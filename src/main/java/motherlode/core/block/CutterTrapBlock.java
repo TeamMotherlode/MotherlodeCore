@@ -15,6 +15,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class CutterTrapBlock extends DefaultTrapBlock{
+    private static final int CUTTER_DAMAGE = 4;
+
     public CutterTrapBlock(Settings settings) {
         super(settings);
         MotherlodeBlocks.translucent.add(this);
@@ -26,7 +28,7 @@ public class CutterTrapBlock extends DefaultTrapBlock{
 
         BlockState state = world.getBlockState(pos);
         if(state.get(POWERED)) {
-            entity.damage(DamageSource.CACTUS, 4);
+            entity.damage(DamageSource.CACTUS, CUTTER_DAMAGE);
         }
     }
 

@@ -1,29 +1,19 @@
 package motherlode.core.particle;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import motherlode.core.util.PositionUtilities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.render.*;
-import net.minecraft.client.render.debug.DebugRenderer;
-import net.minecraft.client.render.entity.ElderGuardianEntityRenderer;
-import net.minecraft.client.render.entity.model.GuardianEntityModel;
-import net.minecraft.client.render.model.SpriteAtlasManager;
+import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
-import org.lwjgl.opengl.GL11;
-import sun.security.provider.certpath.Vertex;
 
 import java.util.Random;
 
@@ -31,22 +21,20 @@ public class ZapParticle extends SpriteBillboardParticle {
     private static final Random RANDOM = new Random();
     private static final int STEPS = 8;
     private static final float VARIANCE = 0.25f;
-    private static final int LIGHT = 13 << 4;
     private static final float THICKNESS = 0.01f;
+
+    private static final float[] ZAP_MIDDLE_COLOR = { 1.f, 1.f, 1.f, 1.f};
+    private static final float[] ZAP_OUTSIDE_COLOR = { 0.2f, 0.5f, 1.f, 0.5f};
 
     private final Vec3d target;
     private final Vec3d source;
     private final Vec3d[] vertices;
-    private final Model model;
-    private final RenderLayer LAYER;
 
     public ZapParticle(ClientWorld clientWorld, Vec3d source, Vec3d target) {
         super(clientWorld, source.x, source.y, source.z);
         this.target = target;
         this.source = source;
         this.vertices = new Vec3d[STEPS];
-        this.model = new GuardianEntityModel();
-        this.LAYER = RenderLayer.getEntityTranslucent(ElderGuardianEntityRenderer.TEXTURE);
         generateVertices();
     }
 
@@ -67,11 +55,9 @@ public class ZapParticle extends SpriteBillboardParticle {
 
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-
         MatrixStack matrixStack = new MatrixStack();
-        //matrixStack.multiply(camera.getRotation());
         matrixStack.translate(this.x - camera.getPos().x, this.y - camera.getPos().y, this.z - camera.getPos().z);
-        VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+        VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEffectVertexConsumers();
         VertexConsumer linesConsumer = immediate.getBuffer(RenderLayer.getLines());
 
         for(int i = 1; i < STEPS; i++){
@@ -81,26 +67,31 @@ public class ZapParticle extends SpriteBillboardParticle {
             vertex = vertex.subtract(camera.getPos());
             connection = connection.subtract(camera.getPos());
 
-            linesConsumer.vertex(vertex.x, vertex.y, vertex.z).color(1.f, 1.f, 1.f, 1.f).next();
-            linesConsumer.vertex(connection.x, connection.y, connection.z).color(1.f, 1.f, 1.f, 1.f).next();
+            linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
+                    .color(ZAP_MIDDLE_COLOR[0], ZAP_MIDDLE_COLOR[1], ZAP_MIDDLE_COLOR[2], ZAP_MIDDLE_COLOR[3]).next();
+            linesConsumer.vertex(connection.x, connection.y, connection.z)
+                    .color(ZAP_MIDDLE_COLOR[0], ZAP_MIDDLE_COLOR[1], ZAP_MIDDLE_COLOR[2], ZAP_MIDDLE_COLOR[3]).next();
+
+            //Render outside lines for a clean gradient
 
             vertex = vertex.add(0, THICKNESS, 0);
             connection = connection.add(0, THICKNESS, 0);
 
-            linesConsumer.vertex(vertex.x, vertex.y, vertex.z).color(0.2f, 0.5f, 1.f, 0.5f).next();
-            linesConsumer.vertex(connection.x, connection.y, connection.z).color(0.2f, 0.5f, 1.f, 0.5f).next();
+            linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
+                    .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
+            linesConsumer.vertex(connection.x, connection.y, connection.z)
+                    .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
 
             vertex = vertex.subtract(0, 2*THICKNESS, 0);
             connection = connection.subtract(0, 2*THICKNESS, 0);
 
-            linesConsumer.vertex(vertex.x, vertex.y, vertex.z).color(0.2f, 0.5f, 1.f, 0.5f).next();
-            linesConsumer.vertex(connection.x, connection.y, connection.z).color(0.2f, 0.5f, 1.f, 0.5f).next();
+            linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
+                    .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
+            linesConsumer.vertex(connection.x, connection.y, connection.z)
+                    .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
 
 
         }
-
-        //VertexConsumer vertexConsumer2 = immediate.getBuffer(this.LAYER);
-        //this.model.render(matrixStack, vertexConsumer2, 15728880, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1);
         immediate.draw();
     }
 
@@ -111,10 +102,7 @@ public class ZapParticle extends SpriteBillboardParticle {
 
     @Environment(EnvType.CLIENT)
     public static class Factory implements ParticleFactory<ZapParticleEffect> {
-        private final SpriteProvider spriteProvider;
-
         public Factory(SpriteProvider spriteProvider) {
-            this.spriteProvider = spriteProvider;
         }
 
         @Override
