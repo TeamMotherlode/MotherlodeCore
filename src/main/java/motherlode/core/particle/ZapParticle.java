@@ -1,5 +1,7 @@
 package motherlode.core.particle;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import motherlode.core.util.PositionUtilities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,10 +12,12 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.Random;
 
@@ -35,7 +39,15 @@ public class ZapParticle extends SpriteBillboardParticle {
         this.target = target;
         this.source = source;
         this.vertices = new Vec3d[STEPS];
+        this.maxAge = (RANDOM.nextInt() % 6) + 2;
         generateVertices();
+    }
+
+    public ZapParticle(ClientWorld clientWorld, Vec3d source) {
+        this(clientWorld, source, source.add(
+                1 - (RANDOM.nextDouble() * 2),
+                1 - (RANDOM.nextDouble() * 2),
+                1 - (RANDOM.nextDouble() * 2)));
     }
 
     private void generateVertices(){

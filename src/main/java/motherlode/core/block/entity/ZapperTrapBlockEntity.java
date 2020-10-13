@@ -3,6 +3,7 @@ package motherlode.core.block.entity;
 import com.google.common.collect.Lists;
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultTrapBlock;
+import motherlode.core.block.ZapperTrapBlock;
 import motherlode.core.network.packet.s2c.ZapS2CPacket;
 import motherlode.core.registry.MotherlodeBlockEntities;
 import motherlode.core.util.PositionUtilities;
@@ -11,6 +12,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.server.PlayerStream;
 import net.fabricmc.loader.launch.FabricServerTweaker;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
@@ -26,22 +28,16 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.RayTraceContext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
-    private static final int ZAP_DELAY_MAXIMUM = 10;
+    private static final int ZAP_DELAY_MAXIMUM = 16;
     private static final int ZAP_RADIUS_CONNECTION = 8;
     private static final int RAYCAST_GRANULARITY = 10;
     private static final int ZAP_DAMAGE = 4;
@@ -69,23 +65,34 @@ public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
     @Override
     public void tick() {
         if(this.world.isClient) return;
-        if(!this.world.getBlockState(this.pos).get(DefaultTrapBlock.POWERED)) return;
-        zap_delay--;
-        if(zap_delay != 0) return;
 
+        BlockState thisBlockState = this.world.getBlockState(this.pos);
+        if(!thisBlockState.get(DefaultTrapBlock.POWERED)) return;
+
+        zap_delay -= (this.world.random.nextInt() % 6) + 1;
+        if(zap_delay > 0) return;
         zap_delay = ZAP_DELAY_MAXIMUM;
-        Vec3d start = new Vec3d(this.pos.getX() + 0.5f, this.pos.getY() + 0.85f, this.pos.getZ() + 0.5f);
+
+        Direction thisDirection = thisBlockState.get(ZapperTrapBlock.FACING);
+        Vec3d start = new Vec3d(this.pos.getX(), this.pos.getY(), this.pos.getZ())
+                .add(ZapperTrapBlock.FACING_ROD_OFFSET[thisDirection.getId()]);
 
         List<ZapperTrapBlockEntity> connections;
         List<Entity> caught = new ArrayList<>();
 
         connections = searchConnections();
         connections.forEach(zapper -> {
-            if (this.world.getBlockState(zapper.getPos()).get(DefaultTrapBlock.POWERED)) {
+            BlockState zapperBlockState = this.world.getBlockState(zapper.getPos());
+            if (zapperBlockState.get(DefaultTrapBlock.POWERED)) {
+                Direction direction = zapperBlockState.get(ZapperTrapBlock.FACING);
                 Stream<PlayerEntity> watching = PlayerStream.watching(this.world, this.pos);
-                Vec3d target = new Vec3d(zapper.getPos().getX() + 0.5f, zapper.getPos().getY() + 0.85f, zapper.getPos().getZ() + 0.5f);
+
+                //Offset target position by position of lightning rod (precalculated estimates)
+                Vec3d target = new Vec3d(zapper.getPos().getX(), zapper.getPos().getY(), zapper.getPos().getZ())
+                        .add(ZapperTrapBlock.FACING_ROD_OFFSET[direction.getId()]);
+
                 watching.forEach(player -> {
-                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new ZapS2CPacket(this.pos, target));
+                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new ZapS2CPacket(start, target));
                 });
 
                 //Damage any entity within the zap line

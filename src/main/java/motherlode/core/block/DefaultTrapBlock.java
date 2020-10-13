@@ -11,9 +11,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
@@ -61,7 +63,8 @@ public class DefaultTrapBlock extends Block implements ArtificeProperties {
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(POWERED, false);
+        return this.getDefaultState()
+                .with(POWERED, false);
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
