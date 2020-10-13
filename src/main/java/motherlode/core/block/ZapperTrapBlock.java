@@ -85,7 +85,7 @@ public class ZapperTrapBlock extends DefaultTrapBlock implements BlockEntityProv
 
     public ZapperTrapBlock(Settings settings) {
         super(settings.lightLevel((blockState) -> blockState.get(POWERED) ? 4 : 0));
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.UP));
+        this.setDefaultState(this.getDefaultState().with(FACING, Direction.UP));
         MotherlodeBlocks.translucent.add(this);
     }
 

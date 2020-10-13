@@ -24,7 +24,7 @@ public class DefaultTrapBlock extends Block implements ArtificeProperties {
 
     public DefaultTrapBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(POWERED, false));
+        this.setDefaultState(this.getDefaultState().with(POWERED, false));
     }
 
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {

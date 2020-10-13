@@ -119,9 +119,8 @@ public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
                     }
                 }
 
-                watching.forEach(player -> {
-                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new ZapS2CPacket(start, target));
-                });
+                watching.forEach(player ->
+                        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new ZapS2CPacket(start, target)));
             }
         });
 

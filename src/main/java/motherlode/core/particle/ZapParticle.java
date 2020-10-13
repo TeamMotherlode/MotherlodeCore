@@ -50,7 +50,7 @@ public class ZapParticle extends SpriteBillboardParticle {
                 1 - (RANDOM.nextDouble() * 2)));
     }
 
-    private void generateVertices(){
+    private void generateVertices() {
         //Generate line from source towards target
         for(int i = 0; i < STEPS; i++){
             Vec3d lerped = PositionUtilities.fromLerpedPosition(this.source, this.target, (float)i / (STEPS - 1));
@@ -86,16 +86,16 @@ public class ZapParticle extends SpriteBillboardParticle {
 
             //Render outside lines for a clean gradient
 
-            vertex = vertex.add(0, THICKNESS, 0);
-            connection = connection.add(0, THICKNESS, 0);
+            vertex = vertex.add( 0, THICKNESS, 0 );
+            connection = connection.add( 0, THICKNESS, 0 );
 
             linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
                     .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
             linesConsumer.vertex(connection.x, connection.y, connection.z)
                     .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
 
-            vertex = vertex.subtract(0, 2*THICKNESS, 0);
-            connection = connection.subtract(0, 2*THICKNESS, 0);
+            vertex = vertex.subtract( 0, 2*THICKNESS, 0 );
+            connection = connection.subtract( 0, 2*THICKNESS, 0 );
 
             linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
                     .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
@@ -122,7 +122,6 @@ public class ZapParticle extends SpriteBillboardParticle {
             Vec3d source = new Vec3d(x, y, z);
             Vec3d target = source.add(RANDOM.nextDouble(), RANDOM.nextDouble(), RANDOM.nextDouble());
             ZapParticle zapParticle = new ZapParticle(world, source, target);
-            zapParticle.setSprite(MinecraftClient.getInstance().getItemRenderer().getModels().getSprite(new ItemStack(Items.ITEM_FRAME, 1)));
             return zapParticle;
         }
     }
