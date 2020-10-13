@@ -6,6 +6,7 @@ import motherlode.core.block.DefaultTrapBlock;
 import motherlode.core.block.ZapperTrapBlock;
 import motherlode.core.network.packet.s2c.ZapS2CPacket;
 import motherlode.core.registry.MotherlodeBlockEntities;
+import motherlode.core.registry.MotherlodeBlocks;
 import motherlode.core.util.PositionUtilities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -91,10 +92,6 @@ public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
                 Vec3d target = new Vec3d(zapper.getPos().getX(), zapper.getPos().getY(), zapper.getPos().getZ())
                         .add(ZapperTrapBlock.FACING_ROD_OFFSET[direction.getId()]);
 
-                watching.forEach(player -> {
-                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new ZapS2CPacket(start, target));
-                });
-
                 //Damage any entity within the zap line
                 //Raycasts are expensive, especially with what we're doing, so we need to limit the granularity
                 double ray_radius = start.distanceTo(target) / RAYCAST_GRANULARITY;
@@ -109,7 +106,22 @@ public class ZapperTrapBlockEntity extends BlockEntity implements Tickable {
                             caught.add(entity);
                         }
                     });
+
+                    BlockPos blockPos = new BlockPos((int)lerped.getX(), (int)lerped.getY(), (int)lerped.getZ());
+                    if(lerped.x < 0) blockPos = blockPos.subtract(new Vec3i(1, 0, 0));
+                    if(lerped.z < 0) blockPos = blockPos.subtract(new Vec3i(0, 0, 1));
+
+                    if(!world.getBlockState(blockPos).isAir()){
+                        if(world.getBlockState(blockPos).getBlock() != MotherlodeBlocks.TRAP_ZAPPER){
+                            caught.clear();
+                            return;
+                        }
+                    }
                 }
+
+                watching.forEach(player -> {
+                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, new ZapS2CPacket(start, target));
+                });
             }
         });
 
