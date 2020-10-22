@@ -76,8 +76,9 @@ public class ZapParticle extends SpriteBillboardParticle {
             Vec3d vertex = vertices[i-1];
             Vec3d connection = vertices[i];
 
-            vertex = vertex.subtract(camera.getPos());
-            connection = connection.subtract(camera.getPos());
+            Vec3d campos = camera.getPos();
+            vertex = vertex.subtract(campos);
+            connection = connection.subtract(campos);
 
             linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
                     .color(ZAP_MIDDLE_COLOR[0], ZAP_MIDDLE_COLOR[1], ZAP_MIDDLE_COLOR[2], ZAP_MIDDLE_COLOR[3]).next();
@@ -86,8 +87,8 @@ public class ZapParticle extends SpriteBillboardParticle {
 
             //Render outside lines for a clean gradient
 
-            vertex = vertex.add( 0, THICKNESS, 0 );
-            connection = connection.add( 0, THICKNESS, 0 );
+            vertex = vertex.add(0, THICKNESS, 0);
+            connection = connection.add(0, THICKNESS, 0);
 
             linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
                     .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();

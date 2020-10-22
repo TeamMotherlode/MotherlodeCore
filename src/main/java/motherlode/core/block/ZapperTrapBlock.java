@@ -91,10 +91,9 @@ public class ZapperTrapBlock extends DefaultTrapBlock implements BlockEntityProv
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState placeState = this.getDefaultState()
+       return this.getDefaultState()
                 .with(POWERED, false)
                 .with(FACING, ctx.getPlayerLookDirection().getOpposite());
-        return placeState;
     }
 
     public BlockState rotate(BlockState state, BlockRotation rotation) {
