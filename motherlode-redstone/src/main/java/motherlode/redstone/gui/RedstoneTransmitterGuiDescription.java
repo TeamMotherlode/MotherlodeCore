@@ -34,18 +34,18 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)));
         panel.add(grid, 36, 22);
 
-        WSprite transmitter = new WSprite(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/transmitter_disconnected.png"));
+        WSprite transmitter = new WSprite(Motherlode.id(MotherlodeModule.MODID, "gui/container/transmitter_disconnected.png"));
         panel.add(transmitter, 109, 22, 15, 54);
 
         for (int i = 0; i < 9; i++) {
-            WSprite gem = new WSprite(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/gem.png"));
+            WSprite gem = new WSprite(Motherlode.id(MotherlodeModule.MODID, "gui/container/gem.png"));
             panel.add(gem, 38 + (i * 18 - ((i / 3) * 54)), 26 + ((i / 3) * 18), 14, 11);
             gems.add(gem);
 
-            WSprite miniGemTop = new WSprite(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
+            WSprite miniGemTop = new WSprite(Motherlode.id(MotherlodeModule.MODID, "gui/container/white.png"));
             panel.add(miniGemTop, 112 + (i * 4 - ((i / 3) * 12)), 25 + ((i / 3) * 4), 1, 1);
 
-            WSprite miniGemBottom = new WSprite(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
+            WSprite miniGemBottom = new WSprite(Motherlode.id(MotherlodeModule.MODID, "gui/container/white.png"));
             panel.add(miniGemBottom, 112 + (i * 4 - ((i / 3) * 12)), 64 + ((i / 3) * 4), 1, 1);
 
             miniGemsTop.add(miniGemTop);
@@ -54,14 +54,14 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         for (int i = 0; i < blockInventory.size(); i++) {
             if (blockInventory.getStack(i).isEmpty()) {
-                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/gem.png"));
-                miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
-                miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
+                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/gem.png"));
+                miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
+                miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
             } else {
-                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
+                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
                 if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
-                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
-                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
+                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/white.png"));
+                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/white.png"));
 
                     if (blockInventory.getStack(i).getItem() == Items.DIAMOND) {
                         miniGemsTop.get(i).setOpaqueTint(0x49EAD6);
@@ -80,8 +80,8 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                         miniGemsBottom.get(i).setOpaqueTint(gemItem.getColor());
                     }
                 } else {
-                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
-                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
+                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
+                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
                 }
             }
         }
@@ -96,14 +96,14 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         ItemStack stack = super.onSlotClick(slotNumber, button, action, player);
         for (int i = 0; i < blockInventory.size(); i++) {
             if (blockInventory.getStack(i).isEmpty()) {
-                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/gem.png"));
-                miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
-                miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
+                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/gem.png"));
+                miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
+                miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
             } else {
-                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
+                gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
                 if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
-                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
-                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
+                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/white.png"));
+                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/white.png"));
 
                     if (blockInventory.getStack(i).getItem() == Items.DIAMOND) {
                         miniGemsTop.get(i).setOpaqueTint(0x49EAD6);
@@ -122,8 +122,8 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                         miniGemsBottom.get(i).setOpaqueTint(gemItem.getColor());
                     }
                 } else {
-                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
-                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
+                    miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
+                    miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "gui/container/empty.png"));
                 }
             }
         }

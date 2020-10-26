@@ -11,7 +11,6 @@ public class MotherlodeModule implements ModInitializer {
 
         MotherlodeOresToolsArmorBlocks.init();
         MotherlodeOresToolsArmorItems.init();
-        MotherlodeOresToolsArmorFeatures.register();
         MotherlodeOresToolsArmorTags.init();
     }
 }

@@ -6,7 +6,5 @@ public class MotherlodeOresToolsArmorClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
-
     }
 }

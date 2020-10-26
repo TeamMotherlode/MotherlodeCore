@@ -29,17 +29,17 @@ public class MotherlodePotionsClient implements ClientModInitializer, AssetProce
 
         for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
             if (!info.useDefaultModel)
-                pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "potions/" + info.model), (model) -> model
+                pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, info.model), model -> model
                         .parent(new Identifier("item/generated"))
                         .texture("layer0", Motherlode.id(MotherlodeModule.MODID, "item/" + info.model)));
         }
 
-        pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "default"), (model) -> model
+        pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "default"), model -> model
                 .parent(new Identifier("item/generated"))
                 .texture("layer0", new Identifier("item/potion_overlay"))
                 .texture("layer1", new Identifier("item/potion")));
 
-        pack.addItemModel(new Identifier("potion"), (model) -> {
+        pack.addItemModel(new Identifier("potion"), model -> {
             model.parent(new Identifier("item/generated"));
             model.texture("layer0", new Identifier("item/potion"));
             model.texture("layer1", new Identifier("item/potion_overlay"));

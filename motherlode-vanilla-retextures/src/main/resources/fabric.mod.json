@@ -16,12 +16,16 @@
   "icon": "assets/motherlode-vanilla-retextures/icon.png",
   "environment": "*",
   "entrypoints": {
+    "client": [
+      "motherlode.vanillaretextures.MotherlodeVanillaRetexturesClient"
+    ]
   },
   "mixins": [
     "motherlode-vanilla-retextures.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4"
+    "fabricloader": ">=0.7.4",
+    "motherlode-base": "*"
   },
   "suggests": {
   },

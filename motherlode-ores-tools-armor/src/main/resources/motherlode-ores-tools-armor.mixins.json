@@ -1,12 +1,13 @@
 {
   "required": true,
-  "package": "motherlode.orestoolsarmor.mixins",
+  "package": "motherlode.orestoolsarmor.mixin",
   "compatibilityLevel": "JAVA_8",
   "injectors": {
     "defaultRequire": 1
   },
-  "client": [
-  ],
   "mixins": [
+    "DefaultBiomeFeaturesMixin"
+  ],
+  "client": [
   ]
 }

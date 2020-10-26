@@ -12,10 +12,10 @@ public class PotAssets {
           for (int i = 0; i <= PotBlock.maxPattern; i++) {
               int ii = i;
               pack.addBlockModel(Motherlode.id(MotherlodeModule.MODID, "pot_with_overlay_" + i), model -> model
-                .parent(Motherlode.id("block/pot"))
-                .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                .parent(Motherlode.id(MotherlodeModule.MODID, "block/pot"))
+                .texture("overlay", Motherlode.id(MotherlodeModule.MODID, "block/pots/pot_overlay_" + ii))
               );
-              state.variant("pattern=" + i, settings -> settings.model(Motherlode.id("block/pot_with_overlay_" + ii)));
+              state.variant("pattern=" + i, settings -> settings.model(Motherlode.id(MotherlodeModule.MODID, "block/pot_with_overlay_" + ii)));
           }
       });
 
@@ -39,7 +39,7 @@ public class PotAssets {
 
               pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "pot_" + ii), model2 -> model2
                 .parent(Motherlode.id(MotherlodeModule.MODID, "item/pot_template"))
-                .texture("overlay", Motherlode.id("block/pots/pot_overlay_" + ii))
+                .texture("overlay", Motherlode.id(MotherlodeModule.MODID, "block/pots/pot_overlay_" + ii))
               );
           }
       });

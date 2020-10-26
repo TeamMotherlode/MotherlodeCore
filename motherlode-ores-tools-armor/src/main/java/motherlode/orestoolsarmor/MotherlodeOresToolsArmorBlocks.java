@@ -14,6 +14,7 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 
+@SuppressWarnings("unused")
 public class MotherlodeOresToolsArmorBlocks {
 
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);

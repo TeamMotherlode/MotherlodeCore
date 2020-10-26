@@ -8,7 +8,6 @@ public class MotherlodeModule implements ModInitializer {
 
     @Override
     public void onInitialize() {
-
         MotherlodePotions.init();
     }
 }

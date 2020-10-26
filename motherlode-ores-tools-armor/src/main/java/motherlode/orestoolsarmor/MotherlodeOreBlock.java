@@ -13,15 +13,16 @@ import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import java.util.Random;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
-public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, DataProcessor {
+public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationSettings.Builder>, DataProcessor {
 
     private final int minExperience;
     private final int maxExperience;
@@ -63,12 +64,10 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
         return 0;
     }
     @Override
-    public void accept(Biome biome) {
-        /* if(dimension.getBiomeCategory().test(biome.getCategory())) {
-            biome.addFeature(dimension.getGenerationStepFeature(), Feature.ORE.configure(
-             new OreFeatureConfig(dimension.getTarget(), getDefaultState(), this.veinSize)).decorate(Decorator.COUNT_RANGE.configure(
-             new RangeDecoratorConfig(this.veinsPerChunk, this.minY, this.minY, this.maxY))));
-        } */
+    public void accept(GenerationSettings.Builder builder) {
+        builder.feature(dimension.getGenerationStepFeature(), Feature.ORE.configure(
+             new OreFeatureConfig(dimension.getTarget(), getDefaultState(), this.veinSize)).decorate(Decorator.RANGE.configure(
+             new RangeDecoratorConfig(this.minY, 0, this.maxY))).repeat(this.veinsPerChunk).spreadHorizontally());
     }
 
     @Override
@@ -96,26 +95,21 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
 
         OVERWORLD(
                 GenerationStep.Feature.UNDERGROUND_ORES,
-                OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
-                category -> category != Category.NETHER && category != Category.THEEND),
+                OreFeatureConfig.Rules.BASE_STONE_OVERWORLD),
         NETHER(
                 GenerationStep.Feature.UNDERGROUND_DECORATION,
-                OreFeatureConfig.Rules.BASE_STONE_NETHER,
-                category -> category == Category.NETHER),
+                OreFeatureConfig.Rules.BASE_STONE_NETHER),
         THE_END(
                 GenerationStep.Feature.UNDERGROUND_ORES,
-                new BlockMatchRuleTest(Blocks.END_STONE),
-                category -> category == Category.THEEND);
+                new BlockMatchRuleTest(Blocks.END_STONE));
 
         private final GenerationStep.Feature feature;
         private final RuleTest target;
-        private final Predicate<Category> category;
 
-        Dimension(GenerationStep.Feature feature, RuleTest target, Predicate<Category> category) {
+        Dimension(GenerationStep.Feature feature, RuleTest target) {
 
             this.feature = feature;
             this.target = target;
-            this.category = category;
         }
 
         public GenerationStep.Feature getGenerationStepFeature() {
@@ -126,11 +120,6 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<Biome>, Dat
         public RuleTest getTarget() {
 
             return this.target;
-        }
-
-        public Predicate<Category> getBiomeCategory() {
-
-            return this.category;
         }
     }
 }

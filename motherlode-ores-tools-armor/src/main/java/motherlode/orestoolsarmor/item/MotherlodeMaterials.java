@@ -1,8 +1,6 @@
 package motherlode.orestoolsarmor.item;
 
 import motherlode.orestoolsarmor.MotherlodeOresToolsArmorItems;
-import motherlode.orestoolsarmor.item.DefaultArmorMaterial;
-import motherlode.orestoolsarmor.item.DefaultToolMaterial;
 import net.minecraft.item.ArmorMaterials;
 import net.minecraft.recipe.Ingredient;
 
@@ -13,7 +11,7 @@ public class MotherlodeMaterials {
     public static final DefaultToolMaterial SILVER_TOOLS =
             new DefaultToolMaterial("silver", 400, 2, 16, 9,2.5F, Ingredient.ofItems(MotherlodeOresToolsArmorItems.SILVER_INGOT));
     public static final DefaultToolMaterial CHARITE_TOOLS =
-            new DefaultToolMaterial("charite", 3000, 5, 12, 10,5, Ingredient.ofItems(MotherlodeOresToolsArmorItems.CHARITE_CRYSTAL));
+            new DefaultToolMaterial("charite", 3000, 5, 12, 10,5, Ingredient.ofItems(MotherlodeOresToolsArmorItems.CHARITE_INGOT));
     public static final DefaultToolMaterial ECHERITE_TOOLS =
             new DefaultToolMaterial("echerite", 5000, 6, 16, 11,6, Ingredient.ofItems(MotherlodeOresToolsArmorItems.ECHERITE_INGOT));
     public static final DefaultToolMaterial TITANIUM_TOOLS =
@@ -33,7 +31,7 @@ public class MotherlodeMaterials {
 
     public static final DefaultArmorMaterial CHARITE_ARMOR =
             new DefaultArmorMaterial("charite", 40, new int[]{4,7,9,4}, 12, 4,0.3F,
-                    Ingredient.ofItems(MotherlodeOresToolsArmorItems.CHARITE_CRYSTAL),
+                    Ingredient.ofItems(MotherlodeOresToolsArmorItems.CHARITE_INGOT),
                     ArmorMaterials.DIAMOND.getEquipSound());
 
 
