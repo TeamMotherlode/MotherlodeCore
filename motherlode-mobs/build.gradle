@@ -1,0 +1,10 @@
+version = "1.0.0+$project.minecraft_version"
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+dependencies {
+    compile project(path: ":motherlode-base", configuration: "dev")
+
+    modImplementation "com.github.bernie-g:geckolib:fabric-1.16.1-geckolib-2.0.0-beta.5"
+}

@@ -1,7 +1,8 @@
-package motherlode.core.entities.render;
+package motherlode.mobs.renderer;
 
-import motherlode.core.entities.RedstoneMarauderEntity;
-import motherlode.core.entities.model.RedstoneMarauderModel;
+import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.entity.RedstoneMarauderEntity;
+import motherlode.mobs.model.RedstoneMarauderModel;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -14,7 +15,7 @@ public class RedstoneMarauderEntityRenderer extends MobEntityRenderer<RedstoneMa
 
     @Override
     public Identifier getTexture(RedstoneMarauderEntity entity) {
-        return new Identifier("motherlode","textures/entity/redstone_marauder/redstone_marauder.png");
+        return new Identifier(MotherlodeModule.MODID,"textures/entity/redstone_marauder/redstone_marauder.png");
     }
 
     protected void scale(RedstoneMarauderEntity redstoneMarauderEntity, MatrixStack matrixStack, float f) {

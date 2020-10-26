@@ -1,17 +1,15 @@
-package motherlode.core.entities.model;
+package motherlode.mobs.model;
 
 // Made with Blockbench 3.5.4
 // Exported for Minecraft version 1.15
-// Paste this class into your mod and generate all required imports
 
-
-import motherlode.core.entities.ArmadilloEntity;
+import motherlode.mobs.entity.ArmadilloEntity;
+import motherlode.mobs.MotherlodeModule;
 import software.bernie.geckolib.animation.model.AnimatedEntityModel;
 import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
 import software.bernie.geckolib.forgetofabric.ResourceLocation;
 
 public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
-
 
     private final AnimatedModelRenderer Tail;
     private final AnimatedModelRenderer LegBackLeft;
@@ -24,8 +22,7 @@ public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
     private final AnimatedModelRenderer LegBackLeft_1;
     private final AnimatedModelRenderer LegFrontLeft_1;
 
-    public ArmadilloModel()
-    {
+    public ArmadilloModel() {
         textureWidth = 64;
         textureHeight = 32;
         Tail = new AnimatedModelRenderer(this);
@@ -103,10 +100,7 @@ public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
     }
 
     @Override
-    public ResourceLocation getAnimationFileLocation()
-    {
-        return new ResourceLocation("motherlode", "animations/armadillo.animations.json");
+    public ResourceLocation getAnimationFileLocation() {
+        return new ResourceLocation(MotherlodeModule.MODID, "animations/armadillo.animations.json");
     }
-
-
 }

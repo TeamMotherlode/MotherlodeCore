@@ -1,7 +1,8 @@
-package motherlode.core.entities.render;
+package motherlode.mobs.renderer;
 
-import motherlode.core.entities.ArmadilloEntity;
-import motherlode.core.entities.model.ArmadilloModel;
+import motherlode.mobs.entity.ArmadilloEntity;
+import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.model.ArmadilloModel;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,7 +16,7 @@ public class ArmadilloEntityRenderer extends MobEntityRenderer<ArmadilloEntity, 
 
     @Override
     public Identifier getTexture(ArmadilloEntity entity) {
-        return new Identifier("motherlode","textures/entity/armadillo/armadillo.png");
+        return new Identifier(MotherlodeModule.MODID,"textures/entity/armadillo/armadillo.png");
     }
 
     protected void setupTransforms(ArmadilloEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {

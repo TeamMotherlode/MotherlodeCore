@@ -1,7 +1,8 @@
-package motherlode.core.entities.render;
+package motherlode.mobs.renderer;
 
-import motherlode.core.entities.LizardEntity;
-import motherlode.core.entities.model.LizardModel;
+import motherlode.mobs.entity.LizardEntity;
+import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.model.LizardModel;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,7 +16,7 @@ public class LizardEntityRenderer extends MobEntityRenderer<LizardEntity, Lizard
 
     @Override
     public Identifier getTexture(LizardEntity entity) {
-        return new Identifier("motherlode","textures/entity/lizard/sand_lizard.png");
+        return new Identifier(MotherlodeModule.MODID,"textures/entity/lizard/sand_lizard.png");
     }
 
     protected void scale(LizardEntity lizardEntity, MatrixStack matrixStack, float f) {

@@ -1,6 +1,6 @@
-package motherlode.core.entities.model;
+package motherlode.mobs.model;
 
-import motherlode.core.entities.RedstoneGolemEntity;
+import motherlode.mobs.entity.RedstoneGolemEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -64,7 +64,6 @@ public class RedstoneGolemModel extends EntityModel<RedstoneGolemEntity> {
 
     }
 
-
     @Override
     public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
         arm_left.render(matrixStack, buffer, packedLight, packedOverlay);
@@ -75,7 +74,6 @@ public class RedstoneGolemModel extends EntityModel<RedstoneGolemEntity> {
         arm_right.render(matrixStack, buffer, packedLight, packedOverlay);
         leg_right.render(matrixStack, buffer, packedLight, packedOverlay);
     }
-
 
     public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
         modelRenderer.pitch = x;

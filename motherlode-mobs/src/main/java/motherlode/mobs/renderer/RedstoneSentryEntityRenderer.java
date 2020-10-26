@@ -1,7 +1,8 @@
-package motherlode.core.entities.render;
+package motherlode.mobs.renderer;
 
-import motherlode.core.entities.RedstoneSentryEntity;
-import motherlode.core.entities.model.RedstoneSentryModel;
+import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.entity.RedstoneSentryEntity;
+import motherlode.mobs.model.RedstoneSentryModel;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
@@ -14,6 +15,6 @@ public class RedstoneSentryEntityRenderer extends MobEntityRenderer<RedstoneSent
 
     @Override
     public Identifier getTexture(RedstoneSentryEntity entity) {
-        return new Identifier("motherlode","textures/entity/redstone_sentry/redstone_sentry.png");
+        return new Identifier(MotherlodeModule.MODID,"textures/entity/redstone_sentry/redstone_sentry.png");
     }
 }

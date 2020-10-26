@@ -1,7 +1,8 @@
-package motherlode.core.entities.render;
+package motherlode.mobs.renderer;
 
-import motherlode.core.entities.RedstoneGolemEntity;
-import motherlode.core.entities.model.RedstoneGolemModel;
+import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.entity.RedstoneGolemEntity;
+import motherlode.mobs.model.RedstoneGolemModel;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
@@ -13,6 +14,6 @@ public class RedstoneGolemEntityRenderer extends MobEntityRenderer<RedstoneGolem
 
     @Override
     public Identifier getTexture(RedstoneGolemEntity entity) {
-        return new Identifier("motherlode","textures/entity/redstone_golem/redstone_golem.png");
+        return new Identifier(MotherlodeModule.MODID,"textures/entity/redstone_golem/redstone_golem.png");
     }
 }

@@ -1,4 +1,4 @@
-package motherlode.core.entities;
+package motherlode.mobs.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -10,6 +10,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
 public class LizardEntity extends AnimalEntity {
@@ -33,7 +34,7 @@ public class LizardEntity extends AnimalEntity {
     }
 
     @Override
-    public PassiveEntity createChild(PassiveEntity mate) {
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity mate) {
         return null;
     }
 }

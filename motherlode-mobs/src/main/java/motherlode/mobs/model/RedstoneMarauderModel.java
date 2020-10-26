@@ -1,7 +1,6 @@
-package motherlode.core.entities.model;
+package motherlode.mobs.model;
 
-import motherlode.core.entities.RedstoneGolemEntity;
-import motherlode.core.entities.RedstoneMarauderEntity;
+import motherlode.mobs.entity.RedstoneMarauderEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -84,7 +83,6 @@ public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
         lower2.setTextureOffset(52, 2).addCuboid(-3.5F, 6.0F, 2.0F, 2.0F, 5.0F, 5.0F, 0.0F, true);
     }
 
-
     @Override
     public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
         arm_left.render(matrixStack, buffer, packedLight, packedOverlay);
@@ -93,7 +91,6 @@ public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
         whirlwind.render(matrixStack, buffer, packedLight, packedOverlay);
         arm_right.render(matrixStack, buffer, packedLight, packedOverlay);
     }
-
 
     public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
         modelRenderer.pitch = x;
@@ -105,6 +102,4 @@ public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
     public void setAngles(RedstoneMarauderEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 
     }
-
-
 }

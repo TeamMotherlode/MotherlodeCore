@@ -1,4 +1,4 @@
-package motherlode.core.entities;
+package motherlode.mobs.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -18,19 +18,18 @@ public class RedstoneMarauderEntity extends GolemEntity {
 
     protected void initGoals() {
         this.goalSelector.add(1, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.add(2, new GoToEntityTargetGoal(this, 0.9D, 16.0F));
+        this.goalSelector.add(2, new WanderNearTargetGoal(this, 0.9D, 16.0F));
         this.goalSelector.add(5, new WanderAroundGoal(this, 0.9D));
         this.goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 16.0F));
-        this.targetSelector.add(1, new RevengeGoal(this, new Class[0]));
-        this.targetSelector.add(2, new FollowTargetGoal(this, LivingEntity.class, 3, false, false, (livingEntity) -> {
-            return livingEntity instanceof PlayerEntity || (livingEntity instanceof Monster);
-        }));
+        this.targetSelector.add(1, new RevengeGoal(this));
+        this.targetSelector.add(2, new FollowTargetGoal<>(this, LivingEntity.class, 3, false, false,
+          livingEntity -> livingEntity instanceof PlayerEntity || livingEntity instanceof Monster));
     }
 
     public static DefaultAttributeContainer.Builder createRedstoneMarauderAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 25.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.24D)
-                .add(EntityAttributes.GENERIC_ARMOR, 3.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0D)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0F);
+          .add(EntityAttributes.GENERIC_ARMOR, 3.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0D)
+          .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0F);
     }
 
     public boolean canTarget(EntityType<?> type) {

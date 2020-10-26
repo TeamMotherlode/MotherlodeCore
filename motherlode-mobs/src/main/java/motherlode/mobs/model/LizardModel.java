@@ -1,6 +1,6 @@
-package motherlode.core.entities.model;
+package motherlode.mobs.model;
 
-import motherlode.core.entities.LizardEntity;
+import motherlode.mobs.entity.LizardEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -68,8 +68,6 @@ public class LizardModel extends EntityModel<LizardEntity> {
         this.leg_front_left.pitch = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
     }
 
-
-
     @Override
     public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
 //        //body.render(matrixStack, buffer, packedLight, packedOverlay);
@@ -79,7 +77,6 @@ public class LizardModel extends EntityModel<LizardEntity> {
 //        leg_back_left.render(matrixStack, buffer, packedLight, packedOverlay);
 //        leg_back_right.render(matrixStack, buffer, packedLight, packedOverlay);
     }
-
 
     public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
         modelRenderer.pitch = x;

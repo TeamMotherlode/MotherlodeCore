@@ -1,6 +1,6 @@
-package motherlode.core.entities.model;
+package motherlode.mobs.model;
 
-import motherlode.core.entities.RedstoneSentryEntity;
+import motherlode.mobs.entity.RedstoneSentryEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -67,7 +67,6 @@ public class RedstoneSentryModel extends EntityModel<RedstoneSentryEntity> {
         leg_left.render(matrixStack, buffer, packedLight, packedOverlay);
         body.render(matrixStack, buffer, packedLight, packedOverlay);
     }
-
 
     public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
         modelRenderer.pitch = x;

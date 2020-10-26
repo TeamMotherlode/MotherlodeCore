@@ -1,4 +1,4 @@
-package motherlode.core.entities;
+package motherlode.mobs.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ToolItem;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -22,8 +23,6 @@ import software.bernie.geckolib.animation.controller.EntityAnimationController;
 import software.bernie.geckolib.entity.IAnimatedEntity;
 import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
-
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -32,23 +31,17 @@ public class ArmadilloEntity extends AnimalEntity implements IAnimatedEntity {
     private boolean is_scared = false;
 //    private final ArmadilloEntity.ArmadilloFleeGoal<PlayerEntity> fleeGoal =
 //            new ArmadilloFleeGoal<>(this, PlayerEntity.class, 0F, 0, 0);
-   // private ArmadilloEntity.ArmadilloEscapeDangerGoal escapeDangerGoal;
-
-
+    // private ArmadilloEntity.ArmadilloEscapeDangerGoal escapeDangerGoal;
 
     EntityAnimationManager manager = new EntityAnimationManager();
 
-    EntityAnimationController walkController =
-            new EntityAnimationController(this, "walkController", 10, this::walk_animationPredicate);
+    EntityAnimationController<ArmadilloEntity> walkController =
+      new EntityAnimationController<>(this, "walkController", 10, this::walk_animationPredicate);
 
     private static final Predicate<LivingEntity> PLAYER_ENTITY_FILTER = (livingEntity) -> {
         if (livingEntity == null) {
             return false;
-        } else if (livingEntity instanceof PlayerEntity) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return livingEntity instanceof PlayerEntity;
     };
 
 //    EntityAnimationController curlUpController =
@@ -66,7 +59,7 @@ public class ArmadilloEntity extends AnimalEntity implements IAnimatedEntity {
             walkController.setAnimation(new AnimationBuilder().addAnimation("scared", false));
             return true;
         }
-       return false;
+        return false;
 
     }
 
@@ -98,7 +91,7 @@ public class ArmadilloEntity extends AnimalEntity implements IAnimatedEntity {
     /*Builds attributes for ArmadilloEntity. Called when ArmadilloEntity is registered*/
     public static DefaultAttributeContainer.Builder createArmadilloAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.18D)
-                .add(EntityAttributes.GENERIC_ARMOR, 5.0D);
+          .add(EntityAttributes.GENERIC_ARMOR, 5.0D);
     }
 
     @Override
@@ -113,11 +106,10 @@ public class ArmadilloEntity extends AnimalEntity implements IAnimatedEntity {
     public void mobTick() {
         super.mobTick();
         Box threatZone = this.getBoundingBox().expand(10);
-        List<ServerPlayerEntity> list = this.world.getEntities(ServerPlayerEntity.class, threatZone,
-                PLAYER_ENTITY_FILTER);
-        Iterator<ServerPlayerEntity> listIterator = list.iterator();
-        while(listIterator.hasNext()){
-            if(listIterator.next().getMainHandStack().getItem() instanceof ToolItem) {
+        List<ServerPlayerEntity> list = this.world.getEntitiesByClass(ServerPlayerEntity.class, threatZone,
+          PLAYER_ENTITY_FILTER);
+        for (ServerPlayerEntity serverPlayerEntity: list) {
+            if (serverPlayerEntity.getMainHandStack().getItem() instanceof ToolItem) {
                 this.setScared(true);
             }
         }
@@ -141,9 +133,9 @@ public class ArmadilloEntity extends AnimalEntity implements IAnimatedEntity {
         public boolean canStart() {
             //sets targetEntity
             this.targetEntity = this.mob.world.getClosestEntityIncludingUngeneratedChunks
-                    (this.classToFleeFrom, this.withinRangePredicate, this.mob,
-                            this.mob.getX(), this.mob.getY(), this.mob.getZ(),
-                            this.mob.getBoundingBox().expand((double)this.fleeDistance, 3.0D, (double)this.fleeDistance));
+              (this.classToFleeFrom, this.withinRangePredicate, this.mob,
+                this.mob.getX(), this.mob.getY(), this.mob.getZ(),
+                this.mob.getBoundingBox().expand(this.fleeDistance, 3.0D, (double)this.fleeDistance));
             if(targetEntity != null) {
                 /*checks if player is holding a tool*/
                 if (this.targetEntity.getMainHandStack().getItem() instanceof ToolItem) {
@@ -215,11 +207,8 @@ public class ArmadilloEntity extends AnimalEntity implements IAnimatedEntity {
         }
     }
 
-
-
-
     @Override
-    public PassiveEntity createChild(PassiveEntity mate) {
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity mate) {
         return null;
     }
 }
