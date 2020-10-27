@@ -14,7 +14,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
 public class LizardEntity extends AnimalEntity {
-
     //lizard constructor
     public LizardEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -23,7 +22,7 @@ public class LizardEntity extends AnimalEntity {
     /*Entity AI goals. The lower the priority, the more the entity prioritizes accomplishing the goal*/
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new EscapeDangerGoal(this,2.0));
+        this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
         this.goalSelector.add(2, new WanderAroundFarGoal(this, 0.7D));
         this.goalSelector.add(3, new LookAroundGoal(this));
     }

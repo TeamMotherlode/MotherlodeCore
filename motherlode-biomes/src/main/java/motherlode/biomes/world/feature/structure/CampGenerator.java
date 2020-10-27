@@ -1,10 +1,13 @@
 package motherlode.biomes.world.feature.structure;
 
-import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeModule;
-import motherlode.biomes.world.MotherlodeStructures;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.structure.*;
+import net.minecraft.structure.SimpleStructurePiece;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructureManager;
+import net.minecraft.structure.StructurePiece;
+import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -12,8 +15,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ServerWorldAccess;
-import java.util.List;
-import java.util.Random;
+import motherlode.base.Motherlode;
+import motherlode.biomes.MotherlodeModule;
+import motherlode.biomes.world.MotherlodeStructures;
 
 public class CampGenerator {
     private static final Identifier CAMP_PIECE = Motherlode.id(MotherlodeModule.MODID, "camp_piece");

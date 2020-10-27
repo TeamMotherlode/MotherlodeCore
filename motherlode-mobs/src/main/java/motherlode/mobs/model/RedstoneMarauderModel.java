@@ -1,10 +1,10 @@
 package motherlode.mobs.model;
 
-import motherlode.mobs.entity.RedstoneMarauderEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import motherlode.mobs.entity.RedstoneMarauderEntity;
 
 public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
     private final ModelPart arm_left;
@@ -49,7 +49,6 @@ public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
         whirlwind = new ModelPart(this);
         whirlwind.setPivot(0.0F, 17.0F, 1.0F);
 
-
         rock1 = new ModelPart(this);
         rock1.setPivot(6.0F, 0.0F, 0.0F);
         whirlwind.addChild(rock1);
@@ -84,7 +83,7 @@ public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         arm_left.render(matrixStack, buffer, packedLight, packedOverlay);
         head.render(matrixStack, buffer, packedLight, packedOverlay);
         body.render(matrixStack, buffer, packedLight, packedOverlay);
@@ -100,6 +99,5 @@ public class RedstoneMarauderModel extends EntityModel<RedstoneMarauderEntity> {
 
     @Override
     public void setAngles(RedstoneMarauderEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-
     }
 }

@@ -1,11 +1,10 @@
 package motherlode.base.api;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import net.minecraft.util.Identifier;
 import java.util.Objects;
+import net.minecraft.util.Identifier;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public interface DataProcessor {
-
     void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id);
 
     default ArtificeResourcePack.ServerResourcePackBuilder process(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
@@ -13,6 +12,7 @@ public interface DataProcessor {
         accept(pack, id);
         return pack;
     }
+
     default DataProcessor after(DataProcessor before) {
         Objects.requireNonNull(before);
 
@@ -22,6 +22,7 @@ public interface DataProcessor {
             this.accept(pack, id);
         };
     }
+
     default DataProcessor andThen(DataProcessor after) {
         Objects.requireNonNull(after);
 

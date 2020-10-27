@@ -3,7 +3,6 @@ package motherlode.base.api;
 import java.util.Objects;
 
 public interface Processor<T> {
-
     /**
      * Performs this operation on the given argument.
      *
@@ -12,7 +11,7 @@ public interface Processor<T> {
     void accept(T t);
 
     /**
-     *Performs this operation on the given argument.
+     * Performs this operation on the given argument.
      *
      * @param t the input argument
      * @return the input argument which was processed
@@ -36,6 +35,9 @@ public interface Processor<T> {
      */
     default Processor<T> andThen(Processor<? super T> after) {
         Objects.requireNonNull(after);
-        return t -> { accept(t); after.accept(t); };
+        return t -> {
+            accept(t);
+            after.accept(t);
+        };
     }
 }

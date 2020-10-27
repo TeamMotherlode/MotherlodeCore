@@ -1,11 +1,7 @@
 package motherlode.orestoolsarmor;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import motherlode.base.CommonData;
-import motherlode.base.Motherlode;
-import motherlode.base.api.DataProcessor;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import java.util.Random;
+import java.util.function.Consumer;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
@@ -19,11 +15,14 @@ import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import java.util.Random;
-import java.util.function.Consumer;
+import motherlode.base.CommonData;
+import motherlode.base.Motherlode;
+import motherlode.base.api.DataProcessor;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationSettings.Builder>, DataProcessor {
-
     private final int minExperience;
     private final int maxExperience;
     private final int veinSize;
@@ -40,7 +39,7 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationS
     public MotherlodeOreBlock(int miningLevel, Dimension dimension, String mineral) {
         this(0, 0, 8, 1, 0, 50, dimension, miningLevel, mineral);
     }
-    
+
     public MotherlodeOreBlock(int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY, Dimension dimension, int miningLevel, String mineral) {
         super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
 
@@ -58,16 +57,17 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationS
     }
 
     protected int getExperienceWhenMined(Random random) {
-        if (maxExperience!=0) {
+        if (maxExperience != 0) {
             return MathHelper.nextInt(random, minExperience, maxExperience);
         }
         return 0;
     }
+
     @Override
     public void accept(GenerationSettings.Builder builder) {
         builder.feature(dimension.getGenerationStepFeature(), Feature.ORE.configure(
-             new OreFeatureConfig(dimension.getTarget(), getDefaultState(), this.veinSize)).decorate(Decorator.RANGE.configure(
-             new RangeDecoratorConfig(this.minY, 0, this.maxY))).repeat(this.veinsPerChunk).spreadHorizontally());
+            new OreFeatureConfig(dimension.getTarget(), getDefaultState(), this.veinSize)).decorate(Decorator.RANGE.configure(
+            new RangeDecoratorConfig(this.minY, 0, this.maxY))).repeat(this.veinsPerChunk).spreadHorizontally());
     }
 
     @Override
@@ -79,29 +79,29 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationS
         Identifier mineral = Motherlode.id(id.getNamespace(), this.mineral);
 
         pack.addSmeltingRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_smelting"), recipe -> recipe
-                .ingredientTag(commonId)
-                .result(mineral)
-                .experience(1)
-                .cookingTime(200));
+            .ingredientTag(commonId)
+            .result(mineral)
+            .experience(1)
+            .cookingTime(200));
 
         pack.addBlastingRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_blasting"), recipe -> recipe
-                .ingredientTag(commonId)
-                .result(mineral)
-                .experience(1)
-                .cookingTime(100));
+            .ingredientTag(commonId)
+            .result(mineral)
+            .experience(1)
+            .cookingTime(100));
     }
 
     public enum Dimension {
 
         OVERWORLD(
-                GenerationStep.Feature.UNDERGROUND_ORES,
-                OreFeatureConfig.Rules.BASE_STONE_OVERWORLD),
+            GenerationStep.Feature.UNDERGROUND_ORES,
+            OreFeatureConfig.Rules.BASE_STONE_OVERWORLD),
         NETHER(
-                GenerationStep.Feature.UNDERGROUND_DECORATION,
-                OreFeatureConfig.Rules.BASE_STONE_NETHER),
+            GenerationStep.Feature.UNDERGROUND_DECORATION,
+            OreFeatureConfig.Rules.BASE_STONE_NETHER),
         THE_END(
-                GenerationStep.Feature.UNDERGROUND_ORES,
-                new BlockMatchRuleTest(Blocks.END_STONE));
+            GenerationStep.Feature.UNDERGROUND_ORES,
+            new BlockMatchRuleTest(Blocks.END_STONE));
 
         private final GenerationStep.Feature feature;
         private final RuleTest target;

@@ -1,7 +1,10 @@
 package motherlode.spelunky.block;
 
-import motherlode.spelunky.MotherlodeSpelunkyBlocks;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.enums.WireConnection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -21,6 +24,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import motherlode.spelunky.MotherlodeSpelunkyBlocks;
 
 public class RopeBlock extends Block {
     public static final EnumProperty<WireConnection> CONNECTED = EnumProperty.of("connected", WireConnection.class);
@@ -140,9 +144,9 @@ public class RopeBlock extends Block {
                 base = VoxelShapes.union(SHORT_ROPE_SHAPE, HOOK_SHORT_SHAPE.offset(x_offset, 0.0, z_offset), HOOK_LONG_TOP_SHAPE.offset(-x_offset, 0.0, -z_offset));
             else
                 base = VoxelShapes.union(SHORT_ROPE_SHAPE, HOOK_SHORT_SHAPE.offset(x_offset, 0.0, z_offset),
-                        facing.getAxis() == Direction.Axis.X ?
-                                HOOK_LONG_SIDE_SHAPE_X.offset(-x_offset * 1.25, 0.0, 0.0) :
-                                HOOK_LONG_SIDE_SHAPE_Z.offset(0.0, 0.0, -z_offset * 1.25));
+                    facing.getAxis() == Direction.Axis.X ?
+                        HOOK_LONG_SIDE_SHAPE_X.offset(-x_offset * 1.25, 0.0, 0.0) :
+                        HOOK_LONG_SIDE_SHAPE_Z.offset(0.0, 0.0, -z_offset * 1.25));
         }
 
         if (state.get(BOTTOM))

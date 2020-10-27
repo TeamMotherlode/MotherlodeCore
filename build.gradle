@@ -5,6 +5,7 @@ version = "${project.mod_version}+${project.minecraft_version}"
 
 allprojects {
 
+    apply plugin: 'checkstyle'
     apply plugin: 'fabric-loom'
 
     sourceCompatibility = 1.8
@@ -19,7 +20,7 @@ allprojects {
 
         modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-        modCompile "com.lettuce.fudge:artifice:${project.artifice_version}"
+        modImplementation "com.lettuce.fudge:artifice:${project.artifice_version}"
     }
     configurations {
         dev
@@ -52,6 +53,10 @@ allprojects {
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier 'sources'
         from sourceSets.main.allSource
+    }
+    checkstyle {
+        configFile = rootProject.file(".github/linters/sun_config.xml")
+        toolVersion = "8.31"
     }
 }
 jar {

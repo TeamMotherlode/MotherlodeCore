@@ -1,5 +1,7 @@
 package motherlode.spelunky.block;
 
+import java.util.Optional;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -11,20 +13,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import java.util.Optional;
-import java.util.Random;
 
 public class PotBlock extends Block {
-
     public final VoxelShape shape;
 
     private static final Random rand = new Random();
 
     public static final Integer maxPattern = 18;
-    public static final VoxelShape POT_SHAPE =  VoxelShapes.union(
-      VoxelShapes.cuboid(3/16D, 12/16D, 3/16D, 13/16D, 14/16D, 13/16D),
-      VoxelShapes.cuboid(4/16D, 10/16D, 4/16D, 12/16D, 12/16D, 12/16D),
-      VoxelShapes.cuboid(3/16D, 0 /16D, 3/16D, 13/16D, 10/16D, 13/16D)
+    public static final VoxelShape POT_SHAPE = VoxelShapes.union(
+        VoxelShapes.cuboid(3 / 16D, 12 / 16D, 3 / 16D, 13 / 16D, 14 / 16D, 13 / 16D),
+        VoxelShapes.cuboid(4 / 16D, 10 / 16D, 4 / 16D, 12 / 16D, 12 / 16D, 12 / 16D),
+        VoxelShapes.cuboid(3 / 16D, 0 / 16D, 3 / 16D, 13 / 16D, 10 / 16D, 13 / 16D)
     );
 
     public static final IntProperty PATTERN = IntProperty.of("pattern", 0, maxPattern);

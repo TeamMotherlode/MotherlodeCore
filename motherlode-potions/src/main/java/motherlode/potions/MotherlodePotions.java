@@ -1,6 +1,9 @@
 package motherlode.potions;
 
-import motherlode.base.Motherlode;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -10,14 +13,10 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.registry.Registry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import motherlode.base.Motherlode;
 
 public class MotherlodePotions {
-
-    public static Map<Potion,PotionModelInfo> potionModelInfos = new HashMap<>();
+    public static Map<Potion, PotionModelInfo> potionModelInfos = new HashMap<>();
 
     public static final StatusEffect THORNS_EFFECT = register("thorns", new ThornsEffect(9848355));
 
@@ -39,7 +38,8 @@ public class MotherlodePotions {
         return Registry.register(Registry.POTION, name, potion);
     }
 
-    public static void init() {}
+    public static void init() {
+    }
 
     static {
         addPotion(Potions.EMPTY, null, 0.000F);
@@ -107,7 +107,6 @@ public class MotherlodePotions {
         addPotion(THORNS, "thorns", 0.210F);
         addPotion(LONG_THORNS, "thorns", 0.211F);
         addPotion(STRONG_THORNS, "thorns", 0.212F);
-
     }
 
     public static void addPotion(Potion potion, String model, float predicateValue) {
@@ -116,9 +115,9 @@ public class MotherlodePotions {
 
     public static List<PotionModelInfo> getPotionModelInfos() {
         return potionModelInfos.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toList());
+            .sorted(Map.Entry.comparingByValue())
+            .map(Map.Entry::getValue)
+            .collect(Collectors.toList());
     }
 
     public static boolean applyTint(ItemStack stack) {
@@ -128,12 +127,12 @@ public class MotherlodePotions {
         PotionModelInfo info = potionModelInfos.get(PotionUtil.getPotion(stack));
         return info == null || info.useDefaultModel;
     }
-    
-    public static class PotionModelInfo implements Comparable<PotionModelInfo>{
+
+    public static class PotionModelInfo implements Comparable<PotionModelInfo> {
         public final String model;
         public final float predicateValue;
         public final boolean useDefaultModel;
-        
+
         public PotionModelInfo(String model, float predicateValue) {
             this.model = model;
             this.predicateValue = predicateValue;
@@ -145,6 +144,4 @@ public class MotherlodePotions {
             return Float.compare(this.predicateValue, o.predicateValue);
         }
     }
-
-
 }

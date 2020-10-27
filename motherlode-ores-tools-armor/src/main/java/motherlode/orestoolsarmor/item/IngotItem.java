@@ -1,14 +1,13 @@
 package motherlode.orestoolsarmor.item;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class IngotItem extends Item implements DataProcessor {
-
     private final String nugget;
     private final boolean nuggetRecipes;
 
@@ -40,15 +39,15 @@ public class IngotItem extends Item implements DataProcessor {
         CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
             .accept(pack, nugget);
 
-        if(this.nuggetRecipes) {
+        if (this.nuggetRecipes) {
             pack.addShapelessRecipe(nugget, recipe -> recipe
-              .ingredientTag(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
-              .result(nugget, 9));
+                .ingredientTag(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
+                .result(nugget, 9));
 
             pack.addShapedRecipe(id, recipe ->
-              recipe.pattern("***", "***", "***")
-                .ingredientTag('*', Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
-                .result(id, 1));
+                recipe.pattern("***", "***", "***")
+                    .ingredientTag('*', Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
+                    .result(id, 1));
         }
     }
 }

@@ -5,7 +5,6 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.StringIdentifiable;
 
 public enum BlockDyeColor implements StringIdentifiable {
-
     UNCOLORED("uncolored", MaterialColor.STONE),
     WHITE("white", MaterialColor.WHITE),
     LIGHT_GRAY("light_gray", MaterialColor.LIGHT_GRAY),
@@ -26,10 +25,12 @@ public enum BlockDyeColor implements StringIdentifiable {
 
     String name;
     MaterialColor color;
+
     BlockDyeColor(String name, MaterialColor color) {
         this.name = name;
         this.color = color;
     }
+
     @Override
     public String asString() {
         return name;

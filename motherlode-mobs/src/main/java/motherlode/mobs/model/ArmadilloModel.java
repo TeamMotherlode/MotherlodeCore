@@ -3,16 +3,15 @@ package motherlode.mobs.model;
 // Made with Blockbench 3.5.4
 // Exported for Minecraft version 1.15
 
-import motherlode.mobs.MotherlodeModule;
-import motherlode.mobs.entity.ArmadilloEntity;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.ModelPart;
+import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.entity.ArmadilloEntity;
 import software.bernie.geckolib.animation.model.AnimatedEntityModel;
 import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
 import software.bernie.geckolib.forgetofabric.ResourceLocation;
 
 public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
-
     private final AnimatedModelRenderer Tail;
     private final AnimatedModelRenderer LegBackLeft;
     private final AnimatedModelRenderer BodyBack;

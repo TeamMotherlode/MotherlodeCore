@@ -1,14 +1,13 @@
 package motherlode.orestoolsarmor;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import net.minecraft.block.Block;
+import net.minecraft.util.Identifier;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
-import net.minecraft.block.Block;
-import net.minecraft.util.Identifier;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class MineralBlock extends Block implements DataProcessor {
-
     private final String mineral;
 
     public MineralBlock(Settings settings, String mineral) {

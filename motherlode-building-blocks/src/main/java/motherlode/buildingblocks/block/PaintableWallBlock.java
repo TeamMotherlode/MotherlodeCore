@@ -1,11 +1,6 @@
 package motherlode.buildingblocks.block;
 
-import com.google.common.collect.Maps;
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
-import motherlode.buildingblocks.MotherlodeModule;
-import motherlode.buildingblocks.block.stateproperty.BlockDyeColor;
+import java.util.Map;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,10 +17,14 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import java.util.Map;
+import motherlode.base.Motherlode;
+import motherlode.base.api.AssetProcessor;
+import motherlode.buildingblocks.MotherlodeModule;
+import motherlode.buildingblocks.block.stateproperty.BlockDyeColor;
+import com.google.common.collect.Maps;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class PaintableWallBlock extends Block implements AssetProcessor {
-
     public static final EnumProperty<BlockDyeColor> SIDE_A_COLOR;
     public static final EnumProperty<BlockDyeColor> SIDE_B_COLOR;
     public static final IntProperty VARIANT;
@@ -39,17 +38,17 @@ public class PaintableWallBlock extends Block implements AssetProcessor {
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(player.getStackInHand(hand).getItem() instanceof DyeItem) {
-            BlockDyeColor color = BlockDyeColor.fromDyeColor(((DyeItem)player.getStackInHand(hand).getItem()).getColor());
+        if (player.getStackInHand(hand).getItem() instanceof DyeItem) {
+            BlockDyeColor color = BlockDyeColor.fromDyeColor(((DyeItem) player.getStackInHand(hand).getItem()).getColor());
             Pair<Direction, Direction> sides = VARIANT_TO_DIRECTIONS.get(world.getBlockState(pos).get(VARIANT));
             Direction dir = hit.getSide();
-            if(sides.getLeft() == dir) {
+            if (sides.getLeft() == dir) {
                 world.setBlockState(pos, world.getBlockState(pos).with(SIDE_A_COLOR, color));
-                if(!player.isCreative()) player.getStackInHand(hand).decrement(1);
+                if (!player.isCreative()) player.getStackInHand(hand).decrement(1);
                 return ActionResult.SUCCESS;
-            } else if(sides.getRight() == dir) {
+            } else if (sides.getRight() == dir) {
                 world.setBlockState(pos, world.getBlockState(pos).with(SIDE_B_COLOR, color));
-                if(!player.isCreative()) player.getStackInHand(hand).decrement(1);
+                if (!player.isCreative()) player.getStackInHand(hand).decrement(1);
                 return ActionResult.SUCCESS;
             }
         }
@@ -65,32 +64,32 @@ public class PaintableWallBlock extends Block implements AssetProcessor {
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
 
         pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_base"), model -> model
-          .parent(new Identifier("block/cube_all"))
-          .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_side"))
+            .parent(new Identifier("block/cube_all"))
+            .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_side"))
         );
-        for (BlockDyeColor color: BlockDyeColor.values()) {
+        for (BlockDyeColor color : BlockDyeColor.values()) {
             pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_" + color.asString()), model -> model
-              .parent(Motherlode.id(MotherlodeModule.MODID, "block/paintable_face"))
-              .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))
+                .parent(Motherlode.id(MotherlodeModule.MODID, "block/paintable_face"))
+                .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))
             );
         }
         pack.addBlockState(id, builder -> {
-              builder.multipartCase(cases -> cases.apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_base"))));
-              for (BlockDyeColor color : BlockDyeColor.values()) {
-                  builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))));
-                  builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(180)));
-                  builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(90)));
-                  builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(270)));
-                  builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))));
-                  builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(270)));
-                  builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))));
-                  builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(90)));
-                  builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(180)));
-                  builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(90)));
-                  builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(180)));
-                  builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(270)));
-              }
-          }
+                builder.multipartCase(cases -> cases.apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_base"))));
+                for (BlockDyeColor color : BlockDyeColor.values()) {
+                    builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))));
+                    builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "0").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(180)));
+                    builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(90)));
+                    builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "1").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(270)));
+                    builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))));
+                    builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "2").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(270)));
+                    builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))));
+                    builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "3").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(90)));
+                    builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(180)));
+                    builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "4").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(90)));
+                    builder.multipartCase(cases -> cases.when("side_a", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(180)));
+                    builder.multipartCase(cases -> cases.when("side_b", color.asString()).when("variant", "5").apply(variant -> variant.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString())).rotationY(270)));
+                }
+            }
         );
     }
 

@@ -1,11 +1,11 @@
 package motherlode.orestoolsarmor.item;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class DefaultGemItem extends Item implements DataProcessor {
     private final int color;

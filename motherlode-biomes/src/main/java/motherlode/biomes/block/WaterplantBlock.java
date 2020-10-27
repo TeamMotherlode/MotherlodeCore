@@ -1,5 +1,6 @@
 package motherlode.biomes.block;
 
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -16,7 +17,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import java.util.Random;
 
 public class WaterplantBlock extends Block {
 
@@ -36,7 +36,7 @@ public class WaterplantBlock extends Block {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
-        if(world.getFluidState(pos.up()).getFluid() != Fluids.EMPTY || world.getBlockState(pos.up()).isSideSolidFullSquare(world, pos, Direction.DOWN)) {
+        if (world.getFluidState(pos.up()).getFluid() != Fluids.EMPTY || world.getBlockState(pos.up()).isSideSolidFullSquare(world, pos, Direction.DOWN)) {
             world.breakBlock(pos, true);
         }
     }
@@ -48,8 +48,8 @@ public class WaterplantBlock extends Block {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if(state.get(SOLID)) {
-            if(context.isAbove(SHAPE, pos, true)) {
+        if (state.get(SOLID)) {
+            if (context.isAbove(SHAPE, pos, true)) {
                 return SHAPE;
             } else return VoxelShapes.empty();
         } else return VoxelShapes.empty();
@@ -57,7 +57,7 @@ public class WaterplantBlock extends Block {
 
     @Override
     public void onSteppedOn(World world, BlockPos pos, Entity entity) {
-        if(world.getBlockState(pos).get(SOLID)) {
+        if (world.getBlockState(pos).get(SOLID)) {
             world.getBlockTickScheduler().schedule(pos, this, 10);
         }
     }
@@ -65,7 +65,7 @@ public class WaterplantBlock extends Block {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.scheduledTick(state, world, pos, random);
-        if(world.getBlockState(pos).get(SOLID)) {
+        if (world.getBlockState(pos).get(SOLID)) {
             world.getBlockTickScheduler().schedule(pos, this, 100);
         }
         world.setBlockState(pos, world.getBlockState(pos).with(SOLID, !world.getBlockState(pos).get(SOLID)));

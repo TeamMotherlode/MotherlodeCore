@@ -1,6 +1,6 @@
 package motherlode.biomes.block;
 
-import com.google.common.collect.Maps;
+import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -15,8 +15,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-
-import java.util.Map;
+import com.google.common.collect.Maps;
 
 public class MossBlock extends Block {
     public static final DirectionProperty SIDE;
@@ -46,7 +45,7 @@ public class MossBlock extends Block {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
-        if(!canPlaceAt(state, world, pos)) {
+        if (!canPlaceAt(state, world, pos)) {
             world.breakBlock(pos, true);
         }
     }

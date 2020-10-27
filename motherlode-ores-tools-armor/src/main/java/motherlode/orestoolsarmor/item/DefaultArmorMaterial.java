@@ -6,7 +6,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 
 public class DefaultArmorMaterial implements ArmorMaterial {
-    private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
+    private static final int[] BASE_DURABILITY = new int[] {13, 15, 16, 11};
 
     private final String name;
     private final int[] protection;
@@ -28,7 +28,6 @@ public class DefaultArmorMaterial implements ArmorMaterial {
         this.equipSound = equipSound;
     }
 
-
     @Override
     public int getDurability(EquipmentSlot slot) {
         return BASE_DURABILITY[slot.getEntitySlotId()] * this.durabilityMultiplier;
@@ -40,20 +39,32 @@ public class DefaultArmorMaterial implements ArmorMaterial {
     }
 
     @Override
-    public int getEnchantability() { return enchantability; }
+    public int getEnchantability() {
+        return enchantability;
+    }
 
     @Override
-    public SoundEvent getEquipSound() { return equipSound; }
+    public SoundEvent getEquipSound() {
+        return equipSound;
+    }
 
     @Override
-    public Ingredient getRepairIngredient() { return repairIngredient; }
+    public Ingredient getRepairIngredient() {
+        return repairIngredient;
+    }
 
     @Override
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     @Override
-    public float getToughness() { return toughness; }
+    public float getToughness() {
+        return toughness;
+    }
 
     @Override
-    public float getKnockbackResistance() { return knockbackResistance; }
+    public float getKnockbackResistance() {
+        return knockbackResistance;
+    }
 }

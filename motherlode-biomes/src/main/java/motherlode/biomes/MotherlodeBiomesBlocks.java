@@ -1,16 +1,5 @@
 package motherlode.biomes;
 
-import motherlode.base.CommonAssets;
-import motherlode.base.CommonData;
-import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.DataProcessor;
-import motherlode.base.api.Processor;
-import motherlode.base.api.Registerable;
-import motherlode.biomes.block.*;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.color.world.BiomeColors;
@@ -20,14 +9,30 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import motherlode.base.CommonAssets;
+import motherlode.base.CommonData;
+import motherlode.base.Motherlode;
+import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.DataProcessor;
+import motherlode.base.api.Processor;
+import motherlode.base.api.Registerable;
+import motherlode.biomes.block.DefaultPlantBlock;
+import motherlode.biomes.block.MossBlock;
+import motherlode.biomes.block.ReedsBlock;
+import motherlode.biomes.block.ShovelableBlock;
+import motherlode.biomes.block.WaterplantBlock;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class MotherlodeBiomesBlocks {
 
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.DECORATIONS);
-    private static final Processor<Block> CUTOUT_RENDER_LAYER = block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());;
+    private static final Processor<Block> CUTOUT_RENDER_LAYER = block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+
     private static final Processor<Block> PLANT = CUTOUT_RENDER_LAYER.andThen(block -> {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-          BiomeColors.getGrassColor(world, pos), block);
+            BiomeColors.getGrassColor(world, pos), block);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getSpruceColor(), block);
     });
 
@@ -64,12 +69,12 @@ public class MotherlodeBiomesBlocks {
     private static Block register(String name, Block block, AssetProcessor assets, DataProcessor data, Processor<Block> p) {
 
         return Motherlode.register(
-          Registerable.block(block, BLOCK_ITEM_SETTINGS),
-          Motherlode.id(MotherlodeModule.MODID, name),
-          block,
-          p,
-          assets,
-          data
+            Registerable.block(block, BLOCK_ITEM_SETTINGS),
+            Motherlode.id(MotherlodeModule.MODID, name),
+            block,
+            p,
+            assets,
+            data
         );
     }
 
@@ -78,8 +83,8 @@ public class MotherlodeBiomesBlocks {
         return (pack, id) -> {
 
             pack.addItemModel(id, state -> state
-                    .parent(new Identifier("item/generated"))
-                    .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + textureName))
+                .parent(new Identifier("item/generated"))
+                .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + textureName))
             );
         };
     }

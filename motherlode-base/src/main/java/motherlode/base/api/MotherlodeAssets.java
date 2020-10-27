@@ -1,12 +1,11 @@
 package motherlode.base.api;
 
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 
 public class MotherlodeAssets {
-
     private static final List<Pair<Identifier, AssetProcessor>> ASSET_PROCESSORS = new ArrayList<>();
 
     public static void addAssets(Identifier id, AssetProcessor p) {

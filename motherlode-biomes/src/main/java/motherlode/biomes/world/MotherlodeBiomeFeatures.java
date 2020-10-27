@@ -1,9 +1,5 @@
 package motherlode.biomes.world;
 
-import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeModule;
-import motherlode.biomes.world.feature.MarshFeature;
-import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -12,6 +8,10 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
+import motherlode.base.Motherlode;
+import motherlode.biomes.MotherlodeModule;
+import motherlode.biomes.world.feature.MarshFeature;
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 
 /**
  * @author Indigo Amann
@@ -32,6 +32,7 @@ public class MotherlodeBiomeFeatures {
     public static <C extends SurfaceConfig, F extends SurfaceBuilder<C>> F register(String name, F surfaceBuilder) {
         return Registry.register(Registry.SURFACE_BUILDER, Motherlode.id(MotherlodeModule.MODID, name), surfaceBuilder);
     }
+
     public static void addToBiome(Biome biome) {
         /* Category category = biome.getCategory();
         if (category == Category.PLAINS || category == Category.FOREST || category == Category.SAVANNA || category == Category.SWAMP || category == Category.TAIGA || category == Category.EXTREME_HILLS || category == Category.JUNGLE) {

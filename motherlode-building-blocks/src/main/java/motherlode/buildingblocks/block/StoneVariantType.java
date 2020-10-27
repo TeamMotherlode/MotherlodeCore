@@ -1,6 +1,22 @@
 package motherlode.buildingblocks.block;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Material;
+import net.minecraft.block.PillarBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import net.minecraft.util.registry.Registry;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
@@ -8,21 +24,9 @@ import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.DataProcessor;
 import motherlode.base.api.RegisterableVariantType;
 import motherlode.buildingblocks.MotherlodeModule;
-import net.minecraft.block.*;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class StoneVariantType implements RegisterableVariantType<Block>, AssetProcessor, DataProcessor {
-
     private static final List<String> IGNORE = new ArrayList<>();
     private static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
 
@@ -59,7 +63,6 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
     }
 
     private StoneVariantType(String id, boolean newStoneType, boolean polished, boolean pillar, boolean rubble, Block baseBlock, Block polishedBlock, Block bricksBlock) {
-
         ID = id;
         BASE = baseBlock != null ? baseBlock : newStoneType ? get() : Registry.BLOCK.get(new Identifier(id));
         this.newBase = newStoneType && baseBlock == null;
@@ -75,7 +78,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         TILES_SMALL = get();
 
         ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id), BASE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID,  "polished_" + id), POLISHED));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, "polished_" + id), POLISHED));
         ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks"), BRICKS));
         if (newStoneType) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_cobble"), COBBLE));
         if (rubble) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_rubble"), RUBBLE));
@@ -109,7 +112,6 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
             }
         }
 
-
         Map<Identifier, Block> carved = new HashMap<>();
         for (char variant = 'a'; variant < 'z'; variant++) {
             String carvedId = id + "_carved_" + variant;
@@ -131,20 +133,18 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
 
     @Override
     public void register(Identifier id) {
+        for (Pair<Identifier, Block> entry : ALL) {
 
-        for(Pair<Identifier, Block> entry: ALL) {
-
-            if(entry.getRight() == null) continue;
-            if(entry.getRight() == BASE && !newBase) continue;
-            if(entry.getRight() == BRICKS && !newBricks) continue;
-            if(entry.getRight() == POLISHED && !newPolished) continue;
+            if (entry.getRight() == null) continue;
+            if (entry.getRight() == BASE && !newBase) continue;
+            if (entry.getRight() == BRICKS && !newBricks) continue;
+            if (entry.getRight() == POLISHED && !newPolished) continue;
 
             register(entry.getLeft(), entry.getRight());
         }
     }
 
     private static void register(Identifier id, Block block) {
-
         Registry.register(Registry.BLOCK, id, block);
         Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
     }
@@ -155,49 +155,40 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier identifier) {
-
-        for(Pair<Identifier, Block> entry: ALL) {
-
-            if(STAIRS.containsValue(entry.getRight()) || SLABS.containsValue(entry.getRight())) continue;
+        for (Pair<Identifier, Block> entry : ALL) {
+            if (STAIRS.containsValue(entry.getRight()) || SLABS.containsValue(entry.getRight())) continue;
 
             CommonAssets.BLOCK_ITEM.accept(pack, entry.getLeft());
 
-            if(PILLAR != entry.getRight()) {
+            if (PILLAR != entry.getRight()) {
 
                 block.accept(pack, entry.getLeft());
-            }
-            else {
-
+            } else {
                 CommonAssets.PILLAR.accept(pack, entry.getLeft());
             }
         }
 
-        for(Map.Entry<Block, Block> entry: STAIRS.entrySet()) {
-
+        for (Map.Entry<Block, Block> entry : STAIRS.entrySet()) {
             stair.accept(pack, Registry.BLOCK.getId(entry.getValue()));
         }
-        for(Map.Entry<Block, Block> entry: SLABS.entrySet()) {
-
+        for (Map.Entry<Block, Block> entry : SLABS.entrySet()) {
             slab.accept(pack, Registry.BLOCK.getId(entry.getValue()));
         }
     }
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier identifier) {
-
-        for(Pair<Identifier, Block> entry: ALL) {
-
-            if(entry.getRight() == null) continue;
-            if(entry.getRight() == BASE && !newBase) continue;
-            if(entry.getRight() == BRICKS && !newBricks) continue;
-            if(entry.getRight() == POLISHED && !newPolished) continue;
+        for (Pair<Identifier, Block> entry : ALL) {
+            if (entry.getRight() == null) continue;
+            if (entry.getRight() == BASE && !newBase) continue;
+            if (entry.getRight() == BRICKS && !newBricks) continue;
+            if (entry.getRight() == POLISHED && !newPolished) continue;
 
             CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, entry.getLeft());
         }
     }
 
     public String getId() {
-
         return ID;
     }
 
@@ -214,7 +205,6 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
     }
 
     private static Block get() {
-
         return new Block(BLOCK_SETTINGS);
     }
 

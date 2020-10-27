@@ -1,7 +1,7 @@
 package motherlode.biomes.world;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import motherlode.biomes.MotherlodeBiomesBlocks;
+import java.awt.Color;
+import java.util.Random;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.world.biome.Biome;
@@ -19,11 +19,10 @@ import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
-import java.awt.*;
-import java.util.Random;
+import motherlode.biomes.MotherlodeBiomesBlocks;
+import com.mojang.blaze3d.platform.GlStateManager;
 
 public class RuinedFlatsBiome {
-
     private static final SimplexNoiseSampler samplerA = new SimplexNoiseSampler(new Random(8086));
     private static final SimplexNoiseSampler samplerB = new SimplexNoiseSampler(new Random(2024));
     private static final SimplexNoiseSampler samplerC = new SimplexNoiseSampler(new Random(1492));
@@ -48,24 +47,24 @@ public class RuinedFlatsBiome {
         DefaultBiomeFeatures.addMossyRocks(builder2);
 
         return new Biome.Builder()
-          .precipitation(Biome.Precipitation.RAIN)
-          .category(Biome.Category.NONE)
-          .depth(0.125F)
-          .scale(0.02F)
-          .temperature(0.8F)
-          .downfall(0.4F)
-          .effects(
-            new BiomeEffects.Builder()
-              .grassColor(0x73bd53)
-              .waterColor(0x003b4d)
-              .waterFogColor(0x002230)
-              .fogColor(0x8294ad)
-              .skyColor(0x8294ad)
-              .moodSound(BiomeMoodSound.CAVE)
-              .build())
-          .spawnSettings(builder.build())
-          .generationSettings(builder2.build())
-          .build();
+            .precipitation(Biome.Precipitation.RAIN)
+            .category(Biome.Category.NONE)
+            .depth(0.125F)
+            .scale(0.02F)
+            .temperature(0.8F)
+            .downfall(0.4F)
+            .effects(
+                new BiomeEffects.Builder()
+                    .grassColor(0x73bd53)
+                    .waterColor(0x003b4d)
+                    .waterFogColor(0x002230)
+                    .fogColor(0x8294ad)
+                    .skyColor(0x8294ad)
+                    .moodSound(BiomeMoodSound.CAVE)
+                    .build())
+            .spawnSettings(builder.build())
+            .generationSettings(builder2.build())
+            .build();
     }
 
     public int getGrassColorAt(double x, double z) {

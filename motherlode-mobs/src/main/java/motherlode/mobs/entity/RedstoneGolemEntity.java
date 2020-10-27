@@ -2,7 +2,12 @@ package motherlode.mobs.entity;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.entity.ai.goal.WanderAroundGoal;
+import net.minecraft.entity.ai.goal.WanderNearTargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
@@ -12,7 +17,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 public class RedstoneGolemEntity extends GolemEntity {
-
     public RedstoneGolemEntity(EntityType<? extends GolemEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -24,11 +28,12 @@ public class RedstoneGolemEntity extends GolemEntity {
         this.goalSelector.add(7, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new FollowTargetGoal<>(this, LivingEntity.class, 3, false, false,
-          livingEntity -> livingEntity instanceof PlayerEntity || livingEntity instanceof Monster));
+            livingEntity -> livingEntity instanceof PlayerEntity || livingEntity instanceof Monster));
     }
+
     public static DefaultAttributeContainer.Builder createRedstoneGolemAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30D)
-          .add(EntityAttributes.GENERIC_ARMOR, 6.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.5D);
+            .add(EntityAttributes.GENERIC_ARMOR, 6.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.5D);
     }
 
     public boolean canTarget(EntityType<?> type) {

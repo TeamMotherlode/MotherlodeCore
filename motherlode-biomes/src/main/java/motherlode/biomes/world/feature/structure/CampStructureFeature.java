@@ -1,8 +1,8 @@
 package motherlode.biomes.world.feature.structure;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.world.gen.feature.JigsawFeature;
 import net.minecraft.world.gen.feature.StructurePoolFeatureConfig;
+import com.mojang.serialization.Codec;
 
 public class CampStructureFeature extends JigsawFeature {
 

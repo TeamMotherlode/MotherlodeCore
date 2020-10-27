@@ -1,5 +1,7 @@
 package motherlode.orestoolsarmor;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
@@ -9,11 +11,8 @@ import motherlode.orestoolsarmor.item.DefaultGemItem;
 import motherlode.orestoolsarmor.item.IngotItem;
 import motherlode.orestoolsarmor.item.MotherlodeMaterials;
 import motherlode.orestoolsarmor.item.ToolArmorVariantType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 
 public class MotherlodeOresToolsArmorItems {
-
     private static final Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final Item COPPER_INGOT = register("copper_ingot", new IngotItem(SETTINGS));
@@ -46,34 +45,34 @@ public class MotherlodeOresToolsArmorItems {
     public static Item register(String name) {
         Item item = new Item(SETTINGS);
         return Motherlode.register(
-                Registerable.item(item),
-                Motherlode.id(MotherlodeModule.MODID, name),
-                item,
-                null,
-                CommonAssets.DEFAULT_ITEM_MODEL,
-                null
+            Registerable.item(item),
+            Motherlode.id(MotherlodeModule.MODID, name),
+            item,
+            null,
+            CommonAssets.DEFAULT_ITEM_MODEL,
+            null
         );
     }
 
     public static Item register(String name, Item item) {
         return Motherlode.register(
-                Registerable.item(item),
-                Motherlode.id(MotherlodeModule.MODID, name),
-                item,
-                null,
-                CommonAssets.DEFAULT_ITEM_MODEL,
-                item instanceof DataProcessor? (DataProcessor) item : null
+            Registerable.item(item),
+            Motherlode.id(MotherlodeModule.MODID, name),
+            item,
+            null,
+            CommonAssets.DEFAULT_ITEM_MODEL,
+            item instanceof DataProcessor ? (DataProcessor) item : null
         );
     }
 
-    public static<T extends Registerable<? super Item> & AssetProcessor & DataProcessor> T register(String name, T item) {
+    public static <T extends Registerable<? super Item> & AssetProcessor & DataProcessor> T register(String name, T item) {
         return Motherlode.register(
-                item,
-                Motherlode.id(MotherlodeModule.MODID, name),
-                item,
-                null,
-                item,
-                item
+            item,
+            Motherlode.id(MotherlodeModule.MODID, name),
+            item,
+            null,
+            item,
+            item
         );
     }
 

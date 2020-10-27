@@ -1,11 +1,11 @@
 package motherlode.mobs.model;
 
-import motherlode.mobs.entity.LizardEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
+import motherlode.mobs.entity.LizardEntity;
 
 public class LizardModel extends EntityModel<LizardEntity> {
     private final ModelPart body;
@@ -69,13 +69,13 @@ public class LizardModel extends EntityModel<LizardEntity> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-//        //body.render(matrixStack, buffer, packedLight, packedOverlay);
-//        leg_front_left.render(matrixStack, buffer, packedLight, packedOverlay);
-//        //head.render(matrixStack, buffer, packedLight, packedOverlay);
-//        leg_front_right.render(matrixStack, buffer, packedLight, packedOverlay);
-//        leg_back_left.render(matrixStack, buffer, packedLight, packedOverlay);
-//        leg_back_right.render(matrixStack, buffer, packedLight, packedOverlay);
+    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        // body.render(matrixStack, buffer, packedLight, packedOverlay);
+        // leg_front_left.render(matrixStack, buffer, packedLight, packedOverlay);
+        // head.render(matrixStack, buffer, packedLight, packedOverlay);
+        // leg_front_right.render(matrixStack, buffer, packedLight, packedOverlay);
+        // leg_back_left.render(matrixStack, buffer, packedLight, packedOverlay);
+        // leg_back_right.render(matrixStack, buffer, packedLight, packedOverlay);
     }
 
     public void setRotationAngle(ModelPart modelRenderer, float x, float y, float z) {
@@ -83,5 +83,4 @@ public class LizardModel extends EntityModel<LizardEntity> {
         modelRenderer.yaw = y;
         modelRenderer.roll = z;
     }
-
 }

@@ -1,6 +1,10 @@
 package motherlode.biomes.block;
 
-import net.minecraft.block.*;
+import java.util.Random;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -18,8 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
-import java.util.Random;
-
 public class ReedsBlock extends Block implements Waterloggable {
 
     public static final EnumProperty<Type> TYPE;
@@ -31,7 +33,7 @@ public class ReedsBlock extends Block implements Waterloggable {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        if(ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER) {
+        if (ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER) {
             return getDefaultState().with(TYPE, Type.WATERLOGGED);
         }
         return super.getPlacementState(ctx);
@@ -45,16 +47,16 @@ public class ReedsBlock extends Block implements Waterloggable {
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Block b = world.getBlockState(pos.down()).getBlock();
-        return (b == Blocks.GRASS_BLOCK || b == Blocks.DIRT || b == Blocks.COARSE_DIRT || b == Blocks.SAND || b == Blocks.CLAY) &&
-                ((b instanceof Waterloggable && world.getBlockState(pos.down()).get(Properties.WATERLOGGED)) ||
-                        world.getFluidState(pos).getFluid() == Fluids.WATER ||
-                            isWaterNeighboring(world, pos.down()));
+        return (b == Blocks.GRASS_BLOCK || b == Blocks.DIRT || b == Blocks.COARSE_DIRT || b == Blocks.SAND || b == Blocks.CLAY)
+            && ((b instanceof Waterloggable && world.getBlockState(pos.down()).get(Properties.WATERLOGGED))
+            || world.getFluidState(pos).getFluid() == Fluids.WATER
+            || isWaterNeighboring(world, pos.down()));
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(player.getStackInHand(hand).getItem() == Items.BONE_MEAL) {
-            if(!world.isClient && new Random().nextInt(3) == 1) {
+        if (player.getStackInHand(hand).getItem() == Items.BONE_MEAL) {
+            if (!world.isClient && new Random().nextInt(3) == 1) {
                 if (state.get(TYPE) == Type.WATERLOGGED && world.getBlockState(pos.up()).isAir()) {
                     world.setBlockState(pos, getDefaultState().with(TYPE, Type.BOTTOM));
                     world.setBlockState(pos.up(), getDefaultState().with(TYPE, Type.TOP));
@@ -66,7 +68,7 @@ public class ReedsBlock extends Block implements Waterloggable {
                     world.setBlockState(pos.up(), getDefaultState().with(TYPE, Type.TOP));
                 }
             }
-            if(!player.isCreative()) player.getStackInHand(hand).decrement(1);
+            if (!player.isCreative()) player.getStackInHand(hand).decrement(1);
             world.syncWorldEvent(2005, pos, 0);
             return ActionResult.SUCCESS;
         }
@@ -87,23 +89,24 @@ public class ReedsBlock extends Block implements Waterloggable {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.scheduledTick(state, world, pos, random);
         boolean brk = false;
-        if(state.get(TYPE) == Type.BOTTOM || state.get(TYPE) == Type.SINGLE || state.get(TYPE) == Type.WATERLOGGED) {
-            if(!canPlaceAt(state, world, pos)) brk = true;
+        if (state.get(TYPE) == Type.BOTTOM || state.get(TYPE) == Type.SINGLE || state.get(TYPE) == Type.WATERLOGGED) {
+            if (!canPlaceAt(state, world, pos)) brk = true;
         }
-        if(state.get(TYPE) == Type.BOTTOM && (world.getBlockState(pos.up()) != getDefaultState().with(TYPE, Type.TOP) && world.getBlockState(pos.up()) != getDefaultState().with(TYPE, Type.MIDDLE))){
+        if (state.get(TYPE) == Type.BOTTOM && (world.getBlockState(pos.up()) != getDefaultState().with(TYPE, Type.TOP) && world.getBlockState(pos.up()) != getDefaultState().with(TYPE, Type.MIDDLE))) {
             brk = true;
-        } else if(state.get(TYPE) == Type.MIDDLE && (world.getBlockState(pos.up()) != getDefaultState().with(TYPE, Type.TOP) || world.getBlockState(pos.down()) != getDefaultState().with(TYPE, Type.BOTTOM))) {
+        } else if (state.get(TYPE) == Type.MIDDLE && (world.getBlockState(pos.up()) != getDefaultState().with(TYPE, Type.TOP) || world.getBlockState(pos.down()) != getDefaultState().with(TYPE, Type.BOTTOM))) {
             brk = true;
-        } else if(state.get(TYPE) == Type.TOP && (world.getBlockState(pos.down()) != getDefaultState().with(TYPE, Type.BOTTOM) && world.getBlockState(pos.down()) != getDefaultState().with(TYPE, Type.MIDDLE))) brk = true;
-        if(brk) world.breakBlock(pos, true);
+        } else if (state.get(TYPE) == Type.TOP && (world.getBlockState(pos.down()) != getDefaultState().with(TYPE, Type.BOTTOM) && world.getBlockState(pos.down()) != getDefaultState().with(TYPE, Type.MIDDLE)))
+            brk = true;
+        if (brk) world.breakBlock(pos, true);
     }
 
     private static boolean isWaterNeighboring(WorldView world, BlockPos pos) {
         boolean b = false;
-        if(world.getFluidState(pos.north()).getFluid() == Fluids.WATER) b = true;
-        else if(world.getFluidState(pos.south()).getFluid() == Fluids.WATER) b = true;
-        else if(world.getFluidState(pos.east()).getFluid() == Fluids.WATER) b = true;
-        else if(world.getFluidState(pos.west()).getFluid() == Fluids.WATER) b = true;
+        if (world.getFluidState(pos.north()).getFluid() == Fluids.WATER) b = true;
+        else if (world.getFluidState(pos.south()).getFluid() == Fluids.WATER) b = true;
+        else if (world.getFluidState(pos.east()).getFluid() == Fluids.WATER) b = true;
+        else if (world.getFluidState(pos.west()).getFluid() == Fluids.WATER) b = true;
         return b;
     }
 
@@ -119,7 +122,10 @@ public class ReedsBlock extends Block implements Waterloggable {
         TOP("top");
 
         String id;
-        Type(String id) { this.id = id; }
+
+        Type(String id) {
+            this.id = id;
+        }
 
         @Override
         public String asString() {

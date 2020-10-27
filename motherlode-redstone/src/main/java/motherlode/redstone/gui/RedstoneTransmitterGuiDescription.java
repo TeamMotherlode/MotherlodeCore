@@ -1,22 +1,22 @@
 package motherlode.redstone.gui;
 
-import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WItemSlot;
-import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
-import io.github.cottonmc.cotton.gui.widget.WSprite;
-import motherlode.base.Motherlode;
-import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
-import motherlode.orestoolsarmor.item.DefaultGemItem;
-import motherlode.redstone.MotherlodeModule;
-import motherlode.redstone.MotherlodeRedstoneScreenHandlers;
+import java.util.ArrayList;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.SlotActionType;
-import java.util.ArrayList;
+import motherlode.base.Motherlode;
+import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
+import motherlode.orestoolsarmor.item.DefaultGemItem;
+import motherlode.redstone.MotherlodeModule;
+import motherlode.redstone.MotherlodeRedstoneScreenHandlers;
+import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WItemSlot;
+import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
+import io.github.cottonmc.cotton.gui.widget.WSprite;
 
 public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     ArrayList<WSprite> gems = new ArrayList<>();

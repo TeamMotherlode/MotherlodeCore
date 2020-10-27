@@ -6,7 +6,6 @@ import motherlode.biomes.world.MotherlodeStructures;
 import net.fabricmc.api.ModInitializer;
 
 public class MotherlodeModule implements ModInitializer {
-
     public static final String MODID = "motherlode-biomes";
 
     @Override

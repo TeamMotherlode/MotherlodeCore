@@ -33,9 +33,9 @@ public class DefaultPlantBlock extends PlantBlock {
 
     public static boolean isHoldingShovelOrSword(ShapeContext ctx) {
         boolean b = false;
-        for(Item e : Registry.ITEM) {
-            if(e instanceof ShovelItem || e instanceof SwordItem) {
-                if(ctx.isHolding(e)) b = true;
+        for (Item e : Registry.ITEM) {
+            if (e instanceof ShovelItem || e instanceof SwordItem) {
+                if (ctx.isHolding(e)) b = true;
             }
         }
         return b;

@@ -1,5 +1,10 @@
 package motherlode.orestoolsarmor;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Material;
+import net.minecraft.block.MaterialColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
@@ -8,21 +13,15 @@ import motherlode.base.api.Registerable;
 import motherlode.orestoolsarmor.MotherlodeOreBlock.Dimension;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.MaterialColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 
 @SuppressWarnings("unused")
 public class MotherlodeOresToolsArmorBlocks {
-
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
     public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(3, 7, 12, 3, 11, 64, Dimension.OVERWORLD, 1, "copper_ingot"));
     public static final MotherlodeOreBlock SILVER_ORE = register("silver_ore", new MotherlodeOreBlock(2, "silver_ingot"));
     public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(3, Dimension.NETHER, "charite_crystal"));
-    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock( 4, Dimension.NETHER, "echerite_ingot"));
+    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(4, Dimension.NETHER, "echerite_ingot"));
     public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(5, "titanium_ingot"));
     public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(6, "adamantite_ingot"));
     public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(2, "amethyst"));
@@ -49,21 +48,21 @@ public class MotherlodeOresToolsArmorBlocks {
         return new MineralBlock(FabricBlockSettings.of(Material.STONE, MaterialColor.IRON).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel), mineral);
     }
 
-    private static<T extends Block> T register(String name, T block) {
+    private static <T extends Block> T register(String name, T block) {
 
         return Motherlode.register(
-                Registerable.block(block, BLOCK_ITEM_SETTINGS),
-                Motherlode.id(MotherlodeModule.MODID, name),
-                block,
-                null,
-                CommonAssets.DEFAULT_BLOCK,
-                block instanceof DataProcessor? ((DataProcessor) block).andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
-                        : CommonData.DEFAULT_BLOCK_LOOT_TABLE
+            Registerable.block(block, BLOCK_ITEM_SETTINGS),
+            Motherlode.id(MotherlodeModule.MODID, name),
+            block,
+            null,
+            CommonAssets.DEFAULT_BLOCK,
+            block instanceof DataProcessor ? ((DataProcessor) block).andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
+                : CommonData.DEFAULT_BLOCK_LOOT_TABLE
         );
     }
 
     public static void init() {
 
-     // Called to load the class
+        // Called to load the class
     }
 }

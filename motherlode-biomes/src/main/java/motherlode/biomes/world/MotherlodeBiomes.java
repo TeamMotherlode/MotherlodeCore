@@ -1,13 +1,13 @@
 package motherlode.biomes.world;
 
-import motherlode.base.Motherlode;
-import motherlode.biomes.MotherlodeModule;
-import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
-import net.fabricmc.fabric.api.biome.v1.OverworldClimate;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
+import motherlode.base.Motherlode;
+import motherlode.biomes.MotherlodeModule;
+import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
+import net.fabricmc.fabric.api.biome.v1.OverworldClimate;
 
 public class MotherlodeBiomes {
 

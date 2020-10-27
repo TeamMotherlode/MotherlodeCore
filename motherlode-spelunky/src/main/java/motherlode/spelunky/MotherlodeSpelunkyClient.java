@@ -1,19 +1,17 @@
 package motherlode.spelunky;
 
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Identifier;
 import motherlode.spelunky.block.PotBlock;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Identifier;
 
 public class MotherlodeSpelunkyClient implements ClientModInitializer {
-
     @Override
     public void onInitializeClient() {
-
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeSpelunkyBlocks.POT, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeSpelunkyBlocks.ROPE, RenderLayer.getCutout());
 
@@ -30,6 +28,6 @@ public class MotherlodeSpelunkyClient implements ClientModInitializer {
             return Integer.parseInt(tag.getString("pattern")) / 100f;
         });
 
-        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), (itemStack,  world,  entity) -> itemStack.getCount() / 100f);
+        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), (itemStack, world, entity) -> itemStack.getCount() / 100f);
     }
 }

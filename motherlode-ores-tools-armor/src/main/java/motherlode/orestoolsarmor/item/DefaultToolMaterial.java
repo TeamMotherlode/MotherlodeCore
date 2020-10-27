@@ -4,7 +4,6 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
 public class DefaultToolMaterial implements ToolMaterial {
-
     private String name;
     private final int durability, miningLevel, enchantability;
     private final float miningSpeed, attackDamage;
@@ -20,23 +19,37 @@ public class DefaultToolMaterial implements ToolMaterial {
         this.name = name;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     @Override
-    public int getDurability() { return durability; }
+    public int getDurability() {
+        return durability;
+    }
 
     @Override
-    public float getMiningSpeedMultiplier() { return miningSpeed; }
+    public float getMiningSpeedMultiplier() {
+        return miningSpeed;
+    }
 
     @Override
-    public float getAttackDamage() { return attackDamage; }
+    public float getAttackDamage() {
+        return attackDamage;
+    }
 
     @Override
-    public int getMiningLevel() { return miningLevel; }
+    public int getMiningLevel() {
+        return miningLevel;
+    }
 
     @Override
-    public int getEnchantability() { return enchantability; }
+    public int getEnchantability() {
+        return enchantability;
+    }
 
     @Override
-    public Ingredient getRepairIngredient() { return repairIngredient; }
+    public Ingredient getRepairIngredient() {
+        return repairIngredient;
+    }
 }

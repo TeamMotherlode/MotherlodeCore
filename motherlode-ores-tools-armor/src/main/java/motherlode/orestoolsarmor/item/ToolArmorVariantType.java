@@ -1,23 +1,30 @@
 package motherlode.orestoolsarmor.item;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import net.minecraft.util.registry.Registry;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.DataProcessor;
 import motherlode.base.api.RegisterableVariantType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.*;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class ToolArmorVariantType implements RegisterableVariantType<Item>, AssetProcessor, DataProcessor {
-
     public final Item PICKAXE;
     public final Item SWORD;
     public final Item AXE;
@@ -34,7 +41,6 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
     private final List<Pair<Identifier, Item>> ALL = new ArrayList<>();
 
     public ToolArmorVariantType(Identifier id, String material, DefaultToolMaterial toolMaterial, ArmorMaterial armorMaterial) {
-
         this.PICKAXE = new MaterialPickaxe(toolMaterial);
         this.SWORD = new SwordItem(toolMaterial, 3, -2.4F, new Item.Settings().maxCount(1).group(ItemGroup.COMBAT));
         this.AXE = new MaterialAxe(toolMaterial);
@@ -62,7 +68,7 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
     @Override
     public void register(Identifier identifier) {
-        for(Pair<Identifier, Item> entry: ALL) {
+        for (Pair<Identifier, Item> entry : ALL) {
             Registry.register(Registry.ITEM, entry.getLeft(), entry.getRight());
         }
     }
@@ -74,14 +80,14 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
-        for(Pair<Identifier, Item> entry: ALL) {
+        for (Pair<Identifier, Item> entry : ALL) {
             CommonAssets.DEFAULT_ITEM_MODEL.accept(pack, entry.getLeft());
         }
     }
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
-        for(Pair<Identifier, Item> entry: ALL) {
+        for (Pair<Identifier, Item> entry : ALL) {
             CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, entry.getLeft().getPath()))
                 .accept(pack, entry.getLeft());
         }
@@ -91,10 +97,10 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
         // Pickaxe
         pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), recipe -> recipe
-          .pattern("***", " | ", " | ")
-          .ingredientTag('*', material)
-          .ingredientItem('|', stick)
-          .result(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), 1));
+            .pattern("***", " | ", " | ")
+            .ingredientTag('*', material)
+            .ingredientItem('|', stick)
+            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), 1));
 
         // Sword
         pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), recipe -> recipe
@@ -169,19 +175,19 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 }
 
 class MaterialPickaxe extends PickaxeItem {
-    public MaterialPickaxe(DefaultToolMaterial material) {
+    MaterialPickaxe(DefaultToolMaterial material) {
         super(material, 1, -2.8F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
 
 class MaterialAxe extends AxeItem {
-    public MaterialAxe(DefaultToolMaterial material) {
+    MaterialAxe(DefaultToolMaterial material) {
         super(material, 6, -3.1F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
 
 class MaterialHoe extends HoeItem {
-    public MaterialHoe(DefaultToolMaterial material) {
+    MaterialHoe(DefaultToolMaterial material) {
         super(material, -2, -1F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }

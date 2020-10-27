@@ -1,10 +1,10 @@
 package motherlode.mobs.model;
 
-import motherlode.mobs.entity.RedstoneSentryEntity;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import motherlode.mobs.entity.RedstoneSentryEntity;
 
 public class RedstoneSentryModel extends EntityModel<RedstoneSentryEntity> {
     private final ModelPart arm_left;
@@ -33,7 +33,6 @@ public class RedstoneSentryModel extends EntityModel<RedstoneSentryEntity> {
         head.addChild(crystal);
         setRotationAngle(crystal, -0.5236F, 0.0F, 0.0F);
 
-
         leg_right = new ModelPart(this);
         leg_right.setPivot(-5.0F, 14.0F, 1.5F);
         leg_right.setTextureOffset(0, 39).addCuboid(-2.0F, 0.0F, -3.5F, 6.0F, 10.0F, 7.0F, 0.0F, false);
@@ -55,11 +54,10 @@ public class RedstoneSentryModel extends EntityModel<RedstoneSentryEntity> {
 
     @Override
     public void setAngles(RedstoneSentryEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         arm_left.render(matrixStack, buffer, packedLight, packedOverlay);
         head.render(matrixStack, buffer, packedLight, packedOverlay);
         leg_right.render(matrixStack, buffer, packedLight, packedOverlay);
