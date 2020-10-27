@@ -98,7 +98,7 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
         // Sword
         pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), recipe -> recipe
-            .pattern(" * ", "*", "|")
+            .pattern("*", "*", "|")
             .ingredientTag('*', material)
             .ingredientItem('|', stick)
             .result(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), 1));

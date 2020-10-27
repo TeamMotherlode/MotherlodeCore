@@ -3,8 +3,10 @@ package motherlode.mobs.model;
 // Made with Blockbench 3.5.4
 // Exported for Minecraft version 1.15
 
-import motherlode.mobs.entity.ArmadilloEntity;
 import motherlode.mobs.MotherlodeModule;
+import motherlode.mobs.entity.ArmadilloEntity;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.ModelPart;
 import software.bernie.geckolib.animation.model.AnimatedEntityModel;
 import software.bernie.geckolib.animation.render.AnimatedModelRenderer;
 import software.bernie.geckolib.forgetofabric.ResourceLocation;
@@ -23,8 +25,10 @@ public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
     private final AnimatedModelRenderer LegFrontLeft_1;
 
     public ArmadilloModel() {
-        textureWidth = 64;
-        textureHeight = 32;
+        // Doesn't get remapped without this cast
+        ((Model) this).textureWidth = 64;
+        ((Model) this).textureHeight = 32;
+
         Tail = new AnimatedModelRenderer(this);
         Tail.setRotationPoint(0.0F, 19.5F, 9.0F);
         Tail.setTextureOffset(1, 25).addBox(-0.5F, -0.5F, 0.0F, 1.0F, 1.0F, 4.0F, 0.0F, false);
@@ -51,7 +55,7 @@ public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
 
         EarLeft = new AnimatedModelRenderer(this);
         EarLeft.setRotationPoint(-1.0F, -1.0F, -1.0F);
-        Head.addChild(EarLeft);
+        ((ModelPart) Head).addChild(EarLeft);
         setRotationAngle(EarLeft, 0.0F, 0.0F, -0.1707F);
         EarLeft.setTextureOffset(0, 16).addBox(-1.9241F, -1.6737F, 0.0F, 2.0F, 2.0F, 0.0F, 0.0F, false);
         EarLeft.setModelRendererName("EarLeft");
@@ -59,7 +63,7 @@ public class ArmadilloModel extends AnimatedEntityModel<ArmadilloEntity> {
 
         EarRight = new AnimatedModelRenderer(this);
         EarRight.setRotationPoint(1.0F, -1.0F, -1.0F);
-        Head.addChild(EarRight);
+        ((ModelPart) Head).addChild(EarRight);
         setRotationAngle(EarRight, 0.0F, 0.0F, 0.1707F);
         EarRight.setTextureOffset(0, 16).addBox(-0.0759F, -1.6737F, 0.0F, 2.0F, 2.0F, 0.0F, 0.0F, true);
         EarRight.setModelRendererName("EarRight");
