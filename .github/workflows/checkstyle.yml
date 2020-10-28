@@ -1,4 +1,3 @@
----
 name: Checkstyle
 on:
   push:
