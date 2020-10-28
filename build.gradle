@@ -15,12 +15,8 @@ repositories {
 		name = "CottonMC"
 		url = "https://server.bbkr.space/artifactory/libs-release"
 	}
-
+	maven { url 'https://jitpack.io' }
     jcenter()
-
-	maven {
-		url = "https://jitpack.io"
-	}
 }
 
 minecraft {
@@ -38,6 +34,8 @@ dependencies {
 
 	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
 	include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
+
+	modImplementation "com.github.bernie-g:geckolib:fabric-1.16.1-geckolib-2.0.0-beta.5"
 
 	modImplementation "com.github.emilyploszaj:trinkets:2.6.4"
 }
