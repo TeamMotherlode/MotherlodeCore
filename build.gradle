@@ -55,7 +55,7 @@ allprojects {
         from sourceSets.main.allSource
     }
     checkstyle {
-        configFile = rootProject.file("checkstyle.xml")
+        configFile = rootProject.file(".github/linters/sun_checks.xml")
         toolVersion = "8.31"
     }
 }
