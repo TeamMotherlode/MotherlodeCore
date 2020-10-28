@@ -55,7 +55,7 @@ allprojects {
         from sourceSets.main.allSource
     }
     checkstyle {
-        configFile = rootProject.file(".github/linters/sun_config.xml")
+        configFile = rootProject.file("checkstyle.xml")
         toolVersion = "8.31"
     }
 }
@@ -65,7 +65,7 @@ jar {
 dependencies {
     afterEvaluate {
         subprojects.each {
-            compile project(path: ":${it.name}", configuration: "dev")
+            implementation project(path: ":${it.name}", configuration: "dev")
             include it
         }
     }
