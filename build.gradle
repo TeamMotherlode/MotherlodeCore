@@ -21,10 +21,6 @@ repositories {
 	maven {
 		url = "https://jitpack.io"
 	}
-	maven {
-		name = "NerdHubMC"
-		url = "https://maven.abusedmaster.xyz/"
-	}
 }
 
 minecraft {
