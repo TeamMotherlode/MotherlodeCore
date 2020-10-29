@@ -29,8 +29,8 @@ public class RingItem extends TrinketItem {
     public final Qualities[] qualities;
     public float attributeEfficiency;
 
-    public RingItem(Rarity rarity, Qualities... qualities) {
-        super(new Settings().group(Motherlode.ARMOUR_AND_TOOLS). rarity(rarity));
+    public RingItem(Qualities... qualities) {
+        super(new Settings().group(Motherlode.ARMOUR_AND_TOOLS));
         this.qualities = qualities;
     }
 
@@ -45,7 +45,7 @@ public class RingItem extends TrinketItem {
         final List<Qualities> qualityList = Arrays.asList(qualities);
         // Check for certain qualities and set relevant attributes.
         if (qualityList.contains(Qualities.COMMON)) {
-            attributeEfficiency = 1.0f;
+            attributeEfficiency = 1.5f;
         }
         if (qualityList.contains(Qualities.UNCOMMON)) {
             attributeEfficiency = 2.0f;
