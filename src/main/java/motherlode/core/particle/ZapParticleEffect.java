@@ -16,14 +16,14 @@ import net.minecraft.util.registry.Registry;
 import java.util.Locale;
 
 public class ZapParticleEffect implements ParticleEffect {
-    public static final Codec<ZapParticleEffect> CODEC = RecordCodecBuilder.create((instance) ->
-            instance.group(Codec.DOUBLE.fieldOf("sx").forGetter((zapParticleEffect) ->
-            zapParticleEffect.source.x), Codec.DOUBLE.fieldOf("sy").forGetter((zapParticleEffect) ->
-            zapParticleEffect.source.y), Codec.DOUBLE.fieldOf("sz").forGetter((zapParticleEffect) ->
-            zapParticleEffect.source.z), Codec.DOUBLE.fieldOf("tx").forGetter((zapParticleEffect) ->
-            zapParticleEffect.target.x), Codec.DOUBLE.fieldOf("ty").forGetter((zapParticleEffect) ->
-            zapParticleEffect.target.y), Codec.DOUBLE.fieldOf("tz").forGetter((zapParticleEffect) ->
-            zapParticleEffect.target.z)).apply(instance, ZapParticleEffect::new));
+    public static final Codec<ZapParticleEffect> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            Codec.DOUBLE.fieldOf("sx").forGetter((zapParticleEffect) -> zapParticleEffect.source.x),
+            Codec.DOUBLE.fieldOf("sy").forGetter((zapParticleEffect) -> zapParticleEffect.source.y),
+            Codec.DOUBLE.fieldOf("sz").forGetter((zapParticleEffect) -> zapParticleEffect.source.z),
+            Codec.DOUBLE.fieldOf("tx").forGetter((zapParticleEffect) -> zapParticleEffect.target.x),
+            Codec.DOUBLE.fieldOf("ty").forGetter((zapParticleEffect) -> zapParticleEffect.target.y),
+            Codec.DOUBLE.fieldOf("tz").forGetter((zapParticleEffect) -> zapParticleEffect.target.z))
+            .apply(instance, ZapParticleEffect::new));
 
     public static final Factory<ZapParticleEffect> PARAMETERS_FACTORY = new Factory<ZapParticleEffect>() {
 

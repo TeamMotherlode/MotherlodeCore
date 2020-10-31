@@ -95,8 +95,8 @@ public class ZapParticle extends SpriteBillboardParticle {
             linesConsumer.vertex(connection.x, connection.y, connection.z)
                     .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
 
-            vertex = vertex.subtract( 0, 2*THICKNESS, 0 );
-            connection = connection.subtract( 0, 2*THICKNESS, 0 );
+            vertex = vertex.subtract( 0, 2 * THICKNESS, 0 );
+            connection = connection.subtract( 0, 2 * THICKNESS, 0 );
 
             linesConsumer.vertex(vertex.x, vertex.y, vertex.z)
                     .color(ZAP_OUTSIDE_COLOR[0], ZAP_OUTSIDE_COLOR[1], ZAP_OUTSIDE_COLOR[2], ZAP_OUTSIDE_COLOR[3]).next();
