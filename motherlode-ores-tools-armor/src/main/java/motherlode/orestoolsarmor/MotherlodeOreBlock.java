@@ -1,7 +1,8 @@
 package motherlode.orestoolsarmor;
 
+import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
+import java.util.function.Predicate;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
@@ -9,38 +10,46 @@ import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.GenerationSettings;
+import net.minecraft.util.registry.BuiltinRegistries;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
+import motherlode.base.api.Registerable;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationSettings.Builder>, DataProcessor {
+public class MotherlodeOreBlock extends OreBlock implements Registerable<ConfiguredFeature<?, ?>>, DataProcessor {
     private final int minExperience;
     private final int maxExperience;
     private final int veinSize;
     private final int veinsPerChunk;
     private final int minY;
     private final int maxY;
-    private final Dimension dimension;
+    private final Target target;
     private final String mineral;
 
     public MotherlodeOreBlock(int miningLevel, String mineral) {
-        this(miningLevel, Dimension.OVERWORLD, mineral);
+        this(miningLevel, Target.OVERWORLD, mineral);
     }
 
-    public MotherlodeOreBlock(int miningLevel, Dimension dimension, String mineral) {
-        this(0, 0, 8, 1, 0, 50, dimension, miningLevel, mineral);
+    public MotherlodeOreBlock(int miningLevel, Target target, String mineral) {
+        this(0, 0, 8, 1, 0, 50, target, miningLevel, mineral);
     }
 
-    public MotherlodeOreBlock(int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY, Dimension dimension, int miningLevel, String mineral) {
+    public MotherlodeOreBlock(int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY, Target target, int miningLevel, String mineral) {
         super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
 
         this.minExperience = minExperience;
@@ -51,7 +60,7 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationS
         this.minY = minY;
         this.maxY = maxY;
 
-        this.dimension = dimension;
+        this.target = target;
 
         this.mineral = mineral;
     }
@@ -63,10 +72,14 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationS
         return 0;
     }
 
+    public Target getDimension() {
+        return this.target;
+    }
+
     @Override
-    public void accept(GenerationSettings.Builder builder) {
-        builder.feature(dimension.getGenerationStepFeature(), Feature.ORE.configure(
-            new OreFeatureConfig(dimension.getTarget(), getDefaultState(), this.veinSize)).decorate(Decorator.RANGE.configure(
+    public void register(Identifier id) {
+        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, Feature.ORE.configure(
+            new OreFeatureConfig(target.getRuleTest(), getDefaultState(), this.veinSize)).decorate(Decorator.RANGE.configure(
             new RangeDecoratorConfig(this.minY, 0, this.maxY))).repeat(this.veinsPerChunk).spreadHorizontally());
     }
 
@@ -91,35 +104,49 @@ public class MotherlodeOreBlock extends OreBlock implements Consumer<GenerationS
             .cookingTime(100));
     }
 
-    public enum Dimension {
-
+    @SuppressWarnings("deprecation")
+    public enum Target {
         OVERWORLD(
+            Motherlode.id(MotherlodeModule.MODID, "overworld_ores"),
+            BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,
             OreFeatureConfig.Rules.BASE_STONE_OVERWORLD),
         NETHER(
+            Motherlode.id(MotherlodeModule.MODID, "nether_ores"),
+            BiomeSelectors.foundInTheNether(),
             GenerationStep.Feature.UNDERGROUND_DECORATION,
             OreFeatureConfig.Rules.BASE_STONE_NETHER),
         THE_END(
+            Motherlode.id(MotherlodeModule.MODID, "the_end_ores"),
+            BiomeSelectors.foundInTheEnd(),
             GenerationStep.Feature.UNDERGROUND_ORES,
             new BlockMatchRuleTest(Blocks.END_STONE));
 
+        private final Identifier id;
+        private final Predicate<BiomeSelectionContext> biomeSelector;
         private final GenerationStep.Feature feature;
-        private final RuleTest target;
+        private final RuleTest ruleTest;
 
-        Dimension(GenerationStep.Feature feature, RuleTest target) {
-
+        Target(Identifier id, Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature feature, RuleTest ruleTest) {
+            this.id = id;
+            this.biomeSelector = biomeSelector;
             this.feature = feature;
-            this.target = target;
+            this.ruleTest = ruleTest;
         }
 
-        public GenerationStep.Feature getGenerationStepFeature() {
-
-            return this.feature;
+        public RuleTest getRuleTest() {
+            return this.ruleTest;
         }
 
-        public RuleTest getTarget() {
-
-            return this.target;
+        public void addOres(List<Identifier> blocks) {
+            BiomeModifications.create(this.id)
+                .add(ModificationPhase.ADDITIONS, this.biomeSelector, context -> {
+                    for (Identifier id : blocks) {
+                        context.getGenerationSettings().addFeature(this.feature, RegistryKey.of(
+                            Registry.CONFIGURED_FEATURE_WORLDGEN, id)
+                        );
+                    }
+                });
         }
     }
 }

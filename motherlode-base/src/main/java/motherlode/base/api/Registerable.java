@@ -1,5 +1,6 @@
 package motherlode.base.api;
 
+import java.util.Objects;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -10,6 +11,15 @@ import net.minecraft.util.registry.Registry;
 @FunctionalInterface
 public interface Registerable<T> {
     void register(Identifier identifier);
+
+    default Registerable<T> andThen(Registerable<T> after) {
+        Objects.requireNonNull(after);
+
+        return id -> {
+            this.register(id);
+            after.register(id);
+        };
+    }
 
     static <T extends Block> Registerable<T> block(Block block, Item.Settings itemSettings) {
         return id -> {

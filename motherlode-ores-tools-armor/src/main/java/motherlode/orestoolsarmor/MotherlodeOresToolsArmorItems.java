@@ -19,7 +19,7 @@ public class MotherlodeOresToolsArmorItems {
     public static final Item COPPER_NUGGET = register("copper_nugget");
     public static final Item SILVER_INGOT = register("silver_ingot", new IngotItem(SETTINGS));
     public static final Item SILVER_NUGGET = register("silver_nugget");
-    public static final Item CHARITE_INGOT = register("charite_ingot", new IngotItem(SETTINGS, "charite_crystal", false));
+    public static final Item CHARITE_INGOT = register("charite_ingot", new IngotItem(SETTINGS, "crystal", false));
     public static final Item CHARITE_CRYSTAL = register("charite_crystal");
     public static final Item CHARITE_POWDER = register("charite_powder");
     public static final Item ECHERITE_INGOT = register("echerite_ingot", new IngotItem(SETTINGS));
@@ -77,7 +77,6 @@ public class MotherlodeOresToolsArmorItems {
     }
 
     public static void init() {
-
         // Called to load the class
     }
 }
