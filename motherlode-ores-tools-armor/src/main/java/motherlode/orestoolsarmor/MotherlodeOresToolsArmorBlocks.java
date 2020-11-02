@@ -1,42 +1,36 @@
 package motherlode.orestoolsarmor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
+import motherlode.base.api.OreTargets;
 import motherlode.base.api.Registerable;
-import motherlode.orestoolsarmor.MotherlodeOreBlock.Target;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 @SuppressWarnings("unused")
 public class MotherlodeOresToolsArmorBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
-    private static List<Pair<MotherlodeOreBlock, Identifier>> ORES = new ArrayList<>();
 
-    public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(3, 7, 12, 3, 11, 64, Target.OVERWORLD, 1, "copper_ingot"));
+    public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 3, 7, 10, 18, 16, 64, 1, "copper_ingot"));
     public static final MotherlodeOreBlock SILVER_ORE = register("silver_ore", new MotherlodeOreBlock(2, "silver_ingot"));
-    public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(3, Target.NETHER, "charite_ingot"));
-    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(4, Target.NETHER, "echerite_ingot"));
+    public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, "charite_ingot"));
+    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 5, 10, 32, 128, 4, "echerite_ingot"));
     public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(5, "titanium_ingot"));
-    public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(6, Target.NETHER, "adamantite_ingot"));
-    public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(2, "amethyst"));
-    public static final MotherlodeOreBlock HOWLITE_ORE = register("howlite_ore", new MotherlodeOreBlock(2, "howlite"));
-    public static final MotherlodeOreBlock RUBY_ORE = register("ruby_ore", new MotherlodeOreBlock(2, "ruby"));
-    public static final MotherlodeOreBlock SAPPHIRE_ORE = register("sapphire_ore", new MotherlodeOreBlock(2, "sapphire"));
-    public static final MotherlodeOreBlock TOPAZ_ORE = register("topaz_ore", new MotherlodeOreBlock(2, "topaz"));
-    public static final MotherlodeOreBlock ONYX_ORE = register("onyx_ore", new MotherlodeOreBlock(2, "onyx"));
+    public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, 1, 2, 32, 6, "adamantite_ingot"));
+    public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "amethyst"));
+    public static final MotherlodeOreBlock HOWLITE_ORE = register("howlite_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "howlite"));
+    public static final MotherlodeOreBlock RUBY_ORE = register("ruby_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "ruby"));
+    public static final MotherlodeOreBlock SAPPHIRE_ORE = register("sapphire_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "sapphire"));
+    public static final MotherlodeOreBlock TOPAZ_ORE = register("topaz_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "topaz"));
+    public static final MotherlodeOreBlock ONYX_ORE = register("onyx_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "onyx"));
 
     public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1, "copper_ingot"));
     public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2, "silver_ingot"));
@@ -73,10 +67,7 @@ public class MotherlodeOresToolsArmorBlocks {
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             id,
             block,
-            b -> {
-                b.register(id);
-                ORES.add(new Pair<>(b, id));
-            },
+            b -> b.addOre(id),
             CommonAssets.DEFAULT_BLOCK,
             block.andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
         );
@@ -84,14 +75,5 @@ public class MotherlodeOresToolsArmorBlocks {
 
     public static void init() {
         // Called to load the class
-
-        Map<Target, List<Pair<MotherlodeOreBlock, Identifier>>> ores = ORES.stream().collect(Collectors.groupingBy(pair -> pair.getLeft().getDimension()));
-
-        for (Map.Entry<Target, List<Pair<MotherlodeOreBlock, Identifier>>> entry : ores.entrySet()) {
-            entry.getKey().addOres(entry.getValue().stream()
-                .map(Pair::getRight)
-                .collect(Collectors.toList()));
-        }
-        ORES = null;
     }
 }

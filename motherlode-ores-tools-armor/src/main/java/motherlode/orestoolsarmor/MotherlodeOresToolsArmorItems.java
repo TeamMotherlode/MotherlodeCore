@@ -12,6 +12,7 @@ import motherlode.orestoolsarmor.item.IngotItem;
 import motherlode.orestoolsarmor.item.MotherlodeMaterials;
 import motherlode.orestoolsarmor.item.ToolArmorVariantType;
 
+@SuppressWarnings("unused")
 public class MotherlodeOresToolsArmorItems {
     private static final Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 

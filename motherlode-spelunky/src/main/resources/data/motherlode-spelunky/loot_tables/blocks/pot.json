@@ -8,11 +8,11 @@
           "children": [
             {
               "type": "minecraft:item",
-              "name": "motherlode:pot",
+              "name": "motherlode-spelunky:pot",
               "functions": [
                 {
                   "function": "minecraft:copy_state",
-                  "block": "motherlode:pot",
+                  "block": "motherlode-spelunky:pot",
                   "properties": [
                     "pattern",
                     "color"
