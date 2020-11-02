@@ -24,6 +24,7 @@ allprojects {
     }
     configurations {
         dev
+        remapped
     }
     loom {
         shareCaches = true
@@ -40,7 +41,8 @@ allprojects {
             archiveName = "${archivesBaseName}-${version}.jar"
         }
         artifacts {
-            dev file: file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar"), type: "jar", builtBy: remapJar
+            dev file: file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar"), type: "jar", builtBy: jar
+            remapped file: file("${project.buildDir}/libs/$archivesBaseName-${version}.jar"), type: "jar", builtBy: remapJar
         }
         processResources {
             inputs.property "version", project.version
@@ -59,14 +61,25 @@ allprojects {
         toolVersion = "8.31"
     }
 }
+
+task deleteBuildFolderAll {
+    doLast {
+        allprojects {
+            delete it.buildDir
+            mkdir "${it.buildDir}/libs"
+        }
+    }
+}
+build.mustRunAfter(deleteBuildFolderAll)
+
 jar {
     from "LICENSE"
 }
 dependencies {
     afterEvaluate {
         subprojects.each {
-            implementation project(path: ":${it.name}", configuration: "dev")
-            include it
+            implementation project(path: ":${it.path}", configuration: "dev")
+            include project(path: ":${it.path}", configuration: "remapped")
         }
     }
 }
