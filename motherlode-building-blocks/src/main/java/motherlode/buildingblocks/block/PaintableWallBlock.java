@@ -1,7 +1,6 @@
 package motherlode.buildingblocks.block;
 
 import java.util.Map;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
