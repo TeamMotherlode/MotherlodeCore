@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PotionItem.class)
 public class PotionItemMixin extends Item {
-    public PotionItemMixin(Item.Settings settings) {
+    public PotionItemMixin(Settings settings) {
         super(settings);
     }
 

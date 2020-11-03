@@ -10,7 +10,7 @@ import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 public class DefaultGemItem extends Item implements DataProcessor {
     private final int color;
 
-    public DefaultGemItem(int color, Item.Settings settings) {
+    public DefaultGemItem(int color, Settings settings) {
         super(settings);
 
         this.color = color;

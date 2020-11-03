@@ -32,14 +32,14 @@ public class ShovelableBlock extends Block implements AssetProcessor {
     public final boolean isRotatable;
     private final SoundEvent shovelSound;
 
-    public ShovelableBlock(boolean rotatable, SoundEvent shovelSound, AbstractBlock.Settings settings) {
+    public ShovelableBlock(boolean rotatable, SoundEvent shovelSound, Settings settings) {
         super(settings);
         this.setDefaultState(getDefaultState().with(SHOVELED, false));
         this.isRotatable = rotatable;
         this.shovelSound = shovelSound;
     }
 
-    public ShovelableBlock(boolean rotatable, AbstractBlock.Settings settings) {
+    public ShovelableBlock(boolean rotatable, Settings settings) {
         this(rotatable, SoundEvents.ITEM_SHOVEL_FLATTEN, settings);
     }
 

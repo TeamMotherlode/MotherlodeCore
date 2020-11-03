@@ -30,7 +30,7 @@ public class PaintableWallBlock extends Block implements AssetProcessor {
     public static final IntProperty VARIANT;
     private static final Map<Integer, Pair<Direction, Direction>> VARIANT_TO_DIRECTIONS = Maps.newHashMap();
 
-    public PaintableWallBlock(AbstractBlock.Settings settings) {
+    public PaintableWallBlock(Settings settings) {
         super(settings);
         this.setDefaultState(getDefaultState().with(SIDE_A_COLOR, BlockDyeColor.UNCOLORED).with(SIDE_B_COLOR, BlockDyeColor.UNCOLORED).with(VARIANT, 0));
     }

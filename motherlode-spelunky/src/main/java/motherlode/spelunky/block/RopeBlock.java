@@ -38,7 +38,7 @@ public class RopeBlock extends Block {
     private static final VoxelShape HOOK_LONG_SIDE_SHAPE_X = Block.createCuboidShape(2.5, 9.0, 7.0, 13.5, 11.0, 9.0);
     private static final VoxelShape HOOK_LONG_SIDE_SHAPE_Z = Block.createCuboidShape(7.0, 9.0, 2.5, 9.0, 11.0, 13.5);
 
-    public RopeBlock(AbstractBlock.Settings settings) {
+    public RopeBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(CONNECTED, WireConnection.NONE).with(FACING, Direction.NORTH).with(BOTTOM, true));
     }

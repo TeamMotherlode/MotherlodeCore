@@ -29,7 +29,7 @@ public class PotBlock extends Block {
     public static final IntProperty PATTERN = IntProperty.of("pattern", 0, maxPattern);
     public static final EnumProperty<PotColor> COLOR = EnumProperty.of("color", PotColor.class);
 
-    public PotBlock(Block.Settings settings) {
+    public PotBlock(Settings settings) {
         super(settings);
 
         this.shape = POT_SHAPE;

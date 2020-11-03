@@ -176,18 +176,18 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
 class MaterialPickaxe extends PickaxeItem {
     MaterialPickaxe(DefaultToolMaterial material) {
-        super(material, 1, -2.8F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+        super(material, 1, -2.8F, new Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
 
 class MaterialAxe extends AxeItem {
     MaterialAxe(DefaultToolMaterial material) {
-        super(material, 6, -3.1F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+        super(material, 6, -3.1F, new Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
 
 class MaterialHoe extends HoeItem {
     MaterialHoe(DefaultToolMaterial material) {
-        super(material, -2, -1F, new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+        super(material, -2, -1F, new Settings().maxCount(1).group(ItemGroup.TOOLS));
     }
 }
