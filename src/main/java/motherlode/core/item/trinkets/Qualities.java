@@ -8,9 +8,6 @@ import net.minecraft.util.Formatting;
 public enum Qualities {
 
     FAULTY(new TranslatableText("quality.motherlode.faulty").formatted(Formatting.GRAY)),
-    COMMON(new TranslatableText("quality.motherlode.common").formatted(Formatting.LIGHT_PURPLE)),
-    UNCOMMON(new TranslatableText("quality.motherlode.uncommon").formatted(Formatting.DARK_PURPLE)),
-    RARE(new TranslatableText("quality.motherlode.rare").formatted(Formatting.GOLD)),
 
     AQUATIC(new TranslatableText("quality.motherlode.aquatic").formatted(Formatting.AQUA)),
     PROTECTOR(new TranslatableText("quality.motherlode.protector").formatted(Formatting.GREEN)),

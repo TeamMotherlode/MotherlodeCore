@@ -8,8 +8,11 @@ import motherlode.core.item.DefaultGemItem;
 import motherlode.core.item.DefaultItem;
 import motherlode.core.item.DefaultMusicDiscItem;
 import motherlode.core.item.MaterialToolsAndArmor;
+import motherlode.core.item.trinkets.Qualities;
+import motherlode.core.item.trinkets.RingItem;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 public class MotherlodeItems {
@@ -35,6 +38,8 @@ public class MotherlodeItems {
     public static final Item SAPPHIRE = register("sapphire", new DefaultGemItem(0x34A6DA, newSettings()));
     public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, newSettings()));
     public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, newSettings()));
+
+    public static final Item RING_OF_THE_SEA = register("ring_of_the_sea", new RingItem(Rarity.RARE, Qualities.AQUATIC));
 
     public static final MaterialToolsAndArmor COPPER = new MaterialToolsAndArmor(MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR);
     public static final MaterialToolsAndArmor SILVER = new MaterialToolsAndArmor(MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR);

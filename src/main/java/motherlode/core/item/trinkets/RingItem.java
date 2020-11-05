@@ -7,8 +7,6 @@ import dev.emi.trinkets.api.Slots;
 import dev.emi.trinkets.api.TrinketItem;
 import motherlode.core.Motherlode;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -28,15 +26,17 @@ public class RingItem extends TrinketItem {
 
     public final Qualities[] qualities;
     public float attributeEfficiency;
+    public final Rarity rarity;
 
-    public RingItem(Qualities... qualities) {
+    public RingItem(Rarity rarity, Qualities... qualities) {
         super(new Settings().group(Motherlode.ARMOUR_AND_TOOLS));
         this.qualities = qualities;
+        this.rarity = rarity;
     }
 
     @Override
     public boolean canWearInSlot(String group, String slot) {
-        return group.equals(SlotGroups.HAND) && slot.equals(Slots.RING);
+        return group.equals(SlotGroups.OFFHAND) && slot.equals(Slots.RING);
     }
 
     @Override
@@ -44,15 +44,16 @@ public class RingItem extends TrinketItem {
         // Convert qualities to list for checking.
         final List<Qualities> qualityList = Arrays.asList(qualities);
         // Check for certain qualities and set relevant attributes.
-        if (qualityList.contains(Qualities.COMMON)) {
-            attributeEfficiency = 1.5f;
+        if (rarity == Rarity.COMMON) {
+            attributeEfficiency = 1.0f;
         }
-        if (qualityList.contains(Qualities.UNCOMMON)) {
+        if (rarity == Rarity.UNCOMMON) {
             attributeEfficiency = 2.0f;
         }
-        if (qualityList.contains(Qualities.RARE)) {
+        if (rarity == Rarity.RARE) {
             attributeEfficiency = 3.0f;
         }
+
     }
 
     @Override
