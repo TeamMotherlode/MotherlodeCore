@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Entity.class)
 public class EntityMixin {
     @Inject(method = "dealDamage", at = @At("HEAD"))
-    private void dealDamage(LivingEntity attacker, Entity target, CallbackInfo _info) {
+    private void dealDamage(LivingEntity attacker, Entity target, CallbackInfo ci) {
         if (attacker != null && target instanceof LivingEntity && ((LivingEntity) target).hasStatusEffect(MotherlodePotions.THORNS_EFFECT))
             ThornsEffect.apply(attacker, target);
     }

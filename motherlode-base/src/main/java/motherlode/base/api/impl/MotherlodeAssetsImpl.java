@@ -5,38 +5,38 @@ import java.util.List;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.AssetsManager;
 import motherlode.base.api.DataProcessor;
 
-public class MotherlodeAssetsImpl {
-    private static List<Pair<Identifier, AssetProcessor>> ASSET_PROCESSORS = new ArrayList<>();
+public class MotherlodeAssetsImpl implements AssetsManager {
+    public static final MotherlodeAssetsImpl INSTANCE = new MotherlodeAssetsImpl();
 
-    public static void addAssets(Identifier id, AssetProcessor p) {
+    private List<Pair<Identifier, AssetProcessor>> assetProcessors = new ArrayList<>();
+    private List<Pair<Identifier, DataProcessor>> dataProcessors = new ArrayList<>();
 
-        ASSET_PROCESSORS.add(new Pair<>(id, p));
+    @Override
+    public void addAssets(Identifier id, AssetProcessor p) {
+        this.assetProcessors.add(new Pair<>(id, p));
     }
 
-    public static List<Pair<Identifier, AssetProcessor>> getAssets() {
-
-        return ASSET_PROCESSORS;
+    public List<Pair<Identifier, AssetProcessor>> getAssets() {
+        return this.assetProcessors;
     }
 
-    public static void removeAssetProcessorList() {
-        ASSET_PROCESSORS = null;
+    public void removeAssetProcessorList() {
+        this.assetProcessors = null;
     }
 
-    private static List<Pair<Identifier, DataProcessor>> DATA_PROCESSORS = new ArrayList<>();
-
-    public static void addData(Identifier id, DataProcessor p) {
-
-        DATA_PROCESSORS.add(new Pair<>(id, p));
+    @Override
+    public void addData(Identifier id, DataProcessor p) {
+        this.dataProcessors.add(new Pair<>(id, p));
     }
 
-    public static List<Pair<Identifier, DataProcessor>> getData() {
-
-        return DATA_PROCESSORS;
+    public List<Pair<Identifier, DataProcessor>> getData() {
+        return this.dataProcessors;
     }
 
-    public static void removeDataProcessorList() {
-        DATA_PROCESSORS = null;
+    public void removeDataProcessorList() {
+        this.dataProcessors = null;
     }
 }

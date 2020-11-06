@@ -2,6 +2,7 @@ package motherlode.base.api;
 
 import java.util.function.Predicate;
 import net.minecraft.block.Blocks;
+import net.minecraft.structure.rule.AlwaysTrueRuleTest;
 import net.minecraft.structure.rule.BlockMatchRuleTest;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.world.gen.GenerationStep;
@@ -22,7 +23,12 @@ public enum OreTargets implements OreTarget {
     THE_END(
         BiomeSelectors.foundInTheEnd(),
         GenerationStep.Feature.UNDERGROUND_ORES,
-        new BlockMatchRuleTest(Blocks.END_STONE));
+        new BlockMatchRuleTest(Blocks.END_STONE)),
+    DEBUG(
+        BiomeSelectors.all(),
+        GenerationStep.Feature.UNDERGROUND_ORES,
+        AlwaysTrueRuleTest.INSTANCE
+    );
 
     private final Predicate<BiomeSelectionContext> biomeSelector;
     private final GenerationStep.Feature feature;

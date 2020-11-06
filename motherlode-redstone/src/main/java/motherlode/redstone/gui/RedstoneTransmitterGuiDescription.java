@@ -31,7 +31,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WPlainPanel panel = new WPlainPanel();
 
-        WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)));
+        WItemSlot grid = WItemSlot.of(blockInventory, 0, 3, 3).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.method_31573(MotherlodeOresToolsArmorTags.GEMS)));
         panel.add(grid, 36, 22);
 
         WSprite transmitter = new WSprite(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/transmitter_disconnected.png"));
@@ -59,7 +59,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
+                if (blockInventory.getStack(i).method_31573(MotherlodeOresToolsArmorTags.GEMS)) {
                     miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
 
@@ -101,7 +101,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
+                if (blockInventory.getStack(i).method_31573(MotherlodeOresToolsArmorTags.GEMS)) {
                     miniGemsTop.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(Motherlode.id(MotherlodeModule.MODID, "textures/gui/container/white.png"));
 

@@ -15,6 +15,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import motherlode.redstone.DefaultInventory;
 import motherlode.redstone.MotherlodeBlockEntities;
 import motherlode.redstone.gui.RedstoneTransmitterGuiDescription;
@@ -26,12 +27,12 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 public class RedstoneTransmitterBlockEntity extends BlockEntity implements DefaultInventory, BlockEntityClientSerializable, ExtendedScreenHandlerFactory {
     private DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
-    public RedstoneTransmitterBlockEntity() {
-        super(MotherlodeBlockEntities.REDSTONE_TRANSMITTER);
+    public RedstoneTransmitterBlockEntity(BlockPos pos, BlockState state) {
+        super(MotherlodeBlockEntities.REDSTONE_TRANSMITTER, pos, state);
     }
 
-    public <T extends BlockEntity> RedstoneTransmitterBlockEntity(BlockEntityType<T> type) {
-        super(type);
+    public <T extends BlockEntity> RedstoneTransmitterBlockEntity(BlockEntityType<T> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override
@@ -56,14 +57,14 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void fromTag(CompoundTag tag) {
+        super.fromTag(tag);
         Inventories.fromTag(tag, stacks);
     }
 
     @Override
     public void fromClientTag(CompoundTag tag) {
-        fromTag(getCachedState(), tag);
+        fromTag(tag);
     }
 
     @Override

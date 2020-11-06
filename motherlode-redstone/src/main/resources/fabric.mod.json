@@ -3,7 +3,7 @@
   "id": "motherlode-redstone",
   "version": "${version}",
   "name": "Motherlode Redstone",
-  "description": "",
+  "description": "Adds new blocks related to redstone.",
   "authors": [
     "Team Motherlode"
   ],
@@ -30,13 +30,12 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x",
+    "minecraft": "1.17.*",
     "motherlode-base": "*"
   },
   "suggests": {
     "flamingo": "*"
   },
-  "description": "Adds new blocks related to redstone.",
   "custom": {
     "modmenu:parent": "motherlode"
   }

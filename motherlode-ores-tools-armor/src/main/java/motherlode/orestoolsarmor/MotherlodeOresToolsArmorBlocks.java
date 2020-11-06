@@ -6,6 +6,9 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.IntRange;
+import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
@@ -19,10 +22,10 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 public class MotherlodeOresToolsArmorBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
 
-    public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 3, 7, 10, 18, 16, 64, 1, "copper_ingot"));
+    public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, IntRange.between(3, 7), 10, 18, 16, 64, 1, "copper_ingot"));
     public static final MotherlodeOreBlock SILVER_ORE = register("silver_ore", new MotherlodeOreBlock(2, "silver_ingot"));
     public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, "charite_ingot"));
-    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 5, 10, 32, 128, 4, "echerite_ingot"));
+    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 4, f -> f.spreadHorizontally().repeat(3).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(3, 3, 128))).repeat(4), 4, "echerite_ingot"));
     public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(5, "titanium_ingot"));
     public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, 1, 2, 32, 6, "adamantite_ingot"));
     public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "amethyst"));

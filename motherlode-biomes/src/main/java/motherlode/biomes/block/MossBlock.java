@@ -34,7 +34,7 @@ public class MossBlock extends Block {
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return world.getBlockState(pos.offset(state.get(SIDE))).isSideSolidFullSquare(world, pos, state.get(SIDE).getOpposite()) || world.getBlockState(pos.offset(state.get(SIDE))).getBlock().isIn(BlockTags.LEAVES);
+        return world.getBlockState(pos.offset(state.get(SIDE))).isSideSolidFullSquare(world, pos, state.get(SIDE).getOpposite()) || world.getBlockState(pos.offset(state.get(SIDE))).isIn(BlockTags.LEAVES);
     }
 
     @Override

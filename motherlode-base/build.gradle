@@ -1,5 +1,4 @@
 version = "1.0.0+$project.minecraft_version"
 
 dependencies {
-    include "com.lettuce.fudge:artifice:${project.artifice_version}"
 }

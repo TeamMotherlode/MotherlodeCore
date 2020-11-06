@@ -2,6 +2,7 @@ package motherlode.base.api.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
@@ -15,18 +16,27 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import motherlode.base.Motherlode;
+import motherlode.base.api.DataManager;
 import motherlode.base.api.OreTarget;
 import net.fabricmc.fabric.api.biome.v1.BiomeModification;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 
-public class MotherlodeDataImpl {
-    private static List<Pair<OreTarget, RegistryKey<ConfiguredFeature<?, ?>>>> ORES = new ArrayList<>();
+public class MotherlodeDataImpl implements DataManager {
+    public static final MotherlodeDataImpl INSTANCE = new MotherlodeDataImpl();
 
-    public static void addOre(Identifier id, OreTarget target, BlockState state, int veinSize, int veinsPerChunk, int minY, int maxY) {
-        ConfiguredFeature<?, ?> configuredFeature = Feature.ORE.configure(
-            new OreFeatureConfig(target.getRuleTest(), state, veinSize)).decorate(Decorator.RANGE.configure(
-            new RangeDecoratorConfig(minY, 0, maxY - minY))).repeat(veinsPerChunk).spreadHorizontally();
+    private List<Pair<OreTarget, RegistryKey<ConfiguredFeature<?, ?>>>> ORES = new ArrayList<>();
+
+    @Override
+    public void addOre(Identifier id, OreTarget target, BlockState state, int veinSize, int veinsPerChunk, int minY, int maxY) {
+        addOre(id, target, state, veinSize, f -> f.decorate(Decorator.RANGE.configure(
+            new RangeDecoratorConfig(minY, 0, maxY - minY))).repeat(veinsPerChunk).spreadHorizontally());
+    }
+
+    @Override
+    public void addOre(Identifier id, OreTarget target, BlockState state, int veinSize, Function<ConfiguredFeature<?, ?>, ConfiguredFeature<?, ?>> decorators) {
+        ConfiguredFeature<?, ?> configuredFeature = decorators.apply(Feature.ORE.configure(
+            new OreFeatureConfig(target.getRuleTest(), state, veinSize)));
 
         RegistryKey<ConfiguredFeature<?, ?>> key = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, id);
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, configuredFeature);
@@ -34,17 +44,17 @@ public class MotherlodeDataImpl {
         addOre(target, key);
     }
 
-    public static void addOre(OreTarget target, RegistryKey<ConfiguredFeature<?, ?>> feature) {
+    public void addOre(OreTarget target, RegistryKey<ConfiguredFeature<?, ?>> feature) {
         ORES.add(new Pair<>(target, feature));
     }
 
-    public static List<Pair<OreTarget, RegistryKey<ConfiguredFeature<?, ?>>>> getOres() {
+    public List<Pair<OreTarget, RegistryKey<ConfiguredFeature<?, ?>>>> getOres() {
         return ORES;
     }
 
     @SuppressWarnings("deprecation")
-    public static void addOreFeatures() {
-        List<Pair<OreTarget, List<RegistryKey<ConfiguredFeature<?, ?>>>>> ores = MotherlodeDataImpl.getOres().stream().collect(Collectors.groupingBy(Pair::getLeft)).entrySet().stream()
+    public void addOreFeatures() {
+        List<Pair<OreTarget, List<RegistryKey<ConfiguredFeature<?, ?>>>>> ores = getOres().stream().collect(Collectors.groupingBy(Pair::getLeft)).entrySet().stream()
             .map(entry -> new Pair<>(entry.getKey(), entry.getValue().stream()
                 .map(Pair::getRight).collect(Collectors.toList())))
             .collect(Collectors.toList());

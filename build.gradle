@@ -16,8 +16,8 @@ allprojects {
 
     repositories {
         maven {
-            name = "CottonMC"
-            url = "https://server.bbkr.space/artifactory/libs-release"
+            name = 'CottonMC'
+            url = 'https://server.bbkr.space/artifactory/libs-release'
         }
 
         maven { url 'https://jitpack.io' }
@@ -25,28 +25,37 @@ allprojects {
     dependencies {
         dependencies.ext.useAsApiOptionally = { dep ->
             modApi(dep) {
-                if (!dep.contains("net.fabricmc.fabric-api")) {
-                    exclude group: "net.fabricmc.fabric-api"
+                if (!dep.contains('net.fabricmc.fabric-api')) {
+                    exclude group: 'net.fabricmc.fabric-api'
                 }
-                exclude group: "net.fabricmc"
-                if (!dep.contains("me.shedaniel")) {
-                    exclude group: "me.shedaniel"
+                exclude group: 'net.fabricmc'
+                if (!dep.contains('me.shedaniel')) {
+                    exclude group: 'me.shedaniel'
                 }
             }
         }
         dependencies.ext.useAsApi = { dep ->
             useAsApiOptionally(dep)
-            if (project.name == "motherlode")
+            if (project.name == 'motherlode')
                 include(dep)
+        }
+        dependencies.ext.useAsApiForModule = { module, dep ->
+            if(rootProject.childProjects.containsKey(module)) {
+                if(project.name == module || project.name == 'motherlode')
+                    useAsApiOptionally(dep)
+
+                if(project.name == 'motherlode')
+                    include(dep)
+            }
         }
         dependencies.ext.useAsRuntime = { dep ->
             modRuntime(dep) {
-                if (!dep.contains("net.fabricmc.fabric-api")) {
-                    exclude group: "net.fabricmc.fabric-api"
+                if (!dep.contains('net.fabricmc.fabric-api')) {
+                    exclude group: 'net.fabricmc.fabric-api'
                 }
-                exclude group: "net.fabricmc"
-                if (!dep.contains("me.shedaniel")) {
-                    exclude group: "me.shedaniel"
+                exclude group: 'net.fabricmc'
+                if (!dep.contains('me.shedaniel')) {
+                    exclude group: 'me.shedaniel'
                 }
             }
         }
@@ -54,9 +63,6 @@ allprojects {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
         mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
         modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-        modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-        modImplementation "com.lettuce.fudge:artifice:${project.artifice_version}"
 
         tap(rootProject.ext.setDefaultApis)
     }
@@ -95,8 +101,8 @@ allprojects {
         from sourceSets.main.allSource
     }
     checkstyle {
-        configFile = rootProject.file(".github/linters/sun_checks.xml")
-        toolVersion = "8.31"
+        configFile = rootProject.file('.github/linters/sun_checks.xml')
+        toolVersion = '8.31'
     }
 }
 
@@ -108,16 +114,16 @@ task deleteAllBuildDirs {
         }
     }
 }
-build.mustRunAfter(deleteAllBuildDirs)
+// build.dependsOn(deleteAllBuildDirs)
 
 jar {
-    from "LICENSE"
+    from 'LICENSE'
 }
 dependencies {
     afterEvaluate {
         subprojects.each {
-            implementation project(path: ":${it.path}", configuration: "dev")
-            include project(path: ":${it.path}", configuration: "remapped")
+            implementation project(path: ":${it.path}", configuration: 'dev')
+            include project(path: ":${it.path}", configuration: 'remapped')
         }
     }
 }

@@ -1,10 +1,13 @@
 package motherlode.orestoolsarmor;
 
-import java.util.Random;
+import java.util.function.Function;
 import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.IntRange;
+import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
@@ -15,12 +18,10 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
-    private final int minExperience;
-    private final int maxExperience;
+    private static final IntRange NULL_INT_RANGE = IntRange.between(0, 0);
+
     private final int veinSize;
-    private final int veinsPerChunk;
-    private final int minY;
-    private final int maxY;
+    private final Function<ConfiguredFeature<?, ?>, ConfiguredFeature<?, ?>> decorators;
     private final OreTarget target;
     private final String mineral;
 
@@ -33,34 +34,30 @@ public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
     }
 
     public MotherlodeOreBlock(OreTarget target, int veinSize, int veinsPerChunk, int minY, int maxY, int miningLevel, String mineral) {
-        this(target, 0, 0, veinSize, veinsPerChunk, minY, maxY, miningLevel, mineral);
+        this(target, NULL_INT_RANGE, veinSize, veinsPerChunk, minY, maxY, miningLevel, mineral);
     }
 
-    public MotherlodeOreBlock(OreTarget target, int minExperience, int maxExperience, int veinSize, int veinsPerChunk, int minY, int maxY, int miningLevel, String mineral) {
-        super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel));
+    public MotherlodeOreBlock(OreTarget target, IntRange experienceRange, int veinSize, int veinsPerChunk, int minY, int maxY, int miningLevel, String mineral) {
+        this(target, experienceRange, veinSize, f -> f.decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(minY, 0, maxY - minY))), miningLevel, mineral);
+    }
 
-        this.minExperience = minExperience;
-        this.maxExperience = maxExperience;
+    public MotherlodeOreBlock(OreTarget target, int veinSize, Function<ConfiguredFeature<?, ?>, ConfiguredFeature<?, ?>> decorators, int miningLevel, String mineral) {
+        this(target, NULL_INT_RANGE, veinSize, decorators, miningLevel, mineral);
+    }
+
+    public MotherlodeOreBlock(OreTarget target, IntRange experienceRange, int veinSize, Function<ConfiguredFeature<?, ?>, ConfiguredFeature<?, ?>> decorators, int miningLevel, String mineral) {
+        super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel), experienceRange);
 
         this.veinSize = veinSize;
-        this.veinsPerChunk = veinsPerChunk;
-        this.minY = minY;
-        this.maxY = maxY;
+        this.decorators = decorators;
 
         this.target = target;
 
         this.mineral = mineral;
     }
 
-    protected int getExperienceWhenMined(Random random) {
-        if (maxExperience != 0)
-            return MathHelper.nextInt(random, minExperience, maxExperience);
-
-        return 0;
-    }
-
     public void addOre(Identifier id) {
-        Motherlode.addOre(id, this.target, this.getDefaultState(), this.veinSize, this.veinsPerChunk, this.minY, this.maxY);
+        Motherlode.getDataManager().addOre(id, this.target, this.getDefaultState(), this.veinSize, this.decorators);
     }
 
     @Override

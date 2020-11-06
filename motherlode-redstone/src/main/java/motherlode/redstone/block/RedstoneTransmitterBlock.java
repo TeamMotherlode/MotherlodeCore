@@ -52,7 +52,7 @@ public class RedstoneTransmitterBlock extends Block implements BlockEntityProvid
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new RedstoneTransmitterBlockEntity();
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new RedstoneTransmitterBlockEntity(pos, state);
     }
 }
