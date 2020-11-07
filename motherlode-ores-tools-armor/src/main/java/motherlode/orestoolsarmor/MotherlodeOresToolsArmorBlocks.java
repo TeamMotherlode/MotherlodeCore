@@ -12,7 +12,8 @@ import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
-import motherlode.base.api.OreTargets;
+import motherlode.base.api.worldgen.MotherlodeOreBlock;
+import motherlode.base.api.worldgen.OreTargets;
 import motherlode.base.api.Registerable;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -69,7 +70,7 @@ public class MotherlodeOresToolsArmorBlocks {
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             id,
             block,
-            b -> b.addOre(id),
+            b -> Motherlode.getFeatureManager().addOre(id, b),
             CommonAssets.DEFAULT_BLOCK,
             block.andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
         );

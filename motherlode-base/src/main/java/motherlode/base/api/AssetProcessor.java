@@ -8,15 +8,17 @@ import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 public interface AssetProcessor {
     /**
      * This is called to register assets using Artifice.
+     *
      * @param pack Resource pack builder to register assets to.
-     * @param id Identifier passed together with the {@code AssetProcessor}. May be {@code null}.
+     * @param id   Identifier passed together with the {@code AssetProcessor}. May be {@code null}.
      */
     void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id);
 
     /**
      * Calls the {@link #accept} method and returns the given resource pack builder.
+     *
      * @param pack Resource pack builder to register assets to.
-     * @param id Identifier passed together with the {@code AssetProcessor}. May be {@code null}.
+     * @param id   Identifier passed together with the {@code AssetProcessor}. May be {@code null}.
      * @return The given resource pack builder.
      */
     default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
@@ -27,6 +29,7 @@ public interface AssetProcessor {
 
     /**
      * Composes a new {@code AssetProcessor} that will first apply the given {@code AssetProcessors}'s changes, then this changes.
+     *
      * @param before The {@code AssetProcessor} to apply before this one.
      * @return The composed {@code AssetProcessor}
      */
@@ -42,6 +45,7 @@ public interface AssetProcessor {
 
     /**
      * Composes a new {@code AssetProcessor} that will first apply this changes, then the given {@code AssetProcessors}'s changes.
+     *
      * @param after The {@code AssetProcessor} to apply after this one.
      * @return The composed {@code AssetProcessor}
      */

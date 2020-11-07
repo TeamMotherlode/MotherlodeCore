@@ -1,4 +1,4 @@
-package motherlode.base.api;
+package motherlode.base.api.worldgen;
 
 import java.util.function.Predicate;
 import net.minecraft.block.Blocks;

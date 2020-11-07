@@ -1,4 +1,4 @@
-package motherlode.base.api;
+package motherlode.base.api.worldgen;
 
 import java.util.function.Predicate;
 import net.minecraft.structure.rule.RuleTest;
@@ -14,6 +14,7 @@ public interface OreTarget {
     /**
      * Returns a {@link Predicate} to test which biomes an ore can generate in.
      * The return value of this method should not change.
+     *
      * @return The biome selector for this ore target
      */
     Predicate<BiomeSelectionContext> getBiomeSelector();
@@ -21,6 +22,7 @@ public interface OreTarget {
     /**
      * Returns the {@link GenerationStep.Feature} that determines in which generation step the {@link net.minecraft.world.gen.feature.ConfiguredFeature} of the ore will be generated in the world.
      * The return value of this method should not change.
+     *
      * @return The generation step for this ore target
      */
     GenerationStep.Feature getGenerationStepFeature();
@@ -28,6 +30,7 @@ public interface OreTarget {
     /**
      * Returns a {@link RuleTest} that determines which blocks an ore can replace while generating.
      * The return value of this method should not change.
+     *
      * @return The {@code RuleTest} for this ore target
      */
     RuleTest getRuleTest();
