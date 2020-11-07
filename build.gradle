@@ -34,6 +34,12 @@ allprojects {
                 }
             }
         }
+        dependencies.ext.useAsApiForModuleOptionally = { module, dep ->
+            if(rootProject.childProjects.containsKey(module)) {
+                if(project.name == module || project.name == 'motherlode')
+                    useAsApiOptionally(dep)
+            }
+        }
         dependencies.ext.useAsApi = { dep ->
             useAsApiOptionally(dep)
             if (project.name == 'motherlode')
@@ -126,4 +132,5 @@ dependencies {
             include project(path: ":${it.path}", configuration: 'remapped')
         }
     }
+    tap(rootProject.ext.setRuntimeTestMods)
 }

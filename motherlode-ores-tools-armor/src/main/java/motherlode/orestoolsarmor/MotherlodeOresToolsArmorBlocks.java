@@ -6,7 +6,6 @@ import net.minecraft.block.MaterialColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.IntRange;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import motherlode.base.CommonAssets;
@@ -22,12 +21,12 @@ import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 public class MotherlodeOresToolsArmorBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
 
-    public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, IntRange.between(3, 7), 10, 18, 16, 64, 1, "copper_ingot"));
+    // public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, IntRange.between(3, 7), 10, 18, 16, 64, 1, "copper_ingot"));
     public static final MotherlodeOreBlock SILVER_ORE = register("silver_ore", new MotherlodeOreBlock(2, "silver_ingot"));
-    public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, "charite_ingot"));
-    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 4, f -> f.spreadHorizontally().repeat(3).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(3, 3, 128))).repeat(4), 4, "echerite_ingot"));
-    public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(5, "titanium_ingot"));
-    public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, 1, 2, 32, 6, "adamantite_ingot"));
+    public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 4, "charite_ingot"));
+    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 4, f -> f.spreadHorizontally().repeat(2).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(3, 3, 125))).repeat(5), 5, "echerite_ingot"));
+    public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(6, "titanium_ingot"));
+    public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(OreTargets.NETHER, 3, 1, 2, 32, 7, "adamantite_ingot"));
     public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "amethyst"));
     public static final MotherlodeOreBlock HOWLITE_ORE = register("howlite_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "howlite"));
     public static final MotherlodeOreBlock RUBY_ORE = register("ruby_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "ruby"));
@@ -35,7 +34,7 @@ public class MotherlodeOresToolsArmorBlocks {
     public static final MotherlodeOreBlock TOPAZ_ORE = register("topaz_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "topaz"));
     public static final MotherlodeOreBlock ONYX_ORE = register("onyx_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, 4, 6, 8, 32, 2, "onyx"));
 
-    public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1, "copper_ingot"));
+    // public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1, "copper_ingot"));
     public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2, "silver_ingot"));
     public static final Block CHARITE_BLOCK = register("charite_block", mineralBlock(3, "charite_ingot"));
     public static final Block ECHERITE_BLOCK = register("echerite_block", mineralBlock(4, "echerite_ingot"));

@@ -134,7 +134,6 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
     @Override
     public void register(Identifier id) {
         for (Pair<Identifier, Block> entry : ALL) {
-
             if (entry.getRight() == null) continue;
             if (entry.getRight() == BASE && !newBase) continue;
             if (entry.getRight() == BRICKS && !newBricks) continue;

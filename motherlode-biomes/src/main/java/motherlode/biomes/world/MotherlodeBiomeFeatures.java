@@ -26,7 +26,6 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
  * @author Indigo Amann
  */
 public class MotherlodeBiomeFeatures {
-
     public static final Feature<DefaultFeatureConfig> MARSH = register("marsh", new MarshFeature(DefaultFeatureConfig.CODEC));
     public static final RegistryKey<ConfiguredFeature<?, ?>> CONFIGURED_SPROUTS = register("sprouts", Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(MotherlodeBiomesBlocks.SPROUTS.getDefaultState()), SimpleBlockPlacer.INSTANCE).tries(96).build()).decorate(Decorator.COUNT_NOISE.configure(new CountNoiseDecoratorConfig(-0.8D, 5, 10))));
 

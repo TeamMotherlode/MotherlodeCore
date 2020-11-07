@@ -26,7 +26,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class MotherlodeBiomesBlocks {
-
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.DECORATIONS);
     private static final Processor<Block> CUTOUT_RENDER_LAYER = block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
 
@@ -52,22 +51,18 @@ public class MotherlodeBiomesBlocks {
     public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL, CUTOUT_RENDER_LAYER);
 
     private static Block register(String name, Block block, AssetProcessor assets) {
-
         return register(name, block, assets, CommonData.DEFAULT_BLOCK_LOOT_TABLE);
     }
 
     private static Block register(String name, Block block, AssetProcessor assets, DataProcessor data) {
-
         return register(name, block, assets, data, null);
     }
 
     private static Block register(String name, Block block, AssetProcessor assets, Processor<Block> p) {
-
         return register(name, block, assets, CommonData.DEFAULT_BLOCK_LOOT_TABLE, p);
     }
 
     private static Block register(String name, Block block, AssetProcessor assets, DataProcessor data, Processor<Block> p) {
-
         return Motherlode.register(
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             Motherlode.id(MotherlodeModule.MODID, name),
@@ -78,15 +73,11 @@ public class MotherlodeBiomesBlocks {
         );
     }
 
-    public static final AssetProcessor flatItemModel(String textureName) {
-
-        return (pack, id) -> {
-
-            pack.addItemModel(id, state -> state
-                .parent(new Identifier("item/generated"))
-                .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + textureName))
-            );
-        };
+    public static AssetProcessor flatItemModel(String textureName) {
+        return (pack, id) -> pack.addItemModel(id, state -> state
+            .parent(new Identifier("item/generated"))
+            .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + textureName))
+        );
     }
 
     public static void init() {

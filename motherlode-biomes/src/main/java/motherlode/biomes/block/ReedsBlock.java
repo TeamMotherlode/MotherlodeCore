@@ -23,7 +23,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class ReedsBlock extends Block implements Waterloggable {
-
     public static final EnumProperty<Type> TYPE;
 
     public ReedsBlock(Settings settings) {

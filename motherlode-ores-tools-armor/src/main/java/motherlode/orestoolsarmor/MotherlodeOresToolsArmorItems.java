@@ -16,8 +16,8 @@ import motherlode.orestoolsarmor.item.ToolArmorVariantType;
 public class MotherlodeOresToolsArmorItems {
     private static final Item.Settings SETTINGS = new Item.Settings().group(ItemGroup.MATERIALS);
 
-    public static final Item COPPER_INGOT = register("copper_ingot", new IngotItem(SETTINGS));
-    public static final Item COPPER_NUGGET = register("copper_nugget");
+    // public static final Item COPPER_INGOT = register("copper_ingot", new IngotItem(SETTINGS));
+    // public static final Item COPPER_NUGGET = register("copper_nugget");
     public static final Item SILVER_INGOT = register("silver_ingot", new IngotItem(SETTINGS));
     public static final Item SILVER_NUGGET = register("silver_nugget");
     public static final Item CHARITE_INGOT = register("charite_ingot", new IngotItem(SETTINGS, "crystal", false));

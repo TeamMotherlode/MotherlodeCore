@@ -10,7 +10,6 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
 public class RuinedCampsData {
-
     public static final StructurePool POOL;
 
     public static void init() {

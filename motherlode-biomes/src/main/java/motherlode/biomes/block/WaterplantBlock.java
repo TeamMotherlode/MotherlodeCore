@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class WaterplantBlock extends Block {
-
     public static final BooleanProperty SOLID;
     private static final VoxelShape SHAPE;
 

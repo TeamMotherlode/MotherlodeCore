@@ -74,7 +74,6 @@ public class ShovelableBlock extends Block implements AssetProcessor {
 
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
-
         pack.addBlockState(id, state -> {
             for (int i = 0; i < (this.isRotatable ? 4 : 1); i++) {
                 int finalI = i;

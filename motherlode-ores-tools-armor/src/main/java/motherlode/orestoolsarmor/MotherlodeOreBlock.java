@@ -46,7 +46,7 @@ public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
     }
 
     public MotherlodeOreBlock(OreTarget target, IntRange experienceRange, int veinSize, Function<ConfiguredFeature<?, ?>, ConfiguredFeature<?, ?>> decorators, int miningLevel, String mineral) {
-        super(FabricBlockSettings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel), experienceRange);
+        super(FabricBlockSettings.of(Material.STONE).strength(Math.min(3f, miningLevel), Math.min(3f, miningLevel + 1)).requiresTool().breakByTool(FabricToolTags.PICKAXES, miningLevel), experienceRange);
 
         this.veinSize = veinSize;
         this.decorators = decorators;
