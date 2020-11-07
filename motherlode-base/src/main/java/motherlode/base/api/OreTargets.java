@@ -10,20 +10,36 @@ import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 
+/**
+ * Provides implementations of {@link OreTarget} for Minecraft's dimensions.
+ */
 @SuppressWarnings("deprecation")
 public enum OreTargets implements OreTarget {
+    /**
+     * Ores using this can generate in all overworld biomes and can replace all blocks that are in the {@code minecraft:base_stone_overworld} block tag.
+     */
     OVERWORLD(
         BiomeSelectors.foundInOverworld(),
         GenerationStep.Feature.UNDERGROUND_ORES,
         OreFeatureConfig.Rules.BASE_STONE_OVERWORLD),
+    /**
+     * Ores using this can generate in all Nether biomes and can replace all blocks that are in the {@code minecraft:base_stone_nether} block tag.
+     */
     NETHER(
         BiomeSelectors.foundInTheNether(),
         GenerationStep.Feature.UNDERGROUND_DECORATION,
         OreFeatureConfig.Rules.BASE_STONE_NETHER),
+    /**
+     * Ores using this can generate in all biomes found in The End and can replace End Stone.
+     */
     THE_END(
         BiomeSelectors.foundInTheEnd(),
         GenerationStep.Feature.UNDERGROUND_ORES,
         new BlockMatchRuleTest(Blocks.END_STONE)),
+    /**
+     * Ores using this can generate in all biomes and can replace all blocks.
+     * This is useful for testing that an ore can generate at all, but should not be used in production.
+     */
     DEBUG(
         BiomeSelectors.all(),
         GenerationStep.Feature.UNDERGROUND_ORES,
