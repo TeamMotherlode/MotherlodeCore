@@ -8,8 +8,8 @@ import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.AssetsManager;
 import motherlode.base.api.DataProcessor;
 
-public class MotherlodeAssetsImpl implements AssetsManager {
-    public static final MotherlodeAssetsImpl INSTANCE = new MotherlodeAssetsImpl();
+public class AssetsManagerImpl implements AssetsManager {
+    public static final AssetsManagerImpl INSTANCE = new AssetsManagerImpl();
 
     private List<Pair<Identifier, AssetProcessor>> assetProcessors = new ArrayList<>();
     private List<Pair<Identifier, DataProcessor>> dataProcessors = new ArrayList<>();

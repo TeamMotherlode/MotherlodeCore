@@ -70,7 +70,7 @@ public class MotherlodeOresToolsArmorBlocks {
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             id,
             block,
-            b -> Motherlode.getFeatureManager().addOre(id, b),
+            b -> Motherlode.getFeaturesManager().addOre(id, b),
             CommonAssets.DEFAULT_BLOCK,
             block.andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
         );

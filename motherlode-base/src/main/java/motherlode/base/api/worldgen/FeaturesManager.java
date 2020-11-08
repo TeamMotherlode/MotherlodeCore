@@ -4,8 +4,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -19,31 +17,39 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 
 /**
  * Using this interface, one can more easily register data. At the moment, only adding ores is possible with this.
- * An implementation of it is returned by {@link Motherlode#getFeatureManager()}.
+ * An implementation of it is returned by {@link Motherlode#getFeaturesManager()}.
  */
 @SuppressWarnings("deprecation")
-public interface FeatureManager {
+public interface FeaturesManager {
     /**
      * Adds a {@link ConfiguredFeature} to all biomes selected by the biome selector.
      *
-     * @param biomeSelector  Determines which biomes the feature generates in.
-     * @param generationStep The generation step in which the feature generates.
-     * @param feature        The {@link RegistryKey} of the {@code ConfiguredFeature} to add.
+     * @param biomeSelector     Determines which biomes the feature generates in.
+     * @param generationStep    The generation step in which the feature generates.
+     * @param configuredFeature The {@link RegistryKey} of the {@code ConfiguredFeature} to add.
      */
-    void addFeature(Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep, RegistryKey<ConfiguredFeature<?, ?>> feature);
+    void addFeature(Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep, RegistryKey<ConfiguredFeature<?, ?>> configuredFeature);
+
+    /**
+     * Registers a {@link ConfiguredFeature}.
+     *
+     * @param id                The {@link Identifier} to register the {@code ConfiguredFeature} under.
+     * @param configuredFeature The {@code ConfiguredFeature} to register.
+     * @return The {@link RegistryKey} of the registered {@code ConfiguredFeature}.
+     */
+    RegistryKey<ConfiguredFeature<?, ?>> register(Identifier id, ConfiguredFeature<?, ?> configuredFeature);
 
     /**
      * Registers the given {@link ConfiguredFeature} and adds it to the world using {@link #addFeature(Predicate, GenerationStep.Feature, RegistryKey)}.
      *
-     * @param id             The {@link Identifier} to register the {@code ConfiguredFeature} under.
-     * @param biomeSelector  Determines which biomes the feature generates in.
-     * @param generationStep The generation step in which the feature generates.
-     * @param feature        The {@code ConfiguredFeature} to add.
+     * @param id                The {@link Identifier} to register the {@code ConfiguredFeature} under.
+     * @param biomeSelector     Determines which biomes the feature generates in.
+     * @param generationStep    The generation step in which the feature generates.
+     * @param configuredFeature The {@code ConfiguredFeature} to add.
      * @return The {@link RegistryKey} for the {@code ConfiguredFeature} created and registered by this method.
      */
-    default RegistryKey<ConfiguredFeature<?, ?>> addFeature(Identifier id, Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep, ConfiguredFeature<?, ?> feature) {
-        RegistryKey<ConfiguredFeature<?, ?>> key = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN, id);
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, id, feature);
+    default RegistryKey<ConfiguredFeature<?, ?>> addFeature(Identifier id, Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep, ConfiguredFeature<?, ?> configuredFeature) {
+        RegistryKey<ConfiguredFeature<?, ?>> key = this.register(id, configuredFeature);
 
         this.addFeature(biomeSelector, generationStep, key);
         return key;
@@ -84,7 +90,7 @@ public interface FeatureManager {
      * Creates and registers a {@link ConfiguredFeature} to generate an ore using the specified options.
      *
      * @param id            The {@link Identifier} to register the {@code ConfiguredFeature} under.
-     * @param target        The {@link OreTarget} to specify the biomes that the ore will generate in, the blocks that the ore can replace and the {@link net.minecraft.world.gen.GenerationStep.Feature} used.
+     * @param target        The {@link OreTarget} to specify the biomes that the ore will generate in, the blocks that the ore can replace and the {@link GenerationStep.Feature} used.
      * @param state         The ore will generate with this {@link BlockState}.
      * @param veinSize      Each ore vein will have about this amount of ores.
      * @param veinsPerChunk The average amount of ore veins per chunk.

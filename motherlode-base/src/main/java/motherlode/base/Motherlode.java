@@ -5,12 +5,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.AssetsManager;
-import motherlode.base.api.worldgen.FeatureManager;
+import motherlode.base.api.worldgen.FeaturesManager;
 import motherlode.base.api.DataProcessor;
 import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
-import motherlode.base.api.impl.MotherlodeAssetsImpl;
-import motherlode.base.api.impl.worldgen.MotherlodeFeatureImpl;
+import motherlode.base.api.impl.AssetsManagerImpl;
+import motherlode.base.api.impl.worldgen.FeaturesManagerImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import com.swordglowsblue.artifice.api.Artifice;
@@ -30,13 +30,13 @@ public final class Motherlode implements ModInitializer {
 
         moduleInitDone = true;
 
-        List<Pair<Identifier, DataProcessor>> data = MotherlodeAssetsImpl.INSTANCE.getData();
+        List<Pair<Identifier, DataProcessor>> data = AssetsManagerImpl.INSTANCE.getData();
         Artifice.registerDataPack(Motherlode.id("data_pack"), pack ->
             data.forEach(pair ->
                 pair.getRight().accept(pack, pair.getLeft())));
-        MotherlodeAssetsImpl.INSTANCE.removeDataProcessorList();
+        AssetsManagerImpl.INSTANCE.removeDataProcessorList();
 
-        MotherlodeFeatureImpl.INSTANCE.addFeatures();
+        FeaturesManagerImpl.INSTANCE.addFeatures();
 
         log(Level.INFO, "[Motherlode] Initialized.");
     }
@@ -102,18 +102,18 @@ public final class Motherlode implements ModInitializer {
     public static AssetsManager getAssetsManager() {
         if (moduleInitDone)
             throw new IllegalStateException("Trying to add assets outside motherlode:init entry point.");
-        return MotherlodeAssetsImpl.INSTANCE;
+        return AssetsManagerImpl.INSTANCE;
     }
 
     /**
-     * Returns an implementation of {@link FeatureManager}. Should only be called from a {@code motherlode:init} entry point.
+     * Returns an implementation of {@link FeaturesManager}. Should only be called from a {@code motherlode:init} entry point.
      *
      * @return An implementation of {@code DataManager}
      * @throws IllegalStateException if not called from a {@code motherlode:init} entry point.
      */
-    public static FeatureManager getFeatureManager() {
+    public static FeaturesManager getFeaturesManager() {
         if (moduleInitDone) throw new IllegalStateException("Trying to add data outside motherlode:init entry point.");
-        return MotherlodeFeatureImpl.INSTANCE;
+        return FeaturesManagerImpl.INSTANCE;
     }
 
     /**
