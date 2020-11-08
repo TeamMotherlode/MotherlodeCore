@@ -5,6 +5,7 @@ import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
+import motherlode.base.api.AssetProcessor;
 import motherlode.potions.MotherlodePotions.PotionModelInfo;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
@@ -12,7 +13,14 @@ import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredica
 public class MotherlodePotionsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        Motherlode.getAssetsManager().addAssets(null, (pack, id) -> {
+        FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
+            PotionModelInfo potion = MotherlodePotions.potionModelInfos.get(PotionUtil.getPotion(itemStack));
+            return potion == null ? 1 : potion.predicateValue;
+        });
+    }
+
+    public static AssetProcessor getAssetProcessor() {
+        return (pack, id) -> {
             for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
                 if (!info.useDefaultModel)
                     pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, info.model), model -> model
@@ -37,11 +45,6 @@ public class MotherlodePotionsClient implements ClientModInitializer {
                         model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodeModule.MODID, "item/" + info.model)));
                 }
             });
-        });
-
-        FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
-            PotionModelInfo potion = MotherlodePotions.potionModelInfos.get(PotionUtil.getPotion(itemStack));
-            return potion == null ? 1 : potion.predicateValue;
-        });
+        };
     }
 }

@@ -11,6 +11,7 @@ public class MotherlodeModule implements ModInitializer {
     @Override
     public void onInitialize() {
         MotherlodePotions.init();
+        Motherlode.getAssetsManager().addAssets(null, MotherlodePotionsClient.getAssetProcessor());
     }
 
     public static void log(Level level, CharSequence message) {
