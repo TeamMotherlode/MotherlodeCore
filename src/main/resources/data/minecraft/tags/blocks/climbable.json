@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "motherlode:rope"
+    "motherlode:rope",
+    "motherlode:steel_ladder"
   ]
 }
