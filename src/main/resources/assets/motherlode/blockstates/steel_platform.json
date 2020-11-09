@@ -1,0 +1,27 @@
+{
+  "variants" : {
+    "facing=down" : {
+      "model": "motherlode:block/steel_platform",
+      "uvlock" : true
+    },
+    "facing=north" : {
+      "model": "motherlode:block/steel_platform_stairs",
+      "uvlock" : true
+    },
+    "facing=east" : {
+      "model": "motherlode:block/steel_platform_stairs",
+      "uvlock" : true,
+      "y": 90
+    },
+    "facing=south" : {
+      "model": "motherlode:block/steel_platform_stairs",
+      "uvlock" : true,
+      "y": 180
+    },
+    "facing=west" : {
+      "model": "motherlode:block/steel_platform_stairs",
+      "uvlock" : true,
+      "y": 270
+    }
+  }
+}
