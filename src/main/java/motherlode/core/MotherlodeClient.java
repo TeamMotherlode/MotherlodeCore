@@ -35,7 +35,7 @@ public class MotherlodeClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		MotherlodeAssets.register();
 		MotherlodeEntityRenderers.init();
-    	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
+    		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_PLATFORM, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_LADDER, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_BARS, RenderLayer.getCutout()); //Maybe a for each could be made here?
