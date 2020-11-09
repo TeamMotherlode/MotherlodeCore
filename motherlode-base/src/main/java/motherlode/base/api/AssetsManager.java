@@ -5,7 +5,7 @@ import motherlode.base.Motherlode;
 
 /**
  * Assets and data can be registered using this interface.
- * An implementation of it is returned by {@link Motherlode#getAssetsManager()}.
+ * An implementation of it can be got by calling {@link Motherlode#getAssetsManager()}.
  */
 public interface AssetsManager {
     /**

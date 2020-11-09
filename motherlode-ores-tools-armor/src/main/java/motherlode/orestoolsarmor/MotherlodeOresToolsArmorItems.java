@@ -36,18 +36,18 @@ public class MotherlodeOresToolsArmorItems {
     public static final Item TOPAZ = register("topaz", new DefaultGemItem(0xFFC304, SETTINGS));
     public static final Item ONYX = register("onyx", new DefaultGemItem(0x302A3B, SETTINGS));
 
-    public static final ToolArmorVariantType COPPER = register("copper", new ToolArmorVariantType(Motherlode.id(MotherlodeModule.MODID, "copper"), "copper_ingot", MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR));
-    public static final ToolArmorVariantType SILVER = register("silver", new ToolArmorVariantType(Motherlode.id(MotherlodeModule.MODID, "silver"), "silver_ingot", MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR));
-    public static final ToolArmorVariantType CHARITE = register("charite", new ToolArmorVariantType(Motherlode.id(MotherlodeModule.MODID, "charite"), "charite_ingot", MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR));
-    public static final ToolArmorVariantType ECHERITE = register("echerite", new ToolArmorVariantType(Motherlode.id(MotherlodeModule.MODID, "echerite"), "echerite_ingot", MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR));
-    public static final ToolArmorVariantType TITANIUM = register("titanium", new ToolArmorVariantType(Motherlode.id(MotherlodeModule.MODID, "titanium"), "titanium_ingot", MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR));
-    public static final ToolArmorVariantType ADAMANTITE = register("adamantite", new ToolArmorVariantType(Motherlode.id(MotherlodeModule.MODID, "adamantite"), "adamantite_ingot", MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR));
+    public static final ToolArmorVariantType COPPER = register("copper", new ToolArmorVariantType(MotherlodeModule.id("copper"), "copper_ingot", MotherlodeMaterials.COPPER_TOOLS, MotherlodeMaterials.COPPER_ARMOR));
+    public static final ToolArmorVariantType SILVER = register("silver", new ToolArmorVariantType(MotherlodeModule.id("silver"), "silver_ingot", MotherlodeMaterials.SILVER_TOOLS, MotherlodeMaterials.SILVER_ARMOR));
+    public static final ToolArmorVariantType CHARITE = register("charite", new ToolArmorVariantType(MotherlodeModule.id("charite"), "charite_ingot", MotherlodeMaterials.CHARITE_TOOLS, MotherlodeMaterials.CHARITE_ARMOR));
+    public static final ToolArmorVariantType ECHERITE = register("echerite", new ToolArmorVariantType(MotherlodeModule.id("echerite"), "echerite_ingot", MotherlodeMaterials.ECHERITE_TOOLS, MotherlodeMaterials.ECHERITE_ARMOR));
+    public static final ToolArmorVariantType TITANIUM = register("titanium", new ToolArmorVariantType(MotherlodeModule.id("titanium"), "titanium_ingot", MotherlodeMaterials.TITANIUM_TOOLS, MotherlodeMaterials.TITANIUM_ARMOR));
+    public static final ToolArmorVariantType ADAMANTITE = register("adamantite", new ToolArmorVariantType(MotherlodeModule.id("adamantite"), "adamantite_ingot", MotherlodeMaterials.ADAMANTITE_TOOLS, MotherlodeMaterials.ADAMANTITE_ARMOR));
 
     public static Item register(String name) {
         Item item = new Item(SETTINGS);
         return Motherlode.register(
             Registerable.item(item),
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             item,
             null,
             CommonAssets.DEFAULT_ITEM_MODEL,
@@ -58,7 +58,7 @@ public class MotherlodeOresToolsArmorItems {
     public static Item register(String name, Item item) {
         return Motherlode.register(
             Registerable.item(item),
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             item,
             null,
             CommonAssets.DEFAULT_ITEM_MODEL,
@@ -69,7 +69,7 @@ public class MotherlodeOresToolsArmorItems {
     public static <T extends Registerable<? super Item> & AssetProcessor & DataProcessor> T register(String name, T item) {
         return Motherlode.register(
             item,
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             item,
             null,
             item,

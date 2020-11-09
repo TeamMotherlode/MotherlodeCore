@@ -1,5 +1,6 @@
 package motherlode.biomes;
 
+import java.util.Objects;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.color.world.BiomeColors;
@@ -30,8 +31,7 @@ public class MotherlodeBiomesBlocks {
     private static final Processor<Block> CUTOUT_RENDER_LAYER = block -> BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
 
     private static final Processor<Block> PLANT = CUTOUT_RENDER_LAYER.andThen(block -> {
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-            BiomeColors.getGrassColor(world, pos), block);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> BiomeColors.getGrassColor(Objects.requireNonNull(world), pos), block);
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getSpruceColor(), block);
     });
 
@@ -65,7 +65,7 @@ public class MotherlodeBiomesBlocks {
     private static Block register(String name, Block block, AssetProcessor assets, DataProcessor data, Processor<Block> p) {
         return Motherlode.register(
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             block,
             p,
             assets,

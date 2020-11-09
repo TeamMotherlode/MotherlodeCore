@@ -10,7 +10,7 @@ import motherlode.base.api.DataProcessor;
 import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.base.api.impl.AssetsManagerImpl;
-import motherlode.base.api.impl.worldgen.FeaturesManagerImpl;
+import motherlode.base.api.impl.FeaturesManagerImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import com.swordglowsblue.artifice.api.Artifice;
@@ -20,6 +20,8 @@ import org.apache.logging.log4j.Logger;
 
 public final class Motherlode implements ModInitializer {
     public static final String MODID = "motherlode";
+    public static final String BASE_MODID = "motherlode-base";
+
     private static final Logger LOGGER = LogManager.getLogger("Motherlode");
     private static boolean moduleInitDone;
 

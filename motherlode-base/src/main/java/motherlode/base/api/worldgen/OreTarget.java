@@ -6,17 +6,18 @@ import net.minecraft.world.gen.GenerationStep;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 
 /**
- * Interface used for selecting the biomes that ores generate in, which blocks they can replace and the {@link GenerationStep.Feature} to use.
- * There are implementations for Minecraft's dimensions in {@link OreTargets};
+ * An interface used for selecting the biomes that ores generate in, which blocks they can replace and the {@link GenerationStep.Feature} to use.
+ * There are implementations for Minecraft's dimensions in {@link FeatureTargets}.
  */
 @SuppressWarnings("deprecation")
-public interface OreTarget {
+public interface OreTarget extends FeatureTarget {
     /**
      * Returns a {@link Predicate} to test which biomes an ore can generate in.
      * The return value of this method should not change.
      *
      * @return The biome selector for this ore target
      */
+    @Override
     Predicate<BiomeSelectionContext> getBiomeSelector();
 
     /**
@@ -25,6 +26,7 @@ public interface OreTarget {
      *
      * @return The generation step for this ore target
      */
+    @Override
     GenerationStep.Feature getGenerationStepFeature();
 
     /**

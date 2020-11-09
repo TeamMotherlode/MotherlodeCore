@@ -25,7 +25,7 @@ public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
     private final String mineral;
 
     public MotherlodeOreBlock(int miningLevel, String mineral) {
-        this(OreTargets.OVERWORLD, miningLevel, mineral);
+        this(FeatureTargets.OVERWORLD, miningLevel, mineral);
     }
 
     public MotherlodeOreBlock(OreTarget target, int miningLevel, String mineral) {
