@@ -15,11 +15,11 @@ public class DefaultDecorationBlock extends DefaultBlock {
     private SlabBlock SLAB_VARIANT;
     private final String id;
 
-    public StairsBlock getSTAIR_VARIANT() {
+    public StairsBlock getStairVariant() {
         return STAIR_VARIANT;
     }
 
-    public SlabBlock getSLAB_VARIANT() {
+    public SlabBlock getSlabVariant() {
         return SLAB_VARIANT;
     }
 
