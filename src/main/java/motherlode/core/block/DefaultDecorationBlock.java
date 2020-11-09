@@ -29,7 +29,7 @@ public class DefaultDecorationBlock extends DefaultBlock {
     }
 
     public DefaultDecorationBlock registerAll(){
-        STAIR_VARIANT = Registry.register(Registry.BLOCK, Motherlode.id(id+"_stairs"), new DefaultStairsBlock(this.getDefaultState(), settings));
+        STAIR_VARIANT = Registry.register(Registry.BLOCK, Motherlode.id(id+"_stairs"), new MotherlodeStairsBlock(this.getDefaultState(), settings));
         MotherlodeItems.register(id+"_stairs", new BlockItem(STAIR_VARIANT, new Item.Settings().group(Motherlode.BLOCKS)));
         MotherlodeBlocks.usesStairModel.put(STAIR_VARIANT, !Registry.BLOCK.getId(this).getNamespace().equals("minecraft"));
         MotherlodeBlocks.defaultItemModelList.add(STAIR_VARIANT);

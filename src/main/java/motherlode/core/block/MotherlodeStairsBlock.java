@@ -3,9 +3,9 @@ package motherlode.core.block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
 
-public class DefaultStairsBlock extends StairsBlock {
+public class MotherlodeStairsBlock extends StairsBlock {
 
-    public DefaultStairsBlock(BlockState baseBlockState, Settings settings) {
+    public MotherlodeStairsBlock(BlockState baseBlockState, Settings settings) {
         super(baseBlockState, settings);
     }
 }

@@ -75,7 +75,7 @@ public class StoneBlocks {
         for (Block block : ALL) {
             String id = Registry.BLOCK.getId(block).getPath() + "_stairs";
             if (!IGNORE.contains(id)) {
-                StairsBlock stairBlock = Registry.register(Registry.BLOCK,Motherlode.id(id), new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS));
+                StairsBlock stairBlock = Registry.register(Registry.BLOCK,Motherlode.id(id), new MotherlodeStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS));
                 STAIRS.put(block, stairBlock);
                 MotherlodeItems.register(id, new BlockItem(stairBlock, new Item.Settings().group(Motherlode.BLOCKS)));
                 MotherlodeBlocks.usesStairModel.put(stairBlock, !Registry.BLOCK.getId(block).getNamespace().equals("minecraft"));

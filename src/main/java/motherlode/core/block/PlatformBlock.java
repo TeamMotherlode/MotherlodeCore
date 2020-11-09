@@ -33,27 +33,28 @@ public class PlatformBlock extends Block implements Waterloggable {
         FACING = DirectionProperty.of("facing", (facing) -> facing != Direction.UP);
         NORMAL_SHAPE = Block.createCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-        STAIR_SHAPES[0] = VoxelShapes.union(Block.createCuboidShape(0.0D, 6.0D, 0.0D, 16.0D, 8.0D, 8.0D)
-                , Block.createCuboidShape(0.0D, 14.0D, 8.0D, 16.0D, 16.0D, 16.0D)
-                , Block.createCuboidShape(0.0D, 6.0D, 8.0D, 16.0D, 16.0D, 9.0D));
+        STAIR_SHAPES[0] = VoxelShapes.union(Block.createCuboidShape(0.0D, 6.0D, 0.0D, 16.0D, 8.0D, 8.0D),
+                Block.createCuboidShape(0.0D, 14.0D, 8.0D, 16.0D, 16.0D, 16.0D),
+                Block.createCuboidShape(0.0D, 6.0D, 8.0D, 16.0D, 16.0D, 9.0D));
 
-        STAIR_SHAPES[3] = VoxelShapes.union(Block.createCuboidShape(0.0D, 6.0D, 0.0D, 8.0D, 8.0D, 16.0D)
-                , Block.createCuboidShape(8.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D)
-                , Block.createCuboidShape(8.0D, 6.0D, 0.0D, 9.0D, 16.0D, 16.0D));
+        STAIR_SHAPES[3] = VoxelShapes.union(Block.createCuboidShape(0.0D, 6.0D, 0.0D, 8.0D, 8.0D, 16.0D),
+                Block.createCuboidShape(8.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D),
+                Block.createCuboidShape(8.0D, 6.0D, 0.0D, 9.0D, 16.0D, 16.0D));
 
-        STAIR_SHAPES[2] = VoxelShapes.union(Block.createCuboidShape(0.0D, 6.0D, 8.0D, 16.0D, 8.0D, 16.0D)
-                , Block.createCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 8.0D)
-                , Block.createCuboidShape(0.0D, 6.0D, 7.0D, 16.0D, 16.0D, 8.0D));
+        STAIR_SHAPES[2] = VoxelShapes.union(Block.createCuboidShape(0.0D, 6.0D, 8.0D, 16.0D, 8.0D, 16.0D),
+                Block.createCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 8.0D),
+                Block.createCuboidShape(0.0D, 6.0D, 7.0D, 16.0D, 16.0D, 8.0D));
 
-        STAIR_SHAPES[1] = VoxelShapes.union(Block.createCuboidShape(8.0D, 6.0D, 0.0D, 16.0D, 8.0D, 16.0D)
-                , Block.createCuboidShape(0.0D, 14.0D, 0.0D, 8.0D, 16.0D, 16.0D)
-                , Block.createCuboidShape(7.0D, 6.0D, 0.0D, 8.0D, 16.0D, 16.0D));
+        STAIR_SHAPES[1] = VoxelShapes.union(Block.createCuboidShape(8.0D, 6.0D, 0.0D, 16.0D, 8.0D, 16.0D),
+                Block.createCuboidShape(0.0D, 14.0D, 0.0D, 8.0D, 16.0D, 16.0D),
+                Block.createCuboidShape(7.0D, 6.0D, 0.0D, 8.0D, 16.0D, 16.0D));
     }
 
     public PlatformBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState().with(WATERLOGGED, false));
         MotherlodeBlocks.defaultLootTableList.add(this);
+        MotherlodeBlocks.cutouts.add(this);
     }
 
     @Override

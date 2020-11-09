@@ -4,9 +4,9 @@ import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
 import motherlode.core.block.*;
 import motherlode.core.block.DefaultPlantBlock;
-import motherlode.core.block.DoorBlock;
-import motherlode.core.block.LadderBlock;
-import motherlode.core.block.PaneBlock;
+import motherlode.core.block.MotherlodeDoorBlock;
+import motherlode.core.block.MotherlodeLadderBlock;
+import motherlode.core.block.MotherlodePaneBlock;
 import motherlode.core.block.DefaultDecorationBlock;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -62,16 +62,14 @@ public class MotherlodeBlocks {
     public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(false, 2));
     public static final Block ONYX_ORE = register("onyx_ore", new DefaultOreBlock(false, 2));
 
-    // steel_blocks begin
     public static final Block STEEL_BLOCK = register("steel_block", mineralBlock(4)); // VARIABLES MIGHT CHANGE
     public static final DefaultDecorationBlock STEEL_WALL = register("steel_wall", new DefaultDecorationBlock("steel_wall", FabricBlockSettings.of(Material.METAL).requiresTool().strength(4.0F, 5.0F))).registerAll();
     public static final DefaultDecorationBlock STEEL_TILES = register("steel_tiles", new DefaultDecorationBlock("steel_tiles", FabricBlockSettings.of(Material.METAL).requiresTool().strength(4.0F, 5.0F))).registerAll();
 
-    public static final Block STEEL_LADDER = register("steel_ladder", new LadderBlock(AbstractBlock.Settings.of(Material.SUPPORTED).strength(0.8F).sounds(BlockSoundGroup.METAL).nonOpaque())); //TODO: Ladder sound?
-    public static final Block STEEL_BARS = register("steel_bars", new PaneBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.CLEAR).requiresTool().strength(6.0F, 7.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
+    public static final Block STEEL_LADDER = register("steel_ladder", new MotherlodeLadderBlock(AbstractBlock.Settings.of(Material.SUPPORTED).strength(0.8F).sounds(BlockSoundGroup.METAL).nonOpaque())); //TODO: Ladder sound?
+    public static final Block STEEL_BARS = register("steel_bars", new MotherlodePaneBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.CLEAR).requiresTool().strength(6.0F, 7.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
     public static final Block STEEL_PLATFORM = register("steel_platform", new PlatformBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.IRON).requiresTool().strength(4.0f,4.0f).sounds(BlockSoundGroup.METAL).nonOpaque()));
-    public static final Block STEEL_DOOR = register("steel_door", new DoorBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.IRON).requiresTool().strength(6.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
-    // steel_block end
+    public static final Block STEEL_DOOR = register("steel_door", new MotherlodeDoorBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.IRON).requiresTool().strength(6.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
 
     public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1));
     public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2));

@@ -36,9 +36,6 @@ public class MotherlodeClient implements ClientModInitializer {
 		MotherlodeAssets.register();
 		MotherlodeEntityRenderers.init();
     	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_PLATFORM, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_LADDER, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_BARS, RenderLayer.getCutout()); //Maybe a for each could be made here?
 		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
 		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
 		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
