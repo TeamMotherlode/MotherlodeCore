@@ -9,6 +9,7 @@
     "BackgroundRendererMixin"
   ],
   "mixins": [
+    "FlowableFluidMixin",
     "StructureFeatureAccessor",
     "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
