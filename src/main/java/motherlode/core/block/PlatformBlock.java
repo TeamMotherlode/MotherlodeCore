@@ -19,6 +19,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
 public class PlatformBlock extends Block implements Waterloggable {
     public static final BooleanProperty WATERLOGGED;
@@ -72,19 +73,28 @@ public class PlatformBlock extends Block implements Waterloggable {
         }
     }
 
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+        if (state.get(WATERLOGGED)) {
+            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        return super.getStateForNeighborUpdate(state, direction, newState, world,pos, posFrom);
+    }
+
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getPlayerLookDirection().getOpposite();
         World world = ctx.getWorld();
         BlockPos pos = ctx.getBlockPos();
+        FluidState fluidState = ctx.getWorld().getFluidState(pos);
         BlockState stateFront = world.getBlockState(pos.offset(direction.getOpposite()));
         BlockState stateBack = world.getBlockState(pos.offset(direction));
         if (stateFront.getBlock() instanceof PlatformBlock){
             world.setBlockState(pos.offset(direction.getOpposite()), stateFront.with(PlatformBlock.FACING, Direction.DOWN));
         }
-        if (stateBack.getBlock() instanceof AirBlock) {
-            return this.getDefaultState().with(FACING, Direction.DOWN);
+        if (!(stateBack.getBlock() instanceof AirBlock)) {
+            return this.getDefaultState().with(FACING, Direction.DOWN).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
         } else {
-            return this.getDefaultState().with(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction);
+            return this.getDefaultState().with(FACING, direction.getAxis() == Direction.Axis.Y ? Direction.DOWN : direction).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
         }
     }
 
