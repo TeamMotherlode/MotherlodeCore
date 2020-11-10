@@ -28,8 +28,8 @@ public class RingItem extends TrinketItem {
     public float attributeEfficiency;
     public final Rarity rarity;
 
-    public RingItem(Rarity rarity, Qualities... qualities) {
-        super(new Settings().group(Motherlode.ARMOUR_AND_TOOLS));
+    public RingItem(Rarity rarity, Settings settings, Qualities... qualities) {
+        super(settings);
         this.qualities = qualities;
         this.rarity = rarity;
     }
