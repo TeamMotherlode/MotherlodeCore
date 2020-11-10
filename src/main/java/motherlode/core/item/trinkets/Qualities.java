@@ -2,6 +2,7 @@ package motherlode.core.item.trinkets;
 
 import net.minecraft.text.BaseText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
@@ -16,13 +17,13 @@ public enum Qualities {
 
 
 
-    private final MutableText text;
+    private final Text text;
 
-    public MutableText getText() {
+    public Text getText() {
         return this.text;
     }
 
-    Qualities(MutableText text) {
+    Qualities(Text text) {
         this.text = text;
     }
 }
