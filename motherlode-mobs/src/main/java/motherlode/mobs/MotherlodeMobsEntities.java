@@ -5,14 +5,14 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.registry.Registry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import motherlode.base.Motherlode;
 import motherlode.mobs.entity.ArmadilloEntity;
 import motherlode.mobs.entity.LizardEntity;
 import motherlode.mobs.entity.RedstoneGolemEntity;
 import motherlode.mobs.entity.RedstoneMarauderEntity;
 import motherlode.mobs.entity.RedstoneSentryEntity;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 
 public class MotherlodeMobsEntities {
     public static final EntityType<ArmadilloEntity> ARMADILLO_ENTITY = register("armadillo", FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ArmadilloEntity::new)

@@ -1,11 +1,11 @@
 package motherlode.mobs;
 
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import motherlode.mobs.renderer.ArmadilloEntityRenderer;
 import motherlode.mobs.renderer.LizardEntityRenderer;
 import motherlode.mobs.renderer.RedstoneGolemEntityRenderer;
 import motherlode.mobs.renderer.RedstoneMarauderEntityRenderer;
 import motherlode.mobs.renderer.RedstoneSentryEntityRenderer;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 
 public class MotherlodeMobsEntityRenderers {
     public static void init() {
