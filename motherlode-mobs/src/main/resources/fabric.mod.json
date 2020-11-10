@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
-    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-mobs"
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-mobs"
   },
   "license": "MIT License",
   "icon": "assets/motherlode-mobs/icon.png",

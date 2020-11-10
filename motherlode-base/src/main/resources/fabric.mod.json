@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
-    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-base"
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-base"
   },
   "license": "MIT License",
   "icon": "assets/motherlode-base/icon.png",
@@ -33,7 +33,6 @@
     "motherlode-base": "*"
   },
   "suggests": {
-    "flamingo": "*"
   },
   "custom": {
     "modmenu:parent": "motherlode"

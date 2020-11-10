@@ -45,7 +45,6 @@ public interface FeaturesManager {
      */
     RegistryKey<ConfiguredStructureFeature<?, ?>> registerConfiguredStructureFeature(Identifier id, ConfiguredStructureFeature<?, ?> configuredStructureFeature);
 
-
     /**
      * Registers the given {@link ConfiguredFeature} and adds it to the world using {@link #addFeature(FeatureTarget, RegistryKey)}.
      *

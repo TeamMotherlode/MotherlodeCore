@@ -8,5 +8,4 @@ project.ext.setDefaultApis = {
 }
 project.ext.setRuntimeTestMods = {
     useAsRuntime('io.github.prospector:modmenu:1.15.0+build.1')
-    useAsRuntime('me.shedaniel:RoughlyEnoughItems-runtime:5.8.1')
 }

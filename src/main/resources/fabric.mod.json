@@ -8,6 +8,7 @@
   "license": "MIT License",
   "icon": "assets/motherlode/icon.png",
   "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore"
   },

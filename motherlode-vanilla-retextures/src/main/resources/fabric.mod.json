@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
-    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/vanilla-retextures"
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-vanilla-retextures"
   },
   "license": "MIT License",
   "icon": "assets/motherlode-vanilla-retextures/icon.png",

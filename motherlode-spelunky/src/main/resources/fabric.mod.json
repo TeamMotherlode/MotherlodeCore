@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
-    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-spelunky"
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-spelunky"
   },
   "license": "MIT License",
   "icon": "assets/motherlode-spelunky/icon.png",

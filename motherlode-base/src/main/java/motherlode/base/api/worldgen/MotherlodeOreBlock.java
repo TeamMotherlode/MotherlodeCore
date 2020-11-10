@@ -9,11 +9,11 @@ import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class MotherlodeOreBlock extends OreBlock implements DataProcessor {

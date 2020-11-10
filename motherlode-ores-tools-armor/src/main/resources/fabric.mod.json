@@ -8,8 +8,9 @@
     "Team Motherlode"
   ],
   "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
-    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/motherlode-ores-tools-armor"
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-ores-tools-armor"
   },
   "license": "MIT License",
   "icon": "assets/motherlode-ores-tools-armor/icon.png",
@@ -33,7 +34,6 @@
     "motherlode-base": "*"
   },
   "suggests": {
-    "flamingo": "*"
   },
   "custom": {
     "modmenu:parent": "motherlode"

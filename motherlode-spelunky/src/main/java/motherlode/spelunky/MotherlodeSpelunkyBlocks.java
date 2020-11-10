@@ -5,6 +5,7 @@ import net.minecraft.block.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
@@ -15,7 +16,6 @@ import motherlode.spelunky.block.PotAssets;
 import motherlode.spelunky.block.PotBlock;
 import motherlode.spelunky.block.RopeAssets;
 import motherlode.spelunky.block.RopeBlock;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class MotherlodeSpelunkyBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.DECORATIONS);

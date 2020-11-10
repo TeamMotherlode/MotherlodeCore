@@ -1,8 +1,8 @@
 package motherlode.redstone;
 
 import net.minecraft.util.Identifier;
-import motherlode.base.Motherlode;
 import net.fabricmc.api.ModInitializer;
+import motherlode.base.Motherlode;
 import org.apache.logging.log4j.Level;
 
 public class MotherlodeModule implements ModInitializer {

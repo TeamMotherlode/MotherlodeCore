@@ -2,8 +2,8 @@ package motherlode.base.api.impl;
 
 import java.util.function.Predicate;
 import net.minecraft.world.gen.GenerationStep;
-import motherlode.base.api.worldgen.FeatureTarget;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
+import motherlode.base.api.worldgen.FeatureTarget;
 
 @SuppressWarnings("deprecation")
 public class FeatureTargetImpl implements FeatureTarget {

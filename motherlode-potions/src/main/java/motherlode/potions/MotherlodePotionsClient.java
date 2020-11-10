@@ -3,12 +3,12 @@ package motherlode.potions;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import motherlode.base.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.potions.MotherlodePotions.PotionModelInfo;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 
 public class MotherlodePotionsClient implements ClientModInitializer {
     @Override

@@ -14,12 +14,12 @@ import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.SurfaceConfig;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import motherlode.base.Motherlode;
 import motherlode.base.api.worldgen.FeatureTarget;
 import motherlode.biomes.MotherlodeBiomesBlocks;
 import motherlode.biomes.MotherlodeModule;
 import motherlode.biomes.world.feature.MarshFeature;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 
 /**
  * @author Indigo Amann

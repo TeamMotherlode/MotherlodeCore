@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
@@ -11,7 +12,6 @@ import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.buildingblocks.block.PaintableWallBlock;
 import motherlode.buildingblocks.block.StoneVariantType;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 @SuppressWarnings("unused")
 public class MotherlodeBuildingBlocks {

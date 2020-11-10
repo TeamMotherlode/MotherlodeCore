@@ -3,11 +3,11 @@ package motherlode.spelunky;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
-import motherlode.spelunky.block.PotBlock;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import motherlode.spelunky.block.PotBlock;
 
 public class MotherlodeSpelunkyClient implements ClientModInitializer {
     @Override

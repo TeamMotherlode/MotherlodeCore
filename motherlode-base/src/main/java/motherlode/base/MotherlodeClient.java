@@ -3,9 +3,9 @@ package motherlode.base;
 import java.util.List;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
+import net.fabricmc.api.ClientModInitializer;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.impl.AssetsManagerImpl;
-import net.fabricmc.api.ClientModInitializer;
 import com.swordglowsblue.artifice.api.Artifice;
 
 public class MotherlodeClient implements ClientModInitializer {

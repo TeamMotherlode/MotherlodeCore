@@ -7,12 +7,12 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.StructurePoolFeatureConfig;
+import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import motherlode.base.Motherlode;
 import motherlode.biomes.MotherlodeModule;
 import motherlode.biomes.world.feature.structure.CampGenerator;
 import motherlode.biomes.world.feature.structure.CampStructureFeature;
 import motherlode.biomes.world.feature.structure.RuinedCampsData;
-import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 
 public class MotherlodeStructures {
     public static final StructureFeature<StructurePoolFeatureConfig> CAMP = new CampStructureFeature(StructurePoolFeatureConfig.CODEC);

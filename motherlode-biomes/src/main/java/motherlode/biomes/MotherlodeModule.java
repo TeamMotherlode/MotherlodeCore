@@ -1,11 +1,11 @@
 package motherlode.biomes;
 
 import net.minecraft.util.Identifier;
+import net.fabricmc.api.ModInitializer;
 import motherlode.base.Motherlode;
 import motherlode.biomes.world.MotherlodeBiomeFeatures;
 import motherlode.biomes.world.MotherlodeBiomes;
 import motherlode.biomes.world.MotherlodeStructures;
-import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.Level;
 
 public class MotherlodeModule implements ModInitializer {

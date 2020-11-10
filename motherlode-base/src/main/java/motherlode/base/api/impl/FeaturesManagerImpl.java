@@ -9,12 +9,12 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
-import motherlode.base.Motherlode;
-import motherlode.base.api.worldgen.FeatureTarget;
-import motherlode.base.api.worldgen.FeaturesManager;
 import net.fabricmc.fabric.api.biome.v1.BiomeModification;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import motherlode.base.Motherlode;
+import motherlode.base.api.worldgen.FeatureTarget;
+import motherlode.base.api.worldgen.FeaturesManager;
 
 @SuppressWarnings("deprecation")
 public class FeaturesManagerImpl implements FeaturesManager {

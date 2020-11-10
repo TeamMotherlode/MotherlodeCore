@@ -16,13 +16,13 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import motherlode.redstone.DefaultInventory;
-import motherlode.redstone.MotherlodeBlockEntities;
-import motherlode.redstone.gui.RedstoneTransmitterGuiDescription;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import motherlode.redstone.DefaultInventory;
+import motherlode.redstone.MotherlodeBlockEntities;
+import motherlode.redstone.gui.RedstoneTransmitterGuiDescription;
 
 public class RedstoneTransmitterBlockEntity extends BlockEntity implements DefaultInventory, BlockEntityClientSerializable, ExtendedScreenHandlerFactory {
     private DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);

@@ -18,7 +18,7 @@ import motherlode.base.Motherlode;
 public class MotherlodePotions {
     public static Map<Potion, PotionModelInfo> potionModelInfos = new HashMap<>();
 
-    public static final StatusEffect THORNS_EFFECT = register("thorns", new ThornsEffect(9848355));
+    public static final StatusEffect THORNS_EFFECT = register("thorns", new ThornsEffect(0x964623));
 
     public static final Potion THORNS = register("thorns", new Potion(new StatusEffectInstance(THORNS_EFFECT, 3600)));
     public static final Potion LONG_THORNS = register("long_thorns", new Potion(new StatusEffectInstance(THORNS_EFFECT, 9600)));

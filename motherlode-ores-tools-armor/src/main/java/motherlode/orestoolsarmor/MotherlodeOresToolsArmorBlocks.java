@@ -8,15 +8,15 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import motherlode.base.CommonAssets;
 import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
-import motherlode.base.api.worldgen.MotherlodeOreBlock;
-import motherlode.base.api.worldgen.FeatureTargets;
 import motherlode.base.api.Registerable;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import motherlode.base.api.worldgen.FeatureTargets;
+import motherlode.base.api.worldgen.MotherlodeOreBlock;
 
 @SuppressWarnings("unused")
 public class MotherlodeOresToolsArmorBlocks {
