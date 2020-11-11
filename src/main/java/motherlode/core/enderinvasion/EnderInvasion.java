@@ -1,14 +1,6 @@
 package motherlode.core.enderinvasion;
 
-import motherlode.core.Motherlode;
-import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodeTags;
-import nerdhub.cardinal.components.api.ComponentRegistry;
-import nerdhub.cardinal.components.api.ComponentType;
-import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
-import nerdhub.cardinal.components.api.event.LevelComponentCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import java.util.Random;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
@@ -22,7 +14,15 @@ import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.dimension.DimensionType;
-import java.util.Random;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import motherlode.core.Motherlode;
+import motherlode.core.registry.MotherlodeBlocks;
+import motherlode.core.registry.MotherlodeTags;
+import nerdhub.cardinal.components.api.ComponentRegistry;
+import nerdhub.cardinal.components.api.ComponentType;
+import nerdhub.cardinal.components.api.event.ChunkComponentCallback;
+import nerdhub.cardinal.components.api.event.LevelComponentCallback;
 
 public class EnderInvasion {
 
@@ -62,7 +62,6 @@ public class EnderInvasion {
 
         // Convert blocks using BlockRecipeManager.SPREAD and generate decoration
         EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
-
             EnderInvasionHelper.convert(world, BlockRecipeManager.SPREAD, pos);
             generateDecoration(world, chunk, pos, EnderInvasionHelper.getNoise(world, pos, DECORATION_NOISE_SCALE));
         });
@@ -82,7 +81,6 @@ public class EnderInvasion {
     }
 
     public static void generateDecoration(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise) {
-
         if (!chunk.getBlockState(pos).isAir() && !chunk.getBlockState(pos).isOf(MotherlodeBlocks.CORRUPTED_GRASS))
             return;
 
@@ -95,7 +93,6 @@ public class EnderInvasion {
     }
 
     public static boolean checkEndFoam(WorldChunk chunk, BlockPos pos) {
-
         boolean ground = false;
         for (int i = 3; i > 0; i--) {
 
@@ -124,9 +121,8 @@ public class EnderInvasion {
         }
 
         switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
-
             case ENDER_INVASION:
-                EnderInvasionHelper.spawnParticles(world, pos, random, 4, 2);
+                EnderInvasionHelper.spawnParticles(world, pos, random, 4);
 
                 if (EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
                         world.random.nextDouble() < (world.isNight() ? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
