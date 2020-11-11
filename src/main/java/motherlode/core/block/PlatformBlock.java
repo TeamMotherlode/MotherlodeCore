@@ -1,24 +1,21 @@
 package motherlode.core.block;
 
 import motherlode.core.registry.MotherlodeBlocks;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -26,19 +23,12 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import org.lwjgl.system.CallbackI;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class PlatformBlock extends Block implements Waterloggable {
     public static final BooleanProperty WATERLOGGED;
     public static final DirectionProperty FACING;
     public static final VoxelShape NORMAL_SHAPE;
     public static final VoxelShape[] STAIR_SHAPES = new VoxelShape[4];
-
-
-
 
     public PlatformBlock(Settings settings) {
         super(settings);
@@ -79,21 +69,15 @@ public class PlatformBlock extends Block implements Waterloggable {
         World world = ctx.getWorld();
         PlayerEntity playerEntity = ctx.getPlayer();
         BlockState result = null;
-        BlockState back = world.getBlockState(placePos.offset(facing.getOpposite()));
-        BlockState front = world.getBlockState(placePos.offset(facing));
-        if (playerEntity != null && (playerEntity.getBlockPos().getX() != placePos.getX() || playerEntity.getBlockPos().getZ() != placePos.getZ())) {
-            if (playerEntity.getY() > placePos.getY() && world.getBlockState(placePos.offset(facing)).getMaterial().isReplaceable()) {
+        if (playerEntity != null && (!playerEntity.isSneaking())) {
+            boolean isBlockFront = world.getBlockState(placePos.offset(facing)).getMaterial().isReplaceable();
+            if (playerEntity.getY() > placePos.getY() && isBlockFront) {
                 // Stair Downwards
                 result = this.getDefaultState().with(FACING, facing).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-                if (back.isOf(this) && !back.get(FACING).equals(Direction.DOWN)){
-                    world.setBlockState(placePos.offset(facing.getOpposite()), back.with(FACING, Direction.DOWN));
-                }
-            } else if (world.getBlockState(placePos.offset(facing.getOpposite())).getMaterial().isReplaceable()){
+            } else if (world.getBlockState(placePos.offset(facing.getOpposite())).getMaterial().isReplaceable()
+            && isBlockFront){
                 // Stair Upwards
                 result = this.getDefaultState().with(FACING, facing.getOpposite()).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-                if (front.isOf(this) && !front.get(FACING).equals(Direction.DOWN)){
-                    world.setBlockState(placePos.offset(facing), front.with(FACING, Direction.DOWN));
-                }
             }
         }
         if (result == null) result = this.getDefaultState().with(PlatformBlock.FACING, Direction.DOWN).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
