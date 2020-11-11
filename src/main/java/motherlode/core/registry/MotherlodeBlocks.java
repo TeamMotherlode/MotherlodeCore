@@ -17,7 +17,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ public class MotherlodeBlocks {
     public static final ArrayList<DefaultShovelableBlock> shovelableBlocks = new ArrayList<>();
 
     public static final ArrayList<Block> cutouts = new ArrayList<>();
+    public static final ArrayList<Block> translucent = new ArrayList<>();
     public static final ArrayList<Block> grassColored = new ArrayList<>();
     public static final ArrayList<Block> foliageColored = new ArrayList<>();
 
@@ -131,6 +131,9 @@ public class MotherlodeBlocks {
     public static final Block REEDS = register("reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "reeds"); });
     public static final Block CATTAIL_REEDS = register("cattail_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "cattail_reeds"); });
     public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), (block) -> { flatItemModelList.put(block, () -> "dry_reeds"); });
+
+    public static final Block TRAP_CUTTER = register("trap_cutter", new CutterTrapBlock(FabricBlockSettings.copy(Blocks.STONE_BRICKS).requiresTool().strength(3.0F, 3.0F).nonOpaque()));
+    public static final Block TRAP_ZAPPER = register("trap_zapper", new ZapperTrapBlock(FabricBlockSettings.copy(Blocks.STONE_BRICKS).requiresTool().strength(3.0F, 3.0F).nonOpaque()));
 
     public static void init() {
         // CALLED TO MAINTAIN REGISTRY ORDER
