@@ -19,7 +19,8 @@ repositories {
 		name = "Ladysnake Libs"
 		url = "https://dl.bintray.com/ladysnake/libs"
 	}
-	maven { url = "https://jitpack.io"}
+	maven { url 'https://jitpack.io' }
+    jcenter()
 }
 
 minecraft {
@@ -29,14 +30,15 @@ dependencies {
     minecraft "com.mojang:minecraft:1.16.1"
     mappings "net.fabricmc:yarn:1.16.1+build.1:v2"
     modImplementation "net.fabricmc:fabric-loader:0.8.8+build.202"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:$project.fabric_version"
-	modImplementation "net.fabricmc.fabric-api:fabric-biomes-v1:0.2.7+059ea86602"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.13.1+build.370-1.16"
 
 	modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 	include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
 
 	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
 	include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
+
+	modImplementation "com.github.bernie-g:geckolib:fabric-1.16.1-geckolib-2.0.0-beta.5"
 
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
 	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-level:${project.cardinal_components_version}"

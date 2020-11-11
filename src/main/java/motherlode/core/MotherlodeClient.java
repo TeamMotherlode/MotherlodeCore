@@ -1,5 +1,6 @@
 package motherlode.core;
 
+import motherlode.core.entities.render.MotherlodeEntityRenderers;
 import motherlode.core.block.PotBlock;
 import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
@@ -27,33 +28,37 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockRenderView;
+import net.minecraft.world.level.ColorResolver;
+import net.minecraft.client.render.RenderLayer;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeClient implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        MotherlodeAssets.register();
+	@Override
+	public void onInitializeClient() {
+		MotherlodeAssets.register();
+		MotherlodeEntityRenderers.init();
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.END_FOAM, RenderLayer.getTranslucent());
-        ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
-        ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
-
-        for (Block block : MotherlodeBlocks.cutouts) {
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
-        }
-        for (Block block : MotherlodeBlocks.grassColored) {
-            ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-                    BiomeColors.getGrassColor(world, pos), block);
-            ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getSpruceColor(), block);
-        }
-        for (Block block : MotherlodeBlocks.foliageColored) {
-            ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-                    BiomeColors.getFoliageColor(world, pos), block);
-            ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getDefaultColor(), block);
-        }
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-                BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.END_FOAM, RenderLayer.getTranslucent());
+		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
+		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
+		
+    		for(Block block : MotherlodeBlocks.cutouts) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for(Block block : MotherlodeBlocks.grassColored) {
+			ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
+				BiomeColors.getGrassColor(world, pos), block);
+			ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getSpruceColor(), block);
+		}
+		for(Block block : MotherlodeBlocks.foliageColored) {
+			ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
+					BiomeColors.getFoliageColor(world, pos), block);
+			ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getDefaultColor(), block);
+		}
+		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
+			BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
 
         FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
             MotherlodePotions.PotionModelInfo potion = MotherlodePotions.potionModelInfos.get(PotionUtil.getPotion(itemStack));
