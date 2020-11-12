@@ -37,6 +37,9 @@ public class EnderInvasionHelper {
     private static long NOISE_GENERATOR_SEED;
 
     public static void convertChunk(ServerWorld world, WorldChunk chunk) {
+        final Profiler profiler = world.getProfiler();
+        profiler.push("enderinvasion");
+
         if (world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
         switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
@@ -50,6 +53,7 @@ public class EnderInvasionHelper {
                 purifyChunk(world, chunk);
                 break;
         }
+        profiler.pop();
     }
 
     public static void corruptChunk(ServerWorld world, WorldChunk chunk) {
@@ -80,6 +84,9 @@ public class EnderInvasionHelper {
     }
 
     public static void purifyChunk(ServerWorld world, WorldChunk chunk) {
+        final Profiler profiler = world.getProfiler();
+        profiler.push("purifyChunk");
+
         EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
         if (chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED) return;
 
@@ -94,8 +101,9 @@ public class EnderInvasionHelper {
                 EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, c, pos, noise);
             }
         });
-
         if (unaffected.get()) chunkState.setValue(EnderInvasionChunkComponent.State.UNAFFECTED);
+
+        profiler.pop();
     }
 
     public static <T extends Chunk> void forEachBlock(T chunk, BiConsumer<T, BlockPos> consumer) {
@@ -168,7 +176,6 @@ public class EnderInvasionHelper {
                     if (playerEntity != null) {
                         double f = playerEntity.squaredDistanceTo(d, i, e);
                         if (SpawnHelperAccessor.isAcceptableSpawnPosition(world, chunk, mutable, f)) {
-
                             o = 1 + world.random.nextInt(4);
 
                             if (canSpawn(world, entityType, mutable, f) && checker.test(entityType, mutable, chunk)) {
@@ -224,19 +231,18 @@ public class EnderInvasionHelper {
         if (!world.getFluidState(posUp).isIn(FluidTags.WATER) && !stateUp.isSolidBlock(world, posUp)) return true;
 
         for (Direction direction : Direction.values()) {
-
             BlockPos pos2 = pos.add(direction.getVector());
             if (world.getFluidState(pos2).isIn(FluidTags.WATER)) return false;
         }
         return true;
     }
 
-    public static void convert(ServerWorld world, BlockRecipeManager manager, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
+    public static void convert(WorldChunk chunk, BlockRecipeManager manager, BlockPos pos) {
+        BlockState state = chunk.getBlockState(pos);
         Optional.of(state.getBlock())
             .map(manager::getRecipe)
             .map(recipe -> recipe.convert(state))
-            .ifPresent(convertedState -> world.setBlockState(pos, convertedState));
+            .ifPresent(convertedState -> chunk.setBlockState(pos, convertedState, false));
     }
 
     // Returns a Vec3i where x and z can be from -1 to 1, and y can be from -2 to 2

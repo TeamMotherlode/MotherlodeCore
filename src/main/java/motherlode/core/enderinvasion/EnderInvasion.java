@@ -8,6 +8,7 @@ import net.minecraft.loot.condition.LootConditionType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.village.VillagerProfession;
@@ -62,13 +63,13 @@ public class EnderInvasion {
 
         // Convert blocks using BlockRecipeManager.SPREAD and generate decoration
         EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
-            EnderInvasionHelper.convert(world, BlockRecipeManager.SPREAD, pos);
+            EnderInvasionHelper.convert(chunk, BlockRecipeManager.SPREAD, pos);
             generateDecoration(world, chunk, pos, EnderInvasionHelper.getNoise(world, pos, DECORATION_NOISE_SCALE));
         });
 
         // Purify blocks using BlockRecipeManager.PURIFICATION
         EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos, noise) ->
-            EnderInvasionHelper.convert(world, BlockRecipeManager.PURIFICATION, pos));
+            EnderInvasionHelper.convert(chunk, BlockRecipeManager.PURIFICATION, pos));
 
         Identifier piglinBarteringLootTable = new Identifier("minecraft", "gameplay/piglin_bartering");
 
@@ -115,13 +116,19 @@ public class EnderInvasion {
     public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (world.getDimension() != DimensionType.getOverworldDimensionType()) return;
 
+        final Profiler profiler = world.getProfiler();
+        profiler.push("enderInvasionRandomTick");
+
         if (!EnderInvasionHelper.canSurvive(world, pos)) {
-            EnderInvasionHelper.convert(world, BlockRecipeManager.PURIFICATION, pos);
+            EnderInvasionHelper.convert(world.getWorldChunk(pos), BlockRecipeManager.PURIFICATION, pos);
+
+            profiler.pop();
             return;
         }
 
         switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
             case ENDER_INVASION:
+
                 EnderInvasionHelper.spawnParticles(world, pos, random, 4);
 
                 if (EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD &&
@@ -134,6 +141,7 @@ public class EnderInvasion {
                 break;
 
             case POST_ENDER_DRAGON:
+
                 if (CHUNK_STATE.get(world.getChunk(pos)).value() == EnderInvasionChunkComponent.State.UNAFFECTED) break;
 
                 double noise = EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE);
@@ -141,6 +149,8 @@ public class EnderInvasion {
                     EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos, noise);
                 break;
         }
+
+        profiler.pop();
     }
 
     public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -151,7 +161,7 @@ public class EnderInvasion {
         for (int i = 0; i < 3; i++) {
 
             BlockPos blockPos = pos.add(EnderInvasionHelper.randomNearbyBlockPos(random));
-            EnderInvasionHelper.convert(world, BlockRecipeManager.SPREAD, blockPos);
+            EnderInvasionHelper.convert(world.getWorldChunk(blockPos), BlockRecipeManager.SPREAD, blockPos);
         }
     }
 }
