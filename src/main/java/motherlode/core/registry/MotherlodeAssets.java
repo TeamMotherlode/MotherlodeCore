@@ -5,6 +5,7 @@ import com.swordglowsblue.artifice.api.Artifice;
 
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
+import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
 import motherlode.core.block.DefaultShovelableBlock;
 import motherlode.core.block.stateproperty.BlockDyeColor;
@@ -17,8 +18,12 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeAssets {
@@ -48,6 +53,21 @@ public class MotherlodeAssets {
                         .parent(new Identifier("block/tinted_cross"))
                         .texture("cross", Motherlode.id("block/"+blockId))
                 );
+            }
+            for (Map.Entry<Block, Function<String, Processor<BlockStateBuilder>>> entry : MotherlodeBlocks.customStateList.entrySet()){
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
+                pack.addBlockState(Motherlode.id(blockId), entry.getValue().apply(blockId));
+            }
+            for (Map.Entry<Block, ArrayList<Function<String, Pair<String, Processor<ModelBuilder>>>>> entry : MotherlodeBlocks.customBlockModelList.entrySet()){
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
+                for (Function<String, Pair<String, Processor<ModelBuilder>>> function : entry.getValue()){
+                    Pair<String, Processor<ModelBuilder>> a = function.apply(blockId);
+                    pack.addBlockModel(Motherlode.id(a.getLeft()), a.getRight());
+                }
+            }
+            for (Map.Entry<Block, Function<String, Processor<ModelBuilder>>> entry : MotherlodeBlocks.customItemModelList.entrySet()){
+                String blockId = Registry.BLOCK.getId(entry.getKey()).getPath();
+                pack.addItemModel(Motherlode.id(blockId), entry.getValue().apply(blockId));
             }
             for(Block block : MotherlodeBlocks.thickCrossModelList) {
                 String blockId = Registry.BLOCK.getId(block).getPath();

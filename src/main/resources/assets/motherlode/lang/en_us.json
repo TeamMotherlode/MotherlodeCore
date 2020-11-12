@@ -14,6 +14,8 @@
     "block.motherlode.steel_bars" : "Steel Bars",
     "block.motherlode.steel_door": "Steel Door",
     "block.motherlode.steel_platform": "Steel Platform",
+    "block.motherlode.steel_platform_stairs": "Steel Platform Stairs",
+
 
     "block.motherlode.copper_ore":"Copper Ore",
     "block.motherlode.copper_block":"Copper Block",

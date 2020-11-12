@@ -1,8 +1,0 @@
-{
-	"parent": "motherlode:block/templates/platform_normal",
-	"textures": {
-		"side": "motherlode:block/steel_platform_side",
-		"top": "motherlode:block/steel_platform_top",
-		"particle": "motherlode:block/steel_platform_top"
-	}
-}
