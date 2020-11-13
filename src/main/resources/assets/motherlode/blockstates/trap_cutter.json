@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "powered=false": {
+            "model": "motherlode:block/trap_cutter"
+        },
+        "powered=true": {
+            "model": "motherlode:block/trap_cutter_deployed"
+        }
+    }
+}
