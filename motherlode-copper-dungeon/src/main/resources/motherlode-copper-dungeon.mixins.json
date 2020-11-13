@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "motherlode.core.copperdungeon.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+  ],
+  "mixins": [
+  ]
+}
