@@ -7,7 +7,6 @@ public class DefaultGemItem extends DefaultItem {
 
     public DefaultGemItem(int color, Item.Settings settings) {
         super(settings);
-
         this.color = color;
     }
 

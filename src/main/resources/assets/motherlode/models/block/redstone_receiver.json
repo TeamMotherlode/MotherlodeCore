@@ -1,7 +1,7 @@
 {
   "parent": "motherlode:block/redstone_transmitter_template",
   "textures": {
-	"top": "motherlode:block/redstone_transmitter_top",
+	"top": "motherlode:block/redstone_receiver_top",
 	"side": "motherlode:block/redstone_transmitter_side"
   }
 }
