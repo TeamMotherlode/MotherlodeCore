@@ -26,12 +26,10 @@ public class RingItem extends TrinketItem {
 
     public final Qualities[] qualities;
     public float attributeEfficiency;
-    public final Rarity rarity;
 
     public RingItem(Rarity rarity, Settings settings, Qualities... qualities) {
         super(settings);
         this.qualities = qualities;
-        this.rarity = rarity;
     }
 
     @Override
@@ -44,13 +42,13 @@ public class RingItem extends TrinketItem {
         // Convert qualities to list for checking.
         final List<Qualities> qualityList = Arrays.asList(qualities);
         // Check for certain qualities and set relevant attributes.
-        if (rarity == Rarity.COMMON) {
+        if (this.getRarity(stack) == Rarity.COMMON) {
             attributeEfficiency = 1.0f;
         }
-        if (rarity == Rarity.UNCOMMON) {
+        if (this.getRarity(stack) == Rarity.UNCOMMON) {
             attributeEfficiency = 2.0f;
         }
-        if (rarity == Rarity.RARE) {
+        if (this.getRarity(stack) == Rarity.RARE) {
             attributeEfficiency = 3.0f;
         }
 
