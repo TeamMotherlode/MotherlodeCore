@@ -2,14 +2,12 @@ package motherlode.core;
 
 import motherlode.core.block.entity.renderer.RedstoneTransmitterRenderer;
 import motherlode.core.registry.MotherlodeBlockEntities;
+import motherlode.core.entities.render.MotherlodeEntityRenderers;
 import motherlode.core.block.PotBlock;
 import motherlode.core.block.PotColor;
 import motherlode.core.gui.RedstoneTransmitterGuiDescription;
 import motherlode.core.gui.RedstoneTransmitterScreen;
-import motherlode.core.registry.MotherlodeAssets;
-import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodePotions;
-import motherlode.core.registry.MotherlodeScreenHandlers;
+import motherlode.core.registry.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -39,13 +37,21 @@ public class MotherlodeClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		MotherlodeAssets.register();
 
-    	BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
-		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
+    BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
+    BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
+
+		MotherlodeEntityRenderers.init();
+		
 		ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeBlocks.POT);
 		ScreenRegistry.register(MotherlodeScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
-		
-    		for(Block block : MotherlodeBlocks.cutouts) {
+
+		MotherlodeParticles.init();
+
+		for(Block block : MotherlodeBlocks.cutouts) {
 			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+		}
+		for(Block block : MotherlodeBlocks.translucent) {
+			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getTranslucent());
 		}
 		for(Block block : MotherlodeBlocks.grassColored) {
 			ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
@@ -77,11 +83,10 @@ public class MotherlodeClient implements ClientModInitializer {
 
 			return Integer.parseInt(tag.getString("pattern")) / 100F;
 		});
-    
+
     BlockEntityRendererRegistry.INSTANCE.register(MotherlodeBlockEntities.REDSTONE_TRANSMITTER, RedstoneTransmitterRenderer::new);
 
-    ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register(((spriteAtlasTexture, registry) -> {
-			registry.register(Motherlode.id("block/transmitter_gem"));
-		}));
+    ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register((spriteAtlasTexture, registry) -> 
+			registry.register(Motherlode.id("block/transmitter_gem")));
 	}
 }
