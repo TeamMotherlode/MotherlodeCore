@@ -6,8 +6,11 @@ import motherlode.core.item.DefaultGemItem;
 import motherlode.core.item.DefaultItem;
 import motherlode.core.item.DefaultMusicDiscItem;
 import motherlode.core.item.MaterialToolsAndArmor;
+import motherlode.core.item.trinkets.Qualities;
+import motherlode.core.item.trinkets.RingItem;
 import net.minecraft.item.Item;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
