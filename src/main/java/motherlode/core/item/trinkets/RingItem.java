@@ -42,6 +42,9 @@ public class RingItem extends TrinketItem {
         // Convert qualities to list for checking.
         final List<Qualities> qualityList = Arrays.asList(qualities);
         // Check for certain qualities and set relevant attributes.
+        if (qualityList.contains(Qualities.FAULTY)) {
+            attributeEfficiency = 0f;
+        }
         if (this.getRarity(stack) == Rarity.COMMON) {
             attributeEfficiency = 1.0f;
         }
@@ -88,7 +91,7 @@ public class RingItem extends TrinketItem {
         }
 
         if (qualityList.contains(Qualities.AQUATIC) && player.isTouchingWaterOrRain() && !qualityList.contains(Qualities.FAULTY)) {
-            player.applyStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1, (int) attributeEfficiency));
+            player.applyStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1, (int) attributeEfficiency - 1));
         }
     }
 
