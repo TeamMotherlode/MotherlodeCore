@@ -3,13 +3,14 @@
   "package": "motherlode.core.mixins",
   "compatibilityLevel": "JAVA_8",
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   },
   "client": [
     "BackgroundRendererMixin"
   ],
   "mixins": [
     "FlowableFluidMixin",
+    "ServerWorldMixin",
     "StructureFeatureAccessor",
     "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
