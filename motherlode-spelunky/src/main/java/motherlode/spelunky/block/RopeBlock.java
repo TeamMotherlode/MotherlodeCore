@@ -72,7 +72,7 @@ public class RopeBlock extends Block {
 
         if (world.getBlockState(pos).isOf(Blocks.AIR)) {
             world.setBlockState(pos, MotherlodeSpelunkyBlocks.ROPE.getDefaultState());
-            if (!player.method_31549().creativeMode)
+            if (!player.getAbilities().creativeMode)
                 itemStack.decrement(1);
             return ActionResult.SUCCESS;
         }

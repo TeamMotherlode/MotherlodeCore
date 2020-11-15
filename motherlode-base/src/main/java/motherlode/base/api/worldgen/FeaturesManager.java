@@ -80,7 +80,7 @@ public interface FeaturesManager {
      * Creates and registers a {@link ConfiguredFeature} to generate an ore using the specified options.
      *
      * @param id         The {@link Identifier} to register the {@code ConfiguredFeature} under.
-     * @param target     The {@link OreTarget} to specify the biomes that the ore will generate in, the blocks that the ore can replace and the {@link net.minecraft.world.gen.GenerationStep.Feature} used.
+     * @param target     The {@link OreTarget} to specify the biomes that the ore will generate in, the blocks that the ore can replace and the {@link GenerationStep.Feature} used.
      * @param state      The ore will generate with this {@link BlockState}.
      * @param veinSize   Each ore vein will have about this amount of ores.
      * @param decorators This can be used to {@link net.minecraft.world.gen.decorator.Decoratable decorate} the created {@code ConfiguredFeature}.
