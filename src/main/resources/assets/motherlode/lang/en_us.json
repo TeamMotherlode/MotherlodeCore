@@ -3,7 +3,20 @@
     "itemGroup.motherlode.items":"Motherlode Items",
     "itemGroup.motherlode.armor_and_tools":"Motherlode Armor and Tools",
     "itemGroup.motherlode.music":"Motherlode Music",
-  
+
+    "block.motherlode.steel_block" : "Steel Block",
+    "block.motherlode.steel_tiles" : "Steel Tiles",
+    "block.motherlode.steel_tiles_stairs" : "Steel Tiles Stairs",
+    "block.motherlode.steel_tiles_slab" : "Steel Tiles Slab",
+    "block.motherlode.steel_wall" : "Steel Wall",
+    "block.motherlode.steel_wall_stairs" : "Steel Wall Stairs",
+    "block.motherlode.steel_wall_slab" : "Steel Wall Slab",
+    "block.motherlode.steel_bars" : "Steel Bars",
+    "block.motherlode.steel_door": "Steel Door",
+    "block.motherlode.steel_platform": "Steel Platform",
+    "block.motherlode.steel_platform_stairs": "Steel Platform Stairs",
+
+
     "block.motherlode.copper_ore":"Copper Ore",
     "block.motherlode.copper_block":"Copper Block",
     "item.motherlode.copper_ingot":"Copper Ingot",

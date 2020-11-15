@@ -1,9 +1,16 @@
 package motherlode.core.registry;
 
+import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
+import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
+import com.swordglowsblue.artifice.api.builder.data.LootTableBuilder;
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
 import motherlode.core.block.*;
 import motherlode.core.block.DefaultPlantBlock;
+import motherlode.core.block.MotherlodeDoorBlock;
+import motherlode.core.block.MotherlodeLadderBlock;
+import motherlode.core.block.MotherlodePaneBlock;
+import motherlode.core.block.DefaultDecorationBlock;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -15,6 +22,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -31,6 +39,13 @@ public class MotherlodeBlocks {
     public static final ArrayList<Block> defaultRotatableStateList = new ArrayList<>();
     public static final ArrayList<Block> defaultModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultPlantModelList = new ArrayList<>();
+
+    public static final HashMap<Block, Function<String, Processor<BlockStateBuilder>>> customStateList = new HashMap<>();
+    public static final HashMap<Block, Function<String, Processor<LootTableBuilder>>> customLootTableList = new HashMap<>();
+    public static final HashMap<Block, ArrayList<Function<String, Pair<String, Processor<ModelBuilder>>>>> customBlockModelList = new HashMap<>();
+    public static final HashMap<Block, Function<String, Processor<ModelBuilder>>> customItemModelList = new HashMap<>();
+
+
     public static final ArrayList<Block> thickCrossModelList = new ArrayList<>();
     public static final ArrayList<Block> defaultItemModelList = new ArrayList<>();
     public static final Map<Block, Supplier<String>> flatItemModelList = new HashMap<>();
@@ -58,6 +73,36 @@ public class MotherlodeBlocks {
     public static final Block SAPPHIRE_ORE = register("sapphire_ore", new DefaultOreBlock(false, 2));
     public static final Block TOPAZ_ORE = register("topaz_ore", new DefaultOreBlock(false, 2));
     public static final Block ONYX_ORE = register("onyx_ore", new DefaultOreBlock(false, 2));
+
+    public static final Block STEEL_BLOCK = register("steel_block", mineralBlock(4)); // VARIABLES MIGHT CHANGE
+    public static final DefaultDecorationBlock STEEL_WALL = register("steel_wall", new DefaultDecorationBlock("steel_wall", FabricBlockSettings.of(Material.METAL).requiresTool().strength(4.0F, 5.0F))).registerAll();
+    public static final DefaultDecorationBlock STEEL_TILES = register("steel_tiles", new DefaultDecorationBlock("steel_tiles", FabricBlockSettings.of(Material.METAL).requiresTool().strength(4.0F, 5.0F))).registerAll();
+
+    public static final Block STEEL_LADDER = register("steel_ladder", new MotherlodeLadderBlock(AbstractBlock.Settings.of(Material.SUPPORTED).strength(0.8F).sounds(BlockSoundGroup.METAL).nonOpaque())); //TODO: Ladder sound?
+    public static final Block STEEL_BARS = register("steel_bars", new MotherlodePaneBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.CLEAR).requiresTool().strength(6.0F, 7.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
+    public static final Block STEEL_PLATFORM = register("steel_platform", new PlatformBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.IRON).requiresTool().strength(4.0f,4.0f).sounds(BlockSoundGroup.METAL).nonOpaque()));
+    public static final Block STEEL_PLATFORM_STAIRS = register("steel_platform_stairs", new PlatformStairsBlock(STEEL_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(STEEL_PLATFORM)));
+    public static final Block STEEL_DOOR = register("steel_door", new MotherlodeDoorBlock(AbstractBlock.Settings.of(Material.METAL, MaterialColor.IRON).requiresTool().strength(6.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
+
+    public static final Block OAK_PLATFORM = register("oak_platform", new PlatformBlock(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS).strength(1.0f,1.0f).nonOpaque()));
+    public static final Block OAK_PLATFORM_STAIRS = register("oak_platform_stairs", new PlatformStairsBlock(OAK_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(OAK_PLATFORM)));
+    public static final Block SPRUCE_PLATFORM = register("spruce_platform", new PlatformBlock(AbstractBlock.Settings.copy(OAK_PLATFORM)));
+    public static final Block SPRUCE_PLATFORM_STAIRS = register("spruce_platform_stairs", new PlatformStairsBlock(SPRUCE_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(SPRUCE_PLATFORM)));
+    public static final Block BIRCH_PLATFORM = register("birch_platform", new PlatformBlock(AbstractBlock.Settings.copy(OAK_PLATFORM)));
+    public static final Block BIRCH_PLATFORM_STAIRS = register("birch_platform_stairs", new PlatformStairsBlock(BIRCH_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(BIRCH_PLATFORM)));
+    public static final Block JUNGLE_PLATFORM = register("jungle_platform", new PlatformBlock(AbstractBlock.Settings.copy(OAK_PLATFORM)));
+    public static final Block JUNGLE_PLATFORM_STAIRS = register("jungle_platform_stairs", new PlatformStairsBlock(JUNGLE_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(JUNGLE_PLATFORM)));
+    public static final Block ACACIA_PLATFORM = register("acacia_platform", new PlatformBlock(AbstractBlock.Settings.copy(OAK_PLATFORM)));
+    public static final Block ACACIA_PLATFORM_STAIRS = register("acacia_platform_stairs", new PlatformStairsBlock(ACACIA_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(ACACIA_PLATFORM)));
+    public static final Block DARK_OAK_PLATFORM = register("dark_oak_platform", new PlatformBlock(AbstractBlock.Settings.copy(OAK_PLATFORM)));
+    public static final Block DARK_OAK_PLATFORM_STAIRS = register("dark_oak_platform_stairs", new PlatformStairsBlock(DARK_OAK_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(DARK_OAK_PLATFORM)));
+    public static final Block CRIMSON_PLATFORM = register("crimson_platform", new PlatformBlock(AbstractBlock.Settings.copy(Blocks.WARPED_PLANKS).strength(1.0f, 1.0f).nonOpaque()));
+    public static final Block CRIMSON_PLATFORM_STAIRS = register("crimson_platform_stairs", new PlatformStairsBlock(CRIMSON_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(CRIMSON_PLATFORM)));
+    public static final Block WARPED_PLATFORM = register("warped_platform", new PlatformBlock(AbstractBlock.Settings.copy(CRIMSON_PLATFORM)));
+    public static final Block WARPED_PLATFORM_STAIRS = register("warped_platform_stairs", new PlatformStairsBlock(WARPED_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(WARPED_PLATFORM)));
+
+
+
 
     public static final Block COPPER_BLOCK = register("copper_block", mineralBlock(1));
     public static final Block SILVER_BLOCK = register("silver_block", mineralBlock(2));
