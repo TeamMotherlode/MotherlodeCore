@@ -42,23 +42,25 @@ public interface FluidFlowable extends FluidDrainable, FluidFillable {
 
         @Override
         public Optional<Identifier> parse(String name) {
-            return Optional.of(new Identifier(name.replace(DOT_REPLACEMENT, ".").replace(DASH_REPLACEMENT, "-").replace(COLON_REPLACEMENT, ":")));
+            return Optional.of(new Identifier(name.replace(DOT_REPLACEMENT, ".")
+                    .replace(DASH_REPLACEMENT, "-").replace(COLON_REPLACEMENT, ":")));
         }
 
         @Override
         public String name(Identifier value) {
-            return value.toString().replace(".", DOT_REPLACEMENT).replace("-", DASH_REPLACEMENT).replace(":", COLON_REPLACEMENT);
+            return value.toString().replace(".", DOT_REPLACEMENT)
+                    .replace("-", DASH_REPLACEMENT).replace(":", COLON_REPLACEMENT);
         }
     };
 
     @Override
     default boolean canFillWithFluid(BlockView view, BlockPos pos, BlockState state, Fluid fluid) {
-        return state.get(FLUID).equals(new Identifier("empty"));
+        return state.get(FLUID).equals(EMPTY);
     }
 
     @Override
     default boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (state.get(FLUID).equals(new Identifier("empty"))) {
+        if (state.get(FLUID).equals(EMPTY)) {
             if (!world.isClient()) {
                 world.setBlockState(pos, state.with(FLUID, Registry.FLUID.getId(fluidState.getFluid()))
                         .with(FlowableFluid.LEVEL, Math.max(fluidState.getLevel(), 1)), 3);
@@ -72,7 +74,7 @@ public interface FluidFlowable extends FluidDrainable, FluidFillable {
 
     @Override
     default Fluid tryDrainFluid(WorldAccess world, BlockPos pos, BlockState state) {
-        if (!state.get(FLUID).equals(new Identifier("empty"))) {
+        if (!state.get(FLUID).equals(EMPTY)) {
             world.setBlockState(pos, state.with(FLUID, new Identifier("empty")), 3);
             if (Registry.FLUID.get(state.get(FLUID)).getDefaultState().isStill()) {
                 return Registry.FLUID.get(state.get(FLUID));

@@ -23,7 +23,8 @@ public class GrateBlock extends DefaultBlock implements FluidFlowable {
 
     public GrateBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(FLUID, EMPTY)
+        this.setDefaultState(this.getDefaultState()
+                .with(FLUID, EMPTY)
                 .with(FlowableFluid.LEVEL, 8)
                 .with(OPEN, false));
     }
@@ -54,16 +55,16 @@ public class GrateBlock extends DefaultBlock implements FluidFlowable {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(FLUID).add(FlowableFluid.LEVEL).add(OPEN);
+        builder.add(FLUID, FlowableFluid.LEVEL, OPEN);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        FluidState state1 = Registry.FLUID.get(state.get(FLUID)).getDefaultState();
-        if (state1.getEntries().containsKey(FlowableFluid.LEVEL)) {
-            state1 = state1.with(FlowableFluid.LEVEL, state.get(FlowableFluid.LEVEL));
+        FluidState fluidState = Registry.FLUID.get(state.get(FLUID)).getDefaultState();
+        if (fluidState.getEntries().containsKey(FlowableFluid.LEVEL)) {
+            fluidState = fluidState.with(FlowableFluid.LEVEL, state.get(FlowableFluid.LEVEL));
         }
-        return state1;
+        return fluidState;
     }
 
     @Override
