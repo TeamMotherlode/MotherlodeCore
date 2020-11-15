@@ -2,7 +2,7 @@ package motherlode.core.registry;
 
 import motherlode.core.Motherlode;
 import motherlode.core.entities.*;
-import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
@@ -13,21 +13,21 @@ import net.minecraft.util.registry.Registry;
 public class MotherlodeEntities {
 
 	public static final EntityType<ArmadilloEntity> ARMADILLO_ENTITY = register("armadillo", FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, ArmadilloEntity::new)
-	.size(EntityDimensions.fixed(0.6F, 0.7F)).build());
+	.dimensions(EntityDimensions.fixed(0.6F, 0.7F)).build());
 
 
 	public static final EntityType<LizardEntity> LIZARD_ENTITY = register("lizard", FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, LizardEntity::new)
-			.size(EntityDimensions.fixed(0.6F, 0.7F)).build());
+			.dimensions(EntityDimensions.fixed(0.6F, 0.7F)).build());
 
 
 	public static final EntityType<RedstoneGolemEntity> REDSTONE_GOLEM_ENTITY = register("redstone_golem", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RedstoneGolemEntity::new)
-			.size(EntityDimensions.fixed(3.0F, 3.5F)).build());
+			.dimensions(EntityDimensions.fixed(3.0F, 3.5F)).build());
 
 	public static final EntityType<RedstoneMarauderEntity> REDSTONE_MARAUDER_ENTITY = register("redstone_marauder", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RedstoneMarauderEntity::new)
-			.size(EntityDimensions.fixed(1.2F, 2.0F)).build());
+			.dimensions(EntityDimensions.fixed(1.2F, 2.0F)).build());
 
 	public static final EntityType<RedstoneSentryEntity> REDSTONE_SENTRY_ENTITY = register("redstone_sentry", FabricEntityTypeBuilder.create(SpawnGroup.MISC, RedstoneSentryEntity::new)
-			.size(EntityDimensions.fixed(1.3F, 1.8F)).build());
+			.dimensions(EntityDimensions.fixed(1.3F, 1.8F)).build());
 
 	public static void init() {
 		//Registry.register(Registry.ENTITY_TYPE, new Identifier("motherlode", "armadillo"), ARMADILLO_ENTITY);

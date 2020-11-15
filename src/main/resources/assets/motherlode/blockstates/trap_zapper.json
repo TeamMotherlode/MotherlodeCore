@@ -1,0 +1,54 @@
+{
+    "variants": {
+        "facing=up,powered=false": {
+            "model": "motherlode:block/trap_zapper"
+        },
+        "facing=up,powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed"
+        },
+        "facing=down,powered=false": {
+            "model": "motherlode:block/trap_zapper",
+            "x": 180
+        },
+        "facing=down,powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed",
+            "x": 180
+        },
+        "facing=north,powered=false": {
+            "model": "motherlode:block/trap_zapper",
+            "x": 90
+        },
+        "facing=north,powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed",
+            "x": 90
+        },
+        "facing=south,powered=false": {
+            "model": "motherlode:block/trap_zapper",
+            "x": 270
+        },
+        "facing=south,powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed",
+            "x": 270
+        },
+        "facing=east,powered=false": {
+            "model": "motherlode:block/trap_zapper",
+            "x": 90,
+            "y": 90
+        },
+        "facing=east,powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed",
+            "x": 90,
+            "y": 90
+        },
+        "facing=west,powered=false": {
+            "model": "motherlode:block/trap_zapper",
+            "x": 270,
+            "y": 90
+        },
+        "facing=west,powered=true": {
+            "model": "motherlode:block/trap_zapper_deployed",
+            "x": 270,
+            "y": 90
+        }
+    }
+}

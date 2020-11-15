@@ -187,6 +187,9 @@
     "block.motherlode.sandstone_pillar": "Sandstone Pillar",
     "block.motherlode.sandstone_slab": "Sandstone Slab",
     "block.motherlode.sandstone_stairs": "Sandstone Stairs",
+
+    "block.motherlode.trap_cutter": "Cutting Trap",
+    "block.motherlode.trap_zapper": "Zapping Trap",
   
     "item.minecraft.potion.effect.thorns": "Potion of Thorns",
     "item.minecraft.potion.effect.long_thorns": "Potion of Thorns",
