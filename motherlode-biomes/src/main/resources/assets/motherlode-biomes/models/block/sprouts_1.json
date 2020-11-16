@@ -1,6 +1,6 @@
 {
-	"parent": "motherlode-base:block/thick_tinted_cross",
-	"textures": {
-		"texture": "motherlode-biomes:block/sprouts_1"
-	}
+  "parent": "motherlode-base:block/thick_tinted_cross",
+  "textures": {
+    "texture": "motherlode-biomes:block/sprouts_1"
+  }
 }

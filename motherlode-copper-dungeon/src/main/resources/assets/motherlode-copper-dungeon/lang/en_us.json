@@ -1,4 +1,15 @@
 {
+  "block.motherlode-copper-dungeon.steel_block": "Steel Block",
+  "block.motherlode-copper-dungeon.steel_tiles": "Steel Tiles",
+  "block.motherlode-copper-dungeon.steel_tiles_stairs": "Steel Tiles Stairs",
+  "block.motherlode-copper-dungeon.steel_tiles_slab": "Steel Tiles Slab",
+  "block.motherlode-copper-dungeon.steel_wall": "Steel Wall",
+  "block.motherlode-copper-dungeon.steel_wall_stairs": "Steel Wall Stairs",
+  "block.motherlode-copper-dungeon.steel_wall_slab": "Steel Wall Slab",
+  "block.motherlode-copper-dungeon.steel_bars": "Steel Bars",
+  "block.motherlode-copper-dungeon.steel_door": "Steel Door",
+  "block.motherlode-copper-dungeon.steel_platform": "Steel Platform",
+  "block.motherlode-copper-dungeon.steel_platform_stairs": "Steel Platform Stairs",
   "block.motherlode-copper-dungeon.cutter_trap": "Cutting Trap",
   "block.motherlode-copper-dungeon.zapper_trap": "Zapping Trap"
 }

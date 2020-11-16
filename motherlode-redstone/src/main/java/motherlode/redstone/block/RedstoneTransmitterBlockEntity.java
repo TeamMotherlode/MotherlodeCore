@@ -1,18 +1,9 @@
 package motherlode.redstone.block;
 
-import motherlode.core.block.RedstoneTransmitterBlock;
-import motherlode.core.gui.RedstoneTransmitterGuiDescription;
-import motherlode.core.inventory.DefaultInventory;
-import motherlode.core.persistantData.RedstoneChannelManager;
-import motherlode.core.registry.MotherlodeBlockEntities;
-import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodeItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import java.util.Arrays;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -28,29 +19,31 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import motherlode.orestoolsarmor.MotherlodeOresToolsArmorItems;
 import motherlode.redstone.DefaultInventory;
-import motherlode.redstone.MotherlodeBlockEntities;
+import motherlode.redstone.MotherlodeModule;
+import motherlode.redstone.MotherlodeRedstoneBlockEntities;
+import motherlode.redstone.MotherlodeRedstoneBlocks;
 import motherlode.redstone.gui.RedstoneTransmitterGuiDescription;
-import net.minecraft.util.math.Direction;
-import org.apache.logging.log4j.LogManager;
+import motherlode.redstone.persistentstate.RedstoneChannelManager;
+import org.apache.logging.log4j.Level;
 
-import java.util.Arrays;
-
-public class RedstoneTransmitterBlockEntity extends BlockEntity implements DefaultInventory, BlockEntityClientSerializable, ExtendedScreenHandlerFactory, Tickable {
+public class RedstoneTransmitterBlockEntity extends BlockEntity implements DefaultInventory, BlockEntityClientSerializable, ExtendedScreenHandlerFactory {
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(4, ItemStack.EMPTY);
     private boolean receiver = false;
     private boolean updated = false;
     private int channelIDCache = getChannelID();
 
     public RedstoneTransmitterBlockEntity(BlockPos pos, BlockState state) {
-        super(MotherlodeBlockEntities.REDSTONE_TRANSMITTER, pos, state);
+        super(MotherlodeRedstoneBlockEntities.REDSTONE_TRANSMITTER, pos, state);
     }
 
     public <T extends BlockEntity> RedstoneTransmitterBlockEntity(BlockEntityType<T> type, BlockPos pos, BlockState state) {
@@ -109,35 +102,33 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
         return toTag(tag);
     }
 
-    @Override
-    public void tick() {
-        if(world.isClient() || !updated)
+    public static void tick(World world, BlockPos pos, BlockState state, RedstoneTransmitterBlockEntity blockEntity) {
+        if (world.isClient() || !blockEntity.updated)
             return;
 
-        RedstoneChannelManager rcm = ((ServerWorld)world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels");
+        RedstoneChannelManager rcm = ((ServerWorld) world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::fromTag, RedstoneChannelManager::new, "motherlode_wireless_channels");
 
-
-        if(channelIDCache != getChannelID()) {
-            rcm.swapChannel(receiver, pos, channelIDCache, getChannelID());
-            channelIDCache = getChannelID();
+        if (blockEntity.channelIDCache != blockEntity.getChannelID()) {
+            rcm.swapChannel(blockEntity.receiver, pos, blockEntity.channelIDCache, blockEntity.getChannelID());
+            blockEntity.channelIDCache = blockEntity.getChannelID();
         }
 
-        if(!receiver && world.isReceivingRedstonePower(pos)) {
+        if (!blockEntity.receiver && world.isReceivingRedstonePower(pos)) {
             int maxVal = -1;
             for (Direction d : Direction.values()) {
-                LogManager.getLogger("motherlode").info(maxVal + "  " + d);
-                if (!world.getBlockState(pos.offset(d)).isOf(MotherlodeBlocks.REDSTONE_TRANSMITTER)) {
+                MotherlodeModule.log(Level.INFO, maxVal + "  " + d);
+                if (!world.getBlockState(pos.offset(d)).isOf(MotherlodeRedstoneBlocks.REDSTONE_TRANSMITTER)) {
                     if (world.getEmittedRedstonePower(pos.offset(d), d) > maxVal) {
                         maxVal = world.getEmittedRedstonePower(pos.offset(d), d);
                     }
                 }
             }
-            rcm.setChannelValue(getChannelID(), pos, maxVal);
-        } else if(!receiver)
-            rcm.setChannelValue(getChannelID(), pos, 0);
+            rcm.setChannelValue(blockEntity.getChannelID(), pos, maxVal);
+        } else if (!blockEntity.receiver)
+            rcm.setChannelValue(blockEntity.getChannelID(), pos, 0);
 
-        world.setBlockState(pos, world.getBlockState(pos).with(Properties.POWER, rcm.getChannelValue(getChannelID())));
-        updated = false;
+        world.setBlockState(pos, world.getBlockState(pos).with(Properties.POWER, rcm.getChannelValue(blockEntity.getChannelID())));
+        blockEntity.updated = false;
     }
 
     public void update() {
@@ -146,18 +137,18 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
 
     public int getChannelID() {
         Integer[] idArr = new Integer[stacks.size()];
-        for(int i = 0; i < stacks.size(); i++)
+        for (int i = 0; i < stacks.size(); i++)
             idArr[i] = getGemValue(stacks.get(i).getItem());
         return Arrays.deepHashCode(idArr);
     }
 
     private int getGemValue(Item item) {
-        if (item.equals(MotherlodeItems.AMETHYST)) return 1;
-        if (item.equals(MotherlodeItems.HOWLITE)) return 2;
-        if (item.equals(MotherlodeItems.RUBY)) return 3;
-        if (item.equals(MotherlodeItems.SAPPHIRE)) return 4;
-        if (item.equals(MotherlodeItems.TOPAZ)) return 5;
-        if (item.equals(MotherlodeItems.ONYX)) return 6;
+        if (item.equals(MotherlodeOresToolsArmorItems.AMETHYST)) return 1;
+        if (item.equals(MotherlodeOresToolsArmorItems.HOWLITE)) return 2;
+        if (item.equals(MotherlodeOresToolsArmorItems.RUBY)) return 3;
+        if (item.equals(MotherlodeOresToolsArmorItems.SAPPHIRE)) return 4;
+        if (item.equals(MotherlodeOresToolsArmorItems.TOPAZ)) return 5;
+        if (item.equals(MotherlodeOresToolsArmorItems.ONYX)) return 6;
         if (item.equals(Items.DIAMOND)) return 7;
         if (item.equals(Items.EMERALD)) return 8;
         return 0;
@@ -165,31 +156,31 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
 
     public void swapTransmitter() {
         receiver = !receiver;
-        if(world.isClient())
+        if (world.isClient())
             return;
 
-        ((ServerWorld)world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels")
-                .swapType(!receiver, channelIDCache, pos, 0);
+        ((ServerWorld) world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::fromTag, RedstoneChannelManager::new, "motherlode_wireless_channels")
+            .swapType(!receiver, channelIDCache, pos, 0);
 
         updated = true;
         world.setBlockState(pos, world.getBlockState(pos).with(RedstoneTransmitterBlock.RECEIVER, receiver));
     }
 
     public void remove() {
-        if(world.isClient())
+        if (world.isClient())
             return;
 
-        ServerWorld sWorld = (ServerWorld)world;
-        RedstoneChannelManager rcm = sWorld.getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels");
+        ServerWorld sWorld = (ServerWorld) world;
+        RedstoneChannelManager rcm = sWorld.getPersistentStateManager().getOrCreate(RedstoneChannelManager::fromTag, RedstoneChannelManager::new, "motherlode_wireless_channels");
 
         rcm.remove(receiver, channelIDCache, pos);
     }
 
     public void register() {
-        ((ServerWorld)world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::new, "motherlode_wireless_channels").registerTransmitter(getChannelID(), pos, 0);
+        ((ServerWorld) world).getPersistentStateManager().getOrCreate(RedstoneChannelManager::fromTag, RedstoneChannelManager::new, "motherlode_wireless_channels").registerTransmitter(getChannelID(), pos, 0);
     }
 
-    public boolean getReceiver() {
+    public boolean isReceiver() {
         return receiver;
     }
 }

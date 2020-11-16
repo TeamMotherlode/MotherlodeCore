@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import motherlode.base.Motherlode;
 import motherlode.copperdungeon.block.ZapperTrapBlockEntity;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 
 public class MotherlodeCopperDungeonBlockEntities {
     public static BlockEntityType<ZapperTrapBlockEntity> ZAPPER_TRAP = register("zapper_trap", ZapperTrapBlockEntity::new, MotherlodeCopperDungeonBlocks.ZAPPER_TRAP);

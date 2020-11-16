@@ -10,9 +10,8 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import motherlode.core.api.ArtificeProperties;
 
-public class DefaultTrapBlock extends Block implements ArtificeProperties {
+public class DefaultTrapBlock extends Block {
     public static final BooleanProperty POWERED = Properties.POWERED;
 
     public DefaultTrapBlock(Settings settings) {
@@ -24,7 +23,7 @@ public class DefaultTrapBlock extends Block implements ArtificeProperties {
         boolean gettingPower = world.isReceivingRedstonePower(pos);
         boolean alreadyPowered = state.get(POWERED);
         if (gettingPower && !alreadyPowered) {
-            if(canDeploy(state, world, pos)){
+            if (canDeploy(state, world, pos)) {
                 world.setBlockState(pos, state.with(POWERED, true), 4);
                 world.addSyncedBlockEvent(pos, this, 0, 1);
             }
@@ -39,7 +38,7 @@ public class DefaultTrapBlock extends Block implements ArtificeProperties {
         super.onPlaced(world, pos, state, placer, itemStack);
         boolean gettingPower = world.isReceivingRedstonePower(pos);
         if (gettingPower) {
-            if(canDeploy(state, world, pos)){
+            if (canDeploy(state, world, pos)) {
                 world.setBlockState(pos, state.with(POWERED, true), 4);
                 world.addSyncedBlockEvent(pos, this, 0, 1);
             }
@@ -51,41 +50,16 @@ public class DefaultTrapBlock extends Block implements ArtificeProperties {
         return true;
     }
 
-    public boolean canDeploy(BlockState state, World world, BlockPos pos){
-        return true;    //Default behavior to allow deployment for all traps
+    public boolean canDeploy(BlockState state, World world, BlockPos pos) {
+        return true; // Default behavior to allow deployment for all traps
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState()
-                .with(POWERED, false);
+            .with(POWERED, false);
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(POWERED);
-    }
-
-    @Override
-    public boolean hasDefaultState() {
-        return false;
-    }
-
-    @Override
-    public boolean hasDefaultModel() {
-        return false;
-    }
-
-    @Override
-    public boolean hasDefaultItemModel() {
-        return false;
-    }
-
-    @Override
-    public boolean hasDefaultLootTable() {
-        return true;
-    }
-
-    @Override
-    public Block getBlockInstance() {
-        return this;
     }
 }

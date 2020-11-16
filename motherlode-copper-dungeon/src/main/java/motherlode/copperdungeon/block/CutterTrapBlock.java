@@ -21,7 +21,7 @@ public class CutterTrapBlock extends DefaultTrapBlock {
         super.onSteppedOn(world, pos, entity);
 
         BlockState state = world.getBlockState(pos);
-        if(state.get(POWERED)) {
+        if (state.get(POWERED)) {
             entity.damage(DamageSource.CACTUS, CUTTER_DAMAGE);
         }
     }
@@ -29,7 +29,7 @@ public class CutterTrapBlock extends DefaultTrapBlock {
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
         boolean alreadyPowered = state.get(POWERED);
-        if(alreadyPowered && !world.getBlockState(pos.up()).isAir()){
+        if (alreadyPowered && !world.getBlockState(pos.up()).isAir()) {
             world.setBlockState(pos, state.with(POWERED, false), 4);
             world.addSyncedBlockEvent(pos, block, 0, 0);
         }
@@ -37,9 +37,9 @@ public class CutterTrapBlock extends DefaultTrapBlock {
 
     public boolean onSyncedBlockEvent(BlockState state, World world, BlockPos pos, int type, int data) {
         super.onSyncedBlockEvent(state, world, pos, type, data);
-        if(data == 1){
+        if (data == 1) {
             world.playSound(null, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS, 0.15F, world.random.nextFloat() * 0.15F + 0.6F);
-        }else{
+        } else {
             world.playSound(null, pos, SoundEvents.BLOCK_PISTON_CONTRACT, SoundCategory.BLOCKS, 0.15F, world.random.nextFloat() * 0.15F + 0.6F);
         }
         return true;

@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,shape=inner_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,shape=inner_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner"
+    },
+    "facing=east,shape=outer_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=east,shape=outer_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer"
+    },
+    "facing=east,shape=straight": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs"
+    },
+    "facing=north,shape=inner_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=north,shape=inner_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,shape=outer_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=north,shape=outer_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=north,shape=straight": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs",
+      "y": 270,
+      "uvlock": true
+    },
+    "facing=south,shape=inner_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner"
+    },
+    "facing=south,shape=inner_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,shape=outer_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer"
+    },
+    "facing=south,shape=outer_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south,shape=straight": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=west,shape=inner_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=west,shape=inner_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_inner",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,shape=outer_left": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=west,shape=outer_right": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs_outer",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west,shape=straight": {
+      "model": "motherlode-copper-dungeon:block/steel_platform_stairs",
+      "uvlock": true,
+      "y": 180
+    }
+  }
+}

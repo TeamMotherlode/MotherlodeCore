@@ -17,7 +17,7 @@
         "y": 270
       }
     ],
-	"solid=false": [
+    "solid=false": [
       {
         "model": "motherlode-biomes:block/waterplant_stepped"
       },

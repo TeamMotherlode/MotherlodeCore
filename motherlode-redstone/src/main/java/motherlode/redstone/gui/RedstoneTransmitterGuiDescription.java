@@ -1,20 +1,6 @@
 package motherlode.redstone.gui;
 
 import java.util.ArrayList;
-import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WItemSlot;
-import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
-import io.github.cottonmc.cotton.gui.widget.WSprite;
-import io.netty.buffer.Unpooled;
-import motherlode.core.Motherlode;
-import motherlode.core.block.entity.RedstoneTransmitterBlockEntity;
-import motherlode.core.gui.widget.WSpriteButton;
-import motherlode.core.item.DefaultGemItem;
-import motherlode.core.registry.MotherlodePackets;
-import motherlode.core.registry.MotherlodeScreenHandlers;
-import motherlode.core.registry.MotherlodeTags;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -22,23 +8,24 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.SlotActionType;
-import motherlode.base.Motherlode;
-import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
-import motherlode.orestoolsarmor.item.DefaultGemItem;
-import motherlode.redstone.MotherlodeModule;
-import motherlode.redstone.MotherlodeRedstoneScreenHandlers;
-import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WItemSlot;
-import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
-import io.github.cottonmc.cotton.gui.widget.WSprite;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
+import motherlode.orestoolsarmor.item.DefaultGemItem;
+import motherlode.redstone.MotherlodeModule;
+import motherlode.redstone.MotherlodeRedstonePackets;
+import motherlode.redstone.MotherlodeRedstoneScreenHandlers;
+import motherlode.redstone.block.RedstoneTransmitterBlockEntity;
+import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WItemSlot;
+import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
+import io.github.cottonmc.cotton.gui.widget.WSprite;
+import io.netty.buffer.Unpooled;
 
 public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     ArrayList<WSprite> gems = new ArrayList<>();
@@ -54,7 +41,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WPlainPanel panel = new WPlainPanel();
 
-        WItemSlot grid = WItemSlot.of(blockInventory, 0, 2, 2).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)));
+        WItemSlot grid = WItemSlot.of(blockInventory, 0, 2, 2).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.isIn(MotherlodeOresToolsArmorTags.GEMS)));
         panel.add(grid, 36, 17);
 
         WSprite transmitter = new WSprite(MotherlodeModule.id("textures/gui/container/transmitter_disconnected.png"));
@@ -69,14 +56,14 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WSpriteButton transmitButton = new WSpriteButton(MotherlodeModule.id(isOn ? "textures/gui/container/transmitter_signal_on.png" : "textures/gui/container/transmitter_signal_off.png"));
         transmitButton.setFocusedImage(MotherlodeModule.id(isOn ? "textures/gui/container/transmitter_signal_focused_on.png" : "textures/gui/container/transmitter_signal_focused_off.png"));
-        if(currEntity.getReceiver()) {
+        if (currEntity.isReceiver()) {
             transmitButton.setImage(getImage(false, isOn, false));
             transmitButton.setFocusedImage(getImage(true, isOn, false));
-            transmitButton.setTooltip(new LiteralText("Receiver"));
+            transmitButton.setTooltip(new LiteralText("Receiver").asOrderedText());
         } else {
             transmitButton.setImage(getImage(false, isOn, true));
             transmitButton.setFocusedImage(getImage(true, isOn, true));
-            transmitButton.setTooltip(new LiteralText("Transmitter"));
+            transmitButton.setTooltip(new LiteralText("Transmitter").asOrderedText());
         }
 
         panel.add(transmitButton, 110, 40, 13, 8);
@@ -84,20 +71,20 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         transmitButton.setOnClick(() -> {
             currEntity.swapTransmitter();
 
-            if(world.isClient()) {
+            if (world.isClient()) {
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 buf.writeBlockPos(pos);
-                ClientSidePacketRegistry.INSTANCE.sendToServer(MotherlodePackets.C2S_REDSTONE_TRANSMITTER_SWAP, buf);
+                ClientSidePacketRegistry.INSTANCE.sendToServer(MotherlodeRedstonePackets.REDSTONE_TRANSMITTER_SWAP_C2S, buf);
             }
 
-            if(currEntity.getReceiver()) {
+            if (currEntity.isReceiver()) {
                 transmitButton.setImage(getImage(false, isOn, false));
                 transmitButton.setFocusedImage(getImage(true, isOn, false));
-                transmitButton.setTooltip(new LiteralText("Receiver"));
+                transmitButton.setTooltip(new LiteralText("Receiver").asOrderedText());
             } else {
                 transmitButton.setImage(getImage(false, isOn, true));
                 transmitButton.setFocusedImage(getImage(true, isOn, true));
-                transmitButton.setTooltip(new LiteralText("Transmitter"));
+                transmitButton.setTooltip(new LiteralText("Transmitter").asOrderedText());
             }
         });
 
@@ -123,7 +110,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
+                if (blockInventory.getStack(i).isIn(MotherlodeOresToolsArmorTags.GEMS)) {
                     miniGemsTop.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
 
@@ -165,7 +152,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).getItem().isIn(MotherlodeOresToolsArmorTags.GEMS)) {
+                if (blockInventory.getStack(i).isIn(MotherlodeOresToolsArmorTags.GEMS)) {
                     miniGemsTop.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
 
@@ -196,18 +183,18 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
     @Override
     public void close(PlayerEntity player) {
-        if(!world.isClient())
+        if (!world.isClient())
             currEntity.update();
 
         super.close(player);
     }
 
     public BlockPos getBlockPos(ScreenHandlerContext ctx) {
-        return (BlockPos)ctx.run((world, pos) -> pos).orElse(new BlockPos(0, 0, 0));
+        return (BlockPos) ctx.run((world, pos) -> pos).orElse(new BlockPos(0, 0, 0));
     }
 
     public World getWorld(ScreenHandlerContext ctx) {
-        return (World)ctx.run((world, pos) -> world).orElse(null);
+        return (World) ctx.run((world, pos) -> world).orElse(null);
     }
 
     public Identifier getImage(boolean focused, boolean on, boolean up) {

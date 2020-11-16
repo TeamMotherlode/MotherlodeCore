@@ -1,12 +1,12 @@
 {
   "variants": {
-	"type=single": {
-	  "model": "motherlode-biomes:block/dry_reeds"
+    "type=single": {
+      "model": "motherlode-biomes:block/dry_reeds"
     },
-	"type=waterlogged": {
-	  "model": "motherlode-biomes:block/dry_reeds"
+    "type=waterlogged": {
+      "model": "motherlode-biomes:block/dry_reeds"
     },
-	"type=bottom": [
+    "type=bottom": [
       {
         "model": "motherlode-biomes:block/dry_reeds_bottom_0"
       },
@@ -14,8 +14,8 @@
         "model": "motherlode-biomes:block/dry_reeds_bottom_1"
       }
     ],
-	"type=middle": {
-	  "model": "motherlode-biomes:block/dry_reeds_middle"
+    "type=middle": {
+      "model": "motherlode-biomes:block/dry_reeds_middle"
     },
     "type=top": [
       {

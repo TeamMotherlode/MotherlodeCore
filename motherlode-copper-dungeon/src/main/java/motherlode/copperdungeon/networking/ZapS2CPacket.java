@@ -6,15 +6,15 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.util.math.Vec3d;
-import motherlode.core.particle.ZapParticle;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import motherlode.copperdungeon.particle.ZapParticle;
 
 public class ZapS2CPacket implements Packet<ClientPlayPacketListener> {
     private Vec3d origin;
     private Vec3d target;
 
-    public ZapS2CPacket(Vec3d origin, Vec3d target){
+    public ZapS2CPacket(Vec3d origin, Vec3d target) {
         this.origin = origin;
         this.target = target;
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "motherlode-copper-dungeon:block/steel_bars"
+  }
+}

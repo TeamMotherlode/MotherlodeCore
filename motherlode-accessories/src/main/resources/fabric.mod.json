@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-accessories",
+  "version": "${version}",
+  "name": "Motherlode Accessories",
+  "description": "Adds some trinkets.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-accessories"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-accessories/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.accessories.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.accessories.MotherlodeAccessoriesClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-accessories.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "*",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

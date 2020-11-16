@@ -1,25 +1,25 @@
 {
   "variants": {
     "side=down": {
-		"model": "motherlode-biomes:block/moss_ceiling"
-	},
-	"side=up": {
-		"model": "motherlode-biomes:block/moss_floor"
-	},
-	"side=north": {
-		"model": "motherlode-biomes:block/moss_side"
-	},
-	"side=south": {
-		"model": "motherlode-biomes:block/moss_side",
-		"y": 180
-	},
-	"side=east": {
-		"model": "motherlode-biomes:block/moss_side",
-		"y": 90
-	},
-	"side=west": {
-		"model": "motherlode-biomes:block/moss_side",
-		"y": 270
-	}
+      "model": "motherlode-biomes:block/moss_ceiling"
+    },
+    "side=up": {
+      "model": "motherlode-biomes:block/moss_floor"
+    },
+    "side=north": {
+      "model": "motherlode-biomes:block/moss_side"
+    },
+    "side=south": {
+      "model": "motherlode-biomes:block/moss_side",
+      "y": 180
+    },
+    "side=east": {
+      "model": "motherlode-biomes:block/moss_side",
+      "y": 90
+    },
+    "side=west": {
+      "model": "motherlode-biomes:block/moss_side",
+      "y": 270
+    }
   }
 }

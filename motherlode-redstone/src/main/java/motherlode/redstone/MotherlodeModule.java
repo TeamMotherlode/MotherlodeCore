@@ -11,7 +11,7 @@ public class MotherlodeModule implements ModInitializer {
     @Override
     public void onInitialize() {
         MotherlodeRedstoneBlocks.init();
-        MotherlodeBlockEntities.init();
+        MotherlodeRedstoneBlockEntities.init();
         MotherlodeRedstoneScreenHandlers.init();
     }
 

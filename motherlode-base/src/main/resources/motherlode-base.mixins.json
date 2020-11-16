@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "motherlode.base.mixins",
+  "package": "motherlode.base.mixin",
   "compatibilityLevel": "JAVA_8",
   "injectors": {
     "defaultRequire": 1
@@ -8,5 +8,6 @@
   "client": [
   ],
   "mixins": [
+    "BlockWithEntityAccessor"
   ]
 }

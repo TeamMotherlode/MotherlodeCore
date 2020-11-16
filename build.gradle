@@ -35,8 +35,8 @@ allprojects {
             }
         }
         dependencies.ext.useAsApiForModuleOptionally = { module, dep ->
-            if(rootProject.childProjects.containsKey(module)) {
-                if(project.name == module || project.name == 'motherlode')
+            if (rootProject.childProjects.containsKey(module)) {
+                if (project.name == module || project.name == 'motherlode')
                     useAsApiOptionally(dep)
             }
         }
@@ -46,11 +46,11 @@ allprojects {
                 include(dep)
         }
         dependencies.ext.useAsApiForModule = { module, dep ->
-            if(rootProject.childProjects.containsKey(module)) {
-                if(project.name == module || project.name == 'motherlode')
+            if (rootProject.childProjects.containsKey(module)) {
+                if (project.name == module || project.name == 'motherlode')
                     useAsApiOptionally(dep)
 
-                if(project.name == 'motherlode')
+                if (project.name == 'motherlode')
                     include(dep)
             }
         }

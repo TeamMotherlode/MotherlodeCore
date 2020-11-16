@@ -13,9 +13,9 @@ public interface Registerable<T> {
     /**
      * Registers something.
      *
-     * @param identifier The {@link Identifier} used to register it.
+     * @param id The {@link Identifier} used to register it.
      */
-    void register(Identifier identifier);
+    void register(Identifier id);
 
     /**
      * Composes a new {@code Registerable} that will first call this {@code register} method, then the given {@code Registerable}'s {@code register} method.
