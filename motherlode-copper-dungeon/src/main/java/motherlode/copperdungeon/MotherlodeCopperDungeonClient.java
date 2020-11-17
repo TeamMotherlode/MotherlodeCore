@@ -8,6 +8,7 @@ public class MotherlodeCopperDungeonClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeCopperDungeonBlocks.CUTTER_TRAP, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeCopperDungeonBlocks.ZAPPER_TRAP, RenderLayer.getTranslucent());
 
         MotherlodeCopperDungeonParticles.init();
     }

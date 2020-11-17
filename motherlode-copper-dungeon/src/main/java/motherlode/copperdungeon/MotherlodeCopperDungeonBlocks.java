@@ -38,7 +38,7 @@ public class MotherlodeCopperDungeonBlocks {
     private static <T extends Block> T register(String name, T block) {
         return Motherlode.register(
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
-            Motherlode.id(name),
+            MotherlodeModule.id(name),
             block,
             null,
             null,
@@ -49,7 +49,7 @@ public class MotherlodeCopperDungeonBlocks {
     private static <T extends DecorationBlock> T register(String name, T block) {
         return Motherlode.register(
             block,
-            Motherlode.id(name),
+            MotherlodeModule.id(name),
             block,
             null,
             block,

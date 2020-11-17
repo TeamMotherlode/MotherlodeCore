@@ -125,7 +125,8 @@ public class ZapperTrapBlock extends DefaultTrapBlock implements BlockEntityProv
         return new ZapperTrapBlockEntity(pos, state);
     }
 
+    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? BlockWithEntityAccessor.callCheckType(type, MotherlodeCopperDungeonBlockEntities.ZAPPER_TRAP, ZapperTrapBlockEntity::tick) : null;
+        return !world.isClient ? BlockWithEntityAccessor.callCheckType(type, MotherlodeCopperDungeonBlockEntities.ZAPPER_TRAP, ZapperTrapBlockEntity::tick) : null;
     }
 }

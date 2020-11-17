@@ -40,7 +40,7 @@ public class MotherlodeSpelunkyBlocks {
     public static Block register(String name, Block block, AssetProcessor assets, DataProcessor data) {
         return Motherlode.register(
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             block,
             null,
             assets,
@@ -51,7 +51,7 @@ public class MotherlodeSpelunkyBlocks {
     public static <T extends PlatformBlocks> T register(String name, T blocks) {
         return Motherlode.register(
             blocks,
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             blocks,
             null,
             blocks,

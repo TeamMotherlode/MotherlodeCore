@@ -84,7 +84,7 @@ public class ZapperTrapBlockEntity extends BlockEntity {
                     Vec3d lerped = PositionUtilities.fromLerpedPosition(start, target, (float) i / RAYCAST_GRANULARITY);
                     Vec3d lower_bound = lerped.subtract(ray_radius, ray_radius, ray_radius);
                     Vec3d upper_bound = lerped.add(ray_radius, ray_radius, ray_radius);
-                    List<Entity> inside = world.getEntitiesByType(null, new Box(lower_bound, upper_bound), EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR);
+                    List<Entity> inside = world.getOtherEntities(null, new Box(lower_bound, upper_bound), EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR);
 
                     inside.forEach(entity -> {
                         if (!caught.contains(entity)) {

@@ -26,7 +26,7 @@ public class PlatformBlock extends Block implements Waterloggable {
     public static final BooleanProperty WATERLOGGED;
     public static final VoxelShape TOP_SHAPE;
     public static final VoxelShape BOTTOM_SHAPE;
-    public static final VoxelShape DUBBLE_SHAPE;
+    public static final VoxelShape DOUBLE_SHAPE;
     public static final EnumProperty<SlabType> TYPE;
 
     public PlatformBlock(Settings settings) {
@@ -49,7 +49,7 @@ public class PlatformBlock extends Block implements Waterloggable {
             case BOTTOM:
                 return BOTTOM_SHAPE;
             default:
-                return DUBBLE_SHAPE;
+                return DOUBLE_SHAPE;
         }
     }
 
@@ -134,6 +134,6 @@ public class PlatformBlock extends Block implements Waterloggable {
 
         TOP_SHAPE = Block.createCuboidShape(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
         BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 6.0D, 0.0D, 16.0D, 8.0D, 16.0D);
-        DUBBLE_SHAPE = VoxelShapes.union(TOP_SHAPE, BOTTOM_SHAPE);
+        DOUBLE_SHAPE = VoxelShapes.union(TOP_SHAPE, BOTTOM_SHAPE);
     }
 }

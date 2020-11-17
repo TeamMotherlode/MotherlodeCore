@@ -2,6 +2,7 @@ package motherlode.redstone.block;
 
 import java.util.Random;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
@@ -91,7 +92,7 @@ public class RedstoneTransmitterBlock extends BlockWithEntity {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? BlockWithEntity.checkType(type, MotherlodeRedstoneBlockEntities.REDSTONE_TRANSMITTER, RedstoneTransmitterBlockEntity::tick) : null;
+        return !world.isClient ? BlockWithEntity.checkType(type, MotherlodeRedstoneBlockEntities.REDSTONE_TRANSMITTER, RedstoneTransmitterBlockEntity::tick) : null;
     }
 
     @Override
@@ -137,5 +138,10 @@ public class RedstoneTransmitterBlock extends BlockWithEntity {
             if (be instanceof RedstoneTransmitterBlockEntity)
                 ((RedstoneTransmitterBlockEntity) be).update();
         }
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 }

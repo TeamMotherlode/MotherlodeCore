@@ -99,30 +99,29 @@ public class PlatformBlocks implements RegisterableVariantType<Block>, AssetProc
                 .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top")))
             .variant("type=bottom", variant -> variant
                 .uvlock(true)
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_slab")))
+                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_bottom")))
             .variant("type=double", variant -> variant
                 .uvlock(true)
                 .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_double"))
             )
         );
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top"), model -> model
+        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_top"), model -> model
             .parent(MotherlodeModule.id("block/templates/platform_top"))
             .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
             .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top")));
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_slab"), model -> model
+        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_bottom"), model -> model
+            .parent(MotherlodeModule.id("block/templates/platform_bottom"))
+            .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
+            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top")));
+
+        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_double"), model -> model
             .parent(MotherlodeModule.id("block/templates/platform_double"))
             .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
             .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top")));
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_double"), model -> model
-            .parent(MotherlodeModule.id("block/templates/platform_slab"))
-            .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
-            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top")));
-
-        pack.addItemModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform"), model -> model
-            .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top")));
+        CommonAssets.BLOCK_ITEM_FUNCTION.apply(Motherlode.id(id.getNamespace(), id.getPath() + "_platform")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_platform_top"));
 
         // Platform stairs
         pack.addBlockState(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_stairs"), state -> state
@@ -203,17 +202,17 @@ public class PlatformBlocks implements RegisterableVariantType<Block>, AssetProc
         pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_stairs"), model -> model
             .parent(MotherlodeModule.id("block/templates/platform_stairs"))
             .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
-            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + "_platform_top"))
+            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top"))
         );
         pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_stairs_inner"), model -> model
             .parent(MotherlodeModule.id("block/templates/platform_stairs_inner"))
             .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
-            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + "_platform_top"))
+            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top"))
         );
         pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_platform_stairs_outer"), model -> model
             .parent(MotherlodeModule.id("block/templates/platform_stairs_outer"))
             .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform"))
-            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + "_platform_top"))
+            .texture("top", this.topTexture != null ? this.topTexture : Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_platform_top"))
         );
 
         CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_platform_stairs"));
@@ -223,15 +222,15 @@ public class PlatformBlocks implements RegisterableVariantType<Block>, AssetProc
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
         // Platform
         pack.addLootTable(Motherlode.id(id.getNamespace(), id.getPath() + "_platform"), table -> table
-            .type(new Identifier("minecraft:block"))
+            .type(new Identifier("minecraft", "block"))
             .pool(pool -> pool
                 .rolls(1)
                 .entry(entry -> entry
-                    .type(new Identifier("minecraft:item"))
-                    .function(new Identifier("minecraft:set_count"), function -> function
-                        .condition(new Identifier("minecraft:block_state_property"),
+                    .type(new Identifier("minecraft", "item"))
+                    .function(new Identifier("minecraft", "set_count"), function -> function
+                        .condition(new Identifier("minecraft", "block_state_property"),
                             condition -> condition
-                                .add("block", id.getNamespace() + ":" + id.getPath())
+                                .add("block", id.getNamespace() + ":" + id.getPath() + "_platform")
                                 .addObject("properties", prop -> prop
                                     .add("type", "double"))
                         )
