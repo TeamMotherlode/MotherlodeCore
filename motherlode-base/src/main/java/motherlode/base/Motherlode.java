@@ -1,6 +1,7 @@
 package motherlode.base;
 
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.fabricmc.api.ModInitializer;
@@ -11,6 +12,7 @@ import motherlode.base.api.DataProcessor;
 import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.base.api.impl.AssetsManagerImpl;
+import motherlode.base.api.impl.ClientRegisterImpl;
 import motherlode.base.api.impl.FeaturesManagerImpl;
 import motherlode.base.api.worldgen.FeaturesManager;
 import com.swordglowsblue.artifice.api.Artifice;
@@ -29,6 +31,18 @@ public final class Motherlode implements ModInitializer {
     public void onInitialize() {
         FabricLoader.getInstance().getEntrypointContainers("motherlode:init", ModInitializer.class)
             .forEach(container -> container.getEntrypoint().onInitialize());
+
+        // DEBUG
+        /*
+
+        log(Level.INFO, "[Motherlode] Some debug tests are enabled. If you see this message and this is not in a development environment, please report this to the Motherlode team.");
+
+        WoodType testWoodType = new WoodType(id(BASE_MODID, "test"), MapColor.WOOD, MapColor.SPRUCE, (log, leaves) -> new DefaultSaplingGenerator(Motherlode.id(BASE_MODID, "test_tree"),
+            Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(log), new SimpleBlockStateProvider(leaves), new BlobFoliagePlacer(UniformIntDistribution.of(2), UniformIntDistribution.of(0), 3), new StraightTrunkPlacer(4, 2, 0), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build())),
+            new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)).register();
+
+        */
+        // DEBUG end
 
         moduleInitDone = true;
 
@@ -86,13 +100,44 @@ public final class Motherlode implements ModInitializer {
      * @return The thing that was registered
      */
     public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, AssetProcessor assets, DataProcessor data) {
+        return register(registerable, id, t, p, null, assets, data);
+    }
+
+    /**
+     * Registers something.
+     *
+     * @param registerable   The {@link Registerable} used to register the thing.
+     * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
+     * @param t              The thing to register.
+     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
+     * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
+     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
+     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param <T>            The type of the thing.
+     * @return The thing that was registered
+     */
+    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, AssetProcessor assets, DataProcessor data) {
         registerable.register(id);
 
         if (p != null) p.accept(t);
+        if (clientConsumer != null) registerOnClient(id, clientConsumer);
         if (assets != null) getAssetsManager().addAssets(id, assets);
         if (data != null) getAssetsManager().addData(id, data);
 
         return t;
+    }
+
+    /**
+     * Adds a task that will only be run on the client.
+     *
+     * @param id             The {@link Identifier} that will be passed to the {@code Consumer} when it runs.
+     * @param clientConsumer The {@link Consumer} that will be run on the client.
+     */
+    public static void registerOnClient(Identifier id, Consumer<Identifier> clientConsumer) {
+        if (moduleInitDone)
+            throw new IllegalStateException("Trying to register on client outside motherlode:init entry point.");
+
+        ClientRegisterImpl.INSTANCE.addClientConsumer(id, clientConsumer);
     }
 
     /**

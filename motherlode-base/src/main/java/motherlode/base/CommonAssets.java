@@ -25,7 +25,7 @@ public class CommonAssets {
 
     public static final AssetProcessor BLOCK_ITEM = (pack, id) -> BLOCK_ITEM_FUNCTION.apply(id).accept(pack, id);
 
-    public static final AssetProcessor FLAT_ITEM_MODEL = (pack, id) ->
+    public static final AssetProcessor FLAT_BLOCK_ITEM_MODEL = (pack, id) ->
         pack.addItemModel(id, state -> state
             .parent(new Identifier("item/generated"))
             .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))

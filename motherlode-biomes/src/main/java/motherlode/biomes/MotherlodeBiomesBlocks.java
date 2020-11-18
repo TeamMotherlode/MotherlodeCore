@@ -40,15 +40,15 @@ public class MotherlodeBiomesBlocks {
     public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new ShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)), CommonAssets.DEFAULT_BLOCK);
 
     public static final Block SPROUTS = register("sprouts", new DefaultPlantBlock(4, FabricBlockSettings.copy(Blocks.GRASS)), flatItemModel("sprouts_0"), PLANT);
-    public static final Block DRACAENA = register("dracaena", new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.FLAT_ITEM_MODEL, PLANT);
-    public static final Block PHILODENDRON = register("philodendron", new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.FLAT_ITEM_MODEL, PLANT);
+    public static final Block DRACAENA = register("dracaena", new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.FLAT_BLOCK_ITEM_MODEL, PLANT);
+    public static final Block PHILODENDRON = register("philodendron", new DefaultPlantBlock(10, FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.FLAT_BLOCK_ITEM_MODEL, PLANT);
 
     public static final Block MOSS = register("moss", new MossBlock(FabricBlockSettings.copy(Blocks.GRASS)), CommonAssets.BLOCK_ITEM);
 
     public static final Block WATERPLANT = register("waterplant", new WaterplantBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), null, CUTOUT_RENDER_LAYER);
-    public static final Block REEDS = register("reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL, CUTOUT_RENDER_LAYER);
-    public static final Block CATTAIL_REEDS = register("cattail_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL, CUTOUT_RENDER_LAYER);
-    public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_ITEM_MODEL, CUTOUT_RENDER_LAYER);
+    public static final Block REEDS = register("reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_BLOCK_ITEM_MODEL, CUTOUT_RENDER_LAYER);
+    public static final Block CATTAIL_REEDS = register("cattail_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_BLOCK_ITEM_MODEL, CUTOUT_RENDER_LAYER);
+    public static final Block DRY_REEDS = register("dry_reeds", new ReedsBlock(FabricBlockSettings.copy(Blocks.SEAGRASS)), CommonAssets.FLAT_BLOCK_ITEM_MODEL, CUTOUT_RENDER_LAYER);
 
     private static Block register(String name, Block block, AssetProcessor assets) {
         return register(name, block, assets, CommonData.DEFAULT_BLOCK_LOOT_TABLE);
