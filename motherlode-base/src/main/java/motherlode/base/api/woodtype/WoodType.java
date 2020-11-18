@@ -20,7 +20,6 @@ import motherlode.base.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.MotherlodeVariantType;
 import motherlode.base.api.Registerable;
-import motherlode.base.api.impl.StrippedBlockMapImpl;
 import motherlode.base.block.DefaultSaplingBlock;
 import motherlode.base.mixin.BlocksAccessor;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
@@ -96,8 +95,8 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         Registerable.block(this.leaves, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
         Registerable.block(this.sapling, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
 
-        StrippedBlockMapImpl.INSTANCE.addStrippedBlock(this.log, this.strippedLog);
-        StrippedBlockMapImpl.INSTANCE.addStrippedBlock(this.wood, this.strippedWood);
+        StrippedBlockMap.INSTANCE.addStrippedBlock(this.log, this.strippedLog);
+        StrippedBlockMap.INSTANCE.addStrippedBlock(this.wood, this.strippedWood);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class AxeItemMixin extends MiningToolItem {
     }
 
     @Redirect(method = "useOnBlock", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"))
-    private Block redirectStrippedBlock(Map<Block, Block> strippedBlocks, Object block) {
+    private Object redirectStrippedBlock(Map<Block, Block> strippedBlocks, Object block) {
         Block strippedBlock = strippedBlocks.get(block);
 
         if (strippedBlock != null) return strippedBlock;
