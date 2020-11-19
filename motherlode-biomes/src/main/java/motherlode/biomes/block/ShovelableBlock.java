@@ -20,7 +20,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import motherlode.base.CommonAssets;
+import motherlode.base.api.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.biomes.MotherlodeModule;

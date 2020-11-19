@@ -1,8 +1,8 @@
-package motherlode.base;
+package motherlode.base.api;
 
 import java.util.function.Function;
 import net.minecraft.util.Identifier;
-import motherlode.base.api.AssetProcessor;
+import motherlode.base.Motherlode;
 import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
@@ -66,7 +66,7 @@ public class CommonAssets {
 
     public static final AssetProcessor THICK_CROSS = (pack, id) ->
         pack.addBlockModel(id, state -> state
-            .parent(Motherlode.id("block/thick_cross"))
+            .parent(Motherlode.id(Motherlode.MODID, "block/thick_cross"))
             .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
         );
 

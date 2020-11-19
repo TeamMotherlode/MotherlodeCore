@@ -2,7 +2,7 @@ package motherlode.orestoolsarmor;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import motherlode.base.CommonAssets;
+import motherlode.base.api.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.DataProcessor;

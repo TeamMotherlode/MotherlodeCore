@@ -5,7 +5,7 @@ import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import motherlode.base.CommonAssets;
+import motherlode.base.api.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.potions.MotherlodePotions.PotionModelInfo;

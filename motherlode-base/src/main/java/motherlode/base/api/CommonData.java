@@ -1,8 +1,8 @@
-package motherlode.base;
+package motherlode.base.api;
 
 import java.util.function.Function;
 import net.minecraft.util.Identifier;
-import motherlode.base.api.DataProcessor;
+import motherlode.base.Motherlode;
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 
 public class CommonData {
@@ -27,8 +27,18 @@ public class CommonData {
             .replace(false)
             .value(id));
 
+    public static final Function<Identifier, DataProcessor> ITEM_TAG_INCLUDE = tagId -> (pack, id) ->
+        pack.addItemTag(tagId, tag -> tag
+            .replace(false)
+            .include(id));
+
     public static final Function<Identifier, DataProcessor> BLOCK_TAG = tagId -> ITEM_TAG.apply(tagId).after((pack, id) ->
         pack.addBlockTag(tagId, tag -> tag
             .replace(false)
             .value(id)));
+
+    public static final Function<Identifier, DataProcessor> BLOCK_TAG_INCLUDE = tagId -> ITEM_TAG_INCLUDE.apply(tagId).after((pack, id) ->
+        pack.addBlockTag(tagId, tag -> tag
+            .replace(false)
+            .include(id)));
 }

@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModification;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import motherlode.base.Motherlode;
+import motherlode.base.MotherlodeBase;
 import motherlode.base.api.worldgen.FeatureTarget;
 import motherlode.base.api.worldgen.FeaturesManager;
 
@@ -46,7 +47,7 @@ public class FeaturesManagerImpl implements FeaturesManager {
     }
 
     public void addFeatures() {
-        BiomeModification modification = BiomeModifications.create(Motherlode.id(Motherlode.BASE_MODID, "motherlode_features"));
+        BiomeModification modification = BiomeModifications.create(Motherlode.id(MotherlodeBase.MODID, "motherlode_features"));
 
         for (Pair<FeatureTarget, RegistryKey<ConfiguredFeature<?, ?>>> pair : getFeatures()) {
             modification.add(ModificationPhase.ADDITIONS, pair.getLeft().getBiomeSelector(), context ->

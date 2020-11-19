@@ -2,7 +2,7 @@ package motherlode.orestoolsarmor.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import motherlode.base.CommonData;
+import motherlode.base.api.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;

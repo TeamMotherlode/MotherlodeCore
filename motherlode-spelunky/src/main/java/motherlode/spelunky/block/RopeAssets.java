@@ -1,7 +1,7 @@
 package motherlode.spelunky.block;
 
 import net.minecraft.util.Identifier;
-import motherlode.base.CommonAssets;
+import motherlode.base.api.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.spelunky.MotherlodeModule;

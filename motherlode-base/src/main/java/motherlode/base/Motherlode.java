@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.AssetsManager;
 import motherlode.base.api.DataProcessor;
@@ -22,58 +21,54 @@ import org.apache.logging.log4j.Logger;
 
 public final class Motherlode implements ModInitializer {
     public static final String MODID = "motherlode";
-    public static final String BASE_MODID = "motherlode-base";
-
     private static final Logger LOGGER = LogManager.getLogger("Motherlode");
-    private static boolean moduleInitDone;
 
     @Override
     public void onInitialize() {
-        FabricLoader.getInstance().getEntrypointContainers("motherlode:init", ModInitializer.class)
-            .forEach(container -> container.getEntrypoint().onInitialize());
-
         // DEBUG
         /*
 
-        log(Level.WARN, "[Motherlode] Some debug tests are enabled. If you see this message and this is not in a development environment, please report this to the Motherlode team.");
+        getLogger().log(Level.WARN, "[Motherlode] Some debug tests are enabled. If you see this message and this is not in a development environment, please report this to the Motherlode team.");
 
-        WoodType testWoodType = new WoodType(id(BASE_MODID, "test"), MapColor.WOOD, MapColor.SPRUCE, (log, leaves) -> new DefaultSaplingGenerator(Motherlode.id(BASE_MODID, "test_tree"),
+        WoodType testWoodType = new WoodType(id(MotherlodeBase.MODID, "test"), MapColor.WOOD, MapColor.SPRUCE, (log, leaves) -> new DefaultSaplingGenerator(id(MotherlodeBase.MODID, "test_tree"),
             Feature.TREE.configure(new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(log), new SimpleBlockStateProvider(leaves), new BlobFoliagePlacer(UniformIntDistribution.of(2), UniformIntDistribution.of(0), 3), new StraightTrunkPlacer(4, 2, 0), new TwoLayersFeatureSize(1, 0, 1)).ignoreVines().build())),
             new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)).register();
 
         */
         // DEBUG end
 
-        moduleInitDone = true;
+        MotherlodeInitEvents.MAIN.register(() -> {
+            List<Pair<Identifier, DataProcessor>> data = AssetsManagerImpl.INSTANCE.getData();
+            Artifice.registerDataPack(Motherlode.id("data_pack"), pack ->
+                data.forEach(pair ->
+                    pair.getRight().accept(pack, pair.getLeft())));
+            AssetsManagerImpl.INSTANCE.removeDataProcessorList();
+        });
 
-        List<Pair<Identifier, DataProcessor>> data = AssetsManagerImpl.INSTANCE.getData();
-        Artifice.registerDataPack(Motherlode.id("data_pack"), pack ->
-            data.forEach(pair ->
-                pair.getRight().accept(pack, pair.getLeft())));
-        AssetsManagerImpl.INSTANCE.removeDataProcessorList();
+        MotherlodeInitEvents.MAIN.register(FeaturesManagerImpl.INSTANCE::addFeatures);
 
-        FeaturesManagerImpl.INSTANCE.addFeatures();
+        MotherlodeInitEvents.CLIENT.register(() -> ClientRegisterImpl.INSTANCE.getClientConsumers()
+            .forEach(pair -> pair.getRight().accept(pair.getLeft())));
 
-        log(Level.INFO, "[Motherlode] Initialized.");
-    }
+        MotherlodeInitEvents.CLIENT.register(() -> {
+            List<Pair<Identifier, AssetProcessor>> assets = AssetsManagerImpl.INSTANCE.getAssets();
 
-    private static void log(Level level, CharSequence message) {
-        LOGGER.log(level, message);
-    }
-
-    private static void log(Level level, Object message) {
-        LOGGER.log(level, String.valueOf(message));
+            Artifice.registerAssetPack(Motherlode.id("resource_pack"), pack ->
+                assets.forEach(pair ->
+                    pair.getRight().accept(pack, pair.getLeft())));
+            AssetsManagerImpl.INSTANCE.removeAssetProcessorList();
+        });
     }
 
     /**
-     * Logs the given message and module in the format "[Module] Message".
+     * Logs the given message and module in the format {@code [Module] Message}.
      *
      * @param level   The severity level of the log message.
      * @param module  The (human-readable) name of the module that logs this message.
      * @param message The message to log.
      */
     public static void log(Level level, String module, CharSequence message) {
-        LOGGER.log(level, "[" + module + "] " + message);
+        getLogger().log(level, "[" + module + "] " + message);
     }
 
     /**
@@ -84,7 +79,16 @@ public final class Motherlode implements ModInitializer {
      * @param message The object to log. The {@code toString} method of the object will be used to get the actual message (or {@code null} if the object is null).
      */
     public static void log(Level level, String module, Object message) {
-        LOGGER.log(level, "[" + module + "] " + message);
+        getLogger().log(level, "[" + module + "] " + message);
+    }
+
+    /**
+     * Returns a {@link Logger} instance for Motherlode.
+     *
+     * @return A logger.
+     */
+    public static Logger getLogger() {
+        return LOGGER;
     }
 
     /**
@@ -134,7 +138,7 @@ public final class Motherlode implements ModInitializer {
      * @param clientConsumer The {@link Consumer} that will be run on the client.
      */
     public static void registerOnClient(Identifier id, Consumer<Identifier> clientConsumer) {
-        if (moduleInitDone)
+        if (MotherlodeBase.isModuleInitializationDone())
             throw new IllegalStateException("Trying to register on client outside motherlode:init entry point.");
 
         ClientRegisterImpl.INSTANCE.addClientConsumer(id, clientConsumer);
@@ -147,7 +151,7 @@ public final class Motherlode implements ModInitializer {
      * @throws IllegalStateException if not called from a {@code motherlode:init} entry point.
      */
     public static AssetsManager getAssetsManager() {
-        if (moduleInitDone)
+        if (MotherlodeBase.isModuleInitializationDone())
             throw new IllegalStateException("Trying to add assets outside motherlode:init entry point.");
         return AssetsManagerImpl.INSTANCE;
     }
@@ -159,7 +163,8 @@ public final class Motherlode implements ModInitializer {
      * @throws IllegalStateException if not called from a {@code motherlode:init} entry point.
      */
     public static FeaturesManager getFeaturesManager() {
-        if (moduleInitDone) throw new IllegalStateException("Trying to add data outside motherlode:init entry point.");
+        if (MotherlodeBase.isModuleInitializationDone())
+            throw new IllegalStateException("Trying to add data outside motherlode:init entry point.");
         return FeaturesManagerImpl.INSTANCE;
     }
 
@@ -180,7 +185,7 @@ public final class Motherlode implements ModInitializer {
      * @param name The path to use for the {@code Identifier}.
      * @return The created {@code Identifier}
      */
-    public static Identifier id(String name) {
+    private static Identifier id(String name) {
         return id(MODID, name);
     }
 }

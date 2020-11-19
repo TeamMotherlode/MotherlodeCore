@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import motherlode.base.CommonData;
+import motherlode.base.api.CommonData;
 import motherlode.base.Motherlode;
 import motherlode.base.api.Registerable;
 import motherlode.copperdungeon.block.CutterTrapBlock;

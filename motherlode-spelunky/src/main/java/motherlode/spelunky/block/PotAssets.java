@@ -1,6 +1,6 @@
 package motherlode.spelunky.block;
 
-import motherlode.base.CommonAssets;
+import motherlode.base.api.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.AssetProcessor;
 import motherlode.spelunky.MotherlodeModule;
@@ -21,7 +21,7 @@ public class PotAssets {
     public static final AssetProcessor POT_TEMPLATE = (pack, id) ->
         pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "pot_template"), model -> model
             .parent(Motherlode.id(MotherlodeModule.MODID, "block/pot"))
-            .texture("overlay", Motherlode.id("block/pots/pot_overlay_1"))
+            .texture("overlay", MotherlodeModule.id("block/pots/pot_overlay_1"))
 
             .display("thirdperson_righthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(66F, 135F, 0F).translation(0, 4, 4))
             .display("thirdperson_lefthand", settings -> settings.scale(0.625F, 0.625F, 0.625F).rotation(66F, 135F, 0F).translation(0, 4, 4))
