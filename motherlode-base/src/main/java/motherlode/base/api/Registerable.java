@@ -33,6 +33,16 @@ public interface Registerable<T> {
     }
 
     /**
+     * Creates a {@code Registerable} that registers the given block.
+     *
+     * @param block        The block to register.
+     * @return A registerable that registers the given block, but no {@code BlockItem}.
+     */
+    static <T extends Block> Registerable<T> block(Block block) {
+        return id -> Registry.register(Registry.BLOCK, id, block);
+    }
+
+    /**
      * Creates a {@code Registerable} that registers the given block and a {@link BlockItem} for that block.
      *
      * @param block        The block to register.

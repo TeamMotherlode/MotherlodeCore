@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
@@ -15,6 +16,7 @@ import net.minecraft.block.WoodenButtonBlock;
 import net.minecraft.block.sapling.SaplingGenerator;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -45,19 +47,18 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
     private PressurePlateBlock pressurePlate;
     private LeavesBlock leaves;
     private SaplingBlock sapling;
+    private FlowerPotBlock pottedSapling;
 
     private final MapColor logTopMapColor;
     private final MapColor logSideMapColor;
     private final BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator;
-    private final Item.Settings itemSettings;
 
-    public WoodType(Identifier id, MapColor logTopMapColor, MapColor logSideMapColor, BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator, Item.Settings itemSettings) {
+    public WoodType(Identifier id, MapColor logTopMapColor, MapColor logSideMapColor, BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator) {
         super(id);
 
         this.logTopMapColor = logTopMapColor;
         this.logSideMapColor = logSideMapColor;
         this.saplingGenerator = saplingGenerator;
-        this.itemSettings = itemSettings;
     }
 
     @Override
@@ -65,31 +66,37 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         return this;
     }
 
+    private final static Item.Settings BUILDING_BLOCKS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
+    private final static Item.Settings REDSTONE = new Item.Settings().group(ItemGroup.REDSTONE);
+    private final static Item.Settings DECORATIONS = new Item.Settings().group(ItemGroup.DECORATIONS);
+
     @Override
     protected void registerBase(Identifier id) {
-        this.log = BlocksAccessor.callCreateLogBlock(logTopMapColor, logSideMapColor);
-        this.strippedLog = BlocksAccessor.callCreateLogBlock(logTopMapColor, logTopMapColor);
-        this.wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, logTopMapColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
-        this.strippedWood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, logTopMapColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
-        this.planks = new Block(FabricBlockSettings.of(Material.WOOD, logTopMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
+        this.log = BlocksAccessor.callCreateLogBlock(this.logTopMapColor, this.logSideMapColor);
+        this.strippedLog = BlocksAccessor.callCreateLogBlock(this.logTopMapColor, this.logTopMapColor);
+        this.wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
+        this.strippedWood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
+        this.planks = new Block(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
         this.button = new DefaultWoodenButtonBlock(FabricBlockSettings.of(Material.SUPPORTED).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
-        this.fence = new FenceBlock(FabricBlockSettings.of(Material.WOOD, logTopMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
-        this.fenceGate = new FenceGateBlock(FabricBlockSettings.of(Material.WOOD, logTopMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
-        this.pressurePlate = new DefaultPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.of(Material.WOOD, logTopMapColor).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
+        this.fence = new FenceBlock(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
+        this.fenceGate = new FenceGateBlock(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
+        this.pressurePlate = new DefaultPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
         this.leaves = BlocksAccessor.callCreateLeavesBlock();
         this.sapling = new DefaultSaplingBlock(saplingGenerator.apply(this.log.getDefaultState(), this.leaves.getDefaultState()), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
+        this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.SUPPORTED).breakInstantly().nonOpaque());
 
-        Registerable.block(this.log, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
-        Registerable.block(this.strippedLog, this.itemSettings).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
-        Registerable.block(this.wood, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
-        Registerable.block(this.strippedWood, this.itemSettings).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
-        Registerable.block(this.planks, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
-        Registerable.block(this.button, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
-        Registerable.block(this.fence, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
-        Registerable.block(this.fenceGate, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
-        Registerable.block(this.pressurePlate, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
-        Registerable.block(this.leaves, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
-        Registerable.block(this.sapling, this.itemSettings).register(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
+        Registerable.block(this.log, BUILDING_BLOCKS).register(Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
+        Registerable.block(this.strippedLog, BUILDING_BLOCKS).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
+        Registerable.block(this.wood, BUILDING_BLOCKS).register(Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
+        Registerable.block(this.strippedWood, BUILDING_BLOCKS).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
+        Registerable.block(this.planks, BUILDING_BLOCKS).register(Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
+        Registerable.block(this.button, REDSTONE).register(Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
+        Registerable.block(this.fence, DECORATIONS).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
+        Registerable.block(this.fenceGate, REDSTONE).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
+        Registerable.block(this.pressurePlate, REDSTONE).register(Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
+        Registerable.block(this.leaves, DECORATIONS).register(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
+        Registerable.block(this.sapling, DECORATIONS).register(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
+        Registerable.block(this.pottedSapling).register(Motherlode.id(id.getNamespace(), "potted_" + id.getPath() + "_sapling"));
 
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.log, this.strippedLog);
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.wood, this.strippedWood);
@@ -139,9 +146,13 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         return this.sapling;
     }
 
+    public FlowerPotBlock getPottedSapling() {
+        return this.pottedSapling;
+    }
+
     @Override
     protected Block[] baseVariants() {
-        return new Block[] { this.log, this.strippedLog, this.wood, this.strippedWood, this.planks, this.button, this.fence, this.fenceGate, this.pressurePlate, this.leaves, this.sapling };
+        return new Block[] { this.log, this.strippedLog, this.wood, this.strippedWood, this.planks, this.button, this.fence, this.fenceGate, this.pressurePlate, this.leaves, this.sapling, this.pottedSapling };
     }
 
     @Override
