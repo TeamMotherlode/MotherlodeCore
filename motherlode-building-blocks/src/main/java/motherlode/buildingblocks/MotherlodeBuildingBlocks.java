@@ -58,7 +58,6 @@ public class MotherlodeBuildingBlocks {
             stone,
             Motherlode.id(MotherlodeModule.MODID, stone.getId()),
             stone,
-            null,
             stone,
             stone
         );

@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
  * JavaDoc planned.
  *
  * @param <T>
+ * @param <S>
  */
 public interface ExtendableVariantType<T, S extends ExtendableVariantType<T, S>> extends RegisterableVariantType<T> {
     S register();

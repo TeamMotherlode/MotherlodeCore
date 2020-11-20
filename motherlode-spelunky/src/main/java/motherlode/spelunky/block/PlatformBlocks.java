@@ -9,18 +9,16 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import motherlode.base.Motherlode;
 import motherlode.base.api.CommonAssets;
 import motherlode.base.api.CommonData;
-import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.DataProcessor;
+import motherlode.base.api.MotherlodeVariantType;
 import motherlode.base.api.Registerable;
-import motherlode.base.api.RegisterableVariantType;
 import motherlode.spelunky.MotherlodeModule;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 
-public class PlatformBlocks implements RegisterableVariantType<Block>, AssetProcessor, DataProcessor {
+public class PlatformBlocks extends MotherlodeVariantType<Block, PlatformBlocks> {
     private static final AbstractBlock.Settings DEFAULT_BLOCK_SETTINGS = FabricBlockSettings.copyOf(Blocks.OAK_PLANKS).strength(1.0f, 1.0f).nonOpaque();
 
     private final PlatformBlock platform;
@@ -29,23 +27,25 @@ public class PlatformBlocks implements RegisterableVariantType<Block>, AssetProc
     private final Item.Settings itemSettings;
     private final Identifier topTexture;
 
-    public PlatformBlocks(Item.Settings itemSettings) {
-        this(DEFAULT_BLOCK_SETTINGS, itemSettings);
+    public PlatformBlocks(Identifier id, Item.Settings itemSettings) {
+        this(id, DEFAULT_BLOCK_SETTINGS, itemSettings);
     }
 
-    public PlatformBlocks(Item.Settings itemSettings, Identifier topTexture) {
-        this(DEFAULT_BLOCK_SETTINGS, itemSettings, topTexture);
+    public PlatformBlocks(Identifier id, Item.Settings itemSettings, Identifier topTexture) {
+        this(id, DEFAULT_BLOCK_SETTINGS, itemSettings, topTexture);
     }
 
-    public PlatformBlocks(MapColor color, Item.Settings itemSettings) {
-        this(FabricBlockSettings.copyOf(DEFAULT_BLOCK_SETTINGS).mapColor(color), itemSettings);
+    public PlatformBlocks(Identifier id, MapColor color, Item.Settings itemSettings) {
+        this(id, FabricBlockSettings.copyOf(DEFAULT_BLOCK_SETTINGS).mapColor(color), itemSettings);
     }
 
-    public PlatformBlocks(AbstractBlock.Settings settings, Item.Settings itemSettings) {
-        this(settings, itemSettings, null);
+    public PlatformBlocks(Identifier id, AbstractBlock.Settings settings, Item.Settings itemSettings) {
+        this(id, settings, itemSettings, null);
     }
 
-    public PlatformBlocks(AbstractBlock.Settings settings, Item.Settings itemSettings, Identifier topTexture) {
+    public PlatformBlocks(Identifier id, AbstractBlock.Settings settings, Item.Settings itemSettings, Identifier topTexture) {
+        super(id);
+
         this.platform = new PlatformBlock(settings);
         this.stairs = new PlatformStairsBlock(this.platform.getDefaultState(), settings);
 
@@ -62,30 +62,32 @@ public class PlatformBlocks implements RegisterableVariantType<Block>, AssetProc
     }
 
     @Override
-    public Block[] variants() {
+    protected PlatformBlocks getThis() {
+        return this;
+    }
+
+    @Override
+    protected Block[] baseVariants() {
         return new Block[] {this.platform, this.stairs};
     }
 
     @Override
-    public void register(Identifier id) {
+    protected void registerBase(Identifier id) {
         Motherlode.register(
             Registerable.block(this.platform, this.itemSettings),
             Motherlode.id(id.getNamespace(), id.getPath() + "_platform"),
-            this.platform,
-            null,
-            null,
-            null
+            this.platform
         );
 
         Motherlode.register(
             Registerable.block(this.stairs, this.itemSettings),
             Motherlode.id(id.getNamespace(), id.getPath() + "_platform_stairs"),
-            this.stairs,
-            null,
-            null,
-            null
+            this.stairs
         );
+    }
 
+    @Override
+    protected void registerOnClient(Identifier id) {
         BlockRenderLayerMap.INSTANCE.putBlock(this.platform, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(this.stairs, RenderLayer.getCutout());
     }

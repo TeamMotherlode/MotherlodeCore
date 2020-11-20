@@ -22,7 +22,6 @@ public class MotherlodeRedstoneBlocks {
             Registerable.block(block, ItemGroup.REDSTONE),
             Motherlode.id(MotherlodeModule.MODID, name),
             block,
-            null,
             p,
             CommonData.DEFAULT_BLOCK_LOOT_TABLE
         );

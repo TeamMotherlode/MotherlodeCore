@@ -10,10 +10,11 @@ import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import motherlode.base.Motherlode;
 import motherlode.base.api.CommonAssets;
 import motherlode.base.api.CommonData;
-import motherlode.base.Motherlode;
 import motherlode.base.api.DataProcessor;
+import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.base.api.worldgen.FeatureTargets;
 import motherlode.base.api.worldgen.MotherlodeOreBlock;
@@ -57,7 +58,6 @@ public class MotherlodeOresToolsArmorBlocks {
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             MotherlodeModule.id(name),
             block,
-            null,
             CommonAssets.DEFAULT_BLOCK,
             block instanceof DataProcessor ? ((DataProcessor) block).andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
                 : CommonData.DEFAULT_BLOCK_LOOT_TABLE
@@ -70,7 +70,7 @@ public class MotherlodeOresToolsArmorBlocks {
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             id,
             block,
-            b -> Motherlode.getFeaturesManager().addOre(id, b),
+            (Processor<MotherlodeOreBlock>) b -> Motherlode.getFeaturesManager().addOre(id, b),
             CommonAssets.DEFAULT_BLOCK,
             block.andThen(CommonData.DEFAULT_BLOCK_LOOT_TABLE)
         );

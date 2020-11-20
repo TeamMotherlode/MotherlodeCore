@@ -10,6 +10,7 @@ import motherlode.base.Motherlode;
  * JavaDoc planned.
  *
  * @param <T>
+ * @param <S>
  */
 public abstract class MotherlodeVariantType<T, S extends MotherlodeVariantType<T, S>> extends AbstractExtendableVariantType<T, S> implements AssetProcessor, DataProcessor {
     public MotherlodeVariantType(Identifier id) {

@@ -49,9 +49,7 @@ public class MotherlodeOresToolsArmorItems {
             Registerable.item(item),
             MotherlodeModule.id(name),
             item,
-            null,
-            CommonAssets.DEFAULT_ITEM_MODEL,
-            null
+            CommonAssets.DEFAULT_ITEM_MODEL
         );
     }
 
@@ -60,7 +58,6 @@ public class MotherlodeOresToolsArmorItems {
             Registerable.item(item),
             MotherlodeModule.id(name),
             item,
-            null,
             CommonAssets.DEFAULT_ITEM_MODEL,
             item instanceof DataProcessor ? (DataProcessor) item : null
         );
@@ -71,7 +68,6 @@ public class MotherlodeOresToolsArmorItems {
             item,
             MotherlodeModule.id(name),
             item,
-            null,
             item,
             item
         );

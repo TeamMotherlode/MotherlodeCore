@@ -14,6 +14,7 @@ import motherlode.base.Motherlode;
  * JavaDoc planned.
  *
  * @param <T>
+ * @param <S>
  */
 public abstract class AbstractExtendableVariantType<T, S extends AbstractExtendableVariantType<T, S>> implements ExtendableVariantType<T, S> {
     private boolean withoutBase;

@@ -40,8 +40,6 @@ public class MotherlodeCopperDungeonBlocks {
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
             MotherlodeModule.id(name),
             block,
-            null,
-            null,
             CommonData.DEFAULT_BLOCK_LOOT_TABLE
         );
     }
@@ -51,7 +49,6 @@ public class MotherlodeCopperDungeonBlocks {
             block,
             MotherlodeModule.id(name),
             block,
-            null,
             block,
             block
         );

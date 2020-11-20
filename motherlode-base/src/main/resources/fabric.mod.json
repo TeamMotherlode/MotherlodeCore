@@ -24,6 +24,9 @@
     ],
     "client": [
       "motherlode.base.MotherlodeClient"
+    ],
+    "server" : [
+      "motherlode.base.MotherlodeBase"
     ]
   },
   "mixins": [
