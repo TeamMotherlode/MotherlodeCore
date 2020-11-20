@@ -1,5 +1,6 @@
 package motherlode.base.api;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import net.minecraft.util.Identifier;
 import motherlode.base.Motherlode;
@@ -139,6 +140,20 @@ public class CommonAssets {
             .variant("type=double", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_double")))
         );
     };
+
+    public static BiFunction<Identifier, Identifier, AssetProcessor> CUBE_COLUMN = (end, side) -> (pack, id) ->
+        pack.addBlockModel(id, model -> model
+            .parent(new Identifier("minecraft", "block/cube_column"))
+            .texture("end", end)
+            .texture("side", side)
+        );
+
+    public static BiFunction<Identifier, Identifier, AssetProcessor> HORIZONTAL_CUBE_COLUMN = (end, side) -> (pack, id) ->
+        pack.addBlockModel(id, model -> model
+            .parent(new Identifier("minecraft", "block/cube_column_horizontal"))
+            .texture("end", end)
+            .texture("side", side)
+        );
 
     public static ModelBuilder.Override floatPredicate(ModelBuilder.Override override, String name, Number value) {
         override.with("predicate", JsonObject::new, predicate -> predicate.addProperty(name, value));
