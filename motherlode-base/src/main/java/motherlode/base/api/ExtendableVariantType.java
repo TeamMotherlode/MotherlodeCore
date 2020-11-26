@@ -23,7 +23,7 @@ public interface ExtendableVariantType<T, S extends ExtendableVariantType<T, S>>
 
     interface Extension<T> extends RegisterableVariantType<T> {
         void registerExtension(Identifier id);
-        
+
         @Override
         default void register(Identifier id) {
             this.registerExtension(id);

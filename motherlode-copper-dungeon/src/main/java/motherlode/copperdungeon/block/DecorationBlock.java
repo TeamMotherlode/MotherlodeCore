@@ -55,28 +55,19 @@ public class DecorationBlock implements RegisterableVariantType<Block>, AssetPro
         Motherlode.register(
             Registerable.block(this.base, this.settings),
             id,
-            this.base,
-            null,
-            null,
-            null
+            this.base
         );
 
         Motherlode.register(
             Registerable.block(this.stairs, this.settings),
             Motherlode.id(id.getNamespace(), id.getPath() + "_stairs"),
-            this.stairs,
-            null,
-            null,
-            null
+            this.stairs
         );
 
         Motherlode.register(
             Registerable.block(this.slab, this.settings),
             Motherlode.id(id.getNamespace(), id.getPath() + "_slab"),
-            this.slab,
-            null,
-            null,
-            null
+            this.slab
         );
     }
 

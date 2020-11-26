@@ -66,9 +66,9 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         return this;
     }
 
-    private final static Item.Settings BUILDING_BLOCKS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
-    private final static Item.Settings REDSTONE = new Item.Settings().group(ItemGroup.REDSTONE);
-    private final static Item.Settings DECORATIONS = new Item.Settings().group(ItemGroup.DECORATIONS);
+    private static final Item.Settings BUILDING_BLOCKS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
+    private static final Item.Settings REDSTONE = new Item.Settings().group(ItemGroup.REDSTONE);
+    private static final Item.Settings DECORATIONS = new Item.Settings().group(ItemGroup.DECORATIONS);
 
     @Override
     protected void registerBase(Identifier id) {

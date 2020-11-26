@@ -51,7 +51,7 @@ public interface FeaturesManager {
         this.registerConfiguredStructureFeatureKey(id, configuredStructureFeature);
         return configuredStructureFeature;
     }
-    
+
     /**
      * Registers a {@link ConfiguredFeature}.
      *

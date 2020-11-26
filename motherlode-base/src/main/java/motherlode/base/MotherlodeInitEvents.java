@@ -23,7 +23,7 @@ public class MotherlodeInitEvents {
     /**
      * An event that is guaranteed to be invoked once on a dedicated server after all modules have been initialized.
      *
-     * Note: Everything done in this event will not affect singleplayer.
+     * <p>Note: Everything done in this event will not affect singleplayer.
      */
     public static Event<Init> DEDICATED_SERVER = EventFactory.createArrayBacked(Init.class, callbacks -> () -> {
         for (Init callback : callbacks)
