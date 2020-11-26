@@ -1,5 +1,5 @@
 project.ext.setDefaultApis = {
-    useAsApi('net.fabricmc.fabric-api:fabric-api:0.25.7+1.17')
+    useAsApi('net.fabricmc.fabric-api:fabric-api:0.26.4+1.17')
     useAsApi('com.lettuce.fudge:artifice:0.14.4+1.16.3')
 
     useAsApiForModule('motherlode-accessories', 'com.github.emilyploszaj:trinkets:2.6.4')
@@ -9,5 +9,5 @@ project.ext.setDefaultApis = {
     useAsApiForModule('motherlode-mobs', 'com.github.bernie-g:geckolib:fabric-1.16.1-geckolib-2.0.0-beta.5')
 }
 project.ext.setRuntimeTestMods = {
-    useAsRuntime('io.github.prospector:modmenu:1.15.0+build.1')
+    useAsRuntime('io.github.prospector:modmenu:2.0.0-beta.1+build.2')
 }

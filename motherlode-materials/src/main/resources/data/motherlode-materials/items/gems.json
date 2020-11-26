@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:diamond",
+    "minecraft:emerald",
+    "motherlode-materials:amethyst",
+    "motherlode-materials:howlite",
+    "motherlode-materials:ruby",
+    "motherlode-materials:sapphire",
+    "motherlode-materials:topaz",
+    "motherlode-materials:onyx"
+  ]
+}

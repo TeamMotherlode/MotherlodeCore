@@ -27,7 +27,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import motherlode.orestoolsarmor.MotherlodeOresToolsArmorItems;
+import motherlode.materials.MotherlodeMaterialsItems;
 import motherlode.redstone.DefaultInventory;
 import motherlode.redstone.MotherlodeModule;
 import motherlode.redstone.MotherlodeRedstoneBlockEntities;
@@ -143,12 +143,12 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     private int getGemValue(Item item) {
-        if (item.equals(MotherlodeOresToolsArmorItems.AMETHYST)) return 1;
-        if (item.equals(MotherlodeOresToolsArmorItems.HOWLITE)) return 2;
-        if (item.equals(MotherlodeOresToolsArmorItems.RUBY)) return 3;
-        if (item.equals(MotherlodeOresToolsArmorItems.SAPPHIRE)) return 4;
-        if (item.equals(MotherlodeOresToolsArmorItems.TOPAZ)) return 5;
-        if (item.equals(MotherlodeOresToolsArmorItems.ONYX)) return 6;
+        if (item.equals(MotherlodeMaterialsItems.AMETHYST)) return 1;
+        if (item.equals(MotherlodeMaterialsItems.HOWLITE)) return 2;
+        if (item.equals(MotherlodeMaterialsItems.RUBY)) return 3;
+        if (item.equals(MotherlodeMaterialsItems.SAPPHIRE)) return 4;
+        if (item.equals(MotherlodeMaterialsItems.TOPAZ)) return 5;
+        if (item.equals(MotherlodeMaterialsItems.ONYX)) return 6;
         if (item.equals(Items.DIAMOND)) return 7;
         if (item.equals(Items.EMERALD)) return 8;
         return 0;

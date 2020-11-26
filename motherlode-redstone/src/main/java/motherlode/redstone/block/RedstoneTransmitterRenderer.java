@@ -17,7 +17,7 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Matrix4f;
-import motherlode.orestoolsarmor.MotherlodeOresToolsArmorItems;
+import motherlode.materials.MotherlodeMaterialsItems;
 import motherlode.redstone.MotherlodeModule;
 
 public class RedstoneTransmitterRenderer implements BlockEntityRenderer<RedstoneTransmitterBlockEntity> {
@@ -51,12 +51,12 @@ public class RedstoneTransmitterRenderer implements BlockEntityRenderer<Redstone
     private Vector4f[] getGemUV(Item gemItem) {
         Sprite gemSprite = MinecraftClient.getInstance().getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(MotherlodeModule.id("block/transmitter_gem"));
         if (gemItem.equals(Items.EMERALD)) return getCubeUV(gemSprite, 4);
-        if (gemItem.equals(MotherlodeOresToolsArmorItems.SAPPHIRE)) return getCubeUV(gemSprite, 8);
-        if (gemItem.equals(MotherlodeOresToolsArmorItems.RUBY)) return getCubeUV(gemSprite, 12);
-        if (gemItem.equals(MotherlodeOresToolsArmorItems.AMETHYST)) return getCubeUV(gemSprite, 16);
-        if (gemItem.equals(MotherlodeOresToolsArmorItems.TOPAZ)) return getCubeUV(gemSprite, 20);
-        if (gemItem.equals(MotherlodeOresToolsArmorItems.HOWLITE)) return getCubeUV(gemSprite, 24);
-        if (gemItem.equals(MotherlodeOresToolsArmorItems.ONYX)) return getCubeUV(gemSprite, 28);
+        if (gemItem.equals(MotherlodeMaterialsItems.SAPPHIRE)) return getCubeUV(gemSprite, 8);
+        if (gemItem.equals(MotherlodeMaterialsItems.RUBY)) return getCubeUV(gemSprite, 12);
+        if (gemItem.equals(MotherlodeMaterialsItems.AMETHYST)) return getCubeUV(gemSprite, 16);
+        if (gemItem.equals(MotherlodeMaterialsItems.TOPAZ)) return getCubeUV(gemSprite, 20);
+        if (gemItem.equals(MotherlodeMaterialsItems.HOWLITE)) return getCubeUV(gemSprite, 24);
+        if (gemItem.equals(MotherlodeMaterialsItems.ONYX)) return getCubeUV(gemSprite, 28);
         if (gemItem.equals(Items.DIAMOND)) return getCubeUV(gemSprite, 32);
         return getCubeUV(gemSprite, 2);
     }

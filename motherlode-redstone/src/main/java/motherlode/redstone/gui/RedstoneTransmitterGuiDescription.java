@@ -14,8 +14,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import motherlode.orestoolsarmor.MotherlodeOresToolsArmorTags;
-import motherlode.orestoolsarmor.item.DefaultGemItem;
+import motherlode.materials.MotherlodeMaterialsTags;
+import motherlode.materials.item.DefaultGemItem;
 import motherlode.redstone.MotherlodeModule;
 import motherlode.redstone.MotherlodeRedstonePackets;
 import motherlode.redstone.MotherlodeRedstoneScreenHandlers;
@@ -41,7 +41,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
 
         WPlainPanel panel = new WPlainPanel();
 
-        WItemSlot grid = WItemSlot.of(blockInventory, 0, 2, 2).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.isIn(MotherlodeOresToolsArmorTags.GEMS)));
+        WItemSlot grid = WItemSlot.of(blockInventory, 0, 2, 2).setFilter(itemStack -> (!itemStack.isEmpty() && itemStack.isIn(MotherlodeMaterialsTags.GEMS)));
         panel.add(grid, 36, 17);
 
         WSprite transmitter = new WSprite(MotherlodeModule.id("textures/gui/container/transmitter_disconnected.png"));
@@ -110,7 +110,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).isIn(MotherlodeOresToolsArmorTags.GEMS)) {
+                if (blockInventory.getStack(i).isIn(MotherlodeMaterialsTags.GEMS)) {
                     miniGemsTop.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
 
@@ -152,7 +152,7 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
             } else {
                 gems.get(i).setImage(MotherlodeModule.id("textures/gui/container/empty.png"));
-                if (blockInventory.getStack(i).isIn(MotherlodeOresToolsArmorTags.GEMS)) {
+                if (blockInventory.getStack(i).isIn(MotherlodeMaterialsTags.GEMS)) {
                     miniGemsTop.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
                     miniGemsBottom.get(i).setImage(MotherlodeModule.id("textures/gui/container/white.png"));
 

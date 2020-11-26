@@ -138,7 +138,7 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
         return (condition ? Optional.of(variantType.get()) : Optional.<S>empty()).map(v -> v.withNamespace(namespace)).map(extensionsFunction);
     }
 
-    protected static class ExtensionEntry<T, E extends ExtendableVariantType.Extension<T>> {
+    protected static class ExtensionEntry<T, E extends Extension<T>> {
         private final boolean registered;
         private final String namespace;
         private final E extension;

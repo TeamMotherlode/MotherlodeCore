@@ -17,7 +17,7 @@ public class MotherlodeSpelunkyClient implements ClientModInitializer {
 
         ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeSpelunkyBlocks.POT);
 
-        FabricModelPredicateProviderRegistry.register(MotherlodeSpelunkyBlocks.POT.asItem(), new Identifier("pot_pattern"), (itemStack, world, entity) -> {
+        FabricModelPredicateProviderRegistry.register(MotherlodeSpelunkyBlocks.POT.asItem(), new Identifier("pot_pattern"), (itemStack, world, entity, i) -> {
             CompoundTag tag = itemStack.getTag();
             if (tag == null || !tag.contains("BlockStateTag"))
                 return 0;
@@ -28,6 +28,6 @@ public class MotherlodeSpelunkyClient implements ClientModInitializer {
             return Integer.parseInt(tag.getString("pattern")) / 100f;
         });
 
-        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), (itemStack, world, entity) -> itemStack.getCount() / 100f);
+        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), (itemStack, world, entity, i) -> itemStack.getCount() / 100f);
     }
 }
