@@ -38,7 +38,7 @@ public class MotherlodeBiomeFeatures {
     }
 
     public static <FC extends FeatureConfig, F extends Feature<FC>> RegistryKey<ConfiguredFeature<?, ?>> register(String name, ConfiguredFeature<FC, F> feature) {
-        return Motherlode.getFeaturesManager().registerConfiguredFeature(MotherlodeModule.id(name), feature);
+        return Motherlode.getFeaturesManager().registerConfiguredFeatureKey(MotherlodeModule.id(name), feature);
     }
 
     public static <C extends SurfaceConfig, F extends SurfaceBuilder<C>> F register(String name, F surfaceBuilder) {

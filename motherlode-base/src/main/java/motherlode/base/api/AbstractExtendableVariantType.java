@@ -122,12 +122,20 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
         return extensionsFunction.apply(variantType.withNamespace(namespace));
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(boolean condition, S variantType, String namespace, Function<S, S> extensionsFunction) {
-        return Optional.ofNullable(condition ? variantType : null).map(v -> v.withNamespace(namespace)).map(extensionsFunction);
-    }
-
     public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Function<S, S> extensionsFunction) {
         return conditionallyExtend(condition.getAsBoolean(), variantType, namespace, extensionsFunction);
+    }
+
+    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(boolean condition, S variantType, String namespace, Function<S, S> extensionsFunction) {
+        return conditionallyExtend(condition, (Supplier<S>) () -> variantType, namespace, extensionsFunction);
+    }
+
+    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Function<S, S> extensionsFunction) {
+        return conditionallyExtend(condition.getAsBoolean(), variantType, namespace, extensionsFunction);
+    }
+
+    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Function<S, S> extensionsFunction) {
+        return (condition? Optional.of(variantType.get()) : Optional.<S>empty()).map(v -> v.withNamespace(namespace)).map(extensionsFunction);
     }
 
     protected static class ExtensionEntry<T, E extends ExtendableVariantType.Extension<T>> {

@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.world.gen.GenerationStep;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
+import motherlode.base.api.impl.OreTargetImpl;
 
 /**
  * An interface used for selecting the biomes that ores generate in, which blocks they can replace and the {@link GenerationStep.Feature} to use.
@@ -36,4 +37,16 @@ public interface OreTarget extends FeatureTarget {
      * @return The {@code RuleTest} for this ore target
      */
     RuleTest getRuleTest();
+
+    /**
+     * Returns a {@code FeatureTarget} that will return the passed arguments in its implementation.
+     *
+     * @param biomeSelector  The biome selector to return by {@link #getBiomeSelector()}.
+     * @param generationStep The {@link GenerationStep.Feature} to return by {@link #getGenerationStepFeature()}.
+     * @param ruleTest       A {@link RuleTest} to return by {@link #getRuleTest()}.
+     * @return A {@code FeatureTarget} using the passed biome selector, generation step and rule test.
+     */
+    static OreTarget of(Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep, RuleTest ruleTest) {
+        return new OreTargetImpl(biomeSelector, generationStep, ruleTest);
+    }
 }

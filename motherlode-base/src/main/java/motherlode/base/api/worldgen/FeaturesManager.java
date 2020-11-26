@@ -12,6 +12,7 @@ import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.StructureFeature;
 import motherlode.base.Motherlode;
 
 /**
@@ -32,9 +33,33 @@ public interface FeaturesManager {
      *
      * @param id                The {@link Identifier} to register the {@code ConfiguredFeature} under.
      * @param configuredFeature The {@code ConfiguredFeature} to register.
+     * @return The registered {@code ConfiguredFeature}.
+     */
+    default <FC extends FeatureConfig, F extends Feature<FC>> ConfiguredFeature<FC, F> registerConfiguredFeature(Identifier id, ConfiguredFeature<FC, F> configuredFeature) {
+        this.registerConfiguredFeatureKey(id, configuredFeature);
+        return configuredFeature;
+    }
+
+    /**
+     * Registers a {@link ConfiguredStructureFeature}.
+     *
+     * @param id                         The {@link Identifier} to register the {@code ConfiguredStructureFeature} under.
+     * @param configuredStructureFeature The {@code ConfiguredStructureFeature} to register.
+     * @return The registered {@code ConfiguredStructureFeature}.
+     */
+    default <FC extends FeatureConfig, F extends StructureFeature<FC>> ConfiguredStructureFeature<FC, F> registerConfiguredStructureFeature(Identifier id, ConfiguredStructureFeature<FC, F> configuredStructureFeature) {
+        this.registerConfiguredStructureFeatureKey(id, configuredStructureFeature);
+        return configuredStructureFeature;
+    }
+    
+    /**
+     * Registers a {@link ConfiguredFeature}.
+     *
+     * @param id                The {@link Identifier} to register the {@code ConfiguredFeature} under.
+     * @param configuredFeature The {@code ConfiguredFeature} to register.
      * @return The {@link RegistryKey} of the registered {@code ConfiguredFeature}.
      */
-    RegistryKey<ConfiguredFeature<?, ?>> registerConfiguredFeature(Identifier id, ConfiguredFeature<?, ?> configuredFeature);
+    RegistryKey<ConfiguredFeature<?, ?>> registerConfiguredFeatureKey(Identifier id, ConfiguredFeature<?, ?> configuredFeature);
 
     /**
      * Registers a {@link ConfiguredStructureFeature}.
@@ -43,7 +68,7 @@ public interface FeaturesManager {
      * @param configuredStructureFeature The {@code ConfiguredStructureFeature} to register.
      * @return The {@link RegistryKey} of the registered {@code ConfiguredStructureFeature}.
      */
-    RegistryKey<ConfiguredStructureFeature<?, ?>> registerConfiguredStructureFeature(Identifier id, ConfiguredStructureFeature<?, ?> configuredStructureFeature);
+    RegistryKey<ConfiguredStructureFeature<?, ?>> registerConfiguredStructureFeatureKey(Identifier id, ConfiguredStructureFeature<?, ?> configuredStructureFeature);
 
     /**
      * Registers the given {@link ConfiguredFeature} and adds it to the world using {@link #addFeature(FeatureTarget, RegistryKey)}.
@@ -54,7 +79,7 @@ public interface FeaturesManager {
      * @return The {@link RegistryKey} for the {@code ConfiguredFeature} created and registered by this method.
      */
     default RegistryKey<ConfiguredFeature<?, ?>> addFeature(Identifier id, FeatureTarget target, ConfiguredFeature<?, ?> configuredFeature) {
-        RegistryKey<ConfiguredFeature<?, ?>> key = this.registerConfiguredFeature(id, configuredFeature);
+        RegistryKey<ConfiguredFeature<?, ?>> key = this.registerConfiguredFeatureKey(id, configuredFeature);
 
         this.addFeature(target, key);
         return key;

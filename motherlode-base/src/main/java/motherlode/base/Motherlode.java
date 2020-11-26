@@ -18,6 +18,7 @@ import com.swordglowsblue.artifice.api.Artifice;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 public final class Motherlode implements ModInitializer {
     public static final String MODID = "motherlode";
@@ -100,7 +101,7 @@ public final class Motherlode implements ModInitializer {
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t) {
         return register(registerable, id, t, null, null, null, null);
     }
 
@@ -110,11 +111,11 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, DataProcessor data) {
         return register(registerable, id, t, null, null, null, data);
     }
 
@@ -124,11 +125,11 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
+     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, AssetProcessor assets) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, AssetProcessor assets) {
         return register(registerable, id, t, null, null, assets, null);
     }
 
@@ -138,12 +139,12 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
-     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
+     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, AssetProcessor assets, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, AssetProcessor assets, DataProcessor data) {
         return register(registerable, id, t, null, null, assets, data);
     }
 
@@ -157,7 +158,7 @@ public final class Motherlode implements ModInitializer {
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer) {
         return register(registerable, id, t, null, clientConsumer, null, null);
     }
 
@@ -168,11 +169,11 @@ public final class Motherlode implements ModInitializer {
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
-     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer, DataProcessor data) {
         return register(registerable, id, t, null, clientConsumer, null, data);
     }
 
@@ -183,11 +184,11 @@ public final class Motherlode implements ModInitializer {
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
-     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
+     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer, AssetProcessor assets) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer, AssetProcessor assets) {
         return register(registerable, id, t, null, clientConsumer, assets, null);
     }
 
@@ -198,12 +199,12 @@ public final class Motherlode implements ModInitializer {
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
-     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
-     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
+     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer, AssetProcessor assets, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Consumer<Identifier> clientConsumer, AssetProcessor assets, DataProcessor data) {
         return register(registerable, id, t, null, clientConsumer, assets, data);
     }
 
@@ -213,11 +214,11 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
+     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p) {
         return register(registerable, id, t, p, null, null, null);
     }
 
@@ -227,12 +228,12 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
-     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered.
+     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, DataProcessor data) {
         return register(registerable, id, t, p, null, null, data);
     }
 
@@ -242,12 +243,12 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
-     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
+     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered.
+     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, AssetProcessor assets) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, AssetProcessor assets) {
         return register(registerable, id, t, p, null, assets, null);
     }
 
@@ -257,13 +258,13 @@ public final class Motherlode implements ModInitializer {
      * @param registerable The {@link Registerable} used to register the thing.
      * @param id           The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t            The thing to register.
-     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
-     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
-     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param p            A {@link Processor} that can be used to do something with the thing after it is registered.
+     * @param assets       An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
+     * @param data         A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>          The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, AssetProcessor assets, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, AssetProcessor assets, DataProcessor data) {
         return register(registerable, id, t, p, null, assets, data);
     }
 
@@ -273,12 +274,12 @@ public final class Motherlode implements ModInitializer {
      * @param registerable   The {@link Registerable} used to register the thing.
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
-     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
+     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer) {
         return register(registerable, id, t, p, clientConsumer, null, null);
     }
 
@@ -288,13 +289,13 @@ public final class Motherlode implements ModInitializer {
      * @param registerable   The {@link Registerable} used to register the thing.
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
-     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
+     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
-     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, DataProcessor data) {
         return register(registerable, id, t, p, clientConsumer, null, data);
     }
 
@@ -304,13 +305,13 @@ public final class Motherlode implements ModInitializer {
      * @param registerable   The {@link Registerable} used to register the thing.
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
-     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
+     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
-     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
+     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, AssetProcessor assets) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, AssetProcessor assets) {
         return register(registerable, id, t, p, clientConsumer, assets, null);
     }
 
@@ -320,14 +321,14 @@ public final class Motherlode implements ModInitializer {
      * @param registerable   The {@link Registerable} used to register the thing.
      * @param id             The {@link Identifier} that will be passed to the {@code Registerable}, {@code AssetProcessor} and {@code DataProcessor}.
      * @param t              The thing to register.
-     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered. May be {@code null}.
+     * @param p              A {@link Processor} that can be used to do something with the thing after it is registered.
      * @param clientConsumer A {@link Consumer} that will be only be run on the client. The {@code Identifier id} will be passed to this.
-     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice. May be {@code null}.
-     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice. May be {@code null}.
+     * @param assets         An {@link AssetProcessor} that can be used to register assets for the thing using Artifice.
+     * @param data           A {@link DataProcessor} that can be used to register data for the thing using Artifice.
      * @param <T>            The type of the thing.
      * @return The thing that was registered
      */
-    public static <T> T register(Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, AssetProcessor assets, DataProcessor data) {
+    public static <T> T register(@NotNull Registerable<?> registerable, Identifier id, T t, Processor<? super T> p, Consumer<Identifier> clientConsumer, AssetProcessor assets, DataProcessor data) {
         registerable.register(id);
 
         if (p != null) p.accept(t);

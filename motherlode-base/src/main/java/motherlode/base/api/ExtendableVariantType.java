@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
  * @param <T>
  * @param <S>
  */
-public interface ExtendableVariantType<T, S extends ExtendableVariantType<T, S>> extends RegisterableVariantType<T> {
+public interface ExtendableVariantType<T, S extends ExtendableVariantType<T, S>> extends VariantType<T> {
     S register();
 
     S withoutBase();
@@ -21,10 +21,12 @@ public interface ExtendableVariantType<T, S extends ExtendableVariantType<T, S>>
 
     S conditionallyWith(BooleanSupplier condition, Supplier<Extension<T>> extension);
 
-    default void register(Identifier id) {
-        throw new UnsupportedOperationException("register(Identifier). Call register() instead.");
-    }
-
     interface Extension<T> extends RegisterableVariantType<T> {
+        void registerExtension(Identifier id);
+        
+        @Override
+        default void register(Identifier id) {
+            this.registerExtension(id);
+        }
     }
 }

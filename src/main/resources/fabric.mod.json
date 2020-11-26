@@ -16,7 +16,7 @@
     "Team Motherlode"
   ],
   "depends": {
-    "minecraft": "1.17.*",
+    "minecraft": "1.17.x",
     "fabricloader": ">=0.8.9",
     "fabric": "*"
   }

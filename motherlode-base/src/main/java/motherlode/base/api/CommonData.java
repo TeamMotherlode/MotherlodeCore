@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 import motherlode.base.Motherlode;
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 
-public class CommonData {
+public final class CommonData {
     public static final DataProcessor DEFAULT_BLOCK_LOOT_TABLE = (pack, id) ->
         pack.addLootTable(Motherlode.id(id.getNamespace(), "blocks/" + id.getPath()), table -> table
             .type(new Identifier("minecraft", "block"))

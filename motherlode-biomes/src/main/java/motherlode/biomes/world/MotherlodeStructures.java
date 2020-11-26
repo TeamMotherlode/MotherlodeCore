@@ -33,7 +33,6 @@ public class MotherlodeStructures {
     }
 
     private static <FC extends FeatureConfig, F extends StructureFeature<FC>> ConfiguredStructureFeature<FC, F> register(String name, ConfiguredStructureFeature<FC, F> entry) {
-        Motherlode.getFeaturesManager().registerConfiguredStructureFeature(MotherlodeModule.id(name), entry);
-        return entry;
+        return Motherlode.getFeaturesManager().registerConfiguredStructureFeature(MotherlodeModule.id(name), entry);
     }
 }

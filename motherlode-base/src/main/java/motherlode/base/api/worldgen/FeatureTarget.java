@@ -28,6 +28,13 @@ public interface FeatureTarget {
      */
     GenerationStep.Feature getGenerationStepFeature();
 
+    /**
+     * Returns a {@code FeatureTarget} that will return the passed arguments in its implementation.
+     *
+     * @param biomeSelector  The biome selector to return by {@link #getBiomeSelector()}.
+     * @param generationStep The {@link GenerationStep.Feature} to return by {@link #getGenerationStepFeature()}.
+     * @return A {@code FeatureTarget} using the passed biome selector and generation step.
+     */
     static FeatureTarget of(Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep) {
         return new FeatureTargetImpl(biomeSelector, generationStep);
     }

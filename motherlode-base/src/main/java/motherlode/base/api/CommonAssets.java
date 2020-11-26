@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 
-public class CommonAssets {
+public final class CommonAssets {
     private static final String[] facings = new String[] {"east", "north", "south", "west"};
     private static final String[] halfs = new String[] {"bottom", "top"};
     private static final String[] shapes = new String[] {"inner_left", "inner_right", "outer_left", "outer_right", "straight"};

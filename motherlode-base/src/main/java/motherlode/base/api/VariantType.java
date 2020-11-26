@@ -5,7 +5,6 @@ package motherlode.base.api;
  *
  * @param <T>
  */
-@FunctionalInterface
 public interface VariantType<T> {
     /**
      * Returns all variants of this {@code VariantType}.
