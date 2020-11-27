@@ -3,6 +3,7 @@ package motherlode.base.api;
 import java.util.Objects;
 import net.minecraft.util.Identifier;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
+import org.jetbrains.annotations.Nullable;
 
 @FunctionalInterface
 public interface AssetProcessor {
@@ -12,7 +13,7 @@ public interface AssetProcessor {
      * @param pack Resource pack builder to register assets to.
      * @param id   Identifier passed together with the {@code AssetProcessor}. May be {@code null}.
      */
-    void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id);
+    void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, @Nullable Identifier id);
 
     /**
      * Calls the {@link #accept} method and returns the given resource pack builder.
@@ -21,7 +22,7 @@ public interface AssetProcessor {
      * @param id   Identifier passed together with the {@code AssetProcessor}. May be {@code null}.
      * @return The given resource pack builder.
      */
-    default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
+    default ArtificeResourcePack.ClientResourcePackBuilder process(ArtificeResourcePack.ClientResourcePackBuilder pack, @Nullable Identifier id) {
 
         accept(pack, id);
         return pack;

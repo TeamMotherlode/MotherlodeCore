@@ -1,14 +1,15 @@
 package motherlode.potions;
 
+import java.util.function.Consumer;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import motherlode.base.api.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.CommonAssets;
 import motherlode.potions.MotherlodePotions.PotionModelInfo;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class MotherlodePotionsClient implements ClientModInitializer {
     @Override
@@ -19,8 +20,8 @@ public class MotherlodePotionsClient implements ClientModInitializer {
         });
     }
 
-    public static AssetProcessor getAssetProcessor() {
-        return (pack, id) -> {
+    public static Consumer<ArtificeResourcePack.ClientResourcePackBuilder> getAssetProcessor() {
+        return pack -> {
             for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
                 if (!info.useDefaultModel)
                     pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, info.model), model -> model

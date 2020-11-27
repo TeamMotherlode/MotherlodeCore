@@ -2,24 +2,22 @@ package motherlode.base.api.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import motherlode.base.api.AssetProcessor;
+import java.util.function.Consumer;
 import motherlode.base.api.AssetsManager;
-import motherlode.base.api.DataProcessor;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class AssetsManagerImpl implements AssetsManager {
     public static final AssetsManagerImpl INSTANCE = new AssetsManagerImpl();
 
-    private List<Pair<Identifier, AssetProcessor>> assetProcessors = new ArrayList<>();
-    private List<Pair<Identifier, DataProcessor>> dataProcessors = new ArrayList<>();
+    private List<Consumer<ArtificeResourcePack.ClientResourcePackBuilder>> assetProcessors = new ArrayList<>();
+    private List<Consumer<ArtificeResourcePack.ServerResourcePackBuilder>> dataProcessors = new ArrayList<>();
 
     @Override
-    public void addAssets(Identifier id, AssetProcessor p) {
-        this.assetProcessors.add(new Pair<>(id, p));
+    public void addAssets(Consumer<ArtificeResourcePack.ClientResourcePackBuilder> p) {
+        this.assetProcessors.add(p);
     }
 
-    public List<Pair<Identifier, AssetProcessor>> getAssets() {
+    public List<Consumer<ArtificeResourcePack.ClientResourcePackBuilder>> getAssets() {
         return this.assetProcessors;
     }
 
@@ -28,11 +26,11 @@ public class AssetsManagerImpl implements AssetsManager {
     }
 
     @Override
-    public void addData(Identifier id, DataProcessor p) {
-        this.dataProcessors.add(new Pair<>(id, p));
+    public void addData(Consumer<ArtificeResourcePack.ServerResourcePackBuilder> p) {
+        this.dataProcessors.add(p);
     }
 
-    public List<Pair<Identifier, DataProcessor>> getData() {
+    public List<Consumer<ArtificeResourcePack.ServerResourcePackBuilder>> getData() {
         return this.dataProcessors;
     }
 

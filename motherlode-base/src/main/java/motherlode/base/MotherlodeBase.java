@@ -18,7 +18,7 @@ public class MotherlodeBase implements ModInitializer, DedicatedServerModInitial
 
         MotherlodeInitEvents.MAIN.invoker().initialize();
 
-        log(Level.INFO, "[Motherlode] Initialized.");
+        Motherlode.getLogger().log(Level.INFO, "[Motherlode] Initialized.");
     }
 
     @Override
@@ -28,13 +28,5 @@ public class MotherlodeBase implements ModInitializer, DedicatedServerModInitial
 
     public static boolean isModuleInitializationDone() {
         return moduleInitDone;
-    }
-
-    private static void log(Level level, CharSequence message) {
-        Motherlode.getLogger().log(level, message);
-    }
-
-    private static void log(Level level, Object message) {
-        Motherlode.getLogger().log(level, String.valueOf(message));
     }
 }

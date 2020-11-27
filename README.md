@@ -7,6 +7,12 @@ It is separated into modules that add to different aspects of Minecraft.
 ### Motherlode Base
 This module provides some utility features to make developing Motherlode easier. It does not add any content.
 
+### Motherlode Materials
+[...]
+
+### Motherlode Copper Dungeon
+[...]
+
 ### Motherlode Biomes
 [...]
 
@@ -14,9 +20,6 @@ This module provides some utility features to make developing Motherlode easier.
 [...]
 
 ### Motherlode Mobs
-[...]
-
-### Motherlode Ores, Tools, & Armor
 [...]
 
 ### Motherlode Potions

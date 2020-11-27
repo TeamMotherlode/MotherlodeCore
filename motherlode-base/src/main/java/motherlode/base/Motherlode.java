@@ -3,7 +3,6 @@ package motherlode.base;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.fabricmc.api.ModInitializer;
 import motherlode.base.api.AssetProcessor;
 import motherlode.base.api.AssetsManager;
@@ -13,8 +12,10 @@ import motherlode.base.api.Registerable;
 import motherlode.base.api.impl.AssetsManagerImpl;
 import motherlode.base.api.impl.ClientRegisterImpl;
 import motherlode.base.api.impl.FeaturesManagerImpl;
+import motherlode.base.api.impl.ServerRegisterImpl;
 import motherlode.base.api.worldgen.FeaturesManager;
 import com.swordglowsblue.artifice.api.Artifice;
+import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,34 @@ public final class Motherlode implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        MotherlodeInitEvents.MAIN.register(() -> {
+            List<Consumer<ArtificeResourcePack.ServerResourcePackBuilder>> data = AssetsManagerImpl.INSTANCE.getData();
+
+            Artifice.registerDataPack(Motherlode.id("data_pack"), pack ->
+                data.forEach(consumer -> consumer.accept(pack)));
+            AssetsManagerImpl.INSTANCE.removeDataProcessorList();
+        });
+
+        MotherlodeInitEvents.MAIN.register(FeaturesManagerImpl.INSTANCE::addFeatures);
+
+        MotherlodeInitEvents.CLIENT.register(() -> {
+            ClientRegisterImpl.INSTANCE.getClientTasks().forEach(Runnable::run);
+            ClientRegisterImpl.INSTANCE.removeClientTaskList();
+        });
+
+        MotherlodeInitEvents.CLIENT.register(() -> {
+            List<Consumer<ArtificeResourcePack.ClientResourcePackBuilder>> assets = AssetsManagerImpl.INSTANCE.getAssets();
+
+            Artifice.registerAssetPack(Motherlode.id("resource_pack"), pack ->
+                assets.forEach(consumer -> consumer.accept(pack)));
+            AssetsManagerImpl.INSTANCE.removeAssetProcessorList();
+        });
+
+        MotherlodeInitEvents.DEDICATED_SERVER.register(() -> {
+            ServerRegisterImpl.INSTANCE.getServerTasks().forEach(Runnable::run);
+            ServerRegisterImpl.INSTANCE.removeServerTaskList();
+        });
+
         // DEBUG
         /*
 
@@ -36,29 +65,6 @@ public final class Motherlode implements ModInitializer {
             new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)).register();
 
         */
-        // DEBUG end
-
-        MotherlodeInitEvents.MAIN.register(() -> {
-            List<Pair<Identifier, DataProcessor>> data = AssetsManagerImpl.INSTANCE.getData();
-            Artifice.registerDataPack(Motherlode.id("data_pack"), pack ->
-                data.forEach(pair ->
-                    pair.getRight().accept(pack, pair.getLeft())));
-            AssetsManagerImpl.INSTANCE.removeDataProcessorList();
-        });
-
-        MotherlodeInitEvents.MAIN.register(FeaturesManagerImpl.INSTANCE::addFeatures);
-
-        MotherlodeInitEvents.CLIENT.register(() -> ClientRegisterImpl.INSTANCE.getClientConsumers()
-            .forEach(pair -> pair.getRight().accept(pair.getLeft())));
-
-        MotherlodeInitEvents.CLIENT.register(() -> {
-            List<Pair<Identifier, AssetProcessor>> assets = AssetsManagerImpl.INSTANCE.getAssets();
-
-            Artifice.registerAssetPack(Motherlode.id("resource_pack"), pack ->
-                assets.forEach(pair ->
-                    pair.getRight().accept(pack, pair.getLeft())));
-            AssetsManagerImpl.INSTANCE.removeAssetProcessorList();
-        });
     }
 
     /**
@@ -342,14 +348,45 @@ public final class Motherlode implements ModInitializer {
     /**
      * Adds a task that will only be run on the client.
      *
-     * @param id             The {@link Identifier} that will be passed to the {@code Consumer} when it runs.
-     * @param clientConsumer The {@link Consumer} that will be run on the client.
+     * @param id         The {@link Identifier} that will be passed to the {@code Consumer} when it runs.
+     * @param clientTask The {@link Consumer} that will be run on the client.
      */
-    public static void registerOnClient(Identifier id, Consumer<Identifier> clientConsumer) {
-        if (MotherlodeBase.isModuleInitializationDone())
-            throw new IllegalStateException("Trying to register on client outside motherlode:init entry point.");
+    public static void registerOnClient(Identifier id, Consumer<Identifier> clientTask) {
+        runOnClient(() -> clientTask.accept(id));
+    }
 
-        ClientRegisterImpl.INSTANCE.addClientConsumer(id, clientConsumer);
+    /**
+     * Adds a task that will only be run on the dedicated server.
+     *
+     * @param id         The {@link Identifier} that will be passed to the {@code Consumer} when it runs.
+     * @param serverTask The {@link Consumer} that will be run on the dedicated server.
+     */
+    public static void registerOnDedicatedServer(Identifier id, Consumer<Identifier> serverTask) {
+        runOnDedicatedServer(() -> serverTask.accept(id));
+    }
+
+    /**
+     * Adds a task that will only be run on the client.
+     *
+     * @param clientTask The {@link Runnable} that will be run on the client.
+     */
+    public static void runOnClient(Runnable clientTask) {
+        if (MotherlodeBase.isModuleInitializationDone())
+            throw new IllegalStateException("Trying to add client task outside motherlode:init entry point.");
+
+        ClientRegisterImpl.INSTANCE.addClientTask(clientTask);
+    }
+
+    /**
+     * Adds a task that will only be run on a dedicated server.
+     *
+     * @param serverTask The {@link Runnable} that will be run on the dedicated server.
+     */
+    public static void runOnDedicatedServer(Runnable serverTask) {
+        if (MotherlodeBase.isModuleInitializationDone())
+            throw new IllegalStateException("Trying to add dedicated server task outside motherlode:init entry point.");
+
+        ServerRegisterImpl.INSTANCE.addServerTask(serverTask);
     }
 
     /**

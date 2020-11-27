@@ -1,6 +1,7 @@
 package motherlode.base.api;
 
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public interface Processor<T> {
     /**
@@ -33,7 +34,7 @@ public interface Processor<T> {
      * operation followed by the {@code after} operation
      * @throws NullPointerException if {@code after} is null
      */
-    default Processor<T> andThen(Processor<? super T> after) {
+    default Processor<T> andThen(@NotNull Processor<? super T> after) {
         Objects.requireNonNull(after);
         return t -> {
             accept(t);
