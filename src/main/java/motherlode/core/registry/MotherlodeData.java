@@ -3,9 +3,14 @@ package motherlode.core.registry;
 import com.swordglowsblue.artifice.api.Artifice;
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 
+import com.swordglowsblue.artifice.api.builder.data.LootTableBuilder;
+import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
+
+import java.util.Map;
+import java.util.function.Function;
 
 public class MotherlodeData {
     
@@ -28,6 +33,10 @@ public class MotherlodeData {
                     )
                 )
             );
+           }
+           for (Map.Entry<Block, Function<String, Processor<LootTableBuilder>>> entry : MotherlodeBlocks.customLootTableList.entrySet()){
+                String blockId = entry.getKey().getTranslationKey().replace("block.motherlode.", "");
+                pack.addLootTable(Motherlode.id("blocks/"+blockId), entry.getValue().apply(blockId));
            }
         });
     }
