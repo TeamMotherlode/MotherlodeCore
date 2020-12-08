@@ -16,7 +16,7 @@ import java.util.Random;
 
 import motherlode.core.api.OreProperties;
 
-public class DefaultOreBlock extends DefaultBlock implements OreProperties{
+public class DefaultOreBlock extends DefaultBlock implements OreProperties {
     public final int minExperience;
     public final int maxExperience;
     public final int veinSize;
@@ -41,7 +41,6 @@ public class DefaultOreBlock extends DefaultBlock implements OreProperties{
         this.maxY = maxY;
 
     }
-
 
     protected int getExperienceWhenMined(Random random) {
         if (maxExperience!=0) {

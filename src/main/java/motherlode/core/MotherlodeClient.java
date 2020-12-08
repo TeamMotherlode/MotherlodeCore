@@ -19,17 +19,34 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.resource.GrassColormapResourceSupplier;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.BlockRenderView;
-import net.minecraft.world.level.ColorResolver;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.math.BlockPos;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import motherlode.core.block.PotBlock;
+import motherlode.core.enderinvasion.EnderInvasion;
+import motherlode.core.entities.render.MotherlodeEntityRenderers;
+import motherlode.core.gui.RedstoneTransmitterGuiDescription;
+import motherlode.core.gui.RedstoneTransmitterScreen;
+import motherlode.core.registry.MotherlodeAssets;
+import motherlode.core.registry.MotherlodeBlocks;
+import motherlode.core.registry.MotherlodeParticles;
+import motherlode.core.registry.MotherlodePotions;
+import motherlode.core.registry.MotherlodeScreenHandlers;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeClient implements ClientModInitializer {
@@ -38,7 +55,8 @@ public class MotherlodeClient implements ClientModInitializer {
 		MotherlodeAssets.register();
 
     BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
-    BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.END_FOAM, RenderLayer.getTranslucent());
 
 		MotherlodeEntityRenderers.init();
 
@@ -66,27 +84,42 @@ public class MotherlodeClient implements ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
 			BiomeColors.getGrassColor(world, pos), MotherlodeBlocks.WATERPLANT);
 
-		FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
-			MotherlodePotions.PotionModelInfo potion = MotherlodePotions.potionModelInfos.get( PotionUtil.getPotion(itemStack) );
-			return potion == null ? 1 : potion.predicateValue;
-		});
+        FabricModelPredicateProviderRegistry.register(Items.POTION, new Identifier("potion_type"), (itemStack, _world, _entity) -> {
+            MotherlodePotions.PotionModelInfo potion = MotherlodePotions.potionModelInfos.get(PotionUtil.getPotion(itemStack));
+            return potion == null ? 1 : potion.predicateValue;
+        });
 
-		FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), ( itemStack,  _world,  _entity) -> itemStack.getCount() / 100F);
+        FabricModelPredicateProviderRegistry.register(new Identifier("stack_count"), (itemStack, _world, _entity) -> itemStack.getCount() / 100F);
 
-		FabricModelPredicateProviderRegistry.register(MotherlodeBlocks.POT_ITEM, new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
-			CompoundTag tag = itemStack.getTag();
-			if (tag == null || !tag.contains("BlockStateTag"))
-				return 0;
-			tag = tag.getCompound("BlockStateTag");
-			if (tag == null || !tag.contains("pattern"))
-				return 0;
+        FabricModelPredicateProviderRegistry.register(MotherlodeBlocks.POT_ITEM, new Identifier("pot_pattern"), (itemStack, _world, _entity) -> {
+            CompoundTag tag = itemStack.getTag();
+            if (tag == null || !tag.contains("BlockStateTag"))
+                return 0;
+            tag = tag.getCompound("BlockStateTag");
+            if (tag == null || !tag.contains("pattern"))
+                return 0;
 
-			return Integer.parseInt(tag.getString("pattern")) / 100F;
-		});
+            return Integer.parseInt(tag.getString("pattern")) / 100F;
+        });
+
+        ClientSidePacketRegistry.INSTANCE.register(EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, (packetContext, attachedData) -> {
+
+            BlockPos pos = attachedData.readBlockPos();
+            double offsetY = attachedData.readDouble();
+
+            double velocityX = attachedData.readDouble();
+            double velocityY = attachedData.readDouble();
+            double velocityZ = attachedData.readDouble();
+
+            packetContext.getTaskQueue().execute(() ->
+                    MinecraftClient.getInstance().particleManager.addParticle(
+                            ParticleTypes.PORTAL, pos.getX(), pos.getY() + offsetY, pos.getZ(), velocityX, velocityY, velocityZ));
+        });
+    }
 
     BlockEntityRendererRegistry.INSTANCE.register(MotherlodeBlockEntities.REDSTONE_TRANSMITTER, RedstoneTransmitterRenderer::new);
 
     ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register((spriteAtlasTexture, registry) -> 
 			registry.register(Motherlode.id("block/transmitter_gem")));
-	}
+  }
 }

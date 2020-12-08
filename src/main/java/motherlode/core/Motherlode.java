@@ -1,5 +1,6 @@
 package motherlode.core;
 
+import motherlode.core.enderinvasion.EnderInvasion;
 import motherlode.core.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -9,10 +10,12 @@ import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class Motherlode implements ModInitializer {
-    private static final String MODID = "motherlode";
+    public static final String MODID = "motherlode";
 
     @Override
     public void onInitialize() {
+
+        EnderInvasion.initializeEnderInvasion();
         MotherlodeEntities.init();
         MotherlodeBlocks.init();
         MotherlodeItems.init();
@@ -31,6 +34,7 @@ public class Motherlode implements ModInitializer {
 
         MotherlodeData.register();
         MotherlodeFeatures.register();
+        MotherlodeSpreadRecipes.register();
     }
 
     public static final ItemGroup BLOCKS = FabricItemGroupBuilder.create( id("blocks"))

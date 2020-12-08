@@ -11,6 +11,11 @@
   "mixins": [
     "ServerWorldMixin",
     "StructureFeatureAccessor",
+    "enderinvasion.ServerWorldMixin",
+    "enderinvasion.MobEntityMixin",
+    "enderinvasion.EnderDragonFightMixin",
+    "SpawnHelperAccessor",
+    "SpawnHelperAccessor$Info",
     "potions.BrewingRecipeRegistryMixin",
     "potions.EntityMixin",
     "potions.PotionEntityMixin",
