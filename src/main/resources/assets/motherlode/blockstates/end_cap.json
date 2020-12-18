@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "motherlode:block/end_cap_00"
+      },
+      {
+        "model": "motherlode:block/end_cap_01"
+      },
+      {
+        "model": "motherlode:block/end_cap_02"
+      }
+    ]
+  }
+}
