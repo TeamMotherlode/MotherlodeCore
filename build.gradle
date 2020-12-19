@@ -16,6 +16,10 @@ allprojects {
 
     repositories {
         maven {
+            name = "Ladysnake Libs"
+            url = 'https://dl.bintray.com/ladysnake/libs'
+        }
+        maven {
             name = 'CottonMC'
             url = 'https://server.bbkr.space/artifactory/libs-release'
         }

@@ -12,6 +12,7 @@ rootProject.name = "motherlode"
 
 include 'motherlode-base'
 include 'motherlode-materials'
+include 'motherlode-ender-invasion'
 include 'motherlode-copper-dungeon'
 include 'motherlode-building-blocks'
 include 'motherlode-biomes'

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "motherlode-ender-invasion:corrupted_dirt",
+    "minecraft:end_stone",
+    "motherlode-ender-invasion:corrupted_grass",
+    "motherlode-ender-invasion:end_foam",
+    "motherlode-ender-invasion:end_cap",
+    "motherlode-ender-invasion:withered_log",
+    "motherlode-ender-invasion:withered_oak_leaves",
+    "motherlode-ender-invasion:withered_dark_oak_leaves",
+    "motherlode-ender-invasion:withered_birch_leaves",
+    "motherlode-ender-invasion:withered_spruce_leaves",
+    "motherlode-ender-invasion:withered_jungle_leaves",
+    "motherlode-ender-invasion:withered_acacia_leaves"
+  ]
+}

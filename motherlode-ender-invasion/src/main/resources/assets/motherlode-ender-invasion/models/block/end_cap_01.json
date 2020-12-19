@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "motherlode-ender-invasion:block/end_cap_01"
+  }
+}

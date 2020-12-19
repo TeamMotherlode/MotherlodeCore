@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "minecraft:grass",
-    "minecraft:fern",
-    "motherlode:corrupted_grass",
-    "motherlode:end_cap"
-  ]
-}

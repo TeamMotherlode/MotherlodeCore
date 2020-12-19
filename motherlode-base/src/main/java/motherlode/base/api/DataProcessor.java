@@ -10,7 +10,7 @@ public interface DataProcessor {
      * This is called to register data using Artifice.
      *
      * @param pack Data pack builder to register data to.
-     * @param id   Identifier passed together with the {@code DataProcessor}. May be {@code null}.
+     * @param id   Identifier passed together with the {@code DataProcessor}.
      */
     void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id);
 
@@ -18,7 +18,7 @@ public interface DataProcessor {
      * Calls the {@link #accept} method and returns the given data pack builder.
      *
      * @param pack Data pack builder to register data to.
-     * @param id   Identifier passed together with the {@code DataProcessor}. May be {@code null}.
+     * @param id   Identifier passed together with the {@code DataProcessor}.
      * @return The given data pack builder.
      */
     default ArtificeResourcePack.ServerResourcePackBuilder process(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {

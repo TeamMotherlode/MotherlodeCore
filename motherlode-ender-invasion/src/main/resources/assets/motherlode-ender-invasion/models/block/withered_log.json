@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "motherlode-ender-invasion:block/withered_log_top",
+    "side": "motherlode-ender-invasion:block/withered_log"
+  }
+}

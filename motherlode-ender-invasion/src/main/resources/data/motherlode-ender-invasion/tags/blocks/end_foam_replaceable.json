@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:grass",
+    "minecraft:fern",
+    "motherlode-ender-invasion:corrupted_grass",
+    "motherlode-ender-invasion:end_cap"
+  ]
+}

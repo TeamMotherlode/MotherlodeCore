@@ -59,6 +59,12 @@ public final class CommonAssets {
 
     public static final AssetProcessor DEFAULT_BLOCK = DEFAULT_BLOCK_STATE.andThen(DEFAULT_BLOCK_MODEL).andThen(BLOCK_ITEM);
 
+    public static final Function<Identifier, AssetProcessor> PLANT_FUNCTION = modelId -> (pack, id) ->
+        pack.addBlockModel(modelId, state -> state
+            .parent(new Identifier("block/tinted_cross"))
+            .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+        );
+
     public static final AssetProcessor PLANT = (pack, id) ->
         pack.addBlockModel(id, state -> state
             .parent(new Identifier("block/tinted_cross"))
