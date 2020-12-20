@@ -11,11 +11,11 @@ import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import motherlode.base.Motherlode;
+import motherlode.base.api.Processor;
+import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.api.assets.CommonData;
 import motherlode.base.api.assets.DataProcessor;
-import motherlode.base.api.Processor;
-import motherlode.base.api.Registerable;
 import motherlode.base.api.worldgen.FeatureTargets;
 import motherlode.base.api.worldgen.MotherlodeOreBlock;
 

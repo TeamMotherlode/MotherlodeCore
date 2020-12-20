@@ -24,8 +24,8 @@ public class ZapParticle extends SpriteBillboardParticle {
     private static final float VARIANCE = 0.25f;
     private static final float THICKNESS = 0.01f;
 
-    private static final float[] ZAP_MIDDLE_COLOR = {1.f, 1.f, 1.f, 1.f};
-    private static final float[] ZAP_OUTSIDE_COLOR = {0.2f, 0.5f, 1.f, 0.5f};
+    private static final float[] ZAP_MIDDLE_COLOR = { 1.f, 1.f, 1.f, 1.f };
+    private static final float[] ZAP_OUTSIDE_COLOR = { 0.2f, 0.5f, 1.f, 0.5f };
 
     private final Vec3d target;
     private final Vec3d source;

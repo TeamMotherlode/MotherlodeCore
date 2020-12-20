@@ -20,9 +20,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.biomes.MotherlodeModule;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 

@@ -9,15 +9,15 @@ import com.swordglowsblue.artifice.api.builder.assets.BlockStateBuilder;
 import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 
 public final class CommonAssets {
-    private static final String[] facings = new String[]{"east", "north", "south", "west"};
-    private static final String[] halfs = new String[]{"bottom", "top"};
-    private static final String[] shapes = new String[]{"inner_left", "inner_right", "outer_left", "outer_right", "straight"};
-    private static final String[] modelStrings = new String[]{"", "_inner", "_outer"};
+    private static final String[] facings = new String[] { "east", "north", "south", "west" };
+    private static final String[] halfs = new String[] { "bottom", "top" };
+    private static final String[] shapes = new String[] { "inner_left", "inner_right", "outer_left", "outer_right", "straight" };
+    private static final String[] modelStrings = new String[] { "", "_inner", "_outer" };
 
     // models: 0 = "", 1 = "_inner", 2 = "_outer" | xs & ys: # = # * 90
-    private static final int[] models = new int[]{1, 1, 2, 2, 0, 1, 1, 2, 2, 0};
-    private static final int[] xs = new int[]{0, 0, 0, 0, 0, 2, 2, 2, 2, 2};
-    private static final int[] ys = new int[]{3, 0, 3, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2};
+    private static final int[] models = new int[] { 1, 1, 2, 2, 0, 1, 1, 2, 2, 0 };
+    private static final int[] xs = new int[] { 0, 0, 0, 0, 0, 2, 2, 2, 2, 2 };
+    private static final int[] ys = new int[] { 3, 0, 3, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 3, 3, 3, 3, 3, 0, 3, 3, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 2 };
 
     public static final Function<Identifier, AssetProcessor> BLOCK_ITEM_FUNCTION = modelId -> (pack, id) ->
         pack.addItemModel(modelId, state -> state
@@ -78,7 +78,7 @@ public final class CommonAssets {
         );
 
     public static final AssetProcessor PILLAR = (pack, id) -> {
-        for (String variant : new String[]{"", "_horizontal"}) {
+        for (String variant : new String[] { "", "_horizontal" }) {
             pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + variant), model -> model
                 .parent(new Identifier("block/cube_column" + variant))
                 .texture("end", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_top"))
@@ -127,7 +127,7 @@ public final class CommonAssets {
 
     public static final AssetProcessor SLAB = (pack, id) -> {
         String texId = id.getPath().replace("_slab", "").replace("_pillar", "_pillar_side");
-        for (String variant : new String[]{"_top", ""}) {
+        for (String variant : new String[] { "_top", "" }) {
             pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + variant), model -> model
                 .parent(new Identifier("block/slab" + variant))
                 .texture("top", new Identifier(id.getNamespace(), "block/" + texId))

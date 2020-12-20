@@ -20,32 +20,32 @@ public class MotherlodeMaterials {
         new DefaultToolMaterial("adamantite", 10000, 8, 15, 13, 8F, Ingredient.ofItems(MotherlodeMaterialsItems.SILVER_INGOT));
 
     public static final DefaultArmorMaterial COPPER_ARMOR =
-        new DefaultArmorMaterial("copper", 10, new int[] {2, 4, 5, 2}, 10, 0, 0,
+        new DefaultArmorMaterial("copper", 10, new int[] { 2, 4, 5, 2 }, 10, 0, 0,
             Ingredient.ofItems(Items.COPPER_INGOT),
             ArmorMaterials.IRON.getEquipSound());
 
     public static final DefaultArmorMaterial SILVER_ARMOR =
-        new DefaultArmorMaterial("silver", 18, new int[] {3, 5, 7, 3}, 17, 0, 0,
+        new DefaultArmorMaterial("silver", 18, new int[] { 3, 5, 7, 3 }, 17, 0, 0,
             Ingredient.ofItems(MotherlodeMaterialsItems.SILVER_INGOT),
             ArmorMaterials.IRON.getEquipSound());
 
     public static final DefaultArmorMaterial CHARITE_ARMOR =
-        new DefaultArmorMaterial("charite", 40, new int[] {4, 7, 9, 4}, 12, 4, 0.3F,
+        new DefaultArmorMaterial("charite", 40, new int[] { 4, 7, 9, 4 }, 12, 4, 0.3F,
             Ingredient.ofItems(MotherlodeMaterialsItems.CHARITE_INGOT),
             ArmorMaterials.NETHERITE.getEquipSound());
 
     public static final DefaultArmorMaterial ECHERITE_ARMOR =
-        new DefaultArmorMaterial("echerite", 42, new int[] {5, 8, 10, 5}, 14, 5, 0.5F,
+        new DefaultArmorMaterial("echerite", 42, new int[] { 5, 8, 10, 5 }, 14, 5, 0.5F,
             Ingredient.ofItems(MotherlodeMaterialsItems.ECHERITE_INGOT),
             ArmorMaterials.NETHERITE.getEquipSound());
 
     public static final DefaultArmorMaterial TITANIUM_ARMOR =
-        new DefaultArmorMaterial("titanium", 48, new int[] {6, 9, 11, 6}, 11, 6, 0.75F,
+        new DefaultArmorMaterial("titanium", 48, new int[] { 6, 9, 11, 6 }, 11, 6, 0.75F,
             Ingredient.ofItems(MotherlodeMaterialsItems.TITANIUM_INGOT),
             ArmorMaterials.DIAMOND.getEquipSound());
 
     public static final DefaultArmorMaterial ADAMANTITE_ARMOR =
-        new DefaultArmorMaterial("adamantite", 55, new int[] {7, 10, 12, 7}, 16, 7, 1,
+        new DefaultArmorMaterial("adamantite", 55, new int[] { 7, 10, 12, 7 }, 16, 7, 1,
             Ingredient.ofItems(MotherlodeMaterialsItems.ADAMANTITE_INGOT),
             ArmorMaterials.NETHERITE.getEquipSound());
 }

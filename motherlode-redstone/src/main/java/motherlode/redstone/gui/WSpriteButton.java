@@ -52,7 +52,7 @@ public class WSpriteButton extends WSprite {
     }
 
     public WSpriteButton setFocusedImage(Identifier focusedFrames) {
-        this.focusedFrames = new Identifier[] {focusedFrames};
+        this.focusedFrames = new Identifier[] { focusedFrames };
         singleFocusedImage = true;
         return this;
     }

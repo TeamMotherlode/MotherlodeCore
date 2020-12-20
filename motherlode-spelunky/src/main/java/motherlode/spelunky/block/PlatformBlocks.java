@@ -10,10 +10,10 @@ import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import motherlode.base.Motherlode;
+import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.api.assets.CommonData;
 import motherlode.base.api.varianttype.MotherlodeVariantType;
-import motherlode.base.api.Registerable;
 import motherlode.spelunky.MotherlodeModule;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
@@ -68,7 +68,7 @@ public class PlatformBlocks extends MotherlodeVariantType<Block, PlatformBlocks>
 
     @Override
     protected Block[] baseVariants() {
-        return new Block[] {this.platform, this.stairs};
+        return new Block[] { this.platform, this.stairs };
     }
 
     @Override

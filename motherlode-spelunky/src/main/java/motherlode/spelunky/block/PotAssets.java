@@ -1,8 +1,8 @@
 package motherlode.spelunky.block;
 
-import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.spelunky.MotherlodeModule;
 
 public class PotAssets {

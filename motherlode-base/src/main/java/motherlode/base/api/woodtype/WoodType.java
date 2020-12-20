@@ -211,7 +211,7 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
 
     @Override
     protected Block[] baseVariants() {
-        return new Block[]{this.log, this.strippedLog, this.wood, this.strippedWood, this.planks, this.button, this.fence, this.fenceGate, this.pressurePlate, this.leaves, this.sapling, this.pottedSapling};
+        return new Block[] { this.log, this.strippedLog, this.wood, this.strippedWood, this.planks, this.button, this.fence, this.fenceGate, this.pressurePlate, this.leaves, this.sapling, this.pottedSapling };
     }
 
     @Override

@@ -4,11 +4,11 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.item.ItemGroup;
+import motherlode.base.Motherlode;
+import motherlode.base.api.Registerable;
+import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.api.assets.CommonData;
-import motherlode.base.Motherlode;
-import motherlode.base.api.assets.AssetProcessor;
-import motherlode.base.api.Registerable;
 import motherlode.redstone.block.RedstoneTransmitterBlock;
 
 public class MotherlodeRedstoneBlocks {

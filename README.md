@@ -1,6 +1,6 @@
 # Motherlode
-Motherlode aims to expand the game's progression, making it take longer, but at the same time feel more engaging and fun. 
-It is separated into modules that add to different aspects of Minecraft.
+Motherlode aims to expand the game's progression, making it take longer, but at the same time feel more engaging and
+fun. It is separated into modules that add to different aspects of Minecraft.
 
 ## Modules
 
@@ -35,5 +35,5 @@ This module provides some utility features to make developing Motherlode easier.
 [...]
 
 ## Licensing
-The mod itself is licensed under the `MIT License`. 
+The mod itself is licensed under the `MIT License`.
 All assets are licensed under `CC BY-NC-SA 4.0`.

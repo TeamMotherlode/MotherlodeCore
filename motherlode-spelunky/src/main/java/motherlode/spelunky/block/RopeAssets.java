@@ -1,13 +1,13 @@
 package motherlode.spelunky.block;
 
 import net.minecraft.util.Identifier;
-import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.Motherlode;
 import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.spelunky.MotherlodeModule;
 
 public class RopeAssets {
-    private static final int[] stackCounts = new int[] {0, 8, 16, 24, 32, 40, 48, 56, 64};
+    private static final int[] stackCounts = new int[] { 0, 8, 16, 24, 32, 40, 48, 56, 64 };
 
     public static final AssetProcessor ITEM_MODELS = (pack, id) -> {
         for (int stackCount : stackCounts) {
@@ -27,7 +27,7 @@ public class RopeAssets {
 
     public static final AssetProcessor BLOCK_STATE = (pack, id) ->
         pack.addBlockState(Motherlode.id(MotherlodeModule.MODID, "rope"), state -> {
-            String[] directions = new String[] {"south", "west", "north", "east"};
+            String[] directions = new String[] { "south", "west", "north", "east" };
             for (int i = 0; i < directions.length; i++) {
                 int ii = i;
                 state.variant("bottom=false,connected=up,facing=" + directions[i], variant -> variant.model(Motherlode.id(MotherlodeModule.MODID, "block/rope_top")).rotationY(ii * 90));
