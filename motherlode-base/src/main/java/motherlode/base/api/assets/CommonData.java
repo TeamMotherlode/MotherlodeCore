@@ -1,4 +1,4 @@
-package motherlode.base.api;
+package motherlode.base.api.assets;
 
 import java.util.function.Function;
 import net.minecraft.util.Identifier;

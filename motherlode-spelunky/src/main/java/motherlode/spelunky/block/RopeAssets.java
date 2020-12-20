@@ -1,9 +1,9 @@
 package motherlode.spelunky.block;
 
 import net.minecraft.util.Identifier;
-import motherlode.base.api.CommonAssets;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.assets.AssetProcessor;
 import motherlode.spelunky.MotherlodeModule;
 
 public class RopeAssets {

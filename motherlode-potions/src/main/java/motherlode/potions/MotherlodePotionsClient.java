@@ -1,13 +1,11 @@
 package motherlode.potions;
 
-import java.util.function.Consumer;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import motherlode.base.Motherlode;
-import motherlode.base.api.CommonAssets;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.potions.MotherlodePotions.PotionModelInfo;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
@@ -20,32 +18,30 @@ public class MotherlodePotionsClient implements ClientModInitializer {
         });
     }
 
-    public static Consumer<ArtificeResourcePack.ClientResourcePackBuilder> getAssetProcessor() {
-        return pack -> {
-            for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
-                if (!info.useDefaultModel)
-                    pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, info.model), model -> model
-                        .parent(new Identifier("item/generated"))
-                        .texture("layer0", Motherlode.id(MotherlodeModule.MODID, "item/" + info.model)));
+    public static void generateAssets(ArtificeResourcePack.ClientResourcePackBuilder pack) {
+        for (PotionModelInfo info : MotherlodePotions.potionModelInfos.values()) {
+            if (!info.useDefaultModel)
+                pack.addItemModel(MotherlodeModule.id(info.model), model -> model
+                    .parent(new Identifier("item/generated"))
+                    .texture("layer0", MotherlodeModule.id("item/" + info.model)));
+        }
+
+        pack.addItemModel(MotherlodeModule.id("default"), model -> model
+            .parent(new Identifier("item/generated"))
+            .texture("layer0", new Identifier("item/potion_overlay"))
+            .texture("layer1", new Identifier("item/potion")));
+
+        pack.addItemModel(new Identifier("potion"), model -> {
+            model.parent(new Identifier("item/generated"));
+            model.texture("layer0", new Identifier("item/potion"));
+            model.texture("layer1", new Identifier("item/potion_overlay"));
+
+            for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
+                if (info.model == null || info.useDefaultModel)
+                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(MotherlodeModule.id("item/default")));
+                else
+                    model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(MotherlodeModule.id("item/" + info.model)));
             }
-
-            pack.addItemModel(Motherlode.id(MotherlodeModule.MODID, "default"), model -> model
-                .parent(new Identifier("item/generated"))
-                .texture("layer0", new Identifier("item/potion_overlay"))
-                .texture("layer1", new Identifier("item/potion")));
-
-            pack.addItemModel(new Identifier("potion"), model -> {
-                model.parent(new Identifier("item/generated"));
-                model.texture("layer0", new Identifier("item/potion"));
-                model.texture("layer1", new Identifier("item/potion_overlay"));
-
-                for (PotionModelInfo info : MotherlodePotions.getPotionModelInfos()) {
-                    if (info.model == null || info.useDefaultModel)
-                        model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodeModule.MODID, "item/default")));
-                    else
-                        model.override(override -> CommonAssets.floatPredicate(override, "potion_type", info.predicateValue).model(Motherlode.id(MotherlodeModule.MODID, "item/" + info.model)));
-                }
-            });
-        };
+        });
     }
 }

@@ -4,18 +4,19 @@ import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ModInitializer;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.AssetsManager;
-import motherlode.base.api.DataProcessor;
 import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
-import motherlode.base.api.impl.AssetsManagerImpl;
-import motherlode.base.api.impl.ClientRegisterImpl;
-import motherlode.base.api.impl.FeaturesManagerImpl;
-import motherlode.base.api.impl.ServerRegisterImpl;
+import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.AssetsGenerator;
+import motherlode.base.api.assets.AssetsManager;
+import motherlode.base.api.assets.DataGenerator;
+import motherlode.base.api.assets.DataProcessor;
 import motherlode.base.api.worldgen.FeaturesManager;
+import motherlode.base.impl.ClientRegisterImpl;
+import motherlode.base.impl.FeaturesManagerImpl;
+import motherlode.base.impl.ServerRegisterImpl;
+import motherlode.base.impl.assets.AssetsManagerImpl;
 import com.swordglowsblue.artifice.api.Artifice;
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +29,7 @@ public final class Motherlode implements ModInitializer {
     @Override
     public void onInitialize() {
         MotherlodeInitEvents.MAIN.register(() -> {
-            List<Consumer<ArtificeResourcePack.ServerResourcePackBuilder>> data = AssetsManagerImpl.INSTANCE.getData();
+            List<DataGenerator> data = AssetsManagerImpl.INSTANCE.getData();
 
             Artifice.registerDataPack(Motherlode.id("data_pack"), pack ->
                 data.forEach(consumer -> consumer.accept(pack)));
@@ -43,7 +44,7 @@ public final class Motherlode implements ModInitializer {
         });
 
         MotherlodeInitEvents.CLIENT.register(() -> {
-            List<Consumer<ArtificeResourcePack.ClientResourcePackBuilder>> assets = AssetsManagerImpl.INSTANCE.getAssets();
+            List<AssetsGenerator> assets = AssetsManagerImpl.INSTANCE.getAssets();
 
             Artifice.registerAssetPack(Motherlode.id("resource_pack"), pack ->
                 assets.forEach(consumer -> consumer.accept(pack)));

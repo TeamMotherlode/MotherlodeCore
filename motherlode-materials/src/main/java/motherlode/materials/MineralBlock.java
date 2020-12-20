@@ -2,9 +2,9 @@ package motherlode.materials;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.Identifier;
-import motherlode.base.api.CommonData;
+import motherlode.base.api.assets.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.DataProcessor;
+import motherlode.base.api.assets.DataProcessor;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class MineralBlock extends Block implements DataProcessor {

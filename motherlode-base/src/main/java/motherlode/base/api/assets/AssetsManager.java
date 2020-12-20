@@ -1,9 +1,7 @@
-package motherlode.base.api;
+package motherlode.base.api.assets;
 
-import java.util.function.Consumer;
 import net.minecraft.util.Identifier;
 import motherlode.base.Motherlode;
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 /**
  * Assets and data can be registered using this interface.
@@ -11,18 +9,18 @@ import com.swordglowsblue.artifice.api.ArtificeResourcePack;
  */
 public interface AssetsManager {
     /**
-     * Uses the given {@link Consumer} to register assets.
+     * Uses the given {@link AssetsGenerator} to register assets.
      *
-     * @param assets The {@code Consumer} that will be called to register the assets.
+     * @param assetsGenerator The {@code AssetsGenerator} that will be called to register the assets.
      */
-    void addAssets(Consumer<ArtificeResourcePack.ClientResourcePackBuilder> assets);
+    void addAssets(AssetsGenerator assetsGenerator);
 
     /**
-     * Uses the given {@link Consumer} to register data.
+     * Uses the given {@link DataGenerator} to register data.
      *
-     * @param data The {@code Consumer} that will be called to register the data.
+     * @param data The {@code DataGenerator} that will be called to register the data.
      */
-    void addData(Consumer<ArtificeResourcePack.ServerResourcePackBuilder> data);
+    void addData(DataGenerator data);
 
     /**
      * Uses the given {@link AssetProcessor} to register assets.

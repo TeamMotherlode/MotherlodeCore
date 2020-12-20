@@ -1,21 +1,18 @@
-package motherlode.base.api.impl;
+package motherlode.base.impl;
 
 import java.util.function.Predicate;
-import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.world.gen.GenerationStep;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
-import motherlode.base.api.worldgen.OreTarget;
+import motherlode.base.api.worldgen.FeatureTarget;
 
 @SuppressWarnings("deprecation")
-public class OreTargetImpl implements OreTarget {
+public class FeatureTargetImpl implements FeatureTarget {
     private final Predicate<BiomeSelectionContext> biomeSelector;
     private final GenerationStep.Feature generationStep;
-    private final RuleTest ruleTest;
 
-    public OreTargetImpl(Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep, RuleTest ruleTest) {
+    public FeatureTargetImpl(Predicate<BiomeSelectionContext> biomeSelector, GenerationStep.Feature generationStep) {
         this.biomeSelector = biomeSelector;
         this.generationStep = generationStep;
-        this.ruleTest = ruleTest;
     }
 
     @Override
@@ -26,10 +23,5 @@ public class OreTargetImpl implements OreTarget {
     @Override
     public GenerationStep.Feature getGenerationStepFeature() {
         return this.generationStep;
-    }
-
-    @Override
-    public RuleTest getRuleTest() {
-        return this.ruleTest;
     }
 }

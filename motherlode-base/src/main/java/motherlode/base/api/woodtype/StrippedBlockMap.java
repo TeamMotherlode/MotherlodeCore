@@ -1,7 +1,7 @@
 package motherlode.base.api.woodtype;
 
 import net.minecraft.block.Block;
-import motherlode.base.api.impl.StrippedBlockMapImpl;
+import motherlode.base.impl.StrippedBlockMapImpl;
 
 public interface StrippedBlockMap {
     StrippedBlockMap INSTANCE = StrippedBlockMapImpl.INSTANCE;

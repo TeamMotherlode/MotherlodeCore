@@ -1,4 +1,4 @@
-package motherlode.base.api;
+package motherlode.base.api.varianttype;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;

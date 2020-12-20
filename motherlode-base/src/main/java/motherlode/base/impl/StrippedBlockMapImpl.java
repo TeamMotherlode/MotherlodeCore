@@ -1,4 +1,4 @@
-package motherlode.base.api.impl;
+package motherlode.base.impl;
 
 import java.util.HashMap;
 import java.util.Map;

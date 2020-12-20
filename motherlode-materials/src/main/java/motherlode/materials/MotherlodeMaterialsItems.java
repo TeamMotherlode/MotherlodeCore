@@ -2,10 +2,10 @@ package motherlode.materials;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import motherlode.base.api.CommonAssets;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.DataProcessor;
+import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.DataProcessor;
 import motherlode.base.api.Registerable;
 import motherlode.materials.item.DefaultGemItem;
 import motherlode.materials.item.IngotItem;

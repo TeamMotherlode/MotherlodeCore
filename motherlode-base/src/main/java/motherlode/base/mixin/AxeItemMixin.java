@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
-import motherlode.base.api.impl.StrippedBlockMapImpl;
+import motherlode.base.impl.StrippedBlockMapImpl;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;

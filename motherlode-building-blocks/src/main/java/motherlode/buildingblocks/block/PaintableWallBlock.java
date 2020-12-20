@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
+import motherlode.base.api.assets.AssetProcessor;
 import motherlode.buildingblocks.MotherlodeModule;
 import motherlode.buildingblocks.block.stateproperty.BlockDyeColor;
 import com.google.common.collect.Maps;

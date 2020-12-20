@@ -6,13 +6,13 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import motherlode.base.api.CommonAssets;
-import motherlode.base.api.CommonData;
+import motherlode.base.api.assets.CommonAssets;
+import motherlode.base.api.assets.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.DataProcessor;
+import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.DataProcessor;
 import motherlode.base.api.Registerable;
-import motherlode.base.api.RegisterableVariantType;
+import motherlode.base.api.varianttype.RegisterableVariantType;
 import motherlode.base.block.MotherlodeStairsBlock;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 

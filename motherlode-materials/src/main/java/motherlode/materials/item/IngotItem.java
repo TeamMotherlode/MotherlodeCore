@@ -2,9 +2,9 @@ package motherlode.materials.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import motherlode.base.api.CommonData;
+import motherlode.base.api.assets.CommonData;
 import motherlode.base.Motherlode;
-import motherlode.base.api.DataProcessor;
+import motherlode.base.api.assets.DataProcessor;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
 public class IngotItem extends Item implements DataProcessor {

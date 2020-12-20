@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 import net.minecraft.structure.rule.RuleTest;
 import net.minecraft.world.gen.GenerationStep;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
-import motherlode.base.api.impl.OreTargetImpl;
+import motherlode.base.impl.OreTargetImpl;
 
 /**
  * An interface used for selecting the biomes that ores generate in, which blocks they can replace and the {@link GenerationStep.Feature} to use.

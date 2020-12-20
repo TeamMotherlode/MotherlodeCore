@@ -25,7 +25,7 @@
     "client": [
       "motherlode.base.MotherlodeClient"
     ],
-    "server" : [
+    "server": [
       "motherlode.base.MotherlodeBase"
     ]
   },

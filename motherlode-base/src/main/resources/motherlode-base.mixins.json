@@ -8,9 +8,9 @@
   "client": [
   ],
   "mixins": [
-    "BlockWithEntityAccessor",
-    "BlocksAccessor",
     "AxeItemAccessor",
-    "AxeItemMixin"
+    "AxeItemMixin",
+    "BlocksAccessor",
+    "BlockWithEntityAccessor"
   ]
 }

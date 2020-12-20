@@ -3,14 +3,14 @@ package motherlode.base.api.woodtype;
 import java.util.function.Function;
 import net.minecraft.util.Identifier;
 import motherlode.base.Motherlode;
-import motherlode.base.api.AssetProcessor;
-import motherlode.base.api.CommonAssets;
+import motherlode.base.api.assets.AssetProcessor;
+import motherlode.base.api.assets.CommonAssets;
 
 public class WoodTypeAssets {
-    private static final boolean[] BOOLEAN = new boolean[] { true, false };
-    private static final String[] ORIENTATIONS = new String[] { "north", "east", "south", "west" };
-    private static final String[] ORIENTATIONS2 = new String[] { "south", "west", "north", "east" };
-    private static final String[] BUTTON_MODEL_TYPES = new String[] { "", "_pressed", "_inventory" };
+    private static final boolean[] BOOLEAN = new boolean[]{true, false};
+    private static final String[] ORIENTATIONS = new String[]{"north", "east", "south", "west"};
+    private static final String[] ORIENTATIONS2 = new String[]{"south", "west", "north", "east"};
+    private static final String[] BUTTON_MODEL_TYPES = new String[]{"", "_pressed", "_inventory"};
 
     public static final AssetProcessor BUTTON_STATE = (pack, id) ->
         pack.addBlockState(Motherlode.id(id.getNamespace(), id.getPath() + "_button"), state -> {
@@ -72,7 +72,7 @@ public class WoodTypeAssets {
             }
         });
 
-    private static final String[] FENCE_GATE_MODEL_TYPES = new String[] { "", "_wall", "_open", "_wall_open" };
+    private static final String[] FENCE_GATE_MODEL_TYPES = new String[]{"", "_wall", "_open", "_wall_open"};
 
     public static final Function<Identifier, AssetProcessor> FENCE_GATE_MODELS = textureId -> (pack, id) -> {
         for (String modelType : FENCE_GATE_MODEL_TYPES)

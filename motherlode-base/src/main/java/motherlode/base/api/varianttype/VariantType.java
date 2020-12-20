@@ -1,4 +1,4 @@
-package motherlode.base.api;
+package motherlode.base.api.varianttype;
 
 /**
  * An interface used for more easily creating several variations of things that consist of multiple variants.

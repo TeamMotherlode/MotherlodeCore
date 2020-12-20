@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
-import motherlode.base.api.impl.FeatureTargetImpl;
+import motherlode.base.impl.FeatureTargetImpl;
 
 /**
  * An interface used for selecting the biomes that a {@link ConfiguredFeature} generates in and which {@link GenerationStep.Feature} to use.
