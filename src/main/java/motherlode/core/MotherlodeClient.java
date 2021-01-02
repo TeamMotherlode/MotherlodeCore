@@ -1,5 +1,22 @@
 package motherlode.core;
 
+import motherlode.core.block.entity.renderer.RedstoneTransmitterRenderer;
+import motherlode.core.registry.MotherlodeBlockEntities;
+import motherlode.core.entities.render.MotherlodeEntityRenderers;
+import motherlode.core.block.PotBlock;
+import motherlode.core.gui.RedstoneTransmitterGuiDescription;
+import motherlode.core.gui.RedstoneTransmitterScreen;
+import motherlode.core.registry.*;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
+import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
@@ -13,27 +30,8 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import motherlode.core.block.PotBlock;
-import motherlode.core.block.entity.renderer.RedstoneTransmitterRenderer;
 import motherlode.core.enderinvasion.EnderInvasion;
-import motherlode.core.entities.render.MotherlodeEntityRenderers;
-import motherlode.core.gui.RedstoneTransmitterGuiDescription;
-import motherlode.core.gui.RedstoneTransmitterScreen;
-import motherlode.core.registry.MotherlodeAssets;
-import motherlode.core.registry.MotherlodeBlockEntities;
-import motherlode.core.registry.MotherlodeBlocks;
-import motherlode.core.registry.MotherlodeParticles;
-import motherlode.core.registry.MotherlodePotions;
-import motherlode.core.registry.MotherlodeScreenHandlers;
 
 @Environment(EnvType.CLIENT)
 public class MotherlodeClient implements ClientModInitializer {
@@ -44,6 +42,7 @@ public class MotherlodeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.ROPE_BLOCK, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.POT, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.END_FOAM, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeBlocks.STEEL_GRATE, RenderLayer.getTranslucent());
 
         MotherlodeEntityRenderers.init();
 

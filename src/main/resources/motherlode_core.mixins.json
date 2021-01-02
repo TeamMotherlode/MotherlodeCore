@@ -9,6 +9,7 @@
     "BackgroundRendererMixin"
   ],
   "mixins": [
+    "FlowableFluidMixin",
     "ServerWorldMixin",
     "StructureFeatureAccessor",
     "enderinvasion.ServerWorldMixin",
