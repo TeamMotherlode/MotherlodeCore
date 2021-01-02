@@ -3,33 +3,28 @@ package motherlode.core.block;
 import motherlode.core.api.ArtificeProperties;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.math.Direction;
 
-public class DefaultBlock extends Block implements ArtificeProperties {
+public class DefaultLeavesBlock extends LeavesBlock implements ArtificeProperties {
     public final boolean hasDefaultState;
     public final boolean hasDefaultModel;
     public final boolean hasDefaultItemModel;
     public final boolean hasDefaultLootTable;
-    public final boolean transparent;
 
-    public DefaultBlock(AbstractBlock.Settings settings) {
+    public DefaultLeavesBlock(Settings settings) {
         this(true, true, true, true, settings);
     }
 
-    public DefaultBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, AbstractBlock.Settings settings) {
-        this(hasDefaultState, hasDefaultModel, hasDefaultItemModel, hasDefaultLootTable, false, settings);
-    }
-    public DefaultBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, boolean transparent, AbstractBlock.Settings settings) {
+    public DefaultLeavesBlock(boolean hasDefaultState, boolean hasDefaultModel, boolean hasDefaultItemModel, boolean hasDefaultLootTable, Settings settings) {
         super(settings);
 
         this.hasDefaultState = hasDefaultState;
         this.hasDefaultModel = hasDefaultModel;
         this.hasDefaultItemModel = hasDefaultItemModel;
         this.hasDefaultLootTable = hasDefaultLootTable;
-        this.transparent = transparent;
     }
 
     @Override
@@ -55,11 +50,5 @@ public class DefaultBlock extends Block implements ArtificeProperties {
     @Override
     public Block getBlockInstance() {
         return this;
-    }
-
-    @Override
-    @Environment(EnvType.CLIENT)
-    public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-        return stateFrom.isOf(this) ? this.transparent : super.isSideInvisible(state, stateFrom, direction);
     }
 }

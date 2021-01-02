@@ -5,7 +5,11 @@ import com.swordglowsblue.artifice.api.builder.assets.ModelBuilder;
 import com.swordglowsblue.artifice.api.builder.data.LootTableBuilder;
 import com.swordglowsblue.artifice.api.util.Processor;
 import motherlode.core.Motherlode;
+import motherlode.core.api.ArtificeProperties;
 import motherlode.core.block.*;
+import motherlode.core.enderinvasion.EnderInvasion;
+import motherlode.core.enderinvasion.EnderInvasionComponent;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import motherlode.core.block.DefaultPlantBlock;
 import motherlode.core.block.MotherlodeDoorBlock;
 import motherlode.core.block.MotherlodeLadderBlock;
@@ -15,18 +19,21 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-
+import net.minecraft.world.BlockView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -64,7 +71,23 @@ public class MotherlodeBlocks {
     public static final Block COPPER_ORE = register("copper_ore", new DefaultOreBlock(true, 3, 7, 12, 3, 11, 64, 1));
     public static final Block SILVER_ORE = register("silver_ore", new DefaultOreBlock(true, 2));
     public static final Block CHARITE_ORE = register("charite_ore", new DefaultOreBlock(false, 3));
-    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, 4));
+    public static final Block ECHERITE_ORE = register("echerite_ore", new DefaultOreBlock(true, 4), (Processor<Block>) block ->
+
+            PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, entity) -> {
+
+                if(!state.isOf(block)) return;
+
+                EnderInvasionComponent component = EnderInvasion.STATE.get(world.getLevelProperties());
+
+                if(component.value() == EnderInvasionComponent.State.PRE_ECHERITE) {
+
+                    component.setValue(EnderInvasionComponent.State.ENDER_INVASION);
+
+                    // Send chat message
+                    world.getPlayers().forEach(p -> player.sendMessage(new TranslatableText("enderinvasion.motherlode.start").formatted(Formatting.DARK_GREEN), false));
+                }
+            })
+    );
     public static final Block TITANIUM_ORE = register("titanium_ore", new DefaultOreBlock(true, 5));
     public static final Block ADAMANTITE_ORE = register("adamantite_ore", new DefaultOreBlock(true, 6));
     public static final Block AMETHYST_ORE = register("amethyst_ore", new DefaultOreBlock(false, 2));
@@ -154,6 +177,23 @@ public class MotherlodeBlocks {
     public static final Block ROCKY_DIRT = register("rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
     public static final Block VERY_ROCKY_DIRT = register("very_rocky_dirt", new DefaultShovelableBlock(false, FabricBlockSettings.copy(Blocks.COARSE_DIRT).sounds(BlockSoundGroup.NYLIUM)));
 
+    public static final Block CORRUPTED_DIRT = register("corrupted_dirt", new DefaultBlock(true, true, true, true, FabricBlockSettings.copy(Blocks.DIRT)));
+    public static final Block CORRUPTED_GRASS = register("corrupted_grass", new DefaultPlantBlock(12, false, false, "corrupted_grass_02", FabricBlockSettings.copy(Blocks.GRASS)));
+    public static final Block WITHERED_LOG = register("withered_log", logBlock(MaterialColor.GRAY, MaterialColor.BLACK), block -> {
+
+        defaultItemModelList.add(block);
+        defaultLootTableList.add(block);
+    });
+    public static final Block END_FOAM = register("end_foam", new DefaultBlock(true, true, true, true, true, FabricBlockSettings.copy(Blocks.SLIME_BLOCK)));
+    public static final Block END_CAP = register("end_cap", new DefaultPlantBlock(6, false, false, "end_cap_01", FabricBlockSettings.copy(Blocks.BROWN_MUSHROOM)));
+
+    public static final Block WITHERED_OAK_LEAVES = register("withered_oak_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_DARK_OAK_LEAVES = register("withered_dark_oak_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_BIRCH_LEAVES = register("withered_birch_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_SPRUCE_LEAVES = register("withered_spruce_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_JUNGLE_LEAVES = register("withered_jungle_leaves", leavesBlock(MaterialColor.PURPLE));
+    public static final Block WITHERED_ACACIA_LEAVES = register("withered_acacia_leaves", leavesBlock(MaterialColor.PURPLE));
+
     public static final Block DIRT_PATH = register("dirt_path", new PathBlock(FabricBlockSettings.copy(Blocks.GRASS_PATH)), (block) -> {
         defaultStateList.add(block);
         defaultItemModelList.add(block);
@@ -189,6 +229,19 @@ public class MotherlodeBlocks {
     private static Block mineralBlock(int miningLevel) {
         return new DefaultBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel)); 
     }
+    private static PillarBlock logBlock(MaterialColor topMaterialColor, MaterialColor sideMaterialColor) {
+        return new PillarBlock(FabricBlockSettings.of(Material.WOOD, blockState -> blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMaterialColor : sideMaterialColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
+    }
+
+    private static LeavesBlock leavesBlock(MaterialColor color) {
+        return new DefaultLeavesBlock(FabricBlockSettings.of(Material.LEAVES, color).strength(0.2F).ticksRandomly().sounds(BlockSoundGroup.GRASS).nonOpaque().allowsSpawning(MotherlodeBlocks::canSpawnOnLeaves).suffocates(MotherlodeBlocks::never).blockVision(MotherlodeBlocks::never));
+    }
+    private static Boolean canSpawnOnLeaves(BlockState state, BlockView world, BlockPos pos, EntityType<?> type) {
+        return type == EntityType.OCELOT || type == EntityType.PARROT;
+    }
+    private static boolean never(BlockState state, BlockView world, BlockPos pos) {
+        return false;
+    }
     
     static <T extends Block> T register(String name, T block, Item.Settings settings) {
         return register(name, block, new BlockItem(block, settings));
@@ -212,19 +265,19 @@ public class MotherlodeBlocks {
         if (item != null) {
             MotherlodeItems.register(name, item);
         }
-        if (block instanceof DefaultBlock) {
-            DefaultBlock defaultBlock = (DefaultBlock)block;
-            if (defaultBlock.hasDefaultState()){
-                defaultStateList.add(defaultBlock);
+        if (block instanceof ArtificeProperties) {
+            ArtificeProperties properties = (ArtificeProperties) block;
+            if (properties.hasDefaultState()){
+                defaultStateList.add(block);
             }
-            if (defaultBlock.hasDefaultModel()){
-                defaultModelList.add(defaultBlock);
+            if (properties.hasDefaultModel()){
+                defaultModelList.add(block);
             }
-            if (defaultBlock.hasDefaultItemModel()) {
-                defaultItemModelList.add(defaultBlock);
+            if (properties.hasDefaultItemModel()) {
+                defaultItemModelList.add(block);
             }
-            if (defaultBlock.hasDefaultLootTable()) {
-                defaultLootTableList.add(defaultBlock);
+            if (properties.hasDefaultLootTable()) {
+                defaultLootTableList.add(block);
             }
         }
         return b;
