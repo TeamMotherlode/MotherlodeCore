@@ -1,6 +1,0 @@
-{
-	"parent": "motherlode:block/thick_tinted_cross",
-	"textures": {
-		"texture": "motherlode:block/sprouts_3"
-	}
-}

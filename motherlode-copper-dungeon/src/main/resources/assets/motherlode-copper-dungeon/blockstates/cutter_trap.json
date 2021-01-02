@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "motherlode-copper-dungeon:block/cutter_trap"
+    },
+    "powered=true": {
+      "model": "motherlode-copper-dungeon:block/deployed_cutter_trap"
+    }
+  }
+}

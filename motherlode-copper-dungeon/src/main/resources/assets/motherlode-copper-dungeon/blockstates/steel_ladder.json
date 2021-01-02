@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "motherlode-copper-dungeon:block/steel_ladder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "motherlode-copper-dungeon:block/steel_ladder"
+    },
+    "facing=south": {
+      "model": "motherlode-copper-dungeon:block/steel_ladder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "motherlode-copper-dungeon:block/steel_ladder",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-spelunky",
+  "version": "${version}",
+  "name": "Motherlode Spelunky",
+  "description": "Adds new blocks and items related to exploring and adventuring.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-spelunky"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-spelunky/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.spelunky.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.spelunky.MotherlodeSpelunkyClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-spelunky.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

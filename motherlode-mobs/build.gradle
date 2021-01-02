@@ -1,0 +1,8 @@
+version = "1.0.0+$project.minecraft_version"
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+dependencies {
+    implementation project(path: ":motherlode-base", configuration: "dev")
+}

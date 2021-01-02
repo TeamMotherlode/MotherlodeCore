@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-building-blocks",
+  "version": "${version}",
+  "name": "Motherlode Building Blocks",
+  "description": "Adds many new blocks for builders to use.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-building-blocks"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-building-blocks/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.buildingblocks.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.buildingblocks.MotherlodeBuildingBlocksClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-building-blocks.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

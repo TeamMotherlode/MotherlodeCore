@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "type=single": {
+      "model": "motherlode-biomes:block/cattail_reeds"
+    },
+    "type=waterlogged": {
+      "model": "motherlode-biomes:block/cattail_reeds"
+    },
+    "type=bottom": {
+      "model": "motherlode-biomes:block/reeds_bottom"
+    },
+    "type=middle": {
+      "model": "motherlode-biomes:block/reeds_middle"
+    },
+    "type=top": [
+      {
+        "model": "motherlode-biomes:block/cattail_reeds_top_0"
+      },
+      {
+        "model": "motherlode-biomes:block/cattail_reeds_top_1"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+version = "1.0.0+$project.minecraft_version"
+
+dependencies {
+    implementation project(path: ":motherlode-base", configuration: "dev")
+    implementation project(path: ":motherlode-materials", configuration: "dev")
+}

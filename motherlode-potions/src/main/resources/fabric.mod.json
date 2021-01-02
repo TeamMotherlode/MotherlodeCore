@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-potions",
+  "version": "${version}",
+  "name": "Motherlode Potions",
+  "description": "Adds a few new potions and changes vanilla potions' textures.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-potions"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-potions/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.potions.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.potions.MotherlodePotionsClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-potions.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

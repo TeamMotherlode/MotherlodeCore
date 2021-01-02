@@ -1,0 +1,7 @@
+{
+  "parent": "motherlode-base:block/thicker_tinted_cross",
+  "textures": {
+    "inner": "minecraft:block/grass",
+    "outer": "motherlode-biomes:block/sprouts_0"
+  }
+}

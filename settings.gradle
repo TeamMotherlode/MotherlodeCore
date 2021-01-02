@@ -8,3 +8,17 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+rootProject.name = "motherlode"
+
+include 'motherlode-base'
+include 'motherlode-materials'
+// include 'motherlode-ender-invasion'
+include 'motherlode-copper-dungeon'
+include 'motherlode-building-blocks'
+include 'motherlode-biomes'
+// include 'motherlode-accessories'
+// include 'motherlode-mobs'
+include 'motherlode-potions'
+include 'motherlode-redstone'
+include 'motherlode-spelunky'
+include 'motherlode-vanilla-retextures'

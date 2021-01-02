@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "motherlode-ender-invasion:block/withered_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "motherlode-ender-invasion:block/withered_log"
+    },
+    "axis=z": {
+      "model": "motherlode-ender-invasion:block/withered_log",
+      "x": 90
+    }
+  }
+}

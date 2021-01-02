@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "motherlode-ender-invasion:block/corrupted_grass_00"
+  }
+}

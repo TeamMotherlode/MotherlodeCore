@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "solid=true": [
+      {
+        "model": "motherlode-biomes:block/waterplant"
+      },
+      {
+        "model": "motherlode-biomes:block/waterplant",
+        "y": 90
+      },
+      {
+        "model": "motherlode-biomes:block/waterplant",
+        "y": 180
+      },
+      {
+        "model": "motherlode-biomes:block/waterplant",
+        "y": 270
+      }
+    ],
+    "solid=false": [
+      {
+        "model": "motherlode-biomes:block/waterplant_stepped"
+      },
+      {
+        "model": "motherlode-biomes:block/waterplant_stepped",
+        "y": 90
+      },
+      {
+        "model": "motherlode-biomes:block/waterplant_stepped",
+        "y": 180
+      },
+      {
+        "model": "motherlode-biomes:block/waterplant_stepped",
+        "y": 270
+      }
+    ]
+  }
+}

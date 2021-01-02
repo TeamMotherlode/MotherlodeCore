@@ -1,93 +1,138 @@
 plugins {
-	id 'fabric-loom' version '0.4-SNAPSHOT'
-	id 'maven-publish'
+    id 'fabric-loom' version '0.5-SNAPSHOT' apply false
+}
+apply from: 'dependencies.gradle'
+
+version = "${project.mod_version}+${project.minecraft_version}"
+
+allprojects {
+    apply plugin: 'checkstyle'
+    apply plugin: 'fabric-loom'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    group = project.maven_group as Object
+
+    repositories {
+        maven {
+            name = "Ladysnake Libs"
+            url = 'https://dl.bintray.com/ladysnake/libs'
+        }
+        maven {
+            name = 'CottonMC'
+            url = 'https://server.bbkr.space/artifactory/libs-release'
+        }
+
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        dependencies.ext.useAsApiOptionally = { dep ->
+            modApi(dep) {
+                if (!dep.contains('net.fabricmc.fabric-api')) {
+                    exclude group: 'net.fabricmc.fabric-api'
+                }
+                exclude group: 'net.fabricmc'
+                if (!dep.contains('me.shedaniel')) {
+                    exclude group: 'me.shedaniel'
+                }
+            }
+        }
+        dependencies.ext.useAsApiForModuleOptionally = { module, dep ->
+            if (rootProject.childProjects.containsKey(module)) {
+                if (project.name == module || project.name == 'motherlode')
+                    useAsApiOptionally(dep)
+            }
+        }
+        dependencies.ext.useAsApi = { dep ->
+            useAsApiOptionally(dep)
+            if (project.name == 'motherlode')
+                include(dep)
+        }
+        dependencies.ext.useAsApiForModule = { module, dep ->
+            if (rootProject.childProjects.containsKey(module)) {
+                if (project.name == module || project.name == 'motherlode')
+                    useAsApiOptionally(dep)
+
+                if (project.name == 'motherlode')
+                    include(dep)
+            }
+        }
+        dependencies.ext.useAsRuntime = { dep ->
+            modRuntime(dep) {
+                if (!dep.contains('net.fabricmc.fabric-api')) {
+                    exclude group: 'net.fabricmc.fabric-api'
+                }
+                exclude group: 'net.fabricmc'
+                if (!dep.contains('me.shedaniel')) {
+                    exclude group: 'me.shedaniel'
+                }
+            }
+        }
+
+        minecraft "com.mojang:minecraft:${project.minecraft_version}"
+        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+        tap(rootProject.ext.setDefaultApis)
+    }
+    configurations {
+        dev
+    }
+    loom {
+        shareCaches = true
+    }
+    repositories {
+        jcenter()
+    }
+    jar {
+        classifier "dev"
+    }
+    afterEvaluate {
+        remapJar {
+            input = file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar")
+            archiveName = "${archivesBaseName}-${version}.jar"
+        }
+        artifacts {
+            dev file: file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar"), type: "jar", builtBy: remapJar
+        }
+        processResources {
+            inputs.property "version", project.version
+
+            filesMatching("fabric.mod.json") {
+                expand "version": project.version
+            }
+        }
+    }
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+    checkstyle {
+        configFile = rootProject.file('checkstyle.xml')
+        toolVersion = '8.31'
+    }
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-archivesBaseName = project.archives_base_name
-version = project.mod_version+ "+" +project.minecraft_version
-group = project.maven_group
-
-repositories {
-	maven {
-		name = "CottonMC"
-		url = "https://server.bbkr.space/artifactory/libs-release"
-	}
-	maven {
-		name = "Ladysnake Libs"
-		url = "https://dl.bintray.com/ladysnake/libs"
-	}
-	maven { url 'https://jitpack.io' }
-    jcenter()
+task deleteAllBuildDirs {
+    doLast {
+        allprojects {
+            delete it.buildDir
+            mkdir "${it.buildDir}/libs"
+        }
+    }
 }
-
-minecraft {
-}
-
-dependencies {
-    minecraft "com.mojang:minecraft:1.16.1"
-    mappings "net.fabricmc:yarn:1.16.1+build.1:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.10.5+build.213"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.18.0+build.387-1.16.1"
-	modImplementation "net.fabricmc.fabric-api:fabric-biomes-v1:0.2.7+059ea866b0"
-
-	modImplementation "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
-	include "com.lettuce.fudge:artifice:0.8.0+1.16-rc1"
-
-	modImplementation "io.github.cottonmc:LibGui:2.0.1+1.16.1"
-	include "io.github.cottonmc:LibGui:2.0.1+1.16.1"
-
-	modImplementation "com.github.bernie-g:geckolib:fabric-1.16.1-geckolib-2.0.0-beta.5"
-
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-level:${project.cardinal_components_version}"
-	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-chunk:${project.cardinal_components_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-level:${project.cardinal_components_version}"
-	include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-chunk:${project.cardinal_components_version}"
-  
-	modImplementation "com.github.emilyploszaj:trinkets:2.6.4"
-}
-processResources {
-	inputs.property "version", project.version
-
-	from(sourceSets.main.resources.srcDirs) {
-		include "fabric.mod.json"
-		expand "version": project.version
-	}
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
-	}
-}
-
-tasks.withType(JavaCompile) {
-	options.encoding = "UTF-8"
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
-	from sourceSets.main.allSource
-
-}
+// build.dependsOn(deleteAllBuildDirs)
 
 jar {
-	from "LICENSE"
+    from 'LICENSE'
 }
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	repositories {
-	}
+dependencies {
+    afterEvaluate {
+        subprojects.each {
+            implementation project(path: ":$it.path", configuration: 'dev')
+            include project(":$it.path")
+        }
+    }
+    tap(rootProject.ext.setRuntimeTestMods)
 }

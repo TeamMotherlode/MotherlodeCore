@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-materials",
+  "version": "${version}",
+  "name": "Motherlode Materials",
+  "description": "Adds several new tiers of ores, tools, weapons and armor.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-materials"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-materials/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.materials.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.materials.MotherlodeMaterialsClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-materials.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": ">=0.25.0",
+    "minecraft": "1.17.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "motherlode.biomes.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "BackgroundRendererMixin"
+  ],
+  "mixins": [
+  ]
+}

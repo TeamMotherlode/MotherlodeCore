@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-base",
+  "version": "${version}",
+  "name": "Motherlode Base",
+  "description": "Base API used by Motherlode's other modules.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-base"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-base/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "motherlode.base.MotherlodeBase"
+    ],
+    "motherlode:init": [
+      "motherlode.base.Motherlode"
+    ],
+    "client": [
+      "motherlode.base.MotherlodeClient"
+    ],
+    "server": [
+      "motherlode.base.MotherlodeBase"
+    ]
+  },
+  "mixins": [
+    "motherlode-base.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "*",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

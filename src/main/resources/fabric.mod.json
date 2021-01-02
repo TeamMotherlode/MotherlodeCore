@@ -1,40 +1,23 @@
 {
   "schemaVersion": 1,
   "id": "motherlode",
-  "version": "${version}",
-
   "name": "Motherlode",
-  "description": "",
-  "authors": [
-    "Spaceman",
-    "Glow"
-  ],
+  "description": "Motherlode aims to expand the game's progression, making it take longer, but at the same time feel more engaging and fun. \nIt is separated into modules that add to different aspects of Minecraft.",
+  "version": "${version}",
+  "environment": "*",
+  "license": "MIT License",
+  "icon": "assets/motherlode/icon.png",
   "contact": {
-    "homepage": "",
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore"
   },
-
-  "license": "CC BY-NC-SA 4.0",
-  "icon": "assets/modid/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "motherlode.core.Motherlode"
-    ],
-    "client": [
-      "motherlode.core.MotherlodeClient"
-    ]
-  },
-  "mixins": [
-    "motherlode_core.mixins.json"
+  "authors": [
+    "Team Motherlode"
   ],
   "depends": {
-    "fabricloader": ">=0.7.4",
-    "fabric": ">=0.18.0",
-    "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
+    "minecraft": "1.17.x",
+    "fabricloader": ">=0.8.9",
+    "fabric": "*"
   }
 }

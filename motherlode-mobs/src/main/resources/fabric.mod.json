@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-mobs",
+  "version": "${version}",
+  "name": "Motherlode Mobs",
+  "description": "Adds some mobs to the game.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-mobs"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-mobs/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.mobs.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.mobs.MotherlodeMobsClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-mobs.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "motherlode-base": "*",
+    "geckolib": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}

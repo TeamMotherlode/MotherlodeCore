@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-ender-invasion",
+  "version": "${version}",
+  "name": "Motherlode Ender Invasion",
+  "description": "The Ender Invasion.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-ender-invasion"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-ender-invasion/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.enderinvasion.MotherlodeModule"
+    ],
+    "cardinal-components": [
+      "motherlode.enderinvasion.EnderInvasion"
+    ],
+    "client": [
+      "motherlode.enderinvasion.MotherlodeEnderInvasionClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-ender-invasion.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": ">=0.25.0",
+    "minecraft": "1.17.x",
+    "motherlode-base": "*",
+    "motherlode-materials": "^1.0.0"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode",
+    "cardinal-components": [
+      "motherlode-ender-invasion:ender_invasion_state",
+      "motherlode-ender-invasion:ender_invasion_chunk_state"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "motherlode-copper-dungeon",
+  "version": "${version}",
+  "name": "Motherlode Copper Dungeon",
+  "description": "Adds things related to the copper dungeon.",
+  "authors": [
+    "Team Motherlode"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
+    "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
+    "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-copper-dungeon"
+  },
+  "license": "MIT License",
+  "icon": "assets/motherlode-copper-dungeon/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "motherlode:init": [
+      "motherlode.copperdungeon.MotherlodeModule"
+    ],
+    "client": [
+      "motherlode.copperdungeon.MotherlodeCopperDungeonClient"
+    ]
+  },
+  "mixins": [
+    "motherlode-copper-dungeon.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "motherlode-base": "*"
+  },
+  "suggests": {
+  },
+  "custom": {
+    "modmenu:parent": "motherlode"
+  }
+}
