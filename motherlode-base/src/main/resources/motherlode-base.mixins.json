@@ -11,6 +11,7 @@
     "AxeItemAccessor",
     "AxeItemMixin",
     "BlocksAccessor",
-    "BlockWithEntityAccessor"
+    "BlockWithEntityAccessor",
+    "FlowableFluidMixin"
   ]
 }

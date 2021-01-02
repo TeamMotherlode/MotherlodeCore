@@ -113,13 +113,13 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         this.wood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
         this.strippedWood = new PillarBlock(FabricBlockSettings.of(Material.WOOD, this.logTopMapColor).strength(2.0F).sounds(BlockSoundGroup.WOOD));
         this.planks = new Block(FabricBlockSettings.of(Material.WOOD, this.woodMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
-        this.button = new DefaultWoodenButtonBlock(FabricBlockSettings.of(Material.SUPPORTED).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
+        this.button = new DefaultWoodenButtonBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
         this.fence = new FenceBlock(FabricBlockSettings.of(Material.WOOD, this.woodMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
         this.fenceGate = new FenceGateBlock(FabricBlockSettings.of(Material.WOOD, this.woodMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
         this.pressurePlate = new DefaultPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.of(Material.WOOD, this.woodMapColor).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
         this.leaves = BlocksAccessor.callCreateLeavesBlock();
         this.sapling = new DefaultSaplingBlock(saplingGenerator.apply(this.log.getDefaultState(), this.leaves.getDefaultState()), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
-        this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.SUPPORTED).breakInstantly().nonOpaque());
+        this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 
         this.itemSettingsFunction.apply(Variant.LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.log, settings))
             .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_log"));

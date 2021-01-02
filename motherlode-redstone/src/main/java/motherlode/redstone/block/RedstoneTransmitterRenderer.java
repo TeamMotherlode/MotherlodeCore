@@ -1,7 +1,7 @@
 package motherlode.redstone.block;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.GraphicsMode;
+import net.minecraft.client.option.GraphicsMode;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -9,7 +9,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -17,6 +16,7 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3f;
 import motherlode.materials.MotherlodeMaterialsItems;
 import motherlode.redstone.MotherlodeModule;
 
@@ -43,7 +43,7 @@ public class RedstoneTransmitterRenderer implements BlockEntityRenderer<Redstone
 
                 Item item = entity.getStack(i).getItem();
 
-                renderRect(model, normal, buffer, light + 2, 0xFFFFFF, getGemUV(item), new Vector3f((i % 2) * 14, 14, (i / 2) * 14), new Vector3f(2f, 2f, 2f));
+                renderRect(model, normal, buffer, light + 2, 0xFFFFFF, getGemUV(item), new Vec3f((i % 2) * 14, 14, (i / 2) * 14), new Vec3f(2f, 2f, 2f));
             }
         }
     }
@@ -75,7 +75,7 @@ public class RedstoneTransmitterRenderer implements BlockEntityRenderer<Redstone
         return cubeUV;
     }
 
-    private void renderRect(Matrix4f model, Matrix3f normal, VertexConsumer buffer, int light, int color, Vector4f[] uv, Vector3f pos, Vector3f size) {
+    private void renderRect(Matrix4f model, Matrix3f normal, VertexConsumer buffer, int light, int color, Vector4f[] uv, Vec3f pos, Vec3f size) {
         renderSide(model, normal, buffer, light, color, uv[0], pos, size.getX(), size.getY(), Direction.NORTH);
         renderSide(model, normal, buffer, light, color, uv[1], pos, size.getX(), size.getY(), Direction.SOUTH);
         renderSide(model, normal, buffer, light, color, uv[2], pos, size.getZ(), size.getY(), Direction.EAST);
@@ -84,7 +84,7 @@ public class RedstoneTransmitterRenderer implements BlockEntityRenderer<Redstone
         renderSide(model, normal, buffer, light, color, uv[5], pos, size.getX(), size.getZ(), Direction.DOWN);
     }
 
-    private void renderSide(Matrix4f model, Matrix3f normal, VertexConsumer buffer, int light, int color, Vector4f uv, Vector3f pos, float width, float height, Direction side) {
+    private void renderSide(Matrix4f model, Matrix3f normal, VertexConsumer buffer, int light, int color, Vector4f uv, Vec3f pos, float width, float height, Direction side) {
         // These are slightly off from what one pixel (in normal res textures) actually is (1/16) to avoid z-fighting
         float onePixelSmall = 127;
         float onePixelLarge = 129;

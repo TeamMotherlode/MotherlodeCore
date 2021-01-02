@@ -14,6 +14,7 @@ public class MotherlodeRedstoneClient implements ClientModInitializer {
     @SuppressWarnings("RedundantCast")
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeRedstoneBlocks.REDSTONE_TRANSMITTER, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeRedstoneBlocks.STEEL_GRATE, RenderLayer.getTranslucent());
 
         ScreenRegistry.register(MotherlodeRedstoneScreenHandlers.REDSTONE_TRANSMITTER_TYPE, (ScreenRegistry.Factory<RedstoneTransmitterGuiDescription, RedstoneTransmitterScreen>) RedstoneTransmitterScreen::new);
 

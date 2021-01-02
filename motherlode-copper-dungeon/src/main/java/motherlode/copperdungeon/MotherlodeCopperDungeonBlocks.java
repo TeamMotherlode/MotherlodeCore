@@ -26,7 +26,7 @@ public class MotherlodeCopperDungeonBlocks {
     public static final DecorationBlock STEEL_WALL = register("steel_wall", new DecorationBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(4.0F, 5.0F), BLOCK_ITEM_SETTINGS));
     public static final DecorationBlock STEEL_TILES = register("steel_tiles", new DecorationBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(4.0F, 5.0F), BLOCK_ITEM_SETTINGS));
 
-    public static final Block STEEL_LADDER = register("steel_ladder", new DefaultLadderBlock(AbstractBlock.Settings.of(Material.SUPPORTED).strength(0.8F).sounds(BlockSoundGroup.METAL).nonOpaque())); //TODO: Ladder sound?
+    public static final Block STEEL_LADDER = register("steel_ladder", new DefaultLadderBlock(AbstractBlock.Settings.of(Material.DECORATION).strength(0.8F).sounds(BlockSoundGroup.METAL).nonOpaque())); // TODO: Ladder sound?
     public static final Block STEEL_BARS = register("steel_bars", new DefaultPaneBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.CLEAR).requiresTool().strength(6.0F, 7.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
     // public static final Block STEEL_PLATFORM = register("steel_platform", new PlatformBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.IRON).requiresTool().strength(4.0f,4.0f).sounds(BlockSoundGroup.METAL).nonOpaque()));
     // public static final Block STEEL_PLATFORM_STAIRS = register("steel_platform_stairs", new PlatformStairsBlock(STEEL_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(STEEL_PLATFORM)));
