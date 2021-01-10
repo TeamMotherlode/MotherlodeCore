@@ -3,6 +3,7 @@ package motherlode.buildingblocks.block;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonAssets;
+import motherlode.buildingblocks.MotherlodeModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +21,7 @@ import motherlode.buildingblocks.MotherlodeBuildingBlocks;
 import motherlode.buildingblocks.screen.SawmillScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class SawmillBlock extends Block implements AssetProcessor {
+public class SawmillBlock extends Block {
     public SawmillBlock(Settings settings) {
         super(settings);
     }
@@ -31,7 +32,7 @@ public class SawmillBlock extends Block implements AssetProcessor {
             return ActionResult.SUCCESS;
         } else {
             player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-            player.incrementStat(MotherlodeBuildingBlocks.INTERACT_WITH_SAWMILL_STAT);
+            player.incrementStat(MotherlodeModule.INTERACT_WITH_SAWMILL_STAT);
             return ActionResult.CONSUME;
         }
     }
@@ -40,10 +41,5 @@ public class SawmillBlock extends Block implements AssetProcessor {
     @Override
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> new SawmillScreenHandler(i, ScreenHandlerContext.create(world, pos), playerInventory), new TranslatableText("container.sawmill"));
-    }
-
-    @Override
-    public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
-        CommonAssets.BLOCK_ITEM.accept(pack, id);
     }
 }

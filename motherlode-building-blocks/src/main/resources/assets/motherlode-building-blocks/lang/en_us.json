@@ -119,5 +119,6 @@
   "block.motherlode-building-blocks.sandstone_slab": "Sandstone Slab",
   "block.motherlode-building-blocks.sandstone_stairs": "Sandstone Stairs",
   "block.motherlode-building-blocks.sawmill": "Sawmill",
+  "stat.motherlode-building-blocks.interact_with_sawmill": "Interactions with Sawmill",
   "container.sawmill": "Sawmill"
 }

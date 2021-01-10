@@ -2,6 +2,8 @@ package motherlode.buildingblocks.screen;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import motherlode.buildingblocks.MotherlodeModule;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -39,7 +41,7 @@ public class SawmillScreenHandler extends ScreenHandler {
     }
 
     public SawmillScreenHandler(int syncId, ScreenHandlerContext context, PlayerInventory playerInventory) {
-        super(MotherlodeBuildingBlocks.SAWMILL_SCREEN_HANDLER, syncId);
+        super(MotherlodeModule.SAWMILL_SCREEN_HANDLER, syncId);
         this.context = context;
         this.world = playerInventory.player.world;
         this.playerInventory = playerInventory;
@@ -61,7 +63,7 @@ public class SawmillScreenHandler extends ScreenHandler {
         if (!itemStack.isOf(inputStack.getItem())) {
             availableRecipes.clear();
             if (!itemStack.isEmpty()) {
-                this.availableRecipes = world.getRecipeManager().getAllMatches(MotherlodeBuildingBlocks.SAWMILLING_RECIPE_TYPE, input, world);
+                this.availableRecipes = world.getRecipeManager().getAllMatches(MotherlodeModule.SAWMILLING_RECIPE_TYPE, input, world);
             }
         }
         inputStack = itemStack.copy();
@@ -115,7 +117,7 @@ public class SawmillScreenHandler extends ScreenHandler {
                 if (!insertItem(itemStack2, 1, 37, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (world.getRecipeManager().getFirstMatch(MotherlodeBuildingBlocks.SAWMILLING_RECIPE_TYPE, new SimpleInventory(new ItemStack[]{itemStack2}), this.world).isPresent()) {
+            } else if (world.getRecipeManager().getFirstMatch(MotherlodeModule.SAWMILLING_RECIPE_TYPE, new SimpleInventory(new ItemStack[]{itemStack2}), this.world).isPresent()) {
                 if (!insertItem(itemStack2, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }

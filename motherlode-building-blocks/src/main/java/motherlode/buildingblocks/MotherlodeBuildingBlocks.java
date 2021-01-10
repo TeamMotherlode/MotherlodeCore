@@ -1,31 +1,19 @@
 package motherlode.buildingblocks;
 
+import motherlode.base.api.assets.CommonAssets;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.recipe.CuttingRecipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.StonecuttingRecipe;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import motherlode.base.Motherlode;
 import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
-import motherlode.base.api.assets.DataProcessor;
 import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonData;
 import motherlode.buildingblocks.block.SawmillBlock;
-import motherlode.buildingblocks.recipe.SawmillingRecipe;
-import motherlode.buildingblocks.recipe.SawmillingRecipeType;
-import motherlode.buildingblocks.screen.SawmillScreenHandler;
 import motherlode.buildingblocks.block.PaintableWallBlock;
 import motherlode.buildingblocks.block.StoneVariantType;
 
@@ -56,17 +44,7 @@ public class MotherlodeBuildingBlocks {
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
-    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD)));
-    public static final Identifier INTERACT_WITH_SAWMILL_STAT;
-    public static final ScreenHandlerType<SawmillScreenHandler> SAWMILL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(MotherlodeModule.id("sawmill"), SawmillScreenHandler::new);
-    public static final RecipeType<SawmillingRecipe> SAWMILLING_RECIPE_TYPE = register("sawmilling", new SawmillingRecipeType());
-    public static final RecipeSerializer<StonecuttingRecipe> SAWMILLING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, MotherlodeModule.id("sawmilling"), new CuttingRecipe.Serializer(SawmillingRecipe::new));
-
-    static {
-        Identifier interactWithSawmillIdentifier = MotherlodeModule.id("interact_with_sawmill");
-        INTERACT_WITH_SAWMILL_STAT = Registry.register(Registry.CUSTOM_STAT, interactWithSawmillIdentifier, interactWithSawmillIdentifier);
-        Stats.CUSTOM.getOrCreateStat(interactWithSawmillIdentifier);
-    }
+    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD)), CommonAssets.BLOCK_ITEM);
 
     /* public static final Block DIRT_PATH = register("dirt_path", new DefaultPathBlock(FabricBlockSettings.copy(Blocks.DIRT_PATH)),
         CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM), block ->
@@ -110,19 +88,6 @@ public class MotherlodeBuildingBlocks {
             p,
             assets,
             CommonData.DEFAULT_BLOCK_LOOT_TABLE
-        );
-    }
-
-    private static <T extends RecipeType<?> & DataProcessor> T register(String name, T recipeType) {
-        return register(name, recipeType, recipeType);
-    }
-
-    private static <T extends RecipeType<?>> T register(String name, T recipeType, DataProcessor data) {
-        return Motherlode.register(
-            id -> Registry.register(Registry.RECIPE_TYPE, id, recipeType),
-            MotherlodeModule.id(name),
-            recipeType,
-            data
         );
     }
 

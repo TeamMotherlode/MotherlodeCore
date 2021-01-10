@@ -1,5 +1,6 @@
 package motherlode.buildingblocks.recipe;
 
+import motherlode.buildingblocks.MotherlodeModule;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CuttingRecipe;
@@ -14,7 +15,7 @@ import motherlode.buildingblocks.MotherlodeBuildingBlocks;
 public class SawmillingRecipe extends CuttingRecipe {
 
     public SawmillingRecipe(Identifier id, String group, Ingredient input, ItemStack output) {
-        super(MotherlodeBuildingBlocks.SAWMILLING_RECIPE_TYPE, RecipeSerializer.STONECUTTING, id, group, input, output);
+        super(MotherlodeModule.SAWMILLING_RECIPE_TYPE, RecipeSerializer.STONECUTTING, id, group, input, output);
     }
 
     public boolean matches(Inventory inv, World world) {
