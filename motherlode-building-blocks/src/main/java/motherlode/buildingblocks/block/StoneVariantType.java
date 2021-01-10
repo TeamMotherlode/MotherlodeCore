@@ -77,15 +77,15 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         TILES = get();
         TILES_SMALL = get();
 
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id), BASE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, "polished_" + id), POLISHED));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks"), BRICKS));
-        if (newStoneType) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_cobble"), COBBLE));
-        if (rubble) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_rubble"), RUBBLE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks_small"), BRICKS_SMALL));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_herringbone"), HERRINGBONE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_tiles"), TILES));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_tiles_small"), TILES_SMALL));
+        ALL.add(new Pair<>(MotherlodeModule.id(id), BASE));
+        ALL.add(new Pair<>(MotherlodeModule.id("polished_" + id), POLISHED));
+        ALL.add(new Pair<>(MotherlodeModule.id(id + "_bricks"), BRICKS));
+        if (newStoneType) ALL.add(new Pair<>(MotherlodeModule.id(id + "_cobble"), COBBLE));
+        if (rubble) ALL.add(new Pair<>(MotherlodeModule.id(id + "_rubble"), RUBBLE));
+        ALL.add(new Pair<>(MotherlodeModule.id(id + "_bricks_small"), BRICKS_SMALL));
+        ALL.add(new Pair<>(MotherlodeModule.id(id + "_herringbone"), HERRINGBONE));
+        ALL.add(new Pair<>(MotherlodeModule.id(id + "_tiles"), TILES));
+        ALL.add(new Pair<>(MotherlodeModule.id(id + "_tiles_small"), TILES_SMALL));
 
         List<Pair<Identifier, Block>> temp = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
 
         PILLAR = pillar ? new PillarBlock(BLOCK_SETTINGS) : null;
         if (pillar) {
-            ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_pillar"), PILLAR));
+            ALL.add(new Pair<>(MotherlodeModule.id(id + "_pillar"), PILLAR));
         }
 
         for (Pair<Identifier, Block> entry : ALL) {
@@ -117,7 +117,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
             String carvedId = id + "_carved_" + variant;
             if (getClass().getResourceAsStream("assets/" + MotherlodeModule.MODID + "/textures/block/" + carvedId + ".png") == null)
                 break;
-            Pair<Identifier, Block> pair = new Pair<>(Motherlode.id(MotherlodeModule.MODID, carvedId), get());
+            Pair<Identifier, Block> pair = new Pair<>(MotherlodeModule.id(carvedId), get());
             carved.put(pair.getLeft(), pair.getRight());
             ALL.add(pair);
         }
@@ -200,7 +200,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
     }
 
     public Block getCarved(char variant) {
-        return variant < 'a' || variant > 'a' + CARVED.size() ? null : CARVED.get(Motherlode.id(MotherlodeModule.MODID, ID + "_carved_" + variant));
+        return variant < 'a' || variant > 'a' + CARVED.size() ? null : CARVED.get(MotherlodeModule.id(ID + "_carved_" + variant));
     }
 
     private static Block get() {
