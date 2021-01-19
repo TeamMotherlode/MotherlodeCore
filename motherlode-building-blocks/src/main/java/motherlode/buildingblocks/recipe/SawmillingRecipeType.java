@@ -58,6 +58,7 @@ public class SawmillingRecipeType implements RecipeType<SawmillingRecipe>, DataP
             add(pack, "oak_" + log + "_to_doors", new Identifier("oak_" + log), new Identifier("oak_door"), 2);
             add(pack, "oak_" + log + "_to_signs", new Identifier("oak_" + log), new Identifier("oak_sign"), 2);
             add(pack, "oak_" + log + "_to_boat", new Identifier("oak_" + log), new Identifier("oak_boat"));
+            add(pack, "oak_" + log + "_to_mulch", new Identifier("oak_" + log), MotherlodeModule.id("mulch"));
         }
 
         // Plank recipes
