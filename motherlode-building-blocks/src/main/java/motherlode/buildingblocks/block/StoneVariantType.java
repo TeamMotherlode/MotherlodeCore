@@ -78,7 +78,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         TILES_SMALL = get();
 
         ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id), BASE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, "polished_" + id), POLISHED));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_polished"), POLISHED));
         ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks"), BRICKS));
         if (newStoneType) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_cobble"), COBBLE));
         if (rubble) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_rubble"), RUBBLE));
