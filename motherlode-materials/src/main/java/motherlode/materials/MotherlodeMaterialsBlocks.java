@@ -50,7 +50,7 @@ public class MotherlodeMaterialsBlocks {
     public static final Block ONYX_BLOCK = register("onyx_block", mineralBlock(2, "onyx"));
 
     private static Block mineralBlock(int miningLevel, String mineral) {
-        return new MineralBlock(FabricBlockSettings.of(Material.STONE, MapColor.IRON).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel), mineral);
+        return new MineralBlock(FabricBlockSettings.of(Material.STONE, MapColor.IRON_GRAY).requiresTool().strength(5.0F, 6.0F).breakByTool(FabricToolTags.PICKAXES, miningLevel), mineral);
     }
 
     private static <T extends Block> T register(String name, T block) {
