@@ -5,7 +5,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.StringIdentifiable;
 
 public enum BlockDyeColor implements StringIdentifiable {
-    UNCOLORED("uncolored", MapColor.STONE),
+    UNCOLORED("uncolored", MapColor.STONE_GRAY),
     WHITE("white", MapColor.WHITE),
     LIGHT_GRAY("light_gray", MapColor.LIGHT_GRAY),
     GRAY("gray", MapColor.GRAY),

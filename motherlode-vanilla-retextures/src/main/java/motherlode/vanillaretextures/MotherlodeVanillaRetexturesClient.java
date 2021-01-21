@@ -2,6 +2,7 @@ package motherlode.vanillaretextures;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import motherlode.base.Motherlode;
 
@@ -13,8 +14,7 @@ public class MotherlodeVanillaRetexturesClient implements ClientModInitializer {
         FabricLoader.getInstance().getModContainer(MODID).ifPresent(modContainer ->
             ResourceManagerHelper.registerBuiltinResourcePack(
                 Motherlode.id(MODID, "vanilla-retextures"),
-                "resourcepacks/vanilla-retextures",
                 modContainer,
-                true));
+                ResourcePackActivationType.DEFAULT_ENABLED));
     }
 }
