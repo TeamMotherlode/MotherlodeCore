@@ -33,6 +33,14 @@ public class MotherlodeBuildingBlocks {
     public static final StoneVariantType LAPIS_LAZULI = register(StoneVariantType.fromBlock("lapis_lazuli", null, false, false));
     public static final StoneVariantType DRIPSTONE = register(StoneVariantType.fromBlock("dripstone", null, false, true));
     public static final StoneVariantType GLOWSTONE = register(StoneVariantType.fromBlock("glowstone", null, false, false));
+    public static final StoneVariantType SNOW = register(StoneVariantType.fromBlock("snow", null, false, true));
+    public static final StoneVariantType END_STONE = register(StoneVariantType.fromBlock("end_stone", null, false, true));
+    public static final StoneVariantType REDSTONE = register(StoneVariantType.fromBlock("redstone", null, false, false));
+    public static final StoneVariantType DIRT = register(StoneVariantType.fromBlock("dirt", null, false, true));
+    public static final StoneVariantType SOUL_SAND = register(StoneVariantType.fromBlock("soul_sand", null, false, true));
+    public static final StoneVariantType NETHER_BRICKS = register(StoneVariantType.fromBlock("nether_bricks", null, false, true));
+    public static final StoneVariantType WARPED = register(StoneVariantType.fromBlock("warped", null, false, true));
+    public static final StoneVariantType CRIMSON = register(StoneVariantType.fromBlock("crimson", null, false, true));
 
     public static final StoneVariantType STONE = register(StoneVariantType.fromStone("stone", Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE, true));
     public static final StoneVariantType GRANITE = register(StoneVariantType.fromStone("granite", null, Blocks.POLISHED_GRANITE, true));
@@ -41,6 +49,8 @@ public class MotherlodeBuildingBlocks {
     public static final StoneVariantType BLACKSTONE = register(StoneVariantType.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE, true));
     public static final StoneVariantType BASALT = register(StoneVariantType.fromStone("basalt", null, Blocks.POLISHED_BASALT, true));
     public static final StoneVariantType SANDSTONE = register(StoneVariantType.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE, true));
+    public static final StoneVariantType RED_SANDSTONE = register(StoneVariantType.fromStone("red_sandstone", null, Blocks.SMOOTH_RED_SANDSTONE, true));
+
 
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
