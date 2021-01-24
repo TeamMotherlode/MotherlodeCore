@@ -1,6 +1,10 @@
 package motherlode.buildingblocks.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -34,6 +38,7 @@ public class SawmillBlock extends HorizontalFacingBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
@@ -46,21 +51,25 @@ public class SawmillBlock extends HorizontalFacingBlock {
 
     @Nullable
     @Override
+    @SuppressWarnings("deprecation")
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedScreenHandlerFactory((i, playerInventory, playerEntity) -> new SawmillScreenHandler(i, ScreenHandlerContext.create(world, pos), playerInventory), new TranslatableText("container.sawmill"));
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean hasSidedTransparency(BlockState state) {
         return true;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.5625f, 1f);
     }
