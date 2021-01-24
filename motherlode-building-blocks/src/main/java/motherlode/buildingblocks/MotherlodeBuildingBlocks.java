@@ -44,7 +44,7 @@ public class MotherlodeBuildingBlocks {
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
-    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD)), CommonAssets.DEFAULT_BLOCK_STATE);
+    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD).nonOpaque()), CommonAssets.DEFAULT_DIRECTIONAL_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM));
     public static final Block MULCH = register("mulch", new Block(FabricBlockSettings.of(Material.SOIL).breakByHand(true).strength(1.2f)), CommonAssets.DEFAULT_BLOCK);
 
     /* public static final Block DIRT_PATH = register("dirt_path", new DefaultPathBlock(FabricBlockSettings.copy(Blocks.DIRT_PATH)),

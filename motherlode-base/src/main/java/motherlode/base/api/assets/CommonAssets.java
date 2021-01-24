@@ -51,6 +51,19 @@ public final class CommonAssets {
             )
         );
 
+    public static final AssetProcessor DEFAULT_DIRECTIONAL_BLOCK_STATE = (pack, id) ->
+        pack.addBlockState(id, builder -> {
+            int y = 0;
+            for (String facing : facings) {
+                int yy = y;
+                builder.variant("facing=" + facing, settings -> settings
+                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+                    .rotationY(ys[yy] * 90)
+                );
+                y++;
+            }
+        });
+
     public static final AssetProcessor DEFAULT_BLOCK_MODEL = (pack, id) ->
         pack.addBlockModel(id, state -> state
             .parent(new Identifier("block/cube_all"))
