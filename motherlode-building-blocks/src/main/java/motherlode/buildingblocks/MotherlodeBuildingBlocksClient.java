@@ -1,8 +1,8 @@
 package motherlode.buildingblocks;
 
-import motherlode.buildingblocks.screen.SawmillScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import motherlode.buildingblocks.screen.SawmillScreen;
 
 public class MotherlodeBuildingBlocksClient implements ClientModInitializer {
     @Override

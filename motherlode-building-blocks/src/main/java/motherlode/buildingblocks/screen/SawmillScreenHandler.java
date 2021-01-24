@@ -2,21 +2,18 @@ package motherlode.buildingblocks.screen;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import motherlode.buildingblocks.MotherlodeModule;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import motherlode.buildingblocks.MotherlodeModule;
 import motherlode.buildingblocks.MotherlodeBuildingBlocks;
 import motherlode.buildingblocks.recipe.SawmillingRecipe;
 
@@ -34,7 +31,7 @@ public class SawmillScreenHandler extends ScreenHandler {
     private final PlayerInventory playerInventory;
     private ItemStack inputStack = ItemStack.EMPTY;
     private List<SawmillingRecipe> availableRecipes = new ArrayList<>();
-    private Runnable screenOnInventoryChanged = ()->{};
+    private Runnable screenOnInventoryChanged = () -> { };
 
     public SawmillScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, ScreenHandlerContext.EMPTY, playerInventory);
@@ -47,13 +44,13 @@ public class SawmillScreenHandler extends ScreenHandler {
         this.playerInventory = playerInventory;
 
         final int playerInventoryY = 84;
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, playerInventoryY + i * 18));
             }
         }
-        for(int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, playerInventoryY + 3*18 + 4));
+        for (int i = 0; i < 9; ++i) {
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, playerInventoryY + 3 * 18 + 4));
         }
     }
 

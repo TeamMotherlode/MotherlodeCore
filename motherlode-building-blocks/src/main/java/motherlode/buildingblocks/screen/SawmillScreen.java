@@ -8,11 +8,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-import motherlode.base.Motherlode;
 import motherlode.buildingblocks.MotherlodeModule;
 import motherlode.buildingblocks.recipe.SawmillingRecipe;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 
 public class SawmillScreen extends HandledScreen<SawmillScreenHandler> {
     private float scrollAmount;
@@ -40,24 +38,23 @@ public class SawmillScreen extends HandledScreen<SawmillScreenHandler> {
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
         renderBackground(matrices);
-        RenderSystem.color4f(1f, 1f, 1f, 1f);
+        RenderSystem.clearColor(1f, 1f, 1f, 1f);
         bindTexture();
 
         // Background
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
         // Scrollbar
-        int scrollbarYPos = (int)(47f * this.scrollAmount);
+        int scrollbarYPos = (int) (47f * this.scrollAmount);
         drawTexture(matrices, x + 159, y + 14 + scrollbarYPos, 176 + (shouldScroll() ? 0 : 12), 0, 12, 15);
 
         // Recipes
         int lastDisplayedCell = this.scrollCellOffset + cells;
         List<SawmillingRecipe> availableRecipes = handler.getAvailableRecipes();
-        for(int i = scrollCellOffset; i < lastDisplayedCell && i < handler.getAvailableRecipes().size(); i++) {
+        for (int i = scrollCellOffset; i < lastDisplayedCell && i < handler.getAvailableRecipes().size(); i++) {
             int iNoOffset = i - scrollCellOffset;
             int cellSize = 18;
             int cellSpace = 2;
-
 
             // Background
             int backgroundX = x+54 + cellSpace + iNoOffset % columns * (cellSize+cellSpace);
@@ -97,7 +94,7 @@ public class SawmillScreen extends HandledScreen<SawmillScreenHandler> {
         scrollbarClicked = false;
         if (canCraft) {
             int lastDisplayedCell = scrollCellOffset + cells;
-            for(int i = scrollCellOffset; i < lastDisplayedCell; ++i) {
+            for (int i = scrollCellOffset; i < lastDisplayedCell; ++i) {
                 int iNoOffset = i - scrollCellOffset;
                 int cellSize = 18;
                 int cellSpace = 2;
@@ -111,7 +108,7 @@ public class SawmillScreen extends HandledScreen<SawmillScreenHandler> {
                 }
             }
 
-            if (mouseX >= (double)(x+159) && mouseX < (double)(x+159 + 12) && mouseY >= (double)(y+14) && mouseY < (double)(y+14 + 54)) {
+            if (mouseX >= (double) (x+159) && mouseX < (double) (x+159 + 12) && mouseY >= (double) (y+14) && mouseY < (double) (y+14 + 54)) {
                 scrollbarClicked = true;
             }
         }
@@ -123,9 +120,9 @@ public class SawmillScreen extends HandledScreen<SawmillScreenHandler> {
         if (scrollbarClicked && shouldScroll()) {
             int i = this.y + 14;
             int j = i + 54;
-            scrollAmount = ((float)mouseY - (float)i - 7.5f) / ((float)(j - i) - 15f);
+            scrollAmount = ((float) mouseY - (float) i - 7.5f) / ((float) (j - i) - 15f);
             scrollAmount = MathHelper.clamp(scrollAmount, 0.0f, 1f);
-            scrollCellOffset = (int)((double)(scrollAmount * (float)getMaxScroll()) + 0.5d) * 4;
+            scrollCellOffset = (int) ((double) (scrollAmount * (float) getMaxScroll()) + 0.5d) * 4;
             return true;
         } else {
             return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
@@ -135,9 +132,9 @@ public class SawmillScreen extends HandledScreen<SawmillScreenHandler> {
     public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         if (shouldScroll()) {
             int maxScroll = getMaxScroll();
-            scrollAmount = (float)((double)scrollAmount - amount / (double)maxScroll);
+            scrollAmount = (float) ((double) scrollAmount - amount / (double) maxScroll);
             scrollAmount = MathHelper.clamp(scrollAmount, 0f, 1f);
-            scrollCellOffset = (int)((double)(scrollAmount * (float)maxScroll) + 0.5d) * columns;
+            scrollCellOffset = (int) ((double) (scrollAmount * (float) maxScroll) + 0.5d) * columns;
         }
 
         return true;

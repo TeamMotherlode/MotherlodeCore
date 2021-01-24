@@ -9,7 +9,6 @@ import motherlode.base.api.assets.DataProcessor;
 import motherlode.buildingblocks.MotherlodeModule;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-
 public class SawmillingRecipeType implements RecipeType<SawmillingRecipe>, DataProcessor {
 
     @Override

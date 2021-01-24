@@ -1,9 +1,5 @@
 package motherlode.buildingblocks.block;
 
-import com.swordglowsblue.artifice.api.ArtificeResourcePack;
-import motherlode.base.api.assets.AssetProcessor;
-import motherlode.base.api.assets.CommonAssets;
-import motherlode.buildingblocks.MotherlodeModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,11 +9,10 @@ import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import motherlode.buildingblocks.MotherlodeBuildingBlocks;
+import motherlode.buildingblocks.MotherlodeModule;
 import motherlode.buildingblocks.screen.SawmillScreenHandler;
 import org.jetbrains.annotations.Nullable;
 

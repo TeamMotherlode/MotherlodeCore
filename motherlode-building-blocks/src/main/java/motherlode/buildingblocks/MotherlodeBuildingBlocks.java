@@ -1,6 +1,5 @@
 package motherlode.buildingblocks;
 
-import motherlode.base.api.assets.CommonAssets;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
@@ -13,6 +12,7 @@ import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonData;
+import motherlode.base.api.assets.CommonAssets;
 import motherlode.buildingblocks.block.SawmillBlock;
 import motherlode.buildingblocks.block.PaintableWallBlock;
 import motherlode.buildingblocks.block.StoneVariantType;
@@ -44,7 +44,7 @@ public class MotherlodeBuildingBlocks {
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
-    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD)), CommonAssets.BLOCK_ITEM);
+    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD)), CommonAssets.DEFAULT_BLOCK_STATE);
     public static final Block MULCH = register("mulch", new Block(FabricBlockSettings.of(Material.SOIL).breakByHand(true).strength(1.2f)), CommonAssets.DEFAULT_BLOCK);
 
     /* public static final Block DIRT_PATH = register("dirt_path", new DefaultPathBlock(FabricBlockSettings.copy(Blocks.DIRT_PATH)),
