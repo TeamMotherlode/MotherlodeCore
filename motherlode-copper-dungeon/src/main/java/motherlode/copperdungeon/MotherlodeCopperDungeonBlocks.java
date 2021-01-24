@@ -30,7 +30,7 @@ public class MotherlodeCopperDungeonBlocks {
     public static final Block STEEL_BARS = register("steel_bars", new DefaultPaneBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.CLEAR).requiresTool().strength(6.0F, 7.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
     // public static final Block STEEL_PLATFORM = register("steel_platform", new PlatformBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.IRON).requiresTool().strength(4.0f,4.0f).sounds(BlockSoundGroup.METAL).nonOpaque()));
     // public static final Block STEEL_PLATFORM_STAIRS = register("steel_platform_stairs", new PlatformStairsBlock(STEEL_PLATFORM.getDefaultState(), AbstractBlock.Settings.copy(STEEL_PLATFORM)));
-    public static final Block STEEL_DOOR = register("steel_door", new DefaultDoorBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.IRON).requiresTool().strength(6.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
+    public static final Block STEEL_DOOR = register("steel_door", new DefaultDoorBlock(AbstractBlock.Settings.of(Material.METAL, MapColor.IRON_GRAY).requiresTool().strength(6.0F).sounds(BlockSoundGroup.METAL).nonOpaque()));
 
     public static final Block CUTTER_TRAP = register("cutter_trap", new CutterTrapBlock(FabricBlockSettings.copy(Blocks.STONE_BRICKS).requiresTool().strength(3.0F, 3.0F).nonOpaque()));
     public static final Block ZAPPER_TRAP = register("zapper_trap", new ZapperTrapBlock(FabricBlockSettings.copy(Blocks.STONE_BRICKS).requiresTool().strength(3.0F, 3.0F).nonOpaque()));
