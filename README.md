@@ -35,5 +35,5 @@ This module provides some utility features to make developing Motherlode easier.
 [...]
 
 ## Licensing
-The mod itself is licensed under the `MIT License`.
+The mod itself is licensed under the GNU Lesser General Public License 2.1 or later.
 All assets are licensed under `CC BY-NC-SA 4.0`.

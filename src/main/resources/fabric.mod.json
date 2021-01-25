@@ -5,7 +5,7 @@
   "description": "Motherlode aims to expand the game's progression, making it take longer, but at the same time feel more engaging and fun. \nIt is separated into modules that add to different aspects of Minecraft.",
   "version": "${version}",
   "environment": "*",
-  "license": "MIT License",
+  "license": "LGPL 2.1",
   "icon": "assets/motherlode/icon.png",
   "contact": {
     "homepage": "https://github.com/TeamMotherlode/MotherlodeCore",
