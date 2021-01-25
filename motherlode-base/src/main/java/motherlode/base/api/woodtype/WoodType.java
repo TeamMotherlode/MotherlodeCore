@@ -3,6 +3,7 @@ package motherlode.base.api.woodtype;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceBlock;
@@ -121,44 +122,26 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         this.sapling = new DefaultSaplingBlock(saplingGenerator.apply(this.log.getDefaultState(), this.leaves.getDefaultState()), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
         this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 
-        this.itemSettingsFunction.apply(Variant.LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.log, settings))
-            .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
-
-        this.itemSettingsFunction.apply(Variant.STRIPPED_LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.strippedLog, settings))
-            .orElseGet(() -> Registerable.block(this.strippedLog)).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
-
-        this.itemSettingsFunction.apply(Variant.WOOD, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.wood, settings))
-            .orElseGet(() -> Registerable.block(this.wood)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
-
-        this.itemSettingsFunction.apply(Variant.STRIPPED_WOOD, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.strippedWood, settings))
-            .orElseGet(() -> Registerable.block(this.strippedWood)).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
-
-        this.itemSettingsFunction.apply(Variant.PLANKS, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.planks, settings))
-            .orElseGet(() -> Registerable.block(this.planks)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
-
-        this.itemSettingsFunction.apply(Variant.BUTTON, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.button, settings))
-            .orElseGet(() -> Registerable.block(this.button)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
-
-        this.itemSettingsFunction.apply(Variant.FENCE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.fence, settings))
-            .orElseGet(() -> Registerable.block(this.fence)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
-
-        this.itemSettingsFunction.apply(Variant.FENCE_GATE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.fenceGate, settings))
-            .orElseGet(() -> Registerable.block(this.fenceGate)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
-
-        this.itemSettingsFunction.apply(Variant.PRESSURE_PLATE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.pressurePlate, settings))
-            .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
-
-        this.itemSettingsFunction.apply(Variant.LEAVES, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.leaves, settings))
-            .orElseGet(() -> Registerable.block(this.leaves)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
-
-        this.itemSettingsFunction.apply(Variant.SAPLING, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.sapling, settings))
-            .orElseGet(() -> Registerable.block(this.sapling)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
-
-        this.itemSettingsFunction.apply(Variant.POTTED_SAPLING, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.pottedSapling, settings))
-            .orElseGet(() -> Registerable.block(this.pottedSapling)).register(Motherlode.id(id.getNamespace(), "potted_" + id.getPath() + "_sapling"));
+        registerBlock(id, this.itemSettingsFunction, Variant.LOG, this.log, name -> name + "_log");
+        registerBlock(id, this.itemSettingsFunction, Variant.STRIPPED_LOG, this.strippedLog, name -> "stripped_" + name + "_log");
+        registerBlock(id, this.itemSettingsFunction, Variant.WOOD, this.wood, name -> name + "_wood");
+        registerBlock(id, this.itemSettingsFunction, Variant.STRIPPED_WOOD, this.strippedWood, name -> "stripped_" + name + "_wood");
+        registerBlock(id, this.itemSettingsFunction, Variant.PLANKS, this.planks, name -> name + "_planks");
+        registerBlock(id, this.itemSettingsFunction, Variant.BUTTON, this.button, name -> name + "_button");
+        registerBlock(id, this.itemSettingsFunction, Variant.FENCE, this.fence, name -> name + "_fence");
+        registerBlock(id, this.itemSettingsFunction, Variant.FENCE_GATE, this.fenceGate, name -> name + "_fence_gate");
+        registerBlock(id, this.itemSettingsFunction, Variant.PRESSURE_PLATE, this.pressurePlate, name -> name + "_pressure_plate");
+        registerBlock(id, this.itemSettingsFunction, Variant.LEAVES, this.leaves, name -> name + "_leaves");
+        registerBlock(id, this.itemSettingsFunction, Variant.SAPLING, this.sapling, name -> name + "_sapling");
+        registerBlock(id, this.itemSettingsFunction, Variant.POTTED_SAPLING, this.pottedSapling, name -> "potted_" + name + "_sapling");
 
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.log, this.strippedLog);
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.wood, this.strippedWood);
+    }
+
+    private static void registerBlock(Identifier id, WoodTypeItemSettingsFunction itemSettingsFunction, Variant variant, Block block, UnaryOperator<String> name) {
+        itemSettingsFunction.apply(variant, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(block, settings))
+            .orElseGet(() -> Registerable.block(block)).register(Motherlode.id(id.getNamespace(), name.apply(id.getPath())));
     }
 
     public PillarBlock getLog() {

@@ -10,6 +10,7 @@ import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonData;
+import motherlode.buildingblocks.block.MotherlodeStoneExtension;
 import motherlode.buildingblocks.block.PaintableWallBlock;
 import motherlode.buildingblocks.block.StoneVariantType;
 
@@ -17,26 +18,26 @@ import motherlode.buildingblocks.block.StoneVariantType;
 public class MotherlodeBuildingBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
 
-    public static final StoneVariantType LIMESTONE = register(StoneVariantType.newStone("limestone", false));
-    public static final StoneVariantType GRAVESTONE = register(StoneVariantType.newStone("gravestone", true));
-    public static final StoneVariantType JASPER = register(StoneVariantType.newStone("jasper", false));
-    public static final StoneVariantType MARBLE = register(StoneVariantType.newStone("marble", false));
-    public static final StoneVariantType SLATE = register(StoneVariantType.newStone("slate", false));
+    public static final StoneVariantType LIMESTONE = new StoneVariantType(MotherlodeModule.id("limestone")).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType GRAVESTONE = new StoneVariantType(MotherlodeModule.id("gravestone")).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType JASPER = new StoneVariantType(MotherlodeModule.id("jasper")).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType MARBLE = new StoneVariantType(MotherlodeModule.id("marble")).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType SLATE = new StoneVariantType(MotherlodeModule.id("slate")).with(new MotherlodeStoneExtension()).register();
 
-    public static final StoneVariantType BRICK = register(StoneVariantType.fromBlock("brick", Blocks.BRICKS));
-    public static final StoneVariantType MAGMA = register(StoneVariantType.fromBlock("magma", Blocks.MAGMA_BLOCK));
-    public static final StoneVariantType OBSIDIAN = register(StoneVariantType.fromBlock("obsidian", null));
-    public static final StoneVariantType CRYING_OBSIDIAN = register(StoneVariantType.fromBlock("crying_obsidian", null));
-    public static final StoneVariantType GOLD = register(StoneVariantType.fromBlock("gold", Blocks.GOLD_BLOCK));
-    public static final StoneVariantType ICE = register(StoneVariantType.fromBlock("ice", null));
+    public static final StoneVariantType BRICK = new StoneVariantType(MotherlodeModule.id("brick")).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType MAGMA = new StoneVariantType(MotherlodeModule.id("magma"), false).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType OBSIDIAN = new StoneVariantType(MotherlodeModule.id("obsidian"), false).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType CRYING_OBSIDIAN = new StoneVariantType(MotherlodeModule.id("crying_obsidian"), false).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType GOLD = new StoneVariantType(MotherlodeModule.id("gold"), false).with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType ICE = new StoneVariantType(MotherlodeModule.id("ice"), false).with(new MotherlodeStoneExtension()).register();
 
-    public static final StoneVariantType STONE = register(StoneVariantType.fromStone("stone", Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE));
-    public static final StoneVariantType GRANITE = register(StoneVariantType.fromStone("granite", null, Blocks.POLISHED_GRANITE));
-    public static final StoneVariantType DIORITE = register(StoneVariantType.fromStone("diorite", null, Blocks.POLISHED_DIORITE));
-    public static final StoneVariantType ANDESITE = register(StoneVariantType.fromStone("andesite", null, Blocks.POLISHED_ANDESITE));
-    public static final StoneVariantType BLACKSTONE = register(StoneVariantType.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE));
-    public static final StoneVariantType BASALT = register(StoneVariantType.fromStone("basalt", null, Blocks.POLISHED_BASALT));
-    public static final StoneVariantType SANDSTONE = register(StoneVariantType.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE));
+    public static final StoneVariantType STONE = new StoneVariantType(MotherlodeModule.id("stone")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType GRANITE = new StoneVariantType(MotherlodeModule.id("granite")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType DIORITE = new StoneVariantType(MotherlodeModule.id("diorite")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType ANDESITE = new StoneVariantType(MotherlodeModule.id("andesite")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType BLACKSTONE = new StoneVariantType(MotherlodeModule.id("blackstone")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType BASALT = new StoneVariantType(MotherlodeModule.id("basalt")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneVariantType SANDSTONE = new StoneVariantType(MotherlodeModule.id("sandstone")).withoutBase().with(new MotherlodeStoneExtension()).register();
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
@@ -51,17 +52,6 @@ public class MotherlodeBuildingBlocks {
                 }
                 return ActionResult.PASS;
             })); */
-
-    private static StoneVariantType register(StoneVariantType stone) {
-
-        return Motherlode.register(
-            stone,
-            Motherlode.id(MotherlodeModule.MODID, stone.getId()),
-            stone,
-            stone,
-            stone
-        );
-    }
 
     private static <T extends Block> T register(String name, T block, AssetProcessor assets) {
 

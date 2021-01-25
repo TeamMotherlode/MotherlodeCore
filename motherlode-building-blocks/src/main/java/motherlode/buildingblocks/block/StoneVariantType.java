@@ -1,213 +1,149 @@
 package motherlode.buildingblocks.block;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
-import net.minecraft.block.PillarBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.StringIdentifiable;
 import motherlode.base.Motherlode;
+import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.api.assets.CommonData;
-import motherlode.base.api.assets.DataProcessor;
-import motherlode.base.api.varianttype.RegisterableVariantType;
-import motherlode.buildingblocks.MotherlodeModule;
+import motherlode.base.api.varianttype.MotherlodeVariantType;
+import motherlode.base.util.Triple;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-public class StoneVariantType implements RegisterableVariantType<Block>, AssetProcessor, DataProcessor {
-    private static final List<String> IGNORE = new ArrayList<>();
-    private static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
+public class StoneVariantType extends MotherlodeVariantType<Block, StoneVariantType> {
+    public static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
+    public static final Item.Settings ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
 
-    private final String ID;
-    public final Block BASE;
-    public final Block COBBLE;
-    public final Block RUBBLE;
-    public final Block POLISHED;
-    public final Block BRICKS;
-    public final Block BRICKS_SMALL;
-    public final Block HERRINGBONE;
-    public final Block TILES;
-    public final Block TILES_SMALL;
-    public final Block PILLAR;
-    public final Map<Block, Block> STAIRS = new HashMap<>();
-    public final Map<Block, Block> SLABS = new HashMap<>();
-    public final Map<Identifier, Block> CARVED;
-    public final List<Pair<Identifier, Block>> ALL = new ArrayList<>();
+    public static final AssetProcessor STAIRS_BLOCK = CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM);
+    public static final AssetProcessor SLAB_BLOCK = CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM);
 
-    private final boolean newBase;
-    private final boolean newBricks;
-    private final boolean newPolished;
+    private final List<Pair<Variant, Block>> variants;
+    private final List<Triple<Block, Variant, SlabBlock>> slabs;
+    private final List<Triple<Block, Variant, StairsBlock>> stairs;
+    private final boolean baseBlock;
 
-    public static StoneVariantType newStone(String baseID, boolean rubble) {
-        return new StoneVariantType(baseID, true, true, true, rubble, null, null, null);
+    public StoneVariantType(Identifier id) {
+        this(id, true);
     }
 
-    public static StoneVariantType fromStone(String baseID, Block bricks, Block polished) {
-        return new StoneVariantType(baseID, false, polished != null, false, false, null, polished, bricks);
-    }
+    public StoneVariantType(Identifier id, boolean baseBlock) {
+        super(id);
 
-    public static StoneVariantType fromBlock(String baseID, Block base) {
-        return new StoneVariantType(baseID, false, false, false, false, base, null, null);
-    }
-
-    private StoneVariantType(String id, boolean newStoneType, boolean polished, boolean pillar, boolean rubble, Block baseBlock, Block polishedBlock, Block bricksBlock) {
-        ID = id;
-        BASE = baseBlock != null ? baseBlock : newStoneType ? get() : Registry.BLOCK.get(new Identifier(id));
-        this.newBase = newStoneType && baseBlock == null;
-        COBBLE = newStoneType ? get() : null;
-        RUBBLE = rubble ? get() : null;
-        POLISHED = polished ? polishedBlock != null ? polishedBlock : get() : null;
-        this.newPolished = polished && polishedBlock == null;
-        BRICKS = bricksBlock == null ? get() : bricksBlock;
-        this.newBricks = bricksBlock == null;
-        BRICKS_SMALL = get();
-        HERRINGBONE = get();
-        TILES = get();
-        TILES_SMALL = get();
-
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id), BASE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, "polished_" + id), POLISHED));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks"), BRICKS));
-        if (newStoneType) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_cobble"), COBBLE));
-        if (rubble) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_rubble"), RUBBLE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks_small"), BRICKS_SMALL));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_herringbone"), HERRINGBONE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_tiles"), TILES));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_tiles_small"), TILES_SMALL));
-
-        List<Pair<Identifier, Block>> temp = new ArrayList<>();
-
-        for (Pair<Identifier, Block> entry : ALL) {
-            String stairsId = entry.getLeft().getPath() + "_stairs";
-            if (!IGNORE.contains(stairsId)) {
-                StairsBlock stairBlock = new DefaultStairsBlock(BASE.getDefaultState(), BLOCK_SETTINGS);
-                STAIRS.put(entry.getRight(), stairBlock);
-                temp.add(new Pair<>(Motherlode.id(entry.getLeft().getNamespace(), stairsId), stairBlock));
-            }
-        }
-
-        PILLAR = pillar ? new PillarBlock(BLOCK_SETTINGS) : null;
-        if (pillar) {
-            ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_pillar"), PILLAR));
-        }
-
-        for (Pair<Identifier, Block> entry : ALL) {
-            String slabId = entry.getLeft().getPath() + "_slab";
-            if (!IGNORE.contains(slabId)) {
-                SlabBlock slabBlock = new SlabBlock(BLOCK_SETTINGS);
-                SLABS.put(entry.getRight(), slabBlock);
-                temp.add(new Pair<>(Motherlode.id(entry.getLeft().getNamespace(), slabId), slabBlock));
-            }
-        }
-
-        Map<Identifier, Block> carved = new HashMap<>();
-        for (char variant = 'a'; variant < 'z'; variant++) {
-            String carvedId = id + "_carved_" + variant;
-            if (getClass().getResourceAsStream("assets/" + MotherlodeModule.MODID + "/textures/block/" + carvedId + ".png") == null)
-                break;
-            Pair<Identifier, Block> pair = new Pair<>(Motherlode.id(MotherlodeModule.MODID, carvedId), get());
-            carved.put(pair.getLeft(), pair.getRight());
-            ALL.add(pair);
-        }
-        CARVED = carved;
-        ALL.addAll(temp);
-        temp.clear();
+        this.variants = new ArrayList<>();
+        this.slabs = new ArrayList<>();
+        this.stairs = new ArrayList<>();
+        this.baseBlock = baseBlock;
     }
 
     @Override
-    public Block[] variants() {
-        return ALL.stream().map(Pair::getRight).collect(Collectors.toList()).toArray(new Block[ALL.size()]);
+    protected StoneVariantType getThis() {
+        return this;
     }
 
     @Override
-    public void register(Identifier id) {
-        for (Pair<Identifier, Block> entry : ALL) {
-            if (entry.getRight() == null) continue;
-            if (entry.getRight() == BASE && !newBase) continue;
-            if (entry.getRight() == BRICKS && !newBricks) continue;
-            if (entry.getRight() == POLISHED && !newPolished) continue;
-
-            register(entry.getLeft(), entry.getRight());
-        }
+    public Block[] baseVariants() {
+        return Stream.concat(variants.stream().skip(this.baseBlock ? 0 : 1).map(Pair::getRight), Stream.concat(
+            slabs.stream().map(Triple::getThird), stairs.stream().map(Triple::getThird)
+        )).toArray(Block[]::new);
     }
-
-    private static void register(Identifier id, Block block) {
-        Registry.register(Registry.BLOCK, id, block);
-        Registry.register(Registry.ITEM, id, new BlockItem(block, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
-    }
-
-    private static final AssetProcessor block = CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.DEFAULT_BLOCK_MODEL);
-    private static final AssetProcessor stair = CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM);
-    private static final AssetProcessor slab = CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM);
 
     @Override
-    public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier identifier) {
-        for (Pair<Identifier, Block> entry : ALL) {
-            if (STAIRS.containsValue(entry.getRight()) || SLABS.containsValue(entry.getRight())) continue;
+    public void registerBase(Identifier id) {
+        Variant[] variants = this.baseBlock ? Variant.values() : Arrays.copyOfRange(Variant.values(), 1, Variant.values().length);
 
-            CommonAssets.BLOCK_ITEM.accept(pack, entry.getLeft());
-
-            if (PILLAR != entry.getRight()) {
-
-                block.accept(pack, entry.getLeft());
-            } else {
-                CommonAssets.PILLAR.accept(pack, entry.getLeft());
-            }
+        for (Variant variant : variants) {
+            Block block = get();
+            this.variants.add(new Pair<>(variant, block));
+            this.slabs.add(new Triple<>(block, variant, new SlabBlock(BLOCK_SETTINGS)));
+            this.stairs.add(new Triple<>(block, variant, new DefaultStairsBlock(block.getDefaultState(), BLOCK_SETTINGS)));
         }
 
-        for (Map.Entry<Block, Block> entry : STAIRS.entrySet()) {
-            stair.accept(pack, Registry.BLOCK.getId(entry.getValue()));
-        }
-        for (Map.Entry<Block, Block> entry : SLABS.entrySet()) {
-            slab.accept(pack, Registry.BLOCK.getId(entry.getValue()));
+        for (int i = this.baseBlock ? 0 : 1; i < variants.length; i++) {
+            int ii = i;
+            Registerable.block(this.variants.get(i).getRight(), ITEM_SETTINGS).register(Motherlode.id(id, name -> name + variants[ii].asString()));
+            Registerable.block(this.slabs.get(i).getThird(), ITEM_SETTINGS).register(Motherlode.id(id, name -> name + variants[ii].asString() + "_slab"));
+            Registerable.block(this.stairs.get(i).getThird(), ITEM_SETTINGS).register(Motherlode.id(id, name -> name + variants[ii].asString() + "_stairs"));
         }
     }
 
     @Override
-    public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier identifier) {
-        for (Pair<Identifier, Block> entry : ALL) {
-            if (entry.getRight() == null) continue;
-            if (entry.getRight() == BASE && !newBase) continue;
-            if (entry.getRight() == BRICKS && !newBricks) continue;
-            if (entry.getRight() == POLISHED && !newPolished) continue;
+    protected void registerOnClient(Identifier id) {
+    }
 
-            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, entry.getLeft());
+    @Override
+    public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
+        for (Pair<Variant, Block> pair : this.variants) {
+            CommonAssets.DEFAULT_BLOCK.accept(pack, Motherlode.id(id, name -> name + pair.getLeft().asString()));
+        }
+
+        for (Triple<Block, Variant, SlabBlock> triple : this.slabs) {
+            SLAB_BLOCK.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_slab"));
+        }
+
+        for (Triple<Block, Variant, StairsBlock> triple : this.stairs) {
+            STAIRS_BLOCK.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_stairs"));
         }
     }
 
-    public String getId() {
-        return ID;
+    @Override
+    public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
+        for (Pair<Variant, Block> pair : this.variants) {
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + pair.getLeft().asString()));
+        }
+
+        for (Triple<Block, Variant, SlabBlock> triple : this.slabs) {
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_slab"));
+        }
+
+        for (Triple<Block, Variant, StairsBlock> triple : this.stairs) {
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_stairs"));
+        }
     }
 
-    public Block getStairs(Block block) {
-        return STAIRS.get(block);
+    public Block getVariant(Variant variant) {
+        return this.variants.stream().filter(pair -> pair.getLeft() == variant).findAny().map(Pair::getRight).orElseThrow(IllegalStateException::new);
     }
 
-    public Block getSlab(Block block) {
-        return SLABS.get(block);
+    public SlabBlock getSlab(Variant variant) {
+        return this.slabs.stream().filter(triple -> triple.getSecond() == variant).findAny().map(Triple::getThird).orElseThrow(IllegalStateException::new);
     }
 
-    public Block getCarved(char variant) {
-        return variant < 'a' || variant > 'a' + CARVED.size() ? null : CARVED.get(Motherlode.id(MotherlodeModule.MODID, ID + "_carved_" + variant));
+    public StairsBlock getStairs(Variant variant) {
+        return this.stairs.stream().filter(triple -> triple.getSecond() == variant).findAny().map(Triple::getThird).orElseThrow(IllegalStateException::new);
     }
 
     private static Block get() {
         return new Block(BLOCK_SETTINGS);
     }
 
-    static {
-        IGNORE.add("stone_bricks_stairs");
+    public enum Variant implements StringIdentifiable {
+        BASE(""),
+        COBBLE("_cobble"),
+        POLISHED("_polished"),
+        BRICKS("_bricks");
+
+        private final String name;
+
+        Variant(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String asString() {
+            return this.name;
+        }
     }
 }

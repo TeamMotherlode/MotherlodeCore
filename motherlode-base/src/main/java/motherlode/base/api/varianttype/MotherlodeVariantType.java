@@ -2,7 +2,6 @@ package motherlode.base.api.varianttype;
 
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import net.minecraft.util.Identifier;
 import motherlode.base.Motherlode;
@@ -37,24 +36,24 @@ public abstract class MotherlodeVariantType<T, S extends MotherlodeVariantType<T
         return AbstractExtendableVariantType.extend(variantType, namespace);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>> S extend(S variantType, String namespace, Function<S, S> extensionsFunction) {
-        return AbstractExtendableVariantType.extend(variantType, namespace, extensionsFunction);
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> E extend(S variantType, String namespace, E extension) {
+        return AbstractExtendableVariantType.extend(variantType, namespace, extension);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Function<S, S> extensionsFunction) {
-        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionsFunction);
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Supplier<E> extensionFunction) {
+        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(boolean condition, S variantType, String namespace, Function<S, S> extensionsFunction) {
-        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionsFunction);
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(boolean condition, S variantType, String namespace, Supplier<E> extensionFunction) {
+        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Function<S, S> extensionsFunction) {
-        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionsFunction);
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
+        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>> Optional<S> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Function<S, S> extensionsFunction) {
-        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionsFunction);
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
+        return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
     public interface Extension<T> extends ExtendableVariantType.Extension<T>, AssetProcessor, DataProcessor {

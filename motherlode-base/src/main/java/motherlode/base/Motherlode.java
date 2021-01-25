@@ -2,6 +2,7 @@ package motherlode.base;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ModInitializer;
 import motherlode.base.api.Processor;
@@ -412,6 +413,16 @@ public final class Motherlode implements ModInitializer {
         if (MotherlodeBase.isModuleInitializationDone())
             throw new IllegalStateException("Trying to add data outside motherlode:init entry point.");
         return FeaturesManagerImpl.INSTANCE;
+    }
+
+    /**
+     * Creates a new {@link Identifier} in the same namespace as an existing one, but with a different path.
+     * @param id The existing {@code Identifier}. The namespace of this will become the new one's namespace.
+     * @param function Function that takes the existing {@code Identifier}'s path and creates a new one.
+     * @return An {@code Identifier} with the namespace of {@code id}, and with the path that {@code function} returns.
+     */
+    public static Identifier id(Identifier id, UnaryOperator<String> function) {
+        return new Identifier(id.getNamespace(), function.apply(id.getPath()));
     }
 
     /**
