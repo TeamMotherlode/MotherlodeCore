@@ -3,7 +3,6 @@ package motherlode.buildingblocks;
 import net.minecraft.recipe.CuttingRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.StonecuttingRecipe;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
@@ -13,8 +12,9 @@ import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import motherlode.base.api.assets.DataProcessor;
 import motherlode.buildingblocks.recipe.SawmillingRecipe;
 import motherlode.buildingblocks.recipe.SawmillingRecipeType;
-import motherlode.buildingblocks.screen.SawmillScreenHandler;
 import motherlode.base.Motherlode;
+import motherlode.buildingblocks.screen.SawmillScreenHandler;
+import motherlode.buildingblocks.screen.StonecutterScreenHandler;
 import org.apache.logging.log4j.Level;
 
 public class MotherlodeModule implements ModInitializer {
@@ -23,7 +23,9 @@ public class MotherlodeModule implements ModInitializer {
     public static final Identifier INTERACT_WITH_SAWMILL_STAT;
     public static final ScreenHandlerType<SawmillScreenHandler> SAWMILL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(MotherlodeModule.id("sawmill"), SawmillScreenHandler::new);
     public static final RecipeType<SawmillingRecipe> SAWMILLING_RECIPE_TYPE = register("sawmilling", new SawmillingRecipeType());
-    public static final RecipeSerializer<StonecuttingRecipe> SAWMILLING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, MotherlodeModule.id("sawmilling"), new CuttingRecipe.Serializer(SawmillingRecipe::new));
+    public static final RecipeSerializer<SawmillingRecipe> SAWMILLING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, MotherlodeModule.id("sawmilling"), new CuttingRecipe.Serializer<>(SawmillingRecipe::new));
+
+    public static final ScreenHandlerType<StonecutterScreenHandler> STONECUTTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(Motherlode.id("minecraft", "stonecutter"), StonecutterScreenHandler::new);
 
     static {
         Identifier interactWithSawmillIdentifier = MotherlodeModule.id("interact_with_sawmill");
