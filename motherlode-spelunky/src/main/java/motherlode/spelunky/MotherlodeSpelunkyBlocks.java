@@ -1,8 +1,13 @@
 package motherlode.spelunky;
 
 import java.util.function.Function;
+
+import motherlode.spelunky.block.*;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.block.Material;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
@@ -14,11 +19,6 @@ import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonAssets;
 import motherlode.base.api.assets.CommonData;
 import motherlode.base.api.assets.DataProcessor;
-import motherlode.spelunky.block.PlatformBlocks;
-import motherlode.spelunky.block.PotAssets;
-import motherlode.spelunky.block.PotBlock;
-import motherlode.spelunky.block.RopeAssets;
-import motherlode.spelunky.block.RopeBlock;
 
 public class MotherlodeSpelunkyBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.DECORATIONS);
@@ -37,6 +37,7 @@ public class MotherlodeSpelunkyBlocks {
     public static final PlatformBlocks DARK_OAK_PLATFORM = register("dark_oak", id -> new PlatformBlocks(id, BLOCK_ITEM_SETTINGS, new Identifier("block/dark_oak_planks")));
     public static final PlatformBlocks CRIMSON_PLATFORM = register("crimson", id -> new PlatformBlocks(id, BLOCK_ITEM_SETTINGS, new Identifier("block/crimson_planks")));
     public static final PlatformBlocks WARPED_PLATFORM = register("warped", id -> new PlatformBlocks(id, BLOCK_ITEM_SETTINGS, new Identifier("block/warped_planks")));
+    public static final FluidBlock SLIME = (FluidBlock) register("slime", new MotherlodeFluidBlock(MotherlodeSpelunkyFluids.STILL_SLIME, AbstractBlock.Settings.of(Material.WATER).noCollision().strength(100.0F).dropsNothing()), null, null);
 
     public static Block register(String name, Block block, AssetProcessor assets, DataProcessor data) {
         return Motherlode.register(
