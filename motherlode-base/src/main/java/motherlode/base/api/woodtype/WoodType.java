@@ -2,7 +2,6 @@ package motherlode.base.api.woodtype;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceBlock;
@@ -38,32 +37,6 @@ import com.swordglowsblue.artifice.api.ArtificeResourcePack;
  * JavaDoc planned.
  */
 public class WoodType extends MotherlodeVariantType<Block, WoodType> {
-    private static final Item.Settings BUILDING_BLOCKS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
-    private static final Item.Settings REDSTONE = new Item.Settings().group(ItemGroup.REDSTONE);
-    private static final Item.Settings DECORATIONS = new Item.Settings().group(ItemGroup.DECORATIONS);
-
-    private static final Function<Variant, Optional<Item.Settings>> VANILLA_ITEM_SETTINGS_FUNCTION = variant -> {
-        switch (variant) {
-            case LOG:
-            case STRIPPED_LOG:
-            case WOOD:
-            case STRIPPED_WOOD:
-            case PLANKS:
-                return Optional.of(BUILDING_BLOCKS);
-            case BUTTON:
-            case FENCE_GATE:
-            case PRESSURE_PLATE:
-                return Optional.of(REDSTONE);
-            case FENCE:
-            case LEAVES:
-            case SAPLING:
-                return Optional.of(DECORATIONS);
-            case POTTED_SAPLING:
-            default:
-                return Optional.empty();
-        }
-    };
-
     private PillarBlock log;
     private PillarBlock strippedLog;
     private Block wood;
@@ -81,24 +54,18 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
     private final MapColor logSideMapColor;
     private final MapColor woodMapColor;
     private final BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator;
-    private final WoodTypeItemSettingsFunction itemSettingsFunction;
 
     public WoodType(Identifier id, MapColor logTopMapColor, MapColor logSideMapColor, BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator) {
-        this(id, logTopMapColor, logSideMapColor, logTopMapColor, saplingGenerator, (variant, vanilla) -> vanilla.apply(variant));
+        this(id, logTopMapColor, logSideMapColor, logTopMapColor, saplingGenerator);
     }
 
     public WoodType(Identifier id, MapColor logTopMapColor, MapColor logSideMapColor, MapColor woodMapColor, BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator) {
-        this(id, logTopMapColor, logSideMapColor, woodMapColor, saplingGenerator, (variant, vanilla) -> vanilla.apply(variant));
-    }
-
-    public WoodType(Identifier id, MapColor logTopMapColor, MapColor logSideMapColor, MapColor woodMapColor, BiFunction<BlockState, BlockState, SaplingGenerator> saplingGenerator, WoodTypeItemSettingsFunction itemSettingsFunction) {
         super(id);
 
         this.logTopMapColor = logTopMapColor;
         this.logSideMapColor = logSideMapColor;
         this.woodMapColor = woodMapColor;
         this.saplingGenerator = saplingGenerator;
-        this.itemSettingsFunction = itemSettingsFunction;
     }
 
     @Override
@@ -121,40 +88,40 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         this.sapling = new DefaultSaplingBlock(saplingGenerator.apply(this.log.getDefaultState(), this.leaves.getDefaultState()), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
         this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 
-        this.itemSettingsFunction.apply(Variant.LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.log, settings))
+        Variant.LOG.getSettings().map(settings -> Registerable.block(this.log, settings))
             .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
 
-        this.itemSettingsFunction.apply(Variant.STRIPPED_LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.strippedLog, settings))
+        Variant.STRIPPED_LOG.getSettings().map(settings -> Registerable.block(this.strippedLog, settings))
             .orElseGet(() -> Registerable.block(this.strippedLog)).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
 
-        this.itemSettingsFunction.apply(Variant.WOOD, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.wood, settings))
+        Variant.WOOD.getSettings().map(settings -> Registerable.block(this.wood, settings))
             .orElseGet(() -> Registerable.block(this.wood)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
 
-        this.itemSettingsFunction.apply(Variant.STRIPPED_WOOD, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.strippedWood, settings))
+        Variant.STRIPPED_WOOD.getSettings().map(settings -> Registerable.block(this.strippedWood, settings))
             .orElseGet(() -> Registerable.block(this.strippedWood)).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
 
-        this.itemSettingsFunction.apply(Variant.PLANKS, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.planks, settings))
+        Variant.PLANKS.getSettings().map(settings -> Registerable.block(this.planks, settings))
             .orElseGet(() -> Registerable.block(this.planks)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
 
-        this.itemSettingsFunction.apply(Variant.BUTTON, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.button, settings))
+        Variant.BUTTON.getSettings().map(settings -> Registerable.block(this.button, settings))
             .orElseGet(() -> Registerable.block(this.button)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
 
-        this.itemSettingsFunction.apply(Variant.FENCE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.fence, settings))
+        Variant.FENCE.getSettings().map(settings -> Registerable.block(this.fence, settings))
             .orElseGet(() -> Registerable.block(this.fence)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
 
-        this.itemSettingsFunction.apply(Variant.FENCE_GATE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.fenceGate, settings))
+        Variant.FENCE_GATE.getSettings().map(settings -> Registerable.block(this.fenceGate, settings))
             .orElseGet(() -> Registerable.block(this.fenceGate)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
 
-        this.itemSettingsFunction.apply(Variant.PRESSURE_PLATE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.pressurePlate, settings))
+        Variant.PRESSURE_PLATE.getSettings().map(settings -> Registerable.block(this.pressurePlate, settings))
             .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
 
-        this.itemSettingsFunction.apply(Variant.LEAVES, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.leaves, settings))
+        Variant.LEAVES.getSettings().map(settings -> Registerable.block(this.leaves, settings))
             .orElseGet(() -> Registerable.block(this.leaves)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
 
-        this.itemSettingsFunction.apply(Variant.SAPLING, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.sapling, settings))
+        Variant.SAPLING.getSettings().map(settings -> Registerable.block(this.sapling, settings))
             .orElseGet(() -> Registerable.block(this.sapling)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
 
-        this.itemSettingsFunction.apply(Variant.POTTED_SAPLING, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.pottedSapling, settings))
+        Variant.POTTED_SAPLING.getSettings().map(settings -> Registerable.block(this.pottedSapling, settings))
             .orElseGet(() -> Registerable.block(this.pottedSapling)).register(Motherlode.id(id.getNamespace(), "potted_" + id.getPath() + "_sapling"));
 
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.log, this.strippedLog);
@@ -529,17 +496,35 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
     }
 
     public enum Variant {
-        LOG,
-        STRIPPED_LOG,
-        WOOD,
-        STRIPPED_WOOD,
-        PLANKS,
-        BUTTON,
-        FENCE,
-        FENCE_GATE,
-        PRESSURE_PLATE,
-        LEAVES,
-        SAPLING,
-        POTTED_SAPLING
+        LOG(ItemGroup.BUILDING_BLOCKS),
+        STRIPPED_LOG(ItemGroup.BUILDING_BLOCKS),
+        WOOD(ItemGroup.BUILDING_BLOCKS),
+        STRIPPED_WOOD(ItemGroup.BUILDING_BLOCKS),
+        PLANKS(ItemGroup.BUILDING_BLOCKS),
+        BUTTON(ItemGroup.REDSTONE),
+        FENCE(ItemGroup.REDSTONE),
+        FENCE_GATE(ItemGroup.REDSTONE),
+        PRESSURE_PLATE(ItemGroup.REDSTONE),
+        LEAVES(ItemGroup.DECORATIONS),
+        SAPLING(ItemGroup.DECORATIONS),
+        POTTED_SAPLING;
+
+        private final Optional<Item.Settings> settings;
+
+        Variant(ItemGroup itemGroup) {
+            this(Optional.of(new Item.Settings().group(itemGroup)));
+        }
+
+        Variant() {
+            this(Optional.empty());
+        }
+
+        Variant(Optional<Item.Settings> settings) {
+            this.settings = settings;
+        }
+
+        public Optional<Item.Settings> getSettings() {
+            return settings;
+        }
     }
 }
