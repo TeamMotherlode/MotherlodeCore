@@ -12,7 +12,7 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-ender-invasion"
   },
-  "license": "MIT License",
+  "license": "LGPL 2.1",
   "icon": "assets/motherlode-ender-invasion/icon.png",
   "environment": "*",
   "entrypoints": {

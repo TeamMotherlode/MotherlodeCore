@@ -12,7 +12,7 @@
     "issues": "https://github.com/TeamMotherlode/MotherlodeCore/issues",
     "sources": "https://github.com/TeamMotherlode/MotherlodeCore/tree/master/motherlode-accessories"
   },
-  "license": "MIT License",
+  "license": "LGPL 2.1",
   "icon": "assets/motherlode-accessories/icon.png",
   "environment": "*",
   "entrypoints": {
