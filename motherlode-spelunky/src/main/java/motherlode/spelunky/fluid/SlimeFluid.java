@@ -1,8 +1,5 @@
 package motherlode.spelunky.fluid;
 
-import motherlode.spelunky.MotherlodeSpelunkyBlocks;
-import motherlode.spelunky.MotherlodeSpelunkyFluids;
-import motherlode.spelunky.MotherlodeSpelunkyItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.FlowableFluid;
@@ -17,6 +14,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import motherlode.spelunky.MotherlodeSpelunkyBlocks;
+import motherlode.spelunky.MotherlodeSpelunkyFluids;
+import motherlode.spelunky.MotherlodeSpelunkyItems;
 
 public abstract class SlimeFluid extends FlowableFluid {
     @Override
@@ -37,7 +37,7 @@ public abstract class SlimeFluid extends FlowableFluid {
     @Override
     protected void beforeBreakingBlock(WorldAccess world, BlockPos pos, BlockState state) {
         world.breakBlock(pos, true);
-        world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BLOCK_BREAK, SoundCategory.BLOCKS, 1f,0.5f);
+        world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BLOCK_BREAK, SoundCategory.BLOCKS, 1f, 0.5f);
     }
 
     @Override
@@ -76,8 +76,6 @@ public abstract class SlimeFluid extends FlowableFluid {
     }
 
     public static class Still extends SlimeFluid {
-
-
         @Override
         public boolean isStill(FluidState state) {
             return true;
@@ -89,8 +87,7 @@ public abstract class SlimeFluid extends FlowableFluid {
         }
     }
 
-    public static class Flowing extends SlimeFluid{
-
+    public static class Flowing extends SlimeFluid {
         @Override
         public boolean isStill(FluidState state) {
             return false;
@@ -100,6 +97,7 @@ public abstract class SlimeFluid extends FlowableFluid {
         public int getLevel(FluidState state) {
             return state.get(LEVEL);
         }
+
         protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder) {
             super.appendProperties(builder);
             builder.add(LEVEL);

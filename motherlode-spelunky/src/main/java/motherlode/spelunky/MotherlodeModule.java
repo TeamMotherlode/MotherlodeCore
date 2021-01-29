@@ -13,9 +13,7 @@ public class MotherlodeModule implements ModInitializer {
         MotherlodeSpelunkyBlocks.init();
         MotherlodeSpelunkyFluids.init();
         MotherlodeSpelunkyItems.init();
-
     }
-
 
     public static void log(Level level, CharSequence message) {
         Motherlode.log(level, "Motherlode Spelunky", message);
