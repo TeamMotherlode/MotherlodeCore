@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "motherlode.core.buildingblocks.mixins",
+  "package": "motherlode.buildingblocks.mixin",
   "compatibilityLevel": "JAVA_8",
   "injectors": {
     "defaultRequire": 1
@@ -8,5 +8,9 @@
   "client": [
   ],
   "mixins": [
+    "ClientRecipeBookMixin",
+    "HandledScreensMixin",
+    "ScreenHandlerTypeMixin",
+    "StonecutterBlockMixin"
   ]
 }
