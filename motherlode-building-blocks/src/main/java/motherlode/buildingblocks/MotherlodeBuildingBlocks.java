@@ -24,7 +24,7 @@ public class MotherlodeBuildingBlocks {
     public static final StoneVariantType SLATE = register(StoneVariantType.newStone("slate", false));
 
     public static final StoneVariantType BRICK = register(StoneVariantType.fromBlock("brick", Blocks.BRICKS, false, true));
-    public static final StoneVariantType MAGMA = register(StoneVariantType.fromBlock("magma", Blocks.MAGMA_BLOCK, false,  true));
+    public static final StoneVariantType MAGMA = register(StoneVariantType.fromBlock("magma", Blocks.MAGMA_BLOCK, false, true));
     public static final StoneVariantType OBSIDIAN = register(StoneVariantType.fromBlock("obsidian", null, false, true));
     public static final StoneVariantType CRYING_OBSIDIAN = register(StoneVariantType.fromBlock("crying_obsidian", null, false, true));
     public static final StoneVariantType GOLD = register(StoneVariantType.fromBlock("gold", Blocks.GOLD_BLOCK, false, true));
@@ -50,8 +50,6 @@ public class MotherlodeBuildingBlocks {
     public static final StoneVariantType BASALT = register(StoneVariantType.fromStone("basalt", null, Blocks.POLISHED_BASALT, true));
     public static final StoneVariantType SANDSTONE = register(StoneVariantType.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE, true));
     public static final StoneVariantType RED_SANDSTONE = register(StoneVariantType.fromStone("red_sandstone", null, Blocks.SMOOTH_RED_SANDSTONE, true));
-
-
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
