@@ -54,12 +54,12 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         return new StoneVariantType(baseID, true, true, true, rubble, null, null, null);
     }
 
-    public static StoneVariantType fromStone(String baseID, Block bricks, Block polished) {
-        return new StoneVariantType(baseID, false, polished != null, false, false, null, polished, bricks);
+    public static StoneVariantType fromStone(String baseID, Block bricks, Block polished, boolean pillar) {
+        return new StoneVariantType(baseID, false, polished != null, pillar, false, null, polished, bricks);
     }
 
-    public static StoneVariantType fromBlock(String baseID, Block base) {
-        return new StoneVariantType(baseID, false, false, false, false, base, null, null);
+    public static StoneVariantType fromBlock(String baseID, Block base, boolean pillar, boolean polished) {
+        return new StoneVariantType(baseID, false, polished, pillar, false, base, null, null);
     }
 
     private StoneVariantType(String id, boolean newStoneType, boolean polished, boolean pillar, boolean rubble, Block baseBlock, Block polishedBlock, Block bricksBlock) {
@@ -78,7 +78,7 @@ public class StoneVariantType implements RegisterableVariantType<Block>, AssetPr
         TILES_SMALL = get();
 
         ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id), BASE));
-        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, "polished_" + id), POLISHED));
+        ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_polished"), POLISHED));
         ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_bricks"), BRICKS));
         if (newStoneType) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_cobble"), COBBLE));
         if (rubble) ALL.add(new Pair<>(Motherlode.id(MotherlodeModule.MODID, id + "_rubble"), RUBBLE));

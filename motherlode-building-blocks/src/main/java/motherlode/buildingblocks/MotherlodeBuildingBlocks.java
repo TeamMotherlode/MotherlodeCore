@@ -23,20 +23,33 @@ public class MotherlodeBuildingBlocks {
     public static final StoneVariantType MARBLE = register(StoneVariantType.newStone("marble", false));
     public static final StoneVariantType SLATE = register(StoneVariantType.newStone("slate", false));
 
-    public static final StoneVariantType BRICK = register(StoneVariantType.fromBlock("brick", Blocks.BRICKS));
-    public static final StoneVariantType MAGMA = register(StoneVariantType.fromBlock("magma", Blocks.MAGMA_BLOCK));
-    public static final StoneVariantType OBSIDIAN = register(StoneVariantType.fromBlock("obsidian", null));
-    public static final StoneVariantType CRYING_OBSIDIAN = register(StoneVariantType.fromBlock("crying_obsidian", null));
-    public static final StoneVariantType GOLD = register(StoneVariantType.fromBlock("gold", Blocks.GOLD_BLOCK));
-    public static final StoneVariantType ICE = register(StoneVariantType.fromBlock("ice", null));
+    public static final StoneVariantType BRICK = register(StoneVariantType.fromBlock("brick", Blocks.BRICKS, false, true));
+    public static final StoneVariantType MAGMA = register(StoneVariantType.fromBlock("magma", Blocks.MAGMA_BLOCK, false, true));
+    public static final StoneVariantType OBSIDIAN = register(StoneVariantType.fromBlock("obsidian", null, false, true));
+    public static final StoneVariantType CRYING_OBSIDIAN = register(StoneVariantType.fromBlock("crying_obsidian", null, false, true));
+    public static final StoneVariantType GOLD = register(StoneVariantType.fromBlock("gold", Blocks.GOLD_BLOCK, false, true));
+    public static final StoneVariantType ICE = register(StoneVariantType.fromBlock("ice", null, false, true));
+    public static final StoneVariantType TUFF = register(StoneVariantType.fromBlock("tuff", null, true, true));
+    public static final StoneVariantType LAPIS_LAZULI = register(StoneVariantType.fromBlock("lapis_lazuli", null, false, false));
+    public static final StoneVariantType DRIPSTONE = register(StoneVariantType.fromBlock("dripstone", null, false, true));
+    public static final StoneVariantType GLOWSTONE = register(StoneVariantType.fromBlock("glowstone", null, false, false));
+    public static final StoneVariantType SNOW = register(StoneVariantType.fromBlock("snow", null, false, true));
+    public static final StoneVariantType END_STONE = register(StoneVariantType.fromBlock("end_stone", null, false, true));
+    public static final StoneVariantType REDSTONE = register(StoneVariantType.fromBlock("redstone", null, false, false));
+    public static final StoneVariantType DIRT = register(StoneVariantType.fromBlock("dirt", null, false, true));
+    public static final StoneVariantType SOUL_SAND = register(StoneVariantType.fromBlock("soul_sand", null, false, true));
+    public static final StoneVariantType NETHER_BRICKS = register(StoneVariantType.fromBlock("nether_bricks", null, false, true));
+    public static final StoneVariantType WARPED = register(StoneVariantType.fromBlock("warped", null, false, true));
+    public static final StoneVariantType CRIMSON = register(StoneVariantType.fromBlock("crimson", null, false, true));
 
-    public static final StoneVariantType STONE = register(StoneVariantType.fromStone("stone", Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE));
-    public static final StoneVariantType GRANITE = register(StoneVariantType.fromStone("granite", null, Blocks.POLISHED_GRANITE));
-    public static final StoneVariantType DIORITE = register(StoneVariantType.fromStone("diorite", null, Blocks.POLISHED_DIORITE));
-    public static final StoneVariantType ANDESITE = register(StoneVariantType.fromStone("andesite", null, Blocks.POLISHED_ANDESITE));
-    public static final StoneVariantType BLACKSTONE = register(StoneVariantType.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE));
-    public static final StoneVariantType BASALT = register(StoneVariantType.fromStone("basalt", null, Blocks.POLISHED_BASALT));
-    public static final StoneVariantType SANDSTONE = register(StoneVariantType.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE));
+    public static final StoneVariantType STONE = register(StoneVariantType.fromStone("stone", Blocks.STONE_BRICKS, Blocks.SMOOTH_STONE, true));
+    public static final StoneVariantType GRANITE = register(StoneVariantType.fromStone("granite", null, Blocks.POLISHED_GRANITE, true));
+    public static final StoneVariantType DIORITE = register(StoneVariantType.fromStone("diorite", null, Blocks.POLISHED_DIORITE, true));
+    public static final StoneVariantType ANDESITE = register(StoneVariantType.fromStone("andesite", null, Blocks.POLISHED_ANDESITE, true));
+    public static final StoneVariantType BLACKSTONE = register(StoneVariantType.fromStone("blackstone", null, Blocks.POLISHED_BLACKSTONE, true));
+    public static final StoneVariantType BASALT = register(StoneVariantType.fromStone("basalt", null, Blocks.POLISHED_BASALT, true));
+    public static final StoneVariantType SANDSTONE = register(StoneVariantType.fromStone("sandstone", null, Blocks.SMOOTH_SANDSTONE, true));
+    public static final StoneVariantType RED_SANDSTONE = register(StoneVariantType.fromStone("red_sandstone", null, Blocks.SMOOTH_RED_SANDSTONE, true));
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
