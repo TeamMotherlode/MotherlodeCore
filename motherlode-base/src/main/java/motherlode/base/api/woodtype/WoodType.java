@@ -65,6 +65,15 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         }
     };
 
+    public static final WoodType OAK = new WoodType(new Identifier("minecraft", "oak"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType DARK_OAK = new WoodType(new Identifier("minecraft", "dark_oak"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType BIRCH = new WoodType(new Identifier("minecraft", "birch"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType SPRUCE = new WoodType(new Identifier("minecraft", "spruce"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType JUNGLE = new WoodType(new Identifier("minecraft", "jungle"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType ACACIA = new WoodType(new Identifier("minecraft", "acacia"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType WARPED = new WoodType(new Identifier("minecraft", "warped"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType CRIMSON = new WoodType(new Identifier("minecraft", "crimson"), null, null, null, null, null).withoutBase().register();
+
     private PillarBlock log;
     private PillarBlock strippedLog;
     private Block wood;

@@ -60,17 +60,6 @@ public class MotherlodeBuildingBlocks {
                 return ActionResult.PASS;
             })); */
 
-    private static StoneVariantType register(StoneVariantType stone) {
-
-        return Motherlode.register(
-            stone,
-            MotherlodeModule.id(stone.getId()),
-            stone,
-            stone,
-            stone
-        );
-    }
-
     private static <T extends Block> T register(String name, T block, AssetProcessor assets) {
 
         return register(name, block, assets, null);

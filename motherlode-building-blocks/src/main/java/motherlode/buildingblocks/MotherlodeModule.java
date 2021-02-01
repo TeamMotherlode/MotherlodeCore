@@ -9,10 +9,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import motherlode.base.api.assets.DataProcessor;
+import motherlode.base.Motherlode;
 import motherlode.buildingblocks.recipe.SawmillingRecipe;
 import motherlode.buildingblocks.recipe.SawmillingRecipeType;
-import motherlode.base.Motherlode;
 import motherlode.buildingblocks.screen.SawmillScreenHandler;
 import motherlode.buildingblocks.screen.StonecutterScreenHandler;
 import org.apache.logging.log4j.Level;
@@ -36,6 +35,7 @@ public class MotherlodeModule implements ModInitializer {
     @Override
     public void onInitialize() {
         MotherlodeBuildingBlocks.init();
+        SawmillingRecipeType.init();
     }
 
     public static void log(Level level, CharSequence message) {
@@ -50,16 +50,11 @@ public class MotherlodeModule implements ModInitializer {
         return Motherlode.id(MODID, name);
     }
 
-    private static <T extends RecipeType<?> & DataProcessor> T register(String name, T recipeType) {
-        return register(name, recipeType, recipeType);
-    }
-
-    private static <T extends RecipeType<?>> T register(String name, T recipeType, DataProcessor data) {
+    private static <T extends RecipeType<?>> T register(String name, T recipeType) {
         return Motherlode.register(
             id -> Registry.register(Registry.RECIPE_TYPE, id, recipeType),
             MotherlodeModule.id(name),
-            recipeType,
-            data
+            recipeType
         );
     }
 }
