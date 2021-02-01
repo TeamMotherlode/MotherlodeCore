@@ -23,7 +23,7 @@ import motherlode.base.api.varianttype.MotherlodeVariantType;
 import motherlode.base.util.Triple;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-public class StoneVariantType extends MotherlodeVariantType<Block, StoneVariantType> {
+public class StoneType extends MotherlodeVariantType<Block, StoneType> {
     public static final AbstractBlock.Settings BLOCK_SETTINGS = AbstractBlock.Settings.of(Material.STONE).requiresTool().strength(3.0F, 3.0F);
     public static final Item.Settings ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
 
@@ -35,11 +35,11 @@ public class StoneVariantType extends MotherlodeVariantType<Block, StoneVariantT
     private final List<Triple<Block, Variant, StairsBlock>> stairs;
     private final boolean baseBlock;
 
-    public StoneVariantType(Identifier id) {
+    public StoneType(Identifier id) {
         this(id, true);
     }
 
-    public StoneVariantType(Identifier id, boolean baseBlock) {
+    public StoneType(Identifier id, boolean baseBlock) {
         super(id);
 
         this.variants = new ArrayList<>();
@@ -49,7 +49,7 @@ public class StoneVariantType extends MotherlodeVariantType<Block, StoneVariantT
     }
 
     @Override
-    protected StoneVariantType getThis() {
+    protected StoneType getThis() {
         return this;
     }
 

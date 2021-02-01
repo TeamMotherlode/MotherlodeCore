@@ -11,37 +11,52 @@ import motherlode.base.Motherlode;
 import motherlode.base.api.Processor;
 import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.AssetProcessor;
-import motherlode.base.api.assets.CommonData;
-import motherlode.buildingblocks.block.MotherlodeStoneExtension;
 import motherlode.base.api.assets.CommonAssets;
-import motherlode.buildingblocks.block.SawmillBlock;
+import motherlode.base.api.assets.CommonData;
+import motherlode.buildingblocks.block.MotherlodeStoneBlocks;
 import motherlode.buildingblocks.block.PaintableWallBlock;
-import motherlode.buildingblocks.block.StoneVariantType;
+import motherlode.buildingblocks.block.SawmillBlock;
+import motherlode.buildingblocks.block.StonePillarBlocks;
+import motherlode.buildingblocks.block.StoneType;
 
 @SuppressWarnings("unused")
 public class MotherlodeBuildingBlocks {
     private static final Item.Settings BLOCK_ITEM_SETTINGS = new Item.Settings().group(ItemGroup.BUILDING_BLOCKS);
 
-    public static final StoneVariantType LIMESTONE = new StoneVariantType(MotherlodeModule.id("limestone")).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType GRAVESTONE = new StoneVariantType(MotherlodeModule.id("gravestone")).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType JASPER = new StoneVariantType(MotherlodeModule.id("jasper")).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType MARBLE = new StoneVariantType(MotherlodeModule.id("marble")).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType SLATE = new StoneVariantType(MotherlodeModule.id("slate")).with(new MotherlodeStoneExtension()).register();
+    public static final StoneType LIMESTONE = new StoneType(MotherlodeModule.id("limestone")).with(new MotherlodeStoneBlocks()).with(new StonePillarBlocks()).register();
+    public static final StoneType GRAVESTONE = new StoneType(MotherlodeModule.id("gravestone")).with(new MotherlodeStoneBlocks()).with(new StonePillarBlocks()).register();
+    public static final StoneType JASPER = new StoneType(MotherlodeModule.id("jasper")).with(new MotherlodeStoneBlocks()).with(new StonePillarBlocks()).register();
+    public static final StoneType MARBLE = new StoneType(MotherlodeModule.id("marble")).with(new MotherlodeStoneBlocks()).with(new StonePillarBlocks()).register();
+    public static final StoneType SLATE = new StoneType(MotherlodeModule.id("slate")).with(new MotherlodeStoneBlocks()).with(new StonePillarBlocks()).register();
+    public static final StoneType TUFF = new StoneType(MotherlodeModule.id("tuff")).with(new MotherlodeStoneBlocks()).with(new StonePillarBlocks()).register();
 
-    public static final StoneVariantType BRICK = new StoneVariantType(MotherlodeModule.id("brick")).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType MAGMA = new StoneVariantType(MotherlodeModule.id("magma"), false).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType OBSIDIAN = new StoneVariantType(MotherlodeModule.id("obsidian"), false).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType CRYING_OBSIDIAN = new StoneVariantType(MotherlodeModule.id("crying_obsidian"), false).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType GOLD = new StoneVariantType(MotherlodeModule.id("gold"), false).with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType ICE = new StoneVariantType(MotherlodeModule.id("ice"), false).with(new MotherlodeStoneExtension()).register();
+    public static final StoneType BRICK = new StoneType(MotherlodeModule.id("brick")).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType MAGMA = new StoneType(MotherlodeModule.id("magma"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType OBSIDIAN = new StoneType(MotherlodeModule.id("obsidian"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType CRYING_OBSIDIAN = new StoneType(MotherlodeModule.id("crying_obsidian"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType GOLD = new StoneType(MotherlodeModule.id("gold"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType ICE = new StoneType(MotherlodeModule.id("ice"), false).with(new MotherlodeStoneBlocks()).register();
 
-    public static final StoneVariantType STONE = new StoneVariantType(MotherlodeModule.id("stone")).withoutBase().with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType GRANITE = new StoneVariantType(MotherlodeModule.id("granite")).withoutBase().with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType DIORITE = new StoneVariantType(MotherlodeModule.id("diorite")).withoutBase().with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType ANDESITE = new StoneVariantType(MotherlodeModule.id("andesite")).withoutBase().with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType BLACKSTONE = new StoneVariantType(MotherlodeModule.id("blackstone")).withoutBase().with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType BASALT = new StoneVariantType(MotherlodeModule.id("basalt")).withoutBase().with(new MotherlodeStoneExtension()).register();
-    public static final StoneVariantType SANDSTONE = new StoneVariantType(MotherlodeModule.id("sandstone")).withoutBase().with(new MotherlodeStoneExtension()).register();
+    public static final StoneType LAPIS_LAZULI = new StoneType(MotherlodeModule.id("lapis_lazuli"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType DRIPSTONE = new StoneType(MotherlodeModule.id("dripstone"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType GLOWSTONE = new StoneType(MotherlodeModule.id("glowstone"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType SNOW = new StoneType(MotherlodeModule.id("snow"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType END_STONE = new StoneType(MotherlodeModule.id("end_stone"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType REDSTONE = new StoneType(MotherlodeModule.id("redstone"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType DIRT = new StoneType(MotherlodeModule.id("dirt"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType SOUL_SAND = new StoneType(MotherlodeModule.id("soul_sand"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType NETHER_BRICKS = new StoneType(MotherlodeModule.id("nether_bricks"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType WARPED = new StoneType(MotherlodeModule.id("warped"), false).with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType CRIMSON = new StoneType(MotherlodeModule.id("crimson"), false).with(new MotherlodeStoneBlocks()).register();
+
+    public static final StoneType STONE = new StoneType(MotherlodeModule.id("stone")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType GRANITE = new StoneType(MotherlodeModule.id("granite")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType DIORITE = new StoneType(MotherlodeModule.id("diorite")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType ANDESITE = new StoneType(MotherlodeModule.id("andesite")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType BLACKSTONE = new StoneType(MotherlodeModule.id("blackstone")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType BASALT = new StoneType(MotherlodeModule.id("basalt")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType SANDSTONE = new StoneType(MotherlodeModule.id("sandstone")).withoutBase().with(new MotherlodeStoneBlocks()).register();
+    public static final StoneType RED_SANDSTONE = new StoneType(MotherlodeModule.id("red_sandstone")).withoutBase().with(new MotherlodeStoneBlocks()).register();
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
