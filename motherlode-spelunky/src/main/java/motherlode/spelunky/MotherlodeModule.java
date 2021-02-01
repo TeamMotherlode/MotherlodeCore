@@ -11,6 +11,8 @@ public class MotherlodeModule implements ModInitializer {
     @Override
     public void onInitialize() {
         MotherlodeSpelunkyBlocks.init();
+        MotherlodeSpelunkyFluids.init();
+        MotherlodeSpelunkyItems.init();
     }
 
     public static void log(Level level, CharSequence message) {

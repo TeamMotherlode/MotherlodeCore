@@ -68,7 +68,7 @@ public class PaintableWallBlock extends Block implements AssetProcessor {
         );
         for (BlockDyeColor color : BlockDyeColor.values()) {
             pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_" + color.asString()), model -> model
-                .parent(Motherlode.id(MotherlodeModule.MODID, "block/paintable_face"))
+                .parent(MotherlodeModule.id("block/paintable_face"))
                 .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_" + color.asString()))
             );
         }

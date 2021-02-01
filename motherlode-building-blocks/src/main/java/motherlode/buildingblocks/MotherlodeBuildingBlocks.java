@@ -2,8 +2,10 @@ package motherlode.buildingblocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.sound.BlockSoundGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import motherlode.base.Motherlode;
 import motherlode.base.api.Processor;
@@ -11,6 +13,8 @@ import motherlode.base.api.Registerable;
 import motherlode.base.api.assets.AssetProcessor;
 import motherlode.base.api.assets.CommonData;
 import motherlode.buildingblocks.block.MotherlodeStoneExtension;
+import motherlode.base.api.assets.CommonAssets;
+import motherlode.buildingblocks.block.SawmillBlock;
 import motherlode.buildingblocks.block.PaintableWallBlock;
 import motherlode.buildingblocks.block.StoneVariantType;
 
@@ -41,6 +45,9 @@ public class MotherlodeBuildingBlocks {
 
     public static final Block MORTAR_BRICKS = register("mortar_bricks", new PaintableWallBlock(FabricBlockSettings.copy(Blocks.TERRACOTTA)));
 
+    public static final Block SAWMILL = register("sawmill", new SawmillBlock(FabricBlockSettings.of(Material.WOOD).strength(3f).sounds(BlockSoundGroup.WOOD).nonOpaque()), CommonAssets.DEFAULT_DIRECTIONAL_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM));
+    public static final Block MULCH = register("mulch", new Block(FabricBlockSettings.of(Material.SOIL).breakByHand(true).strength(1.2f)), CommonAssets.DEFAULT_BLOCK);
+
     /* public static final Block DIRT_PATH = register("dirt_path", new DefaultPathBlock(FabricBlockSettings.copy(Blocks.DIRT_PATH)),
         CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM), block ->
             UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
@@ -52,6 +59,17 @@ public class MotherlodeBuildingBlocks {
                 }
                 return ActionResult.PASS;
             })); */
+
+    private static StoneVariantType register(StoneVariantType stone) {
+
+        return Motherlode.register(
+            stone,
+            MotherlodeModule.id(stone.getId()),
+            stone,
+            stone,
+            stone
+        );
+    }
 
     private static <T extends Block> T register(String name, T block, AssetProcessor assets) {
 
@@ -67,7 +85,7 @@ public class MotherlodeBuildingBlocks {
 
         return Motherlode.register(
             Registerable.block(block, BLOCK_ITEM_SETTINGS),
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             block,
             p,
             assets,
@@ -76,7 +94,6 @@ public class MotherlodeBuildingBlocks {
     }
 
     public static void init() {
-
         // Called to load the class
     }
 }
