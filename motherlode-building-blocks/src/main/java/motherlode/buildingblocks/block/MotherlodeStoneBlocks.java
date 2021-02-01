@@ -17,7 +17,7 @@ import motherlode.base.api.varianttype.MotherlodeVariantType;
 import motherlode.base.util.Triple;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-public class MotherlodeStoneBlocks implements MotherlodeVariantType.Extension<Block> {
+public class MotherlodeStoneBlocks implements MotherlodeVariantType.Extension<Block, StoneType> {
     private final List<Pair<Variant, Block>> variants;
     private final List<Triple<Block, Variant, SlabBlock>> slabs;
     private final List<Triple<Block, Variant, StairsBlock>> stairs;
@@ -36,7 +36,7 @@ public class MotherlodeStoneBlocks implements MotherlodeVariantType.Extension<Bl
     }
 
     @Override
-    public void registerExtension(Identifier id) {
+    public void registerExtension(Identifier id, StoneType stoneType) {
         Variant[] variants = Variant.values();
 
         for (Variant variant : variants) {

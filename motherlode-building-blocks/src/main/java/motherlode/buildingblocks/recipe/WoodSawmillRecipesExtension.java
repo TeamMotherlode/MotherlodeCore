@@ -8,12 +8,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import motherlode.base.Motherlode;
 import motherlode.base.api.varianttype.MotherlodeVariantType;
+import motherlode.base.api.woodtype.WoodType;
 import motherlode.buildingblocks.MotherlodeModule;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-public class WoodSawmillRecipesExtension implements MotherlodeVariantType.Extension<Block> {
+public class WoodSawmillRecipesExtension implements MotherlodeVariantType.Extension<Block, WoodType> {
     @Override
-    public void registerExtension(Identifier id) {
+    public void registerExtension(Identifier id, WoodType woodType) {
     }
 
     @Override

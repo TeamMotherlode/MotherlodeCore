@@ -22,7 +22,7 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
     private String currentNamespace;
     private final String name;
 
-    private final List<ExtensionEntry<T, Extension<T>>> extensions;
+    private final List<ExtensionEntry<T, S, Extension<T, S>>> extensions;
 
     public AbstractExtendableVariantType(Identifier id) {
         this.withoutBase = false;
@@ -67,7 +67,7 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
         this.extensions.stream()
             .filter(extension -> extension.getExtension() != null)
             .filter(extension -> !extension.isRegistered())
-            .forEach(extension -> extension.getExtension().register(Motherlode.id(extension.getNamespace(), this.name)));
+            .forEach(extension -> extension.getExtension().register(Motherlode.id(extension.getNamespace(), this.name), getThis()));
 
         for (int i = 0; i < this.extensions.size(); i++) {
             extensions.set(i, new ExtensionEntry<>(true, this.extensions.get(i).getNamespace(), this.extensions.get(i).getExtension()));
@@ -83,20 +83,20 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
     }
 
     @Override
-    public S with(Extension<T> extension) {
+    public S with(Extension<T, S> extension) {
         this.extensions.add(new ExtensionEntry<>(this.currentNamespace, extension));
         return getThis();
     }
 
     @Override
-    public S conditionallyWith(boolean condition, Supplier<Extension<T>> extension) {
+    public S conditionallyWith(boolean condition, Supplier<Extension<T, S>> extension) {
         if (condition)
             this.extensions.add(new ExtensionEntry<>(this.currentNamespace, extension.get()));
         return getThis();
     }
 
     @Override
-    public S conditionallyWith(BooleanSupplier condition, Supplier<Extension<T>> extension) {
+    public S conditionallyWith(BooleanSupplier condition, Supplier<Extension<T, S>> extension) {
         if (condition.getAsBoolean())
             this.extensions.add(new ExtensionEntry<>(this.currentNamespace, extension.get()));
         return getThis();
@@ -107,7 +107,7 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
         T[] baseVariants = this.baseVariants();
         List<T> variants = new ArrayList<>(Arrays.asList(baseVariants));
 
-        for (ExtensionEntry<T, Extension<T>> extension : this.extensions) {
+        for (ExtensionEntry<T, S, Extension<T, S>> extension : this.extensions) {
             variants.addAll(Arrays.asList(extension.getExtension().variants()));
         }
         return variants.toArray(baseVariants);
@@ -117,30 +117,30 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
         return variantType.withNamespace(namespace);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> E extend(S variantType, String namespace, E extension) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> E extend(S variantType, String namespace, E extension) {
         variantType.withNamespace(namespace).with(extension).register();
         return extension;
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Supplier<E> extensionFunction) {
         return conditionallyExtend(condition.getAsBoolean(), variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(boolean condition, S variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(boolean condition, S variantType, String namespace, Supplier<E> extensionFunction) {
         return conditionallyExtend(condition, (Supplier<S>) () -> variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
         return conditionallyExtend(condition.getAsBoolean(), variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
         E extension = condition ? extensionFunction.get() : null;
         (condition ? Optional.of(variantType.get()) : Optional.<S>empty()).map(v -> v.withNamespace(namespace)).map(type -> type.with(extension));
         return condition ? Optional.of(extension) : Optional.empty();
     }
 
-    protected static class ExtensionEntry<T, E extends Extension<T>> {
+    protected static class ExtensionEntry<T, S extends AbstractExtendableVariantType<T, S>, E extends Extension<T, S>> {
         private final boolean registered;
         private final String namespace;
         private final E extension;

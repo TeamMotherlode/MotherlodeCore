@@ -36,30 +36,30 @@ public abstract class MotherlodeVariantType<T, S extends MotherlodeVariantType<T
         return AbstractExtendableVariantType.extend(variantType, namespace);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> E extend(S variantType, String namespace, E extension) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> E extend(S variantType, String namespace, E extension) {
         return AbstractExtendableVariantType.extend(variantType, namespace, extension);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(BooleanSupplier condition, S variantType, String namespace, Supplier<E> extensionFunction) {
         return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(boolean condition, S variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(boolean condition, S variantType, String namespace, Supplier<E> extensionFunction) {
         return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(BooleanSupplier condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
         return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T>> Optional<E> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
+    public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> Optional<E> conditionallyExtend(boolean condition, Supplier<S> variantType, String namespace, Supplier<E> extensionFunction) {
         return AbstractExtendableVariantType.conditionallyExtend(condition, variantType, namespace, extensionFunction);
     }
 
-    public interface Extension<T> extends ExtendableVariantType.Extension<T>, AssetProcessor, DataProcessor {
+    public interface Extension<T, V extends ExtendableVariantType<T, V>> extends ExtendableVariantType.Extension<T, V>, AssetProcessor, DataProcessor {
         @Override
-        default void register(Identifier id) {
-            ExtendableVariantType.Extension.super.register(id);
+        default void register(Identifier id, V variantType) {
+            ExtendableVariantType.Extension.super.register(id, variantType);
 
             Motherlode.getAssetsManager().addAssets(id, this);
             Motherlode.getAssetsManager().addData(id, this);

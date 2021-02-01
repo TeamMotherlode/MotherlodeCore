@@ -15,18 +15,17 @@ public interface ExtendableVariantType<T, S extends ExtendableVariantType<T, S>>
 
     S withoutBase();
 
-    S with(Extension<T> extension);
+    S with(Extension<T, S> extension);
 
-    S conditionallyWith(boolean condition, Supplier<Extension<T>> extension);
+    S conditionallyWith(boolean condition, Supplier<Extension<T, S>> extension);
 
-    S conditionallyWith(BooleanSupplier condition, Supplier<Extension<T>> extension);
+    S conditionallyWith(BooleanSupplier condition, Supplier<Extension<T, S>> extension);
 
-    interface Extension<T> extends RegisterableVariantType<T> {
-        void registerExtension(Identifier id);
+    interface Extension<T, V extends ExtendableVariantType<T, V>> extends VariantType<T> {
+        void registerExtension(Identifier id, V variantType);
 
-        @Override
-        default void register(Identifier id) {
-            this.registerExtension(id);
+        default void register(Identifier id, V variantType) {
+            this.registerExtension(id, variantType);
         }
     }
 }

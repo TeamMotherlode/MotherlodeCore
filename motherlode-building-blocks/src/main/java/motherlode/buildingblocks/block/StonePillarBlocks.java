@@ -12,12 +12,12 @@ import motherlode.base.api.assets.CommonData;
 import motherlode.base.api.varianttype.MotherlodeVariantType;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
 
-public class StonePillarBlocks implements MotherlodeVariantType.Extension<Block> {
+public class StonePillarBlocks implements MotherlodeVariantType.Extension<Block, StoneType> {
     private PillarBlock pillar;
     public SlabBlock slab;
 
     @Override
-    public void registerExtension(Identifier id) {
+    public void registerExtension(Identifier id, StoneType stoneType) {
         this.pillar = new PillarBlock(StoneType.BLOCK_SETTINGS);
         this.slab = new SlabBlock(StoneType.BLOCK_SETTINGS);
 
