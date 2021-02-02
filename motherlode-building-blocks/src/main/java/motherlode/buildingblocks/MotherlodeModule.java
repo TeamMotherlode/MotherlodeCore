@@ -24,7 +24,7 @@ public class MotherlodeModule implements ModInitializer {
     public static final RecipeType<SawmillingRecipe> SAWMILLING_RECIPE_TYPE = register("sawmilling", new SawmillingRecipeType());
     public static final RecipeSerializer<SawmillingRecipe> SAWMILLING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, MotherlodeModule.id("sawmilling"), new CuttingRecipe.Serializer<>(SawmillingRecipe::new));
 
-    public static final ScreenHandlerType<StonecutterScreenHandler> STONECUTTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(Motherlode.id("minecraft", "stonecutter"), StonecutterScreenHandler::new);
+    public static final ScreenHandlerType<StonecutterScreenHandler> STONECUTTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier("minecraft", "stonecutter"), StonecutterScreenHandler::new);
 
     static {
         Identifier interactWithSawmillIdentifier = MotherlodeModule.id("interact_with_sawmill");
@@ -47,7 +47,7 @@ public class MotherlodeModule implements ModInitializer {
     }
 
     public static Identifier id(String name) {
-        return Motherlode.id(MODID, name);
+        return new Identifier(MODID, name);
     }
 
     private static <T extends RecipeType<?>> T register(String name, T recipeType) {

@@ -79,12 +79,56 @@ public class MotherlodeStoneBlocks implements MotherlodeVariantType.Extension<Bl
             CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + pair.getLeft().asString()));
         }
 
+        Identifier smallBricks = Motherlode.id(id, name -> name + Variant.SMALL_BRICKS.asString());
+        Identifier herringbone = Motherlode.id(id, name -> name + Variant.HERRINGBONE.asString());
+        Identifier tiles = Motherlode.id(id, name -> name + Variant.TILES.asString());
+        Identifier smallTiles = Motherlode.id(id, name -> name + Variant.SMALL_TILES.asString());
+
+        StoneType.addStonecuttingRecipe(pack, id, smallBricks, 1);
+        StoneType.addStonecuttingRecipe(pack, id, herringbone, 1);
+        StoneType.addStonecuttingRecipe(pack, id, tiles, 1);
+        StoneType.addStonecuttingRecipe(pack, id, smallTiles, 1);
+
+        pack.addShapedRecipe(smallBricks, recipe -> recipe
+            .pattern("**", "**")
+            .ingredientItem('*', id)
+            .result(smallBricks, 4)
+        );
+
+        pack.addShapedRecipe(smallTiles, recipe -> recipe
+            .pattern("**", "**")
+            .ingredientItem('*', tiles)
+            .result(smallTiles, 4)
+        );
+
         for (Triple<Block, Variant, SlabBlock> triple : this.slabs) {
-            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_slab"));
+            Identifier normal = Motherlode.id(id, name -> name + triple.getSecond().asString());
+            Identifier slab = Motherlode.id(normal, name -> name + "_slab");
+
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, slab);
+
+            pack.addShapedRecipe(slab, recipe -> recipe
+                .pattern("***")
+                .ingredientItem('*', normal)
+                .result(slab, 6)
+            );
+
+            StoneType.addStonecuttingRecipe(pack, normal, slab, 2);
         }
 
         for (Triple<Block, Variant, StairsBlock> triple : this.stairs) {
-            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_stairs"));
+            Identifier normal = Motherlode.id(id, name -> name + triple.getSecond().asString());
+            Identifier stairs = Motherlode.id(normal, name -> name + "_stairs");
+
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, stairs);
+
+            pack.addShapedRecipe(stairs, recipe -> recipe
+                .pattern("*  ", "** ", "***")
+                .ingredientItem('*', normal)
+                .result(stairs, 4)
+            );
+
+            StoneType.addStonecuttingRecipe(pack, normal, stairs, 1);
         }
     }
 

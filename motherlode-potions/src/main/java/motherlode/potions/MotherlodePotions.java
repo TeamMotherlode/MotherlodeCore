@@ -13,7 +13,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.registry.Registry;
-import motherlode.base.Motherlode;
 
 public class MotherlodePotions {
     public static Map<Potion, PotionModelInfo> potionModelInfos = new HashMap<>();
@@ -31,7 +30,7 @@ public class MotherlodePotions {
     }
 
     private static StatusEffect register(String id, StatusEffect entry) {
-        return Registry.register(Registry.STATUS_EFFECT, Motherlode.id(MotherlodeModule.MODID, id), entry);
+        return Registry.register(Registry.STATUS_EFFECT, MotherlodeModule.id(id), entry);
     }
 
     private static Potion register(String name, Potion potion) {

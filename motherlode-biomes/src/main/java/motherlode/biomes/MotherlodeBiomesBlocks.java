@@ -76,7 +76,7 @@ public class MotherlodeBiomesBlocks {
     public static AssetProcessor flatItemModel(String textureName) {
         return (pack, id) -> pack.addItemModel(id, state -> state
             .parent(new Identifier("item/generated"))
-            .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + textureName))
+            .texture("layer0", new Identifier(id.getNamespace(), "block/" + textureName))
         );
     }
 

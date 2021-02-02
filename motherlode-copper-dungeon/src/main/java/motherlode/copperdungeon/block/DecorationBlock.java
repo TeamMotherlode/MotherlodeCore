@@ -60,13 +60,13 @@ public class DecorationBlock implements RegisterableVariantType<Block>, AssetPro
 
         Motherlode.register(
             Registerable.block(this.stairs, this.settings),
-            Motherlode.id(id.getNamespace(), id.getPath() + "_stairs"),
+            Motherlode.id(id, name -> name + "_stairs"),
             this.stairs
         );
 
         Motherlode.register(
             Registerable.block(this.slab, this.settings),
-            Motherlode.id(id.getNamespace(), id.getPath() + "_slab"),
+            Motherlode.id(id, name -> name + "_slab"),
             this.slab
         );
     }
@@ -74,14 +74,14 @@ public class DecorationBlock implements RegisterableVariantType<Block>, AssetPro
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
         CommonAssets.DEFAULT_BLOCK.accept(pack, id);
-        CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_stairs"));
-        CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_slab"));
+        CommonAssets.STAIR.andThen(CommonAssets.BLOCK_ITEM).accept(pack, Motherlode.id(id, name -> name + "_stairs"));
+        CommonAssets.SLAB.andThen(CommonAssets.BLOCK_ITEM).accept(pack, Motherlode.id(id, name -> name + "_slab"));
     }
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
         CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, id);
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_stairs"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_slab"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_stairs"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_slab"));
     }
 }

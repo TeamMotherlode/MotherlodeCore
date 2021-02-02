@@ -22,7 +22,7 @@ public class MotherlodeRedstoneBlocks {
     private static Block register(String name, Block block, AssetProcessor p) {
         return Motherlode.register(
             Registerable.block(block, ItemGroup.REDSTONE),
-            Motherlode.id(MotherlodeModule.MODID, name),
+            MotherlodeModule.id(name),
             block,
             p,
             CommonData.DEFAULT_BLOCK_LOOT_TABLE

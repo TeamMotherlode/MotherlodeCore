@@ -11,7 +11,6 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import motherlode.base.Motherlode;
 import motherlode.base.api.assets.CommonData;
 import motherlode.base.api.assets.DataProcessor;
 import com.swordglowsblue.artifice.api.ArtificeResourcePack;
@@ -69,19 +68,19 @@ public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
-        Identifier commonId = Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath());
+        Identifier commonId = new Identifier(CommonData.COMMON_NAMESPACE, id.getPath());
 
         CommonData.BLOCK_TAG.apply(commonId).accept(pack, id);
 
-        Identifier mineral = Motherlode.id(id.getNamespace(), this.mineral);
+        Identifier mineral = new Identifier(id.getNamespace(), this.mineral);
 
-        pack.addSmeltingRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_smelting"), recipe -> recipe
+        pack.addSmeltingRecipe(new Identifier(id.getNamespace(), mineral.getPath() + "_smelting"), recipe -> recipe
             .ingredientTag(commonId)
             .result(mineral)
             .experience(1)
             .cookingTime(200));
 
-        pack.addBlastingRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_blasting"), recipe -> recipe
+        pack.addBlastingRecipe(new Identifier(id.getNamespace(), mineral.getPath() + "_blasting"), recipe -> recipe
             .ingredientTag(commonId)
             .result(mineral)
             .experience(1)

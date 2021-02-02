@@ -21,7 +21,7 @@ public final class CommonAssets {
 
     public static final Function<Identifier, AssetProcessor> BLOCK_ITEM_FUNCTION = modelId -> (pack, id) ->
         pack.addItemModel(modelId, state -> state
-            .parent(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .parent(Motherlode.id(id, name -> "block/" + name))
         );
 
     public static final AssetProcessor BLOCK_ITEM = (pack, id) -> BLOCK_ITEM_FUNCTION.apply(id).accept(pack, id);
@@ -29,25 +29,25 @@ public final class CommonAssets {
     public static final AssetProcessor FLAT_BLOCK_ITEM_MODEL = (pack, id) ->
         pack.addItemModel(id, state -> state
             .parent(new Identifier("item/generated"))
-            .texture("layer0", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .texture("layer0", Motherlode.id(id, name -> "block/" + name))
         );
 
     public static final AssetProcessor DEFAULT_ITEM_MODEL = (pack, id) ->
         pack.addItemModel(id, state -> state
             .parent(new Identifier("item/generated"))
-            .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
+            .texture("layer0", Motherlode.id(id, name -> "item/" + name))
         );
 
     public static final AssetProcessor HANDHELD_ITEM_MODEL = (pack, id) ->
         pack.addItemModel(id, state -> state
             .parent(new Identifier("item/handheld"))
-            .texture("layer0", Motherlode.id(id.getNamespace(), "item/" + id.getPath()))
+            .texture("layer0", Motherlode.id(id, name -> "item/" + name))
         );
 
     public static final AssetProcessor DEFAULT_BLOCK_STATE = (pack, id) ->
         pack.addBlockState(id, state -> state
             .variant("", settings -> settings
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+                .model(Motherlode.id(id, name -> "block/" + name))
             )
         );
 
@@ -57,7 +57,7 @@ public final class CommonAssets {
             for (String facing : facings) {
                 int yy = y;
                 builder.variant("facing=" + facing, settings -> settings
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+                    .model(Motherlode.id(id, name -> "block/" + name))
                     .rotationY(ys[yy] * 90)
                 );
                 y++;
@@ -67,7 +67,7 @@ public final class CommonAssets {
     public static final AssetProcessor DEFAULT_BLOCK_MODEL = (pack, id) ->
         pack.addBlockModel(id, state -> state
             .parent(new Identifier("block/cube_all"))
-            .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .texture("all", Motherlode.id(id, name -> "block/" + name))
         );
 
     public static final AssetProcessor DEFAULT_BLOCK = DEFAULT_BLOCK_STATE.andThen(DEFAULT_BLOCK_MODEL).andThen(BLOCK_ITEM);
@@ -75,40 +75,40 @@ public final class CommonAssets {
     public static final Function<Identifier, AssetProcessor> PLANT_FUNCTION = modelId -> (pack, id) ->
         pack.addBlockModel(modelId, state -> state
             .parent(new Identifier("block/tinted_cross"))
-            .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .texture("cross", Motherlode.id(id, name -> "block/" + name))
         );
 
     public static final AssetProcessor PLANT = (pack, id) ->
         pack.addBlockModel(id, state -> state
             .parent(new Identifier("block/tinted_cross"))
-            .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .texture("cross", Motherlode.id(id, name -> "block/" + name))
         );
 
     public static final AssetProcessor THICK_CROSS = (pack, id) ->
         pack.addBlockModel(id, state -> state
-            .parent(Motherlode.id(Motherlode.MODID, "block/thick_cross"))
-            .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .parent(new Identifier(Motherlode.MODID, "block/thick_cross"))
+            .texture("cross", Motherlode.id(id, name -> "block/" + name))
         );
 
     public static final AssetProcessor PILLAR = (pack, id) -> {
         for (String variant : new String[] { "", "_horizontal" }) {
-            pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + variant), model -> model
+            pack.addBlockModel(Motherlode.id(id, name -> name + variant), model -> model
                 .parent(new Identifier("block/cube_column" + variant))
-                .texture("end", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_top"))
-                .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_side"))
+                .texture("end", Motherlode.id(id, name -> "block/" + name + "_top"))
+                .texture("side", Motherlode.id(id, name -> "block/" + name + "_side"))
             );
         }
-        pack.addBlockState(Motherlode.id(id.getNamespace(), id.getPath()), builder -> builder
-            .variant("axis=x", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_horizontal")).rotationX(90).rotationY(90))
-            .variant("axis=y", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath())))
-            .variant("axis=z", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_horizontal")).rotationX(90))
+        pack.addBlockState(Motherlode.id(id, name -> name), builder -> builder
+            .variant("axis=x", settings -> settings.model(Motherlode.id(id, name -> "block/" + name + "_horizontal")).rotationX(90).rotationY(90))
+            .variant("axis=y", settings -> settings.model(Motherlode.id(id, name -> "block/" + name)))
+            .variant("axis=z", settings -> settings.model(Motherlode.id(id, name -> "block/" + name + "_horizontal")).rotationX(90))
         );
     };
     public static final AssetProcessor STAIR = (pack, id) -> {
         String texId = id.getPath().replace("_stairs", "");
         for (int i = 0; i < 3; i++) {
             int ii = i;
-            pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + modelStrings[i]), model -> model
+            pack.addBlockModel(Motherlode.id(id, name -> name + modelStrings[ii]), model -> model
                 .parent(new Identifier("block/" + (ii == 0 ? "" : ii == 1 ? "inner_" : "outer_") + "stairs"))
                 .texture("top", new Identifier(id.getNamespace(), "block/" + texId))
                 .texture("bottom", new Identifier(id.getNamespace(), "block/" + texId))
@@ -127,7 +127,7 @@ public final class CommonAssets {
                     int jj = j;
                     int ii = i;
                     builder.variant("facing=" + facing + ",half=" + half + ",shape=" + shape, settings ->
-                        settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + modelStrings[models[jj]]))
+                        settings.model(Motherlode.id(id, name -> "block/" + name + modelStrings[models[jj]]))
                             .rotationX(xs[jj] * 90)
                             .rotationY(ys[ii] * 90)
                             .uvlock(xs[jj] != 0 || ys[ii] != 0));
@@ -141,22 +141,22 @@ public final class CommonAssets {
     public static final AssetProcessor SLAB = (pack, id) -> {
         String texId = id.getPath().replace("_slab", "").replace("_pillar", "_pillar_side");
         for (String variant : new String[] { "_top", "" }) {
-            pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + variant), model -> model
+            pack.addBlockModel(Motherlode.id(id, name -> name + variant), model -> model
                 .parent(new Identifier("block/slab" + variant))
                 .texture("top", new Identifier(id.getNamespace(), "block/" + texId))
                 .texture("bottom", new Identifier(id.getNamespace(), "block/" + texId))
                 .texture("side", new Identifier(id.getNamespace(), "block/" + texId))
             );
         }
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_double"), model -> model
+        pack.addBlockModel(Motherlode.id(id, name -> name + "_double"), model -> model
             .parent(new Identifier("block/cube_column"))
             .texture("end", new Identifier(id.getNamespace(), "block/" + texId))
             .texture("side", new Identifier(id.getNamespace(), "block/" + texId))
         );
         pack.addBlockState(id, builder -> builder
-            .variant("type=top", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_top")))
-            .variant("type=bottom", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath())))
-            .variant("type=double", settings -> settings.model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_double")))
+            .variant("type=top", settings -> settings.model(Motherlode.id(id, name -> "block/" + name + "_top")))
+            .variant("type=bottom", settings -> settings.model(Motherlode.id(id, name -> "block/" + name)))
+            .variant("type=double", settings -> settings.model(Motherlode.id(id, name -> "block/" + name + "_double")))
         );
     };
 

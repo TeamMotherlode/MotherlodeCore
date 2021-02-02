@@ -428,10 +428,13 @@ public final class Motherlode implements ModInitializer {
     /**
      * Creates an {@link Identifier} from the given namespace and name.
      *
+     * @deprecated Use {@code new Identifier} or {@link #id(Identifier, UnaryOperator)} instead.
+     *
      * @param namespace The namespace to use for the {@code Identifier}.
      * @param name      The path to use for the {@code Identifier}.
      * @return The created {@code Identifier}
      */
+    @Deprecated
     public static Identifier id(String namespace, String name) {
         return new Identifier(namespace, name);
     }
@@ -443,6 +446,6 @@ public final class Motherlode implements ModInitializer {
      * @return The created {@code Identifier}
      */
     private static Identifier id(String name) {
-        return id(MODID, name);
+        return new Identifier(MODID, name);
     }
 }

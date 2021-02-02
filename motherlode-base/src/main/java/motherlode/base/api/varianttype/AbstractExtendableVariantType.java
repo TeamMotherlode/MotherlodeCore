@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import net.minecraft.util.Identifier;
-import motherlode.base.Motherlode;
 
 /**
  * JavaDoc planned.
@@ -54,20 +53,20 @@ public abstract class AbstractExtendableVariantType<T, S extends AbstractExtenda
     }
 
     protected Identifier getBaseId() {
-        return Motherlode.id(this.baseNamespace, this.name);
+        return new Identifier(this.baseNamespace, this.name);
     }
 
     @Override
     public S register() {
         if (!withoutBase) {
-            this.registerBase(Motherlode.id(this.baseNamespace, this.name));
+            this.registerBase(new Identifier(this.baseNamespace, this.name));
             this.withoutBase();
         }
 
         this.extensions.stream()
             .filter(extension -> extension.getExtension() != null)
             .filter(extension -> !extension.isRegistered())
-            .forEach(extension -> extension.getExtension().register(Motherlode.id(extension.getNamespace(), this.name), getThis()));
+            .forEach(extension -> extension.getExtension().register(new Identifier(extension.getNamespace(), this.name), getThis()));
 
         for (int i = 0; i < this.extensions.size(); i++) {
             extensions.set(i, new ExtensionEntry<>(true, this.extensions.get(i).getNamespace(), this.extensions.get(i).getExtension()));

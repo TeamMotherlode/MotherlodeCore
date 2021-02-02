@@ -31,22 +31,22 @@ public class IngotItem extends Item implements DataProcessor {
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
-        CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
+        CommonData.ITEM_TAG.apply(new Identifier(CommonData.COMMON_NAMESPACE, id.getPath()))
             .accept(pack, id);
 
-        Identifier nugget = Motherlode.id(id.getNamespace(), id.getPath().replace("ingot", this.nugget));
+        Identifier nugget = Motherlode.id(id, name -> name.replace("ingot", this.nugget));
 
-        CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
+        CommonData.ITEM_TAG.apply(new Identifier(CommonData.COMMON_NAMESPACE, nugget.getPath()))
             .accept(pack, nugget);
 
         if (this.nuggetRecipes) {
             pack.addShapelessRecipe(nugget, recipe -> recipe
-                .ingredientTag(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
+                .ingredientTag(new Identifier(CommonData.COMMON_NAMESPACE, id.getPath()))
                 .result(nugget, 9));
 
             pack.addShapedRecipe(id, recipe ->
                 recipe.pattern("***", "***", "***")
-                    .ingredientTag('*', Motherlode.id(CommonData.COMMON_NAMESPACE, nugget.getPath()))
+                    .ingredientTag('*', new Identifier(CommonData.COMMON_NAMESPACE, nugget.getPath()))
                     .result(id, 1));
         }
     }

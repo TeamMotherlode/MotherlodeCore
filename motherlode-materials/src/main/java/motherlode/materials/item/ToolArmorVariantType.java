@@ -54,16 +54,16 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
 
         this.material = material;
 
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), this.PICKAXE));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), this.SWORD));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), this.AXE));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"), this.SHOVEL));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), this.HOE));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_pickaxe"), this.PICKAXE));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_sword"), this.SWORD));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_axe"), this.AXE));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_shovel"), this.SHOVEL));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_hoe"), this.HOE));
 
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"), this.HELMET));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"), this.CHESTPLATE));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"), this.LEGGINGS));
-        ALL.add(new Pair<>(Motherlode.id(id.getNamespace(), id.getPath() + "_boots"), this.BOOTS));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_helmet"), this.HELMET));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_chestplate"), this.CHESTPLATE));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_leggings"), this.LEGGINGS));
+        ALL.add(new Pair<>(Motherlode.id(id, name -> name + "_boots"), this.BOOTS));
     }
 
     @Override
@@ -88,89 +88,73 @@ public class ToolArmorVariantType implements RegisterableVariantType<Item>, Asse
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
         for (Pair<Identifier, Item> entry : ALL) {
-            CommonData.ITEM_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, entry.getLeft().getPath()))
+            CommonData.ITEM_TAG.apply(new Identifier(CommonData.COMMON_NAMESPACE, entry.getLeft().getPath()))
                 .accept(pack, entry.getLeft());
         }
 
-        Identifier material = Motherlode.id(CommonData.COMMON_NAMESPACE, this.material);
-        Identifier stick = Motherlode.id("minecraft", "stick");
+        Identifier material = new Identifier(CommonData.COMMON_NAMESPACE, this.material);
+        Identifier stick = new Identifier("minecraft", "stick");
 
         // Pickaxe
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_pickaxe"), recipe -> recipe
             .pattern("***", " | ", " | ")
             .ingredientTag('*', material)
             .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_pickaxe"), 1));
+            .result(Motherlode.id(id, name -> name + "_pickaxe"), 1));
 
         // Sword
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_sword"), recipe -> recipe
             .pattern("*", "*", "|")
             .ingredientTag('*', material)
             .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_sword"), 1));
+            .result(Motherlode.id(id, name -> name + "_sword"), 1));
 
         // Axe
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_axe"), recipe -> recipe
             .pattern("** ", "*| ", " | ")
             .ingredientTag('*', material)
             .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), 1)
-            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_axe")));
-
-        // Axe reversed
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_axe_reversed"), recipe -> recipe
-            .pattern(" **", " |*", " | ")
-            .ingredientTag('*', material)
-            .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_axe"), 1)
-            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_axe")));
+            .result(Motherlode.id(id, name -> name + "_axe"), 1)
+            .group(Motherlode.id(id, name -> name + "_axe")));
 
         // Shovel
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_shovel"), recipe -> recipe
             .pattern("*", "|", "|")
             .ingredientTag('*', material)
             .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_shovel"), 1));
+            .result(Motherlode.id(id, name -> name + "_shovel"), 1));
 
         // Hoe
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_hoe"), recipe -> recipe
             .pattern("** ", " | ", " | ")
             .ingredientTag('*', material)
             .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), 1)
-            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe")));
-
-        // Hoe reversed
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe_reversed"), recipe -> recipe
-            .pattern(" **", " | ", " | ")
-            .ingredientTag('*', material)
-            .ingredientItem('|', stick)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe"), 1)
-            .group(Motherlode.id(id.getNamespace(), id.getPath() + "_hoe")));
+            .result(Motherlode.id(id, name -> name + "_hoe"), 1)
+            .group(Motherlode.id(id, name -> name + "_hoe")));
 
         // Helmet
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_helmet"), recipe -> recipe
             .pattern("***", "* *", "   ")
             .ingredientTag('*', material)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_helmet"), 1));
+            .result(Motherlode.id(id, name -> name + "_helmet"), 1));
 
         // Chestplate
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_chestplate"), recipe -> recipe
             .pattern("* *", "***", "***")
             .ingredientTag('*', material)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_chestplate"), 1));
+            .result(Motherlode.id(id, name -> name + "_chestplate"), 1));
 
         // Leggings
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_leggings"), recipe -> recipe
             .pattern("* *", "* *", "***")
             .ingredientTag('*', material)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_leggings"), 1));
+            .result(Motherlode.id(id, name -> name + "_leggings"), 1));
 
         // Boots
-        pack.addShapedRecipe(Motherlode.id(id.getNamespace(), id.getPath() + "_boots"), recipe -> recipe
+        pack.addShapedRecipe(Motherlode.id(id, name -> name + "_boots"), recipe -> recipe
             .pattern("   ", "* *", "* *")
             .ingredientTag('*', material)
-            .result(Motherlode.id(id.getNamespace(), id.getPath() + "_boots"), 1));
+            .result(Motherlode.id(id, name -> name + "_boots"), 1));
     }
 }
 

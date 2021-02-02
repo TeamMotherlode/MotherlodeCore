@@ -7,7 +7,7 @@ import com.swordglowsblue.artifice.api.builder.TypedJsonBuilder;
 
 public final class CommonData {
     public static final DataProcessor DEFAULT_BLOCK_LOOT_TABLE = (pack, id) ->
-        pack.addLootTable(Motherlode.id(id.getNamespace(), "blocks/" + id.getPath()), table -> table
+        pack.addLootTable(Motherlode.id(id, name -> "blocks/" + name), table -> table
             .type(new Identifier("minecraft", "block"))
             .pool(pool -> pool
                 .rolls(1)

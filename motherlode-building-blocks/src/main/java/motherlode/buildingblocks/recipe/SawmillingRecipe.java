@@ -9,8 +9,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import motherlode.buildingblocks.MotherlodeModule;
 import motherlode.buildingblocks.MotherlodeBuildingBlocks;
+import motherlode.buildingblocks.MotherlodeModule;
 
 public class SawmillingRecipe extends CuttingRecipe {
 

@@ -104,12 +104,48 @@ public class StoneType extends MotherlodeVariantType<Block, StoneType> {
             CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + pair.getLeft().asString()));
         }
 
+        Identifier polished = Motherlode.id(id, name -> name + Variant.POLISHED.asString());
+        Identifier bricks = Motherlode.id(id, name -> name + Variant.BRICKS.asString());
+        Identifier cobble = Motherlode.id(id, name -> name + Variant.COBBLE.asString());
+
+        pack.addShapedRecipe(polished, recipe -> recipe
+            .pattern("**", "**")
+            .ingredientItem('*', id)
+            .result(polished, 4)
+        );
+
+        addStonecuttingRecipe(pack, id, polished, 1);
+        addStonecuttingRecipe(pack, id, bricks, 1);
+        addStonecuttingRecipe(pack, id, cobble, 1);
+
         for (Triple<Block, Variant, SlabBlock> triple : this.slabs) {
-            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_slab"));
+            Identifier normal = Motherlode.id(id, name -> name + triple.getSecond().asString());
+            Identifier slab = Motherlode.id(normal, name -> name + "_slab");
+
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, slab);
+
+            pack.addShapedRecipe(slab, recipe -> recipe
+                .pattern("***")
+                .ingredientItem('*', normal)
+                .result(slab, 6)
+            );
+
+            addStonecuttingRecipe(pack, normal, slab, 2);
         }
 
         for (Triple<Block, Variant, StairsBlock> triple : this.stairs) {
-            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + triple.getSecond().asString() + "_stairs"));
+            Identifier normal = Motherlode.id(id, name -> name + triple.getSecond().asString());
+            Identifier stairs = Motherlode.id(normal, name -> name + "_stairs");
+
+            CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, stairs);
+
+            pack.addShapedRecipe(stairs, recipe -> recipe
+                .pattern("*  ", "** ", "***")
+                .ingredientItem('*', normal)
+                .result(stairs, 4)
+            );
+
+            addStonecuttingRecipe(pack, normal, stairs, 1);
         }
     }
 
@@ -123,6 +159,14 @@ public class StoneType extends MotherlodeVariantType<Block, StoneType> {
 
     public StairsBlock getStairs(Variant variant) {
         return this.stairs.stream().filter(triple -> triple.getSecond() == variant).findAny().map(Triple::getThird).orElseThrow(IllegalStateException::new);
+    }
+
+    public static void addStonecuttingRecipe(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier base, Identifier variant, int count) {
+        pack.addStonecuttingRecipe(Motherlode.id(variant, name -> name + "_stonecutting"), recipe -> recipe
+            .ingredientItem(base)
+            .result(variant)
+            .count(count)
+        );
     }
 
     private static Block get() {
