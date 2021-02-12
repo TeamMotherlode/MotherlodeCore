@@ -14,7 +14,7 @@ import motherlode.redstone.block.RedstoneTransmitterBlock;
 
 public class MotherlodeRedstoneBlocks {
     public static final Block REDSTONE_TRANSMITTER = register("redstone_transmitter", new RedstoneTransmitterBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().strength(3.0F, 3.0F)), CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM));
-    public static final Block STEEL_GRATE = register("steel_grate", new GrateBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().dynamicBounds().nonOpaque().strength(3.0F, 2.5F)), CommonAssets.DEFAULT_BLOCK);
+    public static final Block STEEL_GRATE = register("steel_grate", new GrateBlock(AbstractBlock.Settings.of(Material.METAL).requiresTool().dynamicBounds().nonOpaque().strength(3.0F, 2.5F)), CommonAssets.DEFAULT_BLOCK_STATE.andThen(CommonAssets.BLOCK_ITEM));
 
     public static void init() {
     }
