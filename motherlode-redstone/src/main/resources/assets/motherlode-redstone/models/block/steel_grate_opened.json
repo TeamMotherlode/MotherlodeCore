@@ -1,9 +1,6 @@
 {
-  "parent": "block/cube_bottom_top",
+  "parent": "block/cube_all",
   "textures": {
-    "bottom": "motherlode-redstone:block/steel_grate",
-    "top": "motherlode-redstone:block/steel_grate",
-    "side": "motherlode-redstone:block/steel_grate_opened"
-
+    "all": "motherlode-redstone:block/steel_grate_opened"
   }
 }
