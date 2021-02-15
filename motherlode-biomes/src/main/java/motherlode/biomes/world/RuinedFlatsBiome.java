@@ -1,7 +1,6 @@
 package motherlode.biomes.world;
 
 import java.awt.Color;
-import java.util.Random;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.math.noise.SimplexNoiseSampler;
 import net.minecraft.world.biome.Biome;
@@ -9,6 +8,7 @@ import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.SimpleRandom;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.CountNoiseDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -23,9 +23,9 @@ import motherlode.biomes.MotherlodeBiomesBlocks;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 public class RuinedFlatsBiome {
-    private static final SimplexNoiseSampler samplerA = new SimplexNoiseSampler(new Random(8086));
-    private static final SimplexNoiseSampler samplerB = new SimplexNoiseSampler(new Random(2024));
-    private static final SimplexNoiseSampler samplerC = new SimplexNoiseSampler(new Random(1492));
+    private static final SimplexNoiseSampler samplerA = new SimplexNoiseSampler(new SimpleRandom(8086));
+    private static final SimplexNoiseSampler samplerB = new SimplexNoiseSampler(new SimpleRandom(2024));
+    private static final SimplexNoiseSampler samplerC = new SimplexNoiseSampler(new SimpleRandom(1492));
 
     public static Biome create() {
         SpawnSettings.Builder builder = new SpawnSettings.Builder();
