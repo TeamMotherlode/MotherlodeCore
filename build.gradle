@@ -23,6 +23,10 @@ allprojects {
             name = 'CottonMC'
             url = 'https://server.bbkr.space/artifactory/libs-release'
         }
+        maven {
+            name = 'TerraformersMC'
+            url = 'https://maven.terraformersmc.com/releases'
+        }
 
         maven { url 'https://jitpack.io' }
     }

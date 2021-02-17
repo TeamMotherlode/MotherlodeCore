@@ -74,8 +74,8 @@ public class GrateBlock extends Block implements FluidFlowable {
     }
 
     @Override
-    public Optional<SoundEvent> getDrainSound() {
-        return Fluids.WATER.getFillSound();
+    public Optional<SoundEvent> getBucketFillSound() {
+        return Fluids.WATER.getBucketFillSound();
     }
 
     @Override

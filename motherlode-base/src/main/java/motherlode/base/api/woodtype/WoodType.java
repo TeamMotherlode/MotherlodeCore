@@ -117,7 +117,7 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         this.fence = new FenceBlock(FabricBlockSettings.of(Material.WOOD, this.woodMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
         this.fenceGate = new FenceGateBlock(FabricBlockSettings.of(Material.WOOD, this.woodMapColor).strength(2.0F, 3.0F).sounds(BlockSoundGroup.WOOD));
         this.pressurePlate = new DefaultPressurePlateBlock(PressurePlateBlock.ActivationRule.EVERYTHING, FabricBlockSettings.of(Material.WOOD, this.woodMapColor).noCollision().strength(0.5F).sounds(BlockSoundGroup.WOOD));
-        this.leaves = BlocksAccessor.callCreateLeavesBlock();
+        this.leaves = BlocksAccessor.callCreateLeavesBlock(BlockSoundGroup.GRASS);
         this.sapling = new DefaultSaplingBlock(saplingGenerator.apply(this.log.getDefaultState(), this.leaves.getDefaultState()), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
         this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 

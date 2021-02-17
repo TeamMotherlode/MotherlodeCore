@@ -72,7 +72,7 @@ public abstract class SlimeFluid extends FlowableFluid {
 
     @Override
     protected BlockState toBlockState(FluidState state) {
-        return MotherlodeSpelunkyBlocks.SLIME.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
+        return MotherlodeSpelunkyBlocks.SLIME.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
     }
 
     public static class Still extends SlimeFluid {
