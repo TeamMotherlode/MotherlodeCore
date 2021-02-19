@@ -5,8 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -128,8 +127,7 @@ public interface FeaturesManager {
      * @return The {@link RegistryKey} for the {@code ConfiguredFeature} created and registered by this method.
      */
     default RegistryKey<ConfiguredFeature<?, ?>> addOre(Identifier id, OreTarget target, BlockState state, int veinSize, int veinsPerChunk, int minY, int maxY) {
-        return this.addOre(id, target, state, veinSize, f -> f.decorate(Decorator.RANGE.configure(
-            new RangeDecoratorConfig(minY, 0, maxY - minY))).repeat(veinsPerChunk).spreadHorizontally());
+        return this.addOre(id, target, state, veinSize, f -> f.rangeOf(YOffset.fixed(minY), YOffset.fixed(maxY)).repeat(veinsPerChunk).spreadHorizontally());
     }
 
     /**

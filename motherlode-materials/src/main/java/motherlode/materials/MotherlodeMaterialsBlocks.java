@@ -6,8 +6,7 @@ import net.minecraft.block.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.YOffset;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import motherlode.base.Motherlode;
@@ -26,7 +25,7 @@ public class MotherlodeMaterialsBlocks {
     // public static final MotherlodeOreBlock COPPER_ORE = register("copper_ore", new MotherlodeOreBlock(OreTargets.OVERWORLD, IntRange.between(3, 7), 10, 18, 16, 64, 1, "copper_ingot"));
     public static final MotherlodeOreBlock SILVER_ORE = register("silver_ore", new MotherlodeOreBlock(2, "silver_ingot"));
     public static final MotherlodeOreBlock CHARITE_ORE = register("charite_ore", new MotherlodeOreBlock(FeatureTargets.NETHER, 4, "charite_ingot"));
-    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(FeatureTargets.NETHER, 4, f -> f.spreadHorizontally().repeat(2).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(3, 3, 125))).repeat(5), 5, "echerite_ingot"));
+    public static final MotherlodeOreBlock ECHERITE_ORE = register("echerite_ore", new MotherlodeOreBlock(FeatureTargets.NETHER, 4, f -> f.spreadHorizontally().repeat(2).rangeOf(YOffset.aboveBottom(3), YOffset.fixed(125)).repeat(5), 5, "echerite_ingot"));
     public static final MotherlodeOreBlock TITANIUM_ORE = register("titanium_ore", new MotherlodeOreBlock(6, "titanium_ingot"));
     public static final MotherlodeOreBlock ADAMANTITE_ORE = register("adamantite_ore", new MotherlodeOreBlock(FeatureTargets.NETHER, 3, 1, 2, 32, 7, "adamantite_ingot"));
     public static final MotherlodeOreBlock AMETHYST_ORE = register("amethyst_ore", new MotherlodeOreBlock(FeatureTargets.OVERWORLD, 4, 6, 8, 32, 2, "amethyst"));

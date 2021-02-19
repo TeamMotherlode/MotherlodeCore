@@ -5,8 +5,7 @@ import net.minecraft.block.Material;
 import net.minecraft.block.OreBlock;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.IntRange;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -37,7 +36,7 @@ public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
     }
 
     public MotherlodeOreBlock(OreTarget target, IntRange experienceRange, int veinSize, int veinsPerChunk, int minY, int maxY, int miningLevel, String mineral) {
-        this(target, experienceRange, veinSize, f -> f.decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(minY, 0, maxY - minY))), miningLevel, mineral);
+        this(target, experienceRange, veinSize, f -> f.rangeOf(YOffset.fixed(minY), YOffset.fixed(maxY)), miningLevel, mineral);
     }
 
     public MotherlodeOreBlock(OreTarget target, int veinSize, Function<ConfiguredFeature<OreFeatureConfig, ?>, ConfiguredFeature<?, ?>> decorators, int miningLevel, String mineral) {
