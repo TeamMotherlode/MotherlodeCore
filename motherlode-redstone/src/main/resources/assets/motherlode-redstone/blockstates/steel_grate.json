@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=false": {
+      "model": "motherlode-redstone:block/steel_grate"
+    },
+    "open=true": {
+      "model": "motherlode-redstone:block/steel_grate_opened"
+    }
+  }
+}
