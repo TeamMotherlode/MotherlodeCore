@@ -23,20 +23,32 @@ public class MotherlodeOreBlock extends OreBlock implements DataProcessor {
     private final OreTarget target;
     private final String mineral;
 
+    @Deprecated
     public MotherlodeOreBlock(int miningLevel, String mineral) {
         this(FeatureTargets.OVERWORLD, miningLevel, mineral);
     }
 
+    @Deprecated
     public MotherlodeOreBlock(OreTarget target, int miningLevel, String mineral) {
         this(target, 8, 10, 4, 64, miningLevel, mineral);
     }
 
+    @Deprecated
     public MotherlodeOreBlock(OreTarget target, int veinSize, int veinsPerChunk, int minY, int maxY, int miningLevel, String mineral) {
         this(target, NULL_INT_RANGE, veinSize, veinsPerChunk, minY, maxY, miningLevel, mineral);
     }
 
+    public MotherlodeOreBlock(OreTarget target, int veinSize, int veinsPerChunk, YOffset minY, YOffset maxY, int miningLevel, String mineral) {
+        this(target, NULL_INT_RANGE, veinSize, veinsPerChunk, minY, maxY, miningLevel, mineral);
+    }
+
+    @Deprecated
     public MotherlodeOreBlock(OreTarget target, IntRange experienceRange, int veinSize, int veinsPerChunk, int minY, int maxY, int miningLevel, String mineral) {
-        this(target, experienceRange, veinSize, f -> f.rangeOf(YOffset.fixed(minY), YOffset.fixed(maxY)), miningLevel, mineral);
+        this(target, experienceRange, veinSize, veinsPerChunk, YOffset.fixed(minY), YOffset.fixed(maxY), miningLevel, mineral);
+    }
+
+    public MotherlodeOreBlock(OreTarget target, IntRange experienceRange, int veinSize, int veinsPerChunk, YOffset minY, YOffset maxY, int miningLevel, String mineral) {
+        this(target, experienceRange, veinSize, f -> f.rangeOf(minY, maxY).spreadHorizontally().repeat(veinsPerChunk), miningLevel, mineral);
     }
 
     public MotherlodeOreBlock(OreTarget target, int veinSize, Function<ConfiguredFeature<OreFeatureConfig, ?>, ConfiguredFeature<?, ?>> decorators, int miningLevel, String mineral) {
