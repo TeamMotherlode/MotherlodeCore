@@ -22,7 +22,7 @@ public class MarshFeature extends Feature<DefaultFeatureConfig> {
     @Override
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
         boolean b = false;
-        BlockPos pos = context.getWorld().getTopPosition(Heightmap.Type.WORLD_SURFACE, context.getPos()).down();
+        BlockPos pos = context.getWorld().getTopPosition(Heightmap.Type.WORLD_SURFACE, context.getOrigin()).down();
         boolean[][] replace = new boolean[24][24];
         if (context.getWorld().getBlockState(pos.up()).isAir()) {
             for (int a = 0; a < 24; a++) {
