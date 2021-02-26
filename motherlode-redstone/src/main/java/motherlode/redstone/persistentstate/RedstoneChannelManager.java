@@ -62,7 +62,7 @@ public class RedstoneChannelManager extends PersistentState {
     }
 
     @Override
-    public CompoundTag toNbt(CompoundTag tag) {
+    public CompoundTag writeNbt(CompoundTag tag) {
         ListTag listTag = new ListTag();
         channels.forEach((key, val) -> {
             CompoundTag channelTag = new CompoundTag();
