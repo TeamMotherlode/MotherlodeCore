@@ -6,6 +6,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.loot.condition.LootConditionType;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.profiler.Profiler;
@@ -16,19 +18,18 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import motherlode.enderinvasion.component.EnderInvasionChunkComponent;
 import motherlode.enderinvasion.component.EnderInvasionComponent;
+import motherlode.enderinvasion.impl.EnderInvasionGenerator;
 import motherlode.enderinvasion.recipe.BlockRecipeManager;
 import motherlode.enderinvasion.util.EnderInvasionHelper;
-import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.chunk.ChunkComponentInitializer;
+import motherlode.materials.MotherlodeMaterialsBlocks;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.level.LevelComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.level.LevelComponentInitializer;
 
-public final class EnderInvasion implements LevelComponentInitializer, ChunkComponentInitializer {
+public final class EnderInvasion {
     public static final ComponentKey<EnderInvasionComponent> STATE =
         ComponentRegistry.getOrCreate(MotherlodeModule.id("ender_invasion_state"), EnderInvasionComponent.class);
 
@@ -39,48 +40,51 @@ public final class EnderInvasion implements LevelComponentInitializer, ChunkComp
 
     public static final Identifier PLAY_PORTAL_PARTICLE_PACKET_ID = MotherlodeModule.id("ender_invasion_portal_particle");
 
-    public static final double NOISE_THRESHOLD = 0.75;
-    public static final double NOISE_SCALE = 0.002;
-    public static final double END_CAP_NOISE_THRESHOLD = 0.75;
-    public static final double END_FOAM_NOISE_THRESHOLD = 0.9;
-    public static final double DECORATION_NOISE_SCALE = 0.05;
-
     public static Difficulty SPREAD_DIFFICULTY = Difficulty.HARD;
     public static int INVASION_END_TIME = 216000;
     public static double ENDERMAN_SPAWN_RATE_DAY = 0.1;
     public static double ENDERMAN_SPAWN_RATE_NIGHT = 0.25;
 
-    @Override
-    public void registerLevelComponentFactories(LevelComponentFactoryRegistry registry) {
-        registry.register(STATE, worldProperties -> new EnderInvasionComponent.Impl(EnderInvasionComponent.State.PRE_ECHERITE));
+    private final EnderInvasionGenerator generator;
+
+    public EnderInvasion(EnderInvasionGenerator generator) {
+        this.generator = generator;
     }
 
-    @Override
-    public void registerChunkComponentFactories(ChunkComponentFactoryRegistry registry) {
-        registry.register(CHUNK_STATE, chunk -> new EnderInvasionChunkComponent.Impl(EnderInvasionChunkComponent.State.PRE_ECHERITE));
-    }
-
-    public static void initializeEnderInvasion() {
+    public void initializeEnderInvasion() {
         // Prevents clerics from selling ender pearls before the ender invasion has started
         TradeOffers.PROFESSION_TO_LEVELED_TRADE.get(VillagerProfession.CLERIC).get(4)[2] =
             new PostEnderInvasionSellItemFactory(Items.ENDER_PEARL, 5, 1, 15);
 
-        // Call EnderInvasionHelper.convertChunk when a chunk gets loaded
-        ServerChunkEvents.CHUNK_LOAD.register(EnderInvasionHelper::convertChunk);
+        // Call convertChunk when a chunk gets loaded
+        ServerChunkEvents.CHUNK_LOAD.register(this::convertChunk);
 
-        // Convert blocks using BlockRecipeManager.SPREAD and generate decoration
-        EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos, noise) -> {
-            EnderInvasionHelper.convert(chunk, BlockRecipeManager.SPREAD, pos);
-            generateDecoration(world, chunk, pos, EnderInvasionHelper.getNoise(world, pos, DECORATION_NOISE_SCALE));
+        // Start the ender invasion when Echerite Ore is broken
+        PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
+            if (state.isOf(MotherlodeMaterialsBlocks.ECHERITE_ORE)) {
+                EnderInvasionComponent component = EnderInvasion.STATE.get(world.getLevelProperties());
+
+                if (component.value() == EnderInvasionComponent.State.PRE_ECHERITE) {
+                    component.setValue(EnderInvasionComponent.State.ENDER_INVASION);
+
+                    // Send chat message
+                    world.getPlayers().forEach(p -> player.sendMessage(new TranslatableText("message.motherlode-ender-invasion.start").formatted(Formatting.DARK_GREEN), false));
+                }
+            }
         });
 
+        // Convert blocks using BlockRecipeManager.SPREAD
+        EnderInvasionEvents.CONVERT_BLOCK.register((world, chunk, pos) ->
+            EnderInvasionHelper.convert(chunk, BlockRecipeManager.SPREAD, pos));
+
         // Purify blocks using BlockRecipeManager.PURIFICATION
-        EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos, noise) ->
+        EnderInvasionEvents.PURIFY_BLOCK.register((world, chunk, pos) ->
             EnderInvasionHelper.convert(chunk, BlockRecipeManager.PURIFICATION, pos));
 
         Identifier piglinBarteringLootTable = new Identifier("minecraft", "gameplay/piglin_bartering");
 
-        // Prevents piglins from trading ender pearls before the ender invasion has started
+        // Override piglin bartering loot table to prevent ender pearls before the ender invasion
+        // TODO Try to just modify the ender pearl entry instead of overriding the whole thing
         LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
             if (piglinBarteringLootTable.equals(id)) {
                 setter.set(lootManager.getTable(MotherlodeModule.id("gameplay/piglin_bartering")));
@@ -88,43 +92,78 @@ public final class EnderInvasion implements LevelComponentInitializer, ChunkComp
         });
     }
 
-    public static void generateDecoration(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise) {
-        if (!chunk.getBlockState(pos).isAir() && !chunk.getBlockState(pos).isOf(MotherlodeEnderInvasionBlocks.CORRUPTED_GRASS))
-            return;
+    public void convertChunk(ServerWorld world, WorldChunk chunk) {
+        final Profiler profiler = world.getProfiler();
+        profiler.push("enderinvasion");
 
-        if (noise >= END_FOAM_NOISE_THRESHOLD && checkEndFoam(chunk, pos))
-            chunk.setBlockState(pos, MotherlodeEnderInvasionBlocks.END_FOAM.getDefaultState(), false);
+        if (!world.equals(world.getServer().getWorld(World.OVERWORLD))) return;
 
-        if (world.getLightLevel(pos) < 15 && noise >= END_CAP_NOISE_THRESHOLD && chunk.getBlockState(pos.down()).isOf(MotherlodeEnderInvasionBlocks.CORRUPTED_DIRT)) {
-            chunk.setBlockState(pos, MotherlodeEnderInvasionBlocks.END_CAP.getDefaultState(), false);
+        switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
+            case PRE_ECHERITE:
+                checkUnaffected(world, chunk);
+                break;
+            case ENDER_INVASION:
+                corruptChunk(world, chunk);
+                this.generator.generateDecoration(world, chunk);
+                break;
+
+            case POST_ENDER_DRAGON:
+                if (EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkComponent.State.PRE_ECHERITE)
+                    corruptChunk(world, chunk);
+                purifyChunk(world, chunk);
+                break;
         }
+        profiler.pop();
     }
 
-    public static boolean checkEndFoam(WorldChunk chunk, BlockPos pos) {
-        boolean ground = false;
-        for (int i = 3; i > 0; i--) {
+    public void checkUnaffected(ServerWorld world, WorldChunk chunk) {
+        EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
 
-            BlockPos blockPos = pos.down(i);
-            if (chunk.getBlockState(blockPos).isOf(MotherlodeEnderInvasionBlocks.CORRUPTED_DIRT)) {
-                ground = true;
-                continue;
-            }
-            if (chunk.getBlockState(blockPos).isOf(MotherlodeEnderInvasionBlocks.END_FOAM)) continue;
+        if (chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED) return;
 
-            if (ground) {
-                if (chunk.getBlockState(blockPos).isAir() || MotherlodeEnderInvasionTags.END_FOAM_REPLACEABLE.contains(MotherlodeEnderInvasionBlocks.END_FOAM))
-                    chunk.setBlockState(blockPos, MotherlodeEnderInvasionBlocks.END_FOAM.getDefaultState(), false);
-                else return false;
-            }
-        }
-        return ground;
+        if (this.generator.isChunkUnaffected(world, chunk)) chunkState.setValue(
+            EnderInvasionChunkComponent.State.UNAFFECTED);
     }
 
-    public static void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void corruptChunk(ServerWorld world, WorldChunk chunk) {
+        final Profiler profiler = world.getProfiler();
+        profiler.push("corruptChunk");
+
+        EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
+
+        if (chunkState.value() == EnderInvasionChunkComponent.State.ENDER_INVASION
+            || chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED) return;
+
+        boolean unaffected = this.generator.convertChunk(world, chunk);
+
+        chunkState.setValue(unaffected ? EnderInvasionChunkComponent.State.UNAFFECTED :
+            EnderInvasionChunkComponent.State.ENDER_INVASION);
+
+        profiler.pop();
+    }
+
+    public void purifyChunk(ServerWorld world, WorldChunk chunk) {
+        final Profiler profiler = world.getProfiler();
+        profiler.push("purifyChunk");
+
+        EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
+        if (chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED
+            || chunkState.value() == EnderInvasionChunkComponent.State.PURIFIED) return;
+
+        boolean unaffected = this.generator.purifyChunk(world, chunk,
+            STATE.get(world.getLevelProperties()).getInvasionEndTick() / (double) INVASION_END_TIME);
+
+        chunkState.setValue(unaffected ? EnderInvasionChunkComponent.State.UNAFFECTED :
+            EnderInvasionChunkComponent.State.PURIFIED);
+
+        profiler.pop();
+    }
+
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!world.equals(world.getServer().getWorld(World.OVERWORLD))) return;
 
         final Profiler profiler = world.getProfiler();
-        profiler.push("enderInvasionRandomTick");
+        profiler.push("enderInvasionTick");
 
         if (!EnderInvasionHelper.canSurvive(world, pos)) {
             EnderInvasionHelper.convert(world.getWorldChunk(pos), BlockRecipeManager.PURIFICATION, pos);
@@ -133,12 +172,14 @@ public final class EnderInvasion implements LevelComponentInitializer, ChunkComp
             return;
         }
 
-        switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
+        EnderInvasionComponent component = EnderInvasion.STATE.get(world.getLevelProperties());
+
+        switch (component.value()) {
             case ENDER_INVASION:
 
-                EnderInvasionHelper.spawnParticles(world, pos, random, 4);
+                EnderInvasionHelper.spawnParticles(world, pos, random, 4, blockPos -> this.generator.isInEnderInvasion(world, pos, 0));
 
-                if (EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE) >= NOISE_THRESHOLD
+                if (generator.isInEnderInvasion(world, pos, 0)
                     && world.random.nextDouble() < (world.isNight() ? ENDERMAN_SPAWN_RATE_NIGHT : ENDERMAN_SPAWN_RATE_DAY)) {
 
                     EnderInvasionHelper.spawnMobGroup(world, world.getChunk(pos), EntityType.ENDERMAN, pos, world.getChunkManager().getSpawnInfo());
@@ -151,16 +192,15 @@ public final class EnderInvasion implements LevelComponentInitializer, ChunkComp
 
                 if (CHUNK_STATE.get(world.getChunk(pos)).value() == EnderInvasionChunkComponent.State.UNAFFECTED) break;
 
-                double noise = EnderInvasionHelper.getNoise(world, pos, NOISE_SCALE);
-                if (noise < EnderInvasionHelper.getPostEnderDragonNoiseThreshold(world, INVASION_END_TIME, NOISE_THRESHOLD))
-                    EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos, noise);
+                if (!this.generator.isInEnderInvasion(world, pos, component.getInvasionEndTick() / (double) INVASION_END_TIME))
+                    EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, world.getWorldChunk(pos), pos);
                 break;
         }
 
         profiler.pop();
     }
 
-    public static void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void spread(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         if (!state.isIn(MotherlodeEnderInvasionTags.SPREADABLE)) return;
         if (world.getDifficulty().getId() < SPREAD_DIFFICULTY.getId()) return;

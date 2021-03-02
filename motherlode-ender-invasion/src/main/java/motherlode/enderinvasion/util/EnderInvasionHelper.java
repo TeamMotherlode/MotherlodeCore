@@ -3,6 +3,7 @@ package motherlode.enderinvasion.util;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
@@ -18,97 +19,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.math.noise.SimplexNoiseSampler;
-import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.SpawnHelper;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.server.PlayerStream;
-import motherlode.enderinvasion.EnderInvasion;
-import motherlode.enderinvasion.EnderInvasionEvents;
-import motherlode.enderinvasion.component.EnderInvasionChunkComponent;
 import motherlode.enderinvasion.mixin.SpawnHelperAccessor;
 import motherlode.enderinvasion.recipe.BlockRecipeManager;
 import io.netty.buffer.Unpooled;
 
 public class EnderInvasionHelper {
-    private static SimplexNoiseSampler NOISE_GENERATOR;
-    private static long NOISE_GENERATOR_SEED;
-
-    public static void convertChunk(ServerWorld world, WorldChunk chunk) {
-        final Profiler profiler = world.getProfiler();
-        profiler.push("enderinvasion");
-
-        if (!world.equals(world.getServer().getWorld(World.OVERWORLD))) return;
-
-        switch (EnderInvasion.STATE.get(world.getLevelProperties()).value()) {
-            case ENDER_INVASION:
-                corruptChunk(world, chunk);
-                break;
-
-            case POST_ENDER_DRAGON:
-                if (EnderInvasion.CHUNK_STATE.get(chunk).value() == EnderInvasionChunkComponent.State.PRE_ECHERITE)
-                    corruptChunk(world, chunk);
-                purifyChunk(world, chunk);
-                break;
-        }
-        profiler.pop();
-    }
-
-    public static void corruptChunk(ServerWorld world, WorldChunk chunk) {
-        final Profiler profiler = world.getProfiler();
-        profiler.push("corruptChunk");
-
-        EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
-
-        if (chunkState.value() == EnderInvasionChunkComponent.State.ENDER_INVASION
-            || chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED) return;
-
-        WrappedBoolean unaffected = new WrappedBoolean(true);
-
-        forEachBlock(chunk, (c, pos) -> {
-            double noise = getNoise(world, pos, EnderInvasion.NOISE_SCALE);
-            if (noise >= EnderInvasion.NOISE_THRESHOLD) {
-                unaffected.set(false);
-
-                EnderInvasionEvents.CONVERT_BLOCK.invoker().convertBlock(world, c, pos, noise);
-            }
-        });
-        EnderInvasionEvents.AFTER_CHUNK_CONVERSION.invoker().afterConversion(world, chunk);
-
-        chunkState.setValue(unaffected.get() ? EnderInvasionChunkComponent.State.UNAFFECTED :
-            EnderInvasionChunkComponent.State.ENDER_INVASION);
-
-        profiler.pop();
-    }
-
-    public static void purifyChunk(ServerWorld world, WorldChunk chunk) {
-        final Profiler profiler = world.getProfiler();
-        profiler.push("purifyChunk");
-
-        EnderInvasionChunkComponent chunkState = EnderInvasion.CHUNK_STATE.get(chunk);
-        if (chunkState.value() == EnderInvasionChunkComponent.State.UNAFFECTED) return;
-
-        double noiseThreshold = getPostEnderDragonNoiseThreshold(world, EnderInvasion.INVASION_END_TIME, EnderInvasion.NOISE_THRESHOLD);
-        WrappedBoolean unaffected = new WrappedBoolean(true);
-
-        forEachBlock(chunk, (c, pos) -> {
-            double noise = getNoise(world, pos, EnderInvasion.NOISE_SCALE);
-            if (noise < noiseThreshold) {
-                unaffected.set(false);
-
-                EnderInvasionEvents.PURIFY_BLOCK.invoker().convertBlock(world, c, pos, noise);
-            }
-        });
-        if (unaffected.get()) chunkState.setValue(EnderInvasionChunkComponent.State.UNAFFECTED);
-
-        profiler.pop();
-    }
-
     public static <T extends Chunk> void forEachBlock(T chunk, BiConsumer<T, BlockPos> consumer) {
         int maxY = chunk.getHighestNonEmptySectionYOffset() * 16;
 
@@ -119,31 +40,6 @@ public class EnderInvasionHelper {
                 }
             }
         }
-    }
-
-    public static double getPostEnderDragonNoiseThreshold(ServerWorld world, int time, double normalThreshold) {
-        if (time <= 0) throw new IllegalArgumentException("Needed time can't be less than 1: " + time);
-        if (normalThreshold > 1)
-            throw new IllegalArgumentException("Normal threshold can't be greater than 1: " + normalThreshold);
-        int endTick = EnderInvasion.STATE.get(world.getLevelProperties()).getInvasionEndTick();
-        int ticksPassed = world.getServer().getTicks() - endTick;
-        if (ticksPassed >= time) return -1;
-
-        double mark = ticksPassed / (double) time;
-        return (mark - mark * normalThreshold) + normalThreshold;
-    }
-
-    private static SimplexNoiseSampler getNoiseSampler(ServerWorld world) {
-        if (NOISE_GENERATOR == null || NOISE_GENERATOR_SEED != world.getSeed()) {
-
-            NOISE_GENERATOR = new SimplexNoiseSampler(new Random(world.getSeed()));
-            NOISE_GENERATOR_SEED = world.getSeed();
-        }
-        return NOISE_GENERATOR;
-    }
-
-    public static double getNoise(ServerWorld world, Vec3i pos, double scale) {
-        return getNoiseSampler(world).method_22416(pos.getX() * scale, pos.getY() * scale, pos.getZ() * scale);
     }
 
     // Spawns a group of mobs
@@ -251,16 +147,15 @@ public class EnderInvasionHelper {
 
     // Returns a Vec3i where x and z can be from -1 to 1, and y can be from -2 to 2
     public static Vec3i randomNearbyBlockPos(Random random) {
-
         return new Vec3i(random.nextInt(3) - 1, random.nextInt(5) - 2, random.nextInt(3) - 1);
     }
 
-    public static void spawnParticles(ServerWorld world, BlockPos pos, Random random, int tries) {
+    public static void spawnParticles(ServerWorld world, BlockPos pos, Random random, int tries, Predicate<BlockPos> inEnderInvasion) {
         for (int i = 0; i < tries; i++) {
             BlockPos blockPos = pos.add(random.nextInt(5) - 2, random.nextInt(5) - 2, random.nextInt(5) - 2);
             BlockState blockState = world.getBlockState(blockPos);
 
-            if (!blockState.isAir() && !world.getBlockState(blockPos.up()).getMaterial().isSolid() && EnderInvasionHelper.getNoise(world, blockPos, EnderInvasion.NOISE_SCALE) >= EnderInvasion.NOISE_THRESHOLD) {
+            if (!blockState.isAir() && !world.getBlockState(blockPos.up()).getMaterial().isSolid() && inEnderInvasion.test(blockPos)) {
                 Stream<PlayerEntity> watchingPlayers = PlayerStream.watching(world, blockPos);
                 PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                 passedData.writeBlockPos(blockPos);
@@ -270,16 +165,16 @@ public class EnderInvasionHelper {
                 passedData.writeDouble((random.nextDouble() + 0.3) * 4);
                 passedData.writeDouble(random.nextDouble() * 2 - 1);
 
-                watchingPlayers.forEach(player ->
-                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, passedData));
+                /* watchingPlayers.forEach(player ->
+                    ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, EnderInvasion.PLAY_PORTAL_PARTICLE_PACKET_ID, passedData)); */ // TODO
             }
         }
     }
 
-    private static class WrappedBoolean {
+    public static class WrappedBoolean {
         private boolean value;
 
-        WrappedBoolean(boolean value) {
+        public WrappedBoolean(boolean value) {
             this.value = value;
         }
 

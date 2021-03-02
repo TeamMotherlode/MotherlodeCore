@@ -10,18 +10,18 @@ public class EnderInvasionEvents {
     /**
      * Called when a block can be converted.
      */
-    public static final Event<ConvertBlock> CONVERT_BLOCK = EventFactory.createArrayBacked(ConvertBlock.class, callbacks -> (world, chunk, pos, noise) -> {
+    public static final Event<ConvertBlock> CONVERT_BLOCK = EventFactory.createArrayBacked(ConvertBlock.class, callbacks -> (world, chunk, pos) -> {
         for (ConvertBlock callback : callbacks) {
-            callback.convertBlock(world, chunk, pos, noise);
+            callback.convertBlock(world, chunk, pos);
         }
     });
 
     /**
      * Called when a block can be converted back to its normal form.
      */
-    public static final Event<ConvertBlock> PURIFY_BLOCK = EventFactory.createArrayBacked(ConvertBlock.class, callbacks -> (world, chunk, pos, noise) -> {
+    public static final Event<ConvertBlock> PURIFY_BLOCK = EventFactory.createArrayBacked(ConvertBlock.class, callbacks -> (world, chunk, pos) -> {
         for (ConvertBlock callback : callbacks) {
-            callback.convertBlock(world, chunk, pos, noise);
+            callback.convertBlock(world, chunk, pos);
         }
     });
 
@@ -37,7 +37,7 @@ public class EnderInvasionEvents {
     @FunctionalInterface
     public interface ConvertBlock {
 
-        void convertBlock(ServerWorld world, WorldChunk chunk, BlockPos pos, double noise);
+        void convertBlock(ServerWorld world, WorldChunk chunk, BlockPos pos);
     }
 
     @FunctionalInterface

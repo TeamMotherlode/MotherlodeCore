@@ -8,7 +8,7 @@ import dev.onyxstudios.cca.api.v3.component.CopyableComponent;
 
 public interface EnderInvasionChunkComponent extends ComponentV3, CopyableComponent<EnderInvasionChunkComponent> {
     enum State {
-        UNAFFECTED, PRE_ECHERITE, ENDER_INVASION
+        UNAFFECTED, PRE_ECHERITE, ENDER_INVASION, PURIFIED
     }
 
     State value();

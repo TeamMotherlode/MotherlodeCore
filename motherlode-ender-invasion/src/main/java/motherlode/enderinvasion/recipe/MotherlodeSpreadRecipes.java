@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.tag.BlockTags;
+import motherlode.biomes.MotherlodeBiomesBlocks;
 import motherlode.enderinvasion.MotherlodeEnderInvasionBlocks;
 import static motherlode.enderinvasion.MotherlodeModule.id;
 import static motherlode.enderinvasion.recipe.BlockRecipeManager.PURIFICATION;
@@ -19,7 +20,7 @@ public class MotherlodeSpreadRecipes {
         addSimpleRecipe(SPREAD, id("stone_to_end_stone"), Blocks.STONE, Blocks.END_STONE);
         addSimpleRecipe(SPREAD, id("grass_to_corrupted_grass"), Blocks.GRASS, MotherlodeEnderInvasionBlocks.CORRUPTED_GRASS);
         addSimpleRecipe(SPREAD, id("ferns_to_corrupted_grass"), Blocks.FERN, MotherlodeEnderInvasionBlocks.CORRUPTED_GRASS);
-        // addSimpleRecipe(SPREAD, id("sprouts_to_corrupted_grass"), MotherlodeEnderInvasionBlocks.SPROUTS, MotherlodeEnderInvasionBlocks.CORRUPTED_GRASS); // TODO
+        addSimpleRecipe(SPREAD, id("sprouts_to_corrupted_grass"), MotherlodeBiomesBlocks.SPROUTS, MotherlodeEnderInvasionBlocks.CORRUPTED_GRASS);
         addSimpleRecipe(SPREAD, id("brown_mushroom_to_end_cap"), Blocks.BROWN_MUSHROOM, MotherlodeEnderInvasionBlocks.END_CAP);
         addSimpleRecipe(SPREAD, id("red_mushroom_to_end_cap"), Blocks.RED_MUSHROOM, MotherlodeEnderInvasionBlocks.END_CAP);
         addRecipe(SPREAD, id("logs_to_withered_log"), BlockTags.LOGS::contains, state -> MotherlodeEnderInvasionBlocks.WITHERED_LOG.getDefaultState()

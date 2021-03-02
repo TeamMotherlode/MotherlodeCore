@@ -8,6 +8,7 @@ public class MotherlodeEnderInvasionClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeEnderInvasionBlocks.END_FOAM, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeEnderInvasionBlocks.CORRUPTED_GRASS, RenderLayer.getCutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeEnderInvasionBlocks.WITHERED_OAK_LEAVES, RenderLayer.getCutoutMipped());
         BlockRenderLayerMap.INSTANCE.putBlock(MotherlodeEnderInvasionBlocks.WITHERED_DARK_OAK_LEAVES, RenderLayer.getCutoutMipped());

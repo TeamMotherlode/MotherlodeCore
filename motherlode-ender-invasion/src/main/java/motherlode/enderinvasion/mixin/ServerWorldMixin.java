@@ -10,7 +10,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
-import motherlode.enderinvasion.EnderInvasion;
+import motherlode.enderinvasion.MotherlodeModule;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -28,7 +28,7 @@ public abstract class ServerWorldMixin extends World {
 
     @Redirect(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;randomTick(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Ljava/util/Random;)V"))
     public void redirectRandomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        EnderInvasion.randomTick(state, world, pos, random);
+        MotherlodeModule.getEnderInvasion().randomTick(state, world, pos, random);
 
         if (state.hasRandomTicks()) state.randomTick(world, pos, random);
     }
