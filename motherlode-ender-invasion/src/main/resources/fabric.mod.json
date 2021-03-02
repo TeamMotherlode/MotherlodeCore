@@ -20,7 +20,7 @@
       "motherlode.enderinvasion.MotherlodeModule"
     ],
     "cardinal-components": [
-      "motherlode.enderinvasion.EnderInvasion"
+      "motherlode.enderinvasion.MotherlodeModule"
     ],
     "client": [
       "motherlode.enderinvasion.MotherlodeEnderInvasionClient"
@@ -34,7 +34,8 @@
     "fabric": ">=0.25.0",
     "minecraft": "1.17.x",
     "motherlode-base": "*",
-    "motherlode-materials": "^1.0.0"
+    "motherlode-materials": "^1.0.0",
+    "motherlode-biomes": "*"
   },
   "suggests": {
   },
