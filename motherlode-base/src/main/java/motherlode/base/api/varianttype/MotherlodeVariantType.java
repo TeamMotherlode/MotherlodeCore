@@ -32,10 +32,12 @@ public abstract class MotherlodeVariantType<T, S extends MotherlodeVariantType<T
         return super.register();
     }
 
+    @Deprecated
     public static <T, S extends AbstractExtendableVariantType<T, S>> S extend(S variantType, String namespace) {
         return AbstractExtendableVariantType.extend(variantType, namespace);
     }
 
+    @Deprecated
     public static <T, S extends AbstractExtendableVariantType<T, S>, E extends ExtendableVariantType.Extension<T, S>> E extend(S variantType, String namespace, E extension) {
         return AbstractExtendableVariantType.extend(variantType, namespace, extension);
     }
