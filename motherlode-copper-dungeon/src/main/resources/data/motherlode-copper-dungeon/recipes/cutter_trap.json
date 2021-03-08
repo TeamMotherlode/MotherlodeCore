@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "cGc",
+    "MIM"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diamond_sword"
+    },
+    "c": {
+      "item": "minecraft:copper_ingot"
+    },
+    "G": {
+      "tag": "motherlode-materials:gems"
+    },
+    "M": {
+      "item": "minecraft:copper_block"
+    }
+  },
+  "result": {
+    "item": "motherlode-copper-dungeon:cutter_trap",
+    "count": 1
+  }
+}
