@@ -6,6 +6,7 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.entity.EntityType;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +21,7 @@ public interface BlocksAccessor {
     }
 
     @Invoker("createLeavesBlock")
-    static LeavesBlock callCreateLeavesBlock() {
+    static LeavesBlock callCreateLeavesBlock(BlockSoundGroup soundGroup) {
         throw new IllegalStateException();
     }
 

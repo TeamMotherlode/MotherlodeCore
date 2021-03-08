@@ -3,7 +3,9 @@ package motherlode.redstone.block;
 import java.util.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -44,7 +46,16 @@ public class GrateBlock extends Block implements FluidFlowable {
     @Override
     @SuppressWarnings("deprecation")
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return state.get(OPEN) ? VoxelShapes.empty() : VoxelShapes.fullCube();
+        if (state.get(OPEN)) {
+            if (context instanceof EntityShapeContext) {
+                if (((EntityShapeContext) context).getEntity().isPresent()) {
+                    if (((EntityShapeContext) context).getEntity().get() instanceof ItemEntity) {
+                        return VoxelShapes.empty();
+                    }
+                }
+            }
+        }
+        return VoxelShapes.fullCube();
     }
 
     @Override
@@ -74,8 +85,8 @@ public class GrateBlock extends Block implements FluidFlowable {
     }
 
     @Override
-    public Optional<SoundEvent> getDrainSound() {
-        return Fluids.WATER.getFillSound();
+    public Optional<SoundEvent> getBucketFillSound() {
+        return Fluids.WATER.getBucketFillSound();
     }
 
     @Override

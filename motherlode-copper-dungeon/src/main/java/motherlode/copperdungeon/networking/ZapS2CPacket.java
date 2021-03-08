@@ -19,14 +19,14 @@ public class ZapS2CPacket implements Packet<ClientPlayPacketListener> {
         this.target = target;
     }
 
-    @Override
-    public void read(PacketByteBuf buf) throws IOException {
+    // @Override
+    public void read(PacketByteBuf buf) throws IOException { // TODO Broken since 21w08a
         this.origin = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
         this.target = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
     }
 
     @Override
-    public void write(PacketByteBuf buf) throws IOException {
+    public void write(PacketByteBuf buf) {
         buf.writeDouble(this.origin.getX());
         buf.writeDouble(this.origin.getY());
         buf.writeDouble(this.origin.getZ());

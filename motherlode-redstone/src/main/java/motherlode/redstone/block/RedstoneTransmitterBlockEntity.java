@@ -72,9 +72,9 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     @Override
-    public void fromTag(CompoundTag tag) {
-        super.fromTag(tag);
-        Inventories.fromTag(tag, stacks);
+    public void readNbt(CompoundTag tag) {
+        super.readNbt(tag);
+        Inventories.readNbt(tag, stacks);
         receiver = tag.getBoolean("transmitter");
         channelIDCache = tag.getInt("channelCache");
     }
@@ -86,20 +86,20 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
 
     @Override
     public void fromClientTag(CompoundTag tag) {
-        fromTag(tag);
+        readNbt(tag);
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        Inventories.toTag(tag, stacks);
+    public CompoundTag writeNbt(CompoundTag tag) {
+        Inventories.writeNbt(tag, stacks);
         tag.putBoolean("transmitter", receiver);
         tag.putInt("channelCache", channelIDCache);
-        return super.toTag(tag);
+        return super.writeNbt(tag);
     }
 
     @Override
     public CompoundTag toClientTag(CompoundTag tag) {
-        return toTag(tag);
+        return writeNbt(tag);
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, RedstoneTransmitterBlockEntity blockEntity) {

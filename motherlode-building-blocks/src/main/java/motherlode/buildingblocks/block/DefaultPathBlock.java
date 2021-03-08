@@ -1,8 +1,8 @@
 package motherlode.buildingblocks.block;
 
-import net.minecraft.block.GrassPathBlock;
+import net.minecraft.block.DirtPathBlock;
 
-public class DefaultPathBlock extends GrassPathBlock {
+public class DefaultPathBlock extends DirtPathBlock {
     public DefaultPathBlock(Settings settings) {
         super(settings);
     }

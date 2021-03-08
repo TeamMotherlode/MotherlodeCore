@@ -5,8 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.decorator.Decorator;
-import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
+import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -126,10 +125,28 @@ public interface FeaturesManager {
      * @param minY          The minimum Y level that that this ore will generate in.
      * @param maxY          The maximum Y level that that this ore will generate in.
      * @return The {@link RegistryKey} for the {@code ConfiguredFeature} created and registered by this method.
+     * @deprecated Since the height limit change in 21w06a, and the ore generation change in 21w07a, you shouldn't use
+     * the raw Y values anymore for this.
      */
+    @Deprecated
     default RegistryKey<ConfiguredFeature<?, ?>> addOre(Identifier id, OreTarget target, BlockState state, int veinSize, int veinsPerChunk, int minY, int maxY) {
-        return this.addOre(id, target, state, veinSize, f -> f.decorate(Decorator.RANGE.configure(
-            new RangeDecoratorConfig(minY, 0, maxY - minY))).repeat(veinsPerChunk).spreadHorizontally());
+        return this.addOre(id, target, state, veinSize, veinsPerChunk, YOffset.fixed(minY), YOffset.fixed(maxY));
+    }
+
+    /**
+     * Creates and registers a {@link ConfiguredFeature} to generate an ore using the specified options.
+     *
+     * @param id            The {@link Identifier} to register the {@code ConfiguredFeature} under.
+     * @param target        The {@link OreTarget} to specify the biomes that the ore will generate in, the blocks that the ore can replace and the {@link GenerationStep.Feature} used.
+     * @param state         The ore will generate with this {@link BlockState}.
+     * @param veinSize      Each ore vein will have about this amount of ores.
+     * @param veinsPerChunk The average amount of ore veins per chunk.
+     * @param minY          The minimum Y level that that this ore will generate in.
+     * @param maxY          The maximum Y level that that this ore will generate in.
+     * @return The {@link RegistryKey} for the {@code ConfiguredFeature} created and registered by this method.
+     */
+    default RegistryKey<ConfiguredFeature<?, ?>> addOre(Identifier id, OreTarget target, BlockState state, int veinSize, int veinsPerChunk, YOffset minY, YOffset maxY) {
+        return this.addOre(id, target, state, veinSize, f -> f.rangeOf(minY, maxY).repeat(veinsPerChunk).spreadHorizontally());
     }
 
     /**
