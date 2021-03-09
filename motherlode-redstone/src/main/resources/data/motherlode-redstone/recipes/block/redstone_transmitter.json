@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "GRG",
+    "ccc"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone_torch"
+    },
+    "G": {
+      "tag": "motherlode-materials:gems"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "c": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "motherlode-redstone:redstone_transmitter",
+    "count": 1
+  }
+}

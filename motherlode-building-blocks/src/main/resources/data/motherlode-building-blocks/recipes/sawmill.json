@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "LPL"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": [
+      {
+        "item": "minecraft:oak_log"
+      }
+    ],
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "motherlode-building-blocks:sawmill",
+    "count": 1
+  }
+}

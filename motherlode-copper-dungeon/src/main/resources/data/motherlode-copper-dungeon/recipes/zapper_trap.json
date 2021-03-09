@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "l l",
+    "cGc",
+    "McM"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:lightning_rod"
+    },
+    "c": {
+      "item": "minecraft:copper_ingot"
+    },
+    "G": {
+      "tag": "motherlode-materials:gems"
+    },
+    "M": {
+      "item": "minecraft:copper_block"
+    }
+  },
+  "result": {
+    "item": "motherlode-copper-dungeon:zapper_trap",
+    "count": 1
+  }
+}
