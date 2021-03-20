@@ -9,10 +9,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import motherlode.base.api.assets.DataProcessor;
+import motherlode.base.Motherlode;
 import motherlode.buildingblocks.recipe.SawmillingRecipe;
 import motherlode.buildingblocks.recipe.SawmillingRecipeType;
-import motherlode.base.Motherlode;
 import motherlode.buildingblocks.screen.SawmillScreenHandler;
 import motherlode.buildingblocks.screen.StonecutterScreenHandler;
 import org.apache.logging.log4j.Level;
@@ -25,7 +24,7 @@ public class MotherlodeModule implements ModInitializer {
     public static final RecipeType<SawmillingRecipe> SAWMILLING_RECIPE_TYPE = register("sawmilling", new SawmillingRecipeType());
     public static final RecipeSerializer<SawmillingRecipe> SAWMILLING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, MotherlodeModule.id("sawmilling"), new CuttingRecipe.Serializer<>(SawmillingRecipe::new));
 
-    public static final ScreenHandlerType<StonecutterScreenHandler> STONECUTTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(Motherlode.id("minecraft", "stonecutter"), StonecutterScreenHandler::new);
+    public static final ScreenHandlerType<StonecutterScreenHandler> STONECUTTER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier("minecraft", "stonecutter"), StonecutterScreenHandler::new);
 
     static {
         Identifier interactWithSawmillIdentifier = MotherlodeModule.id("interact_with_sawmill");
@@ -36,6 +35,7 @@ public class MotherlodeModule implements ModInitializer {
     @Override
     public void onInitialize() {
         MotherlodeBuildingBlocks.init();
+        SawmillingRecipeType.init();
     }
 
     public static void log(Level level, CharSequence message) {
@@ -47,19 +47,14 @@ public class MotherlodeModule implements ModInitializer {
     }
 
     public static Identifier id(String name) {
-        return Motherlode.id(MODID, name);
+        return new Identifier(MODID, name);
     }
 
-    private static <T extends RecipeType<?> & DataProcessor> T register(String name, T recipeType) {
-        return register(name, recipeType, recipeType);
-    }
-
-    private static <T extends RecipeType<?>> T register(String name, T recipeType, DataProcessor data) {
+    private static <T extends RecipeType<?>> T register(String name, T recipeType) {
         return Motherlode.register(
             id -> Registry.register(Registry.RECIPE_TYPE, id, recipeType),
             MotherlodeModule.id(name),
-            recipeType,
-            data
+            recipeType
         );
     }
 }

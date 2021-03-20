@@ -24,6 +24,6 @@ public class MotherlodeModule implements ModInitializer {
     }
 
     public static Identifier id(String name) {
-        return Motherlode.id(MODID, name);
+        return new Identifier(MODID, name);
     }
 }

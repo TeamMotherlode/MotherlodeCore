@@ -78,24 +78,24 @@ public class ShovelableBlock extends Block implements AssetProcessor {
             for (int i = 0; i < (this.isRotatable ? 4 : 1); i++) {
                 int finalI = i;
                 state.variant("shoveled=false", variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+                    .model(Motherlode.id(id, name -> "block/" + name))
                     .rotationY(finalI * 90)
                 );
                 state.variant("shoveled=true", variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_shoveled"))
+                    .model(Motherlode.id(id, name -> "block/" + name + "_shoveled"))
                     .rotationY(finalI * 90)
                 );
             }
         });
         pack.addBlockModel(id, state -> state
             .parent(new Identifier("block/cube_all"))
-            .texture("all", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+            .texture("all", Motherlode.id(id, name -> "block/" + name))
         );
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_shoveled"), state -> state
-            .parent(Motherlode.id(MotherlodeModule.MODID, "block/cube_lowered"))
-            .texture("top", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
-            .texture("side", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
-            .texture("bottom", Motherlode.id(id.getNamespace(), "block/" + id.getPath()))
+        pack.addBlockModel(Motherlode.id(id, name -> name + "_shoveled"), state -> state
+            .parent(MotherlodeModule.id("block/cube_lowered"))
+            .texture("top", Motherlode.id(id, name -> "block/" + name))
+            .texture("side", Motherlode.id(id, name -> "block/" + name))
+            .texture("bottom", Motherlode.id(id, name -> "block/" + name))
         );
 
         CommonAssets.BLOCK_ITEM.accept(pack, id);

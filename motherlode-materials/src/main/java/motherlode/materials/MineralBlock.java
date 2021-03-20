@@ -17,18 +17,18 @@ public class MineralBlock extends Block implements DataProcessor {
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
-        CommonData.BLOCK_TAG.apply(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
+        CommonData.BLOCK_TAG.apply(new Identifier(CommonData.COMMON_NAMESPACE, id.getPath()))
             .accept(pack, id);
 
-        Identifier mineral = Motherlode.id(id.getNamespace(), this.mineral);
+        Identifier mineral = Motherlode.id(id, name -> this.mineral);
 
         pack.addShapedRecipe(id, recipe -> recipe
             .pattern("***", "***", "***")
-            .ingredientTag('*', Motherlode.id(CommonData.COMMON_NAMESPACE, mineral.getPath()))
+            .ingredientTag('*', new Identifier(CommonData.COMMON_NAMESPACE, mineral.getPath()))
             .result(id, 1));
 
-        pack.addShapelessRecipe(Motherlode.id(id.getNamespace(), mineral.getPath() + "_from_block"), recipe -> recipe
-            .ingredientTag(Motherlode.id(CommonData.COMMON_NAMESPACE, id.getPath()))
+        pack.addShapelessRecipe(Motherlode.id(id, name -> mineral.getPath() + "_from_block"), recipe -> recipe
+            .ingredientTag(new Identifier(CommonData.COMMON_NAMESPACE, id.getPath()))
             .result(mineral, 9)
         );
     }

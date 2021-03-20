@@ -3,6 +3,7 @@ package motherlode.base.api.woodtype;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FenceBlock;
@@ -64,6 +65,15 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         }
     };
 
+    public static final WoodType OAK = new WoodType(new Identifier("minecraft", "oak"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType DARK_OAK = new WoodType(new Identifier("minecraft", "dark_oak"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType BIRCH = new WoodType(new Identifier("minecraft", "birch"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType SPRUCE = new WoodType(new Identifier("minecraft", "spruce"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType JUNGLE = new WoodType(new Identifier("minecraft", "jungle"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType ACACIA = new WoodType(new Identifier("minecraft", "acacia"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType WARPED = new WoodType(new Identifier("minecraft", "warped"), null, null, null, null, null).withoutBase().register();
+    public static final WoodType CRIMSON = new WoodType(new Identifier("minecraft", "crimson"), null, null, null, null, null).withoutBase().register();
+
     private PillarBlock log;
     private PillarBlock strippedLog;
     private Block wood;
@@ -121,44 +131,26 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         this.sapling = new DefaultSaplingBlock(saplingGenerator.apply(this.log.getDefaultState(), this.leaves.getDefaultState()), FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS));
         this.pottedSapling = new FlowerPotBlock(this.sapling, FabricBlockSettings.of(Material.DECORATION).breakInstantly().nonOpaque());
 
-        this.itemSettingsFunction.apply(Variant.LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.log, settings))
-            .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
-
-        this.itemSettingsFunction.apply(Variant.STRIPPED_LOG, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.strippedLog, settings))
-            .orElseGet(() -> Registerable.block(this.strippedLog)).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
-
-        this.itemSettingsFunction.apply(Variant.WOOD, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.wood, settings))
-            .orElseGet(() -> Registerable.block(this.wood)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
-
-        this.itemSettingsFunction.apply(Variant.STRIPPED_WOOD, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.strippedWood, settings))
-            .orElseGet(() -> Registerable.block(this.strippedWood)).register(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
-
-        this.itemSettingsFunction.apply(Variant.PLANKS, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.planks, settings))
-            .orElseGet(() -> Registerable.block(this.planks)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
-
-        this.itemSettingsFunction.apply(Variant.BUTTON, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.button, settings))
-            .orElseGet(() -> Registerable.block(this.button)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
-
-        this.itemSettingsFunction.apply(Variant.FENCE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.fence, settings))
-            .orElseGet(() -> Registerable.block(this.fence)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
-
-        this.itemSettingsFunction.apply(Variant.FENCE_GATE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.fenceGate, settings))
-            .orElseGet(() -> Registerable.block(this.fenceGate)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
-
-        this.itemSettingsFunction.apply(Variant.PRESSURE_PLATE, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.pressurePlate, settings))
-            .orElseGet(() -> Registerable.block(this.log)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
-
-        this.itemSettingsFunction.apply(Variant.LEAVES, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.leaves, settings))
-            .orElseGet(() -> Registerable.block(this.leaves)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
-
-        this.itemSettingsFunction.apply(Variant.SAPLING, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.sapling, settings))
-            .orElseGet(() -> Registerable.block(this.sapling)).register(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
-
-        this.itemSettingsFunction.apply(Variant.POTTED_SAPLING, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(this.pottedSapling, settings))
-            .orElseGet(() -> Registerable.block(this.pottedSapling)).register(Motherlode.id(id.getNamespace(), "potted_" + id.getPath() + "_sapling"));
+        registerBlock(id, this.itemSettingsFunction, Variant.LOG, this.log, name -> name + "_log");
+        registerBlock(id, this.itemSettingsFunction, Variant.STRIPPED_LOG, this.strippedLog, name -> "stripped_" + name + "_log");
+        registerBlock(id, this.itemSettingsFunction, Variant.WOOD, this.wood, name -> name + "_wood");
+        registerBlock(id, this.itemSettingsFunction, Variant.STRIPPED_WOOD, this.strippedWood, name -> "stripped_" + name + "_wood");
+        registerBlock(id, this.itemSettingsFunction, Variant.PLANKS, this.planks, name -> name + "_planks");
+        registerBlock(id, this.itemSettingsFunction, Variant.BUTTON, this.button, name -> name + "_button");
+        registerBlock(id, this.itemSettingsFunction, Variant.FENCE, this.fence, name -> name + "_fence");
+        registerBlock(id, this.itemSettingsFunction, Variant.FENCE_GATE, this.fenceGate, name -> name + "_fence_gate");
+        registerBlock(id, this.itemSettingsFunction, Variant.PRESSURE_PLATE, this.pressurePlate, name -> name + "_pressure_plate");
+        registerBlock(id, this.itemSettingsFunction, Variant.LEAVES, this.leaves, name -> name + "_leaves");
+        registerBlock(id, this.itemSettingsFunction, Variant.SAPLING, this.sapling, name -> name + "_sapling");
+        registerBlock(id, this.itemSettingsFunction, Variant.POTTED_SAPLING, this.pottedSapling, name -> "potted_" + name + "_sapling");
 
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.log, this.strippedLog);
         StrippedBlockMap.INSTANCE.addStrippedBlock(this.wood, this.strippedWood);
+    }
+
+    private static void registerBlock(Identifier id, WoodTypeItemSettingsFunction itemSettingsFunction, Variant variant, Block block, UnaryOperator<String> name) {
+        itemSettingsFunction.apply(variant, VANILLA_ITEM_SETTINGS_FUNCTION).map(settings -> Registerable.block(block, settings))
+            .orElseGet(() -> Registerable.block(block)).register(Motherlode.id(id, name));
     }
 
     public PillarBlock getLog() {
@@ -223,119 +215,119 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
     @Override
     public void accept(ArtificeResourcePack.ClientResourcePackBuilder pack, Identifier id) {
         // Log
-        pack.addBlockState(Motherlode.id(id.getNamespace(), id.getPath() + "_log"), state -> state
+        pack.addBlockState(Motherlode.id(id, name -> name + "_log"), state -> state
             .variant("axis=x", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log_horizontal"))
+                .model(Motherlode.id(id, name -> "block/" + name + "_log_horizontal"))
                 .rotationX(90)
                 .rotationY(90))
             .variant("axis=y", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log")))
+                .model(Motherlode.id(id, name -> "block/" + name + "_log")))
             .variant("axis=z", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log_horizontal"))
+                .model(Motherlode.id(id, name -> "block/" + name + "_log_horizontal"))
                 .rotationX(90))
         );
 
         CommonAssets.CUBE_COLUMN.apply(
-            Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log_top"),
-            Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log")
-        ).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
+            Motherlode.id(id, name -> "block/" + name + "_log_top"),
+            Motherlode.id(id, name -> "block/" + name + "_log")
+        ).accept(pack, Motherlode.id(id, name -> name + "_log"));
 
         CommonAssets.HORIZONTAL_CUBE_COLUMN.apply(
-            Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log_top"),
-            Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log")
-        ).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_log_horizontal"));
+            Motherlode.id(id, name -> "block/" + name + "_log_top"),
+            Motherlode.id(id, name -> "block/" + name + "_log")
+        ).accept(pack, Motherlode.id(id, name -> name + "_log_horizontal"));
 
-        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
+        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id, name -> name + "_log"));
 
         // Stripped log
-        pack.addBlockState(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"), state -> state
+        pack.addBlockState(Motherlode.id(id, name -> "stripped_" + name + "_log"), state -> state
             .variant("axis=x", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log_horizontal"))
+                .model(Motherlode.id(id, name -> "block/stripped_" + name + "_log_horizontal"))
                 .rotationX(90)
                 .rotationY(90))
             .variant("axis=y", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log")))
+                .model(Motherlode.id(id, name -> "block/stripped_" + name + "_log")))
             .variant("axis=z", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log_horizontal"))
+                .model(Motherlode.id(id, name -> "block/stripped_" + name + "_log_horizontal"))
                 .rotationX(90))
         );
 
         CommonAssets.CUBE_COLUMN.apply(
-            Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log_top"),
-            Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log")
-        ).accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
+            Motherlode.id(id, name -> "block/stripped_" + name + "_log_top"),
+            Motherlode.id(id, name -> "block/stripped_" + name + "_log")
+        ).accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_log"));
 
         CommonAssets.HORIZONTAL_CUBE_COLUMN.apply(
-            Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log_top"),
-            Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log")
-        ).accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log_horizontal"));
+            Motherlode.id(id, name -> "block/stripped_" + name + "_log_top"),
+            Motherlode.id(id, name -> "block/stripped_" + name + "_log")
+        ).accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_log_horizontal"));
 
-        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
+        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_log"));
 
         // Wood
-        pack.addBlockState(Motherlode.id(id.getNamespace(), id.getPath() + "_wood"), state -> state
+        pack.addBlockState(Motherlode.id(id, name -> name + "_wood"), state -> state
             .variant("axis=x", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_wood"))
+                .model(Motherlode.id(id, name -> "block/" + name + "_wood"))
                 .rotationX(90)
                 .rotationY(90))
             .variant("axis=y", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_wood")))
+                .model(Motherlode.id(id, name -> "block/" + name + "_wood")))
             .variant("axis=z", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_wood"))
+                .model(Motherlode.id(id, name -> "block/" + name + "_wood"))
                 .rotationX(90))
         );
 
         CommonAssets.CUBE_COLUMN.apply(
-            Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log"),
-            Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_log")
-        ).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
+            Motherlode.id(id, name -> "block/" + name + "_log"),
+            Motherlode.id(id, name -> "block/" + name + "_log")
+        ).accept(pack, Motherlode.id(id, name -> name + "_wood"));
 
-        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
+        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id, name -> name + "_wood"));
 
         // Stripped wood
-        pack.addBlockState(Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"), state -> state
+        pack.addBlockState(Motherlode.id(id, name -> "stripped_" + name + "_wood"), state -> state
             .variant("axis=x", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_wood"))
+                .model(Motherlode.id(id, name -> "block/stripped_" + name + "_wood"))
                 .rotationX(90)
                 .rotationY(90))
             .variant("axis=y", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_wood")))
+                .model(Motherlode.id(id, name -> "block/stripped_" + name + "_wood")))
             .variant("axis=z", variant -> variant
-                .model(Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_wood"))
+                .model(Motherlode.id(id, name -> "block/stripped_" + name + "_wood"))
                 .rotationX(90))
         );
 
         CommonAssets.CUBE_COLUMN.apply(
-            Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log"),
-            Motherlode.id(id.getNamespace(), "block/stripped_" + id.getPath() + "_log")
-        ).accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
+            Motherlode.id(id, name -> "block/stripped_" + name + "_log"),
+            Motherlode.id(id, name -> "block/stripped_" + name + "_log")
+        ).accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_wood"));
 
-        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
+        CommonAssets.BLOCK_ITEM.accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_wood"));
 
         // Planks
-        CommonAssets.DEFAULT_BLOCK.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
+        CommonAssets.DEFAULT_BLOCK.accept(pack, Motherlode.id(id, name -> name + "_planks"));
 
         // Button
         WoodTypeAssets.BUTTON.accept(pack, id);
 
         // Fence
-        pack.addBlockState(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"), state -> state
+        pack.addBlockState(Motherlode.id(id, name -> name + "_fence"), state -> state
             .multipartCase(multipartCase -> multipartCase
                 .apply(variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_fence_post"))
+                    .model(Motherlode.id(id, name -> "block/" + name + "_fence_post"))
                 )
             )
             .multipartCase(multipartCase -> multipartCase
                 .when("north", "true")
                 .apply(variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_fence_side"))
+                    .model(Motherlode.id(id, name -> "block/" + name + "_fence_side"))
                     .uvlock(true)
                 )
             )
             .multipartCase(multipartCase -> multipartCase
                 .when("east", "true")
                 .apply(variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_fence_side"))
+                    .model(Motherlode.id(id, name -> "block/" + name + "_fence_side"))
                     .rotationY(90)
                     .uvlock(true)
                 )
@@ -343,7 +335,7 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
             .multipartCase(multipartCase -> multipartCase
                 .when("south", "true")
                 .apply(variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_fence_side"))
+                    .model(Motherlode.id(id, name -> "block/" + name + "_fence_side"))
                     .rotationY(180)
                     .uvlock(true)
                 )
@@ -351,30 +343,30 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
             .multipartCase(multipartCase -> multipartCase
                 .when("west", "true")
                 .apply(variant -> variant
-                    .model(Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_fence_side"))
+                    .model(Motherlode.id(id, name -> "block/" + name + "_fence_side"))
                     .rotationY(270)
                     .uvlock(true)
                 )
             )
         );
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_post"), model -> model
+        pack.addBlockModel(Motherlode.id(id, name -> name + "_fence_post"), model -> model
             .parent(new Identifier("minecraft", "block/fence_post"))
-            .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_planks"))
+            .texture("texture", Motherlode.id(id, name -> "block/" + name + "_planks"))
         );
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_side"), model -> model
+        pack.addBlockModel(Motherlode.id(id, name -> name + "_fence_side"), model -> model
             .parent(new Identifier("minecraft", "block/fence_side"))
-            .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_planks"))
+            .texture("texture", Motherlode.id(id, name -> "block/" + name + "_planks"))
         );
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_fence_inventory"), model -> model
+        pack.addBlockModel(Motherlode.id(id, name -> name + "_fence_inventory"), model -> model
             .parent(new Identifier("minecraft", "block/fence_inventory"))
-            .texture("texture", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_planks"))
+            .texture("texture", Motherlode.id(id, name -> "block/" + name + "_planks"))
         );
 
-        CommonAssets.BLOCK_ITEM_FUNCTION.apply(Motherlode.id(id.getNamespace(), id.getPath() + "_fence"))
-            .accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_fence_inventory"));
+        CommonAssets.BLOCK_ITEM_FUNCTION.apply(Motherlode.id(id, name -> name + "_fence"))
+            .accept(pack, Motherlode.id(id, name -> name + "_fence_inventory"));
 
         // Fence gate
         WoodTypeAssets.FENCE_GATE.accept(pack, id);
@@ -383,32 +375,32 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
         WoodTypeAssets.PRESSURE_PLATE.accept(pack, id);
 
         // Leaves
-        CommonAssets.DEFAULT_BLOCK.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
+        CommonAssets.DEFAULT_BLOCK.accept(pack, Motherlode.id(id, name -> name + "_leaves"));
 
         // Sapling
-        CommonAssets.DEFAULT_BLOCK_STATE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
+        CommonAssets.DEFAULT_BLOCK_STATE.accept(pack, Motherlode.id(id, name -> name + "_sapling"));
 
-        pack.addBlockModel(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"), state -> state
+        pack.addBlockModel(Motherlode.id(id, name -> name + "_sapling"), state -> state
             .parent(new Identifier("minecraft", "block/cross"))
-            .texture("cross", Motherlode.id(id.getNamespace(), "block/" + id.getPath() + "_sapling"))
+            .texture("cross", Motherlode.id(id, name -> "block/" + name + "_sapling"))
         );
 
-        CommonAssets.FLAT_BLOCK_ITEM_MODEL.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
+        CommonAssets.FLAT_BLOCK_ITEM_MODEL.accept(pack, Motherlode.id(id, name -> name + "_sapling"));
     }
 
     @Override
     public void accept(ArtificeResourcePack.ServerResourcePackBuilder pack, Identifier id) {
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_log"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_log"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_wood"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_wood"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_planks"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_button"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_fence"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_fence_gate"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_pressure_plate"));
 
-        pack.addLootTable(Motherlode.id(id.getNamespace(), "blocks/" + id.getPath() + "_leaves"), table -> table
+        pack.addLootTable(Motherlode.id(id, name -> "blocks/" + name + "_leaves"), table -> table
             .type(new Identifier("minecraft", "block"))
             .pool(pool -> pool
                 .rolls(1)
@@ -439,7 +431,7 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
                                 )
                             )
                         )
-                        .name(Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"))
+                        .name(Motherlode.id(id, name -> name + "_leaves"))
                     )
                     .child(child -> child
                         .type(new Identifier("minecraft", "item"))
@@ -454,7 +446,7 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
                                 .add(0.1)
                             )
                         )
-                        .name(Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"))
+                        .name(Motherlode.id(id, name -> name + "_sapling"))
                     )
                 )
             )
@@ -512,20 +504,20 @@ public class WoodType extends MotherlodeVariantType<Block, WoodType> {
             )
         );
 
-        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
+        CommonData.DEFAULT_BLOCK_LOOT_TABLE.accept(pack, Motherlode.id(id, name -> name + "_sapling"));
 
-        CommonData.BLOCK_TAG.apply(Motherlode.id(id.getNamespace(), id.getPath() + "_logs")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_log"));
-        CommonData.BLOCK_TAG.apply(Motherlode.id(id.getNamespace(), id.getPath() + "_logs")).accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_log"));
-        CommonData.BLOCK_TAG.apply(Motherlode.id(id.getNamespace(), id.getPath() + "_logs")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_wood"));
-        CommonData.BLOCK_TAG.apply(Motherlode.id(id.getNamespace(), id.getPath() + "_logs")).accept(pack, Motherlode.id(id.getNamespace(), "stripped_" + id.getPath() + "_wood"));
-        CommonData.BLOCK_TAG_INCLUDE.apply(new Identifier("minecraft", "logs_that_burn")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_logs"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "planks")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_planks"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "wooden_buttons")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_button"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "wooden_fences")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_fence"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "fence_gates")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_fence_gate"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "pressure_plates")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_pressure_plate"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "leaves")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_leaves"));
-        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "saplings")).accept(pack, Motherlode.id(id.getNamespace(), id.getPath() + "_sapling"));
+        CommonData.BLOCK_TAG.apply(Motherlode.id(id, name -> id.getPath() + "_logs")).accept(pack, Motherlode.id(id, name -> name + "_log"));
+        CommonData.BLOCK_TAG.apply(Motherlode.id(id, name -> id.getPath() + "_logs")).accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_log"));
+        CommonData.BLOCK_TAG.apply(Motherlode.id(id, name -> id.getPath() + "_logs")).accept(pack, Motherlode.id(id, name -> name + "_wood"));
+        CommonData.BLOCK_TAG.apply(Motherlode.id(id, name -> id.getPath() + "_logs")).accept(pack, Motherlode.id(id, name -> "stripped_" + name + "_wood"));
+        CommonData.BLOCK_TAG_INCLUDE.apply(new Identifier("minecraft", "logs_that_burn")).accept(pack, Motherlode.id(id, name -> name + "_logs"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "planks")).accept(pack, Motherlode.id(id, name -> name + "_planks"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "wooden_buttons")).accept(pack, Motherlode.id(id, name -> name + "_button"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "wooden_fences")).accept(pack, Motherlode.id(id, name -> name + "_fence"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "fence_gates")).accept(pack, Motherlode.id(id, name -> name + "_fence_gate"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "pressure_plates")).accept(pack, Motherlode.id(id, name -> name + "_pressure_plate"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "leaves")).accept(pack, Motherlode.id(id, name -> name + "_leaves"));
+        CommonData.BLOCK_TAG.apply(new Identifier("minecraft", "saplings")).accept(pack, Motherlode.id(id, name -> name + "_sapling"));
     }
 
     public enum Variant {
