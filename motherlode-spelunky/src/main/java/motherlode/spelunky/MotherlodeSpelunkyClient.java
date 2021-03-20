@@ -1,7 +1,7 @@
 package motherlode.spelunky;
 
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -18,7 +18,7 @@ public class MotherlodeSpelunkyClient implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register((state, _world, _pos, _tintIndex) -> state.get(PotBlock.COLOR).getColor(), MotherlodeSpelunkyBlocks.POT);
 
         FabricModelPredicateProviderRegistry.register(MotherlodeSpelunkyBlocks.POT.asItem(), new Identifier("pot_pattern"), (itemStack, world, entity, i) -> {
-            CompoundTag tag = itemStack.getTag();
+            NbtCompound tag = itemStack.getTag();
             if (tag == null || !tag.contains("BlockStateTag"))
                 return 0;
             tag = tag.getCompound("BlockStateTag");

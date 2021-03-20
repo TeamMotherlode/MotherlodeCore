@@ -20,7 +20,6 @@ import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilders;
 import motherlode.biomes.MotherlodeBiomesBlocks;
-import com.mojang.blaze3d.platform.GlStateManager;
 
 public class RuinedFlatsBiome {
     private static final SimplexNoiseSampler samplerA = new SimplexNoiseSampler(new SimpleRandom(8086));
@@ -67,7 +66,7 @@ public class RuinedFlatsBiome {
             .build();
     }
 
-    public int getGrassColorAt(double x, double z) {
+    public static int getGrassColorAt(double x, double z) {
         int red = (int) (((samplerA.sample(x / 36, z / 36) + 1.0) / 2) * 22) + 70;
         int green = (int) (((samplerB.sample(x / 12, z / 12) + 1.0) / 2) * 30) + 130;
         int blue = (int) (((samplerC.sample(x / 30, z / 30) + 1.0) / 2) * 20) + 40;
@@ -75,11 +74,11 @@ public class RuinedFlatsBiome {
         return c.getRGB();
     }
 
-    public float getFogDensity(double posX, double posZ) {
+    public static float getFogDensity(double posX, double posZ) {
         return 0.024f;
     }
 
-    public GlStateManager.FogMode getFogMode() {
+    /* public GlStateManager.FogMode getFogMode() { // TODO Broken in 21w11a
         return GlStateManager.FogMode.EXP2;
-    }
+    } */
 }

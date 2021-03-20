@@ -1,5 +1,6 @@
 package motherlode.redstone.gui;
 
+import java.util.function.Supplier;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
@@ -12,10 +13,11 @@ import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
+import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import io.github.cottonmc.cotton.gui.widget.data.Texture;
 
 public class WSpriteButton extends WSprite {
-    private Runnable onClick;
+    private Supplier<InputResult> onClick;
     private Identifier[] focusedFrames;
     private boolean singleFocusedImage;
     private OrderedText tooltip;
@@ -33,13 +35,15 @@ public class WSpriteButton extends WSprite {
     }
 
     @Override
-    public void onClick(int x, int y, int button) {
+    public InputResult onClick(int x, int y, int button) {
         if (this.isWithinBounds(x, y)) {
             MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (this.onClick != null) {
-                this.onClick.run();
+                return this.onClick.get();
             }
         }
+
+        return InputResult.IGNORED;
     }
 
     public void setTooltip(OrderedText tooltip) {
@@ -61,17 +65,17 @@ public class WSpriteButton extends WSprite {
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         boolean hovered = mouseX >= 0 && mouseY >= 0 && mouseX < this.getWidth() && mouseY < this.getHeight();
         if ((this.isFocused() || hovered) && focusedFrames != null) {
-            paintFrames(singleFocusedImage, focusedFrames, x, y);
+            paintFrames(matrices, singleFocusedImage, focusedFrames, x, y);
             ScreenDrawing.drawStringWithShadow(matrices, tooltip, HorizontalAlignment.CENTER, x + 40, y - 10, this.width, 14737632);
-            ScreenDrawing.coloredRect(x + 38, y - 12, tooltip.toString().length() * 6, 24, 0xaaee00);
+            ScreenDrawing.coloredRect(matrices, x + 38, y - 12, tooltip.toString().length() * 6, 24, 0xaaee00);
         } else {
-            paintFrames(singleImage, frames, x, y);
+            paintFrames(matrices, singleImage, frames, x, y);
         }
     }
 
-    private void paintFrames(boolean single, Identifier[] frames, int x, int y) {
+    private void paintFrames(MatrixStack matrices, boolean single, Identifier[] frames, int x, int y) {
         if (single) {
-            this.paintFrame(x, y, super.frames[0]);
+            this.paintFrame(matrices, x, y, super.frames[0]);
         } else {
             long now = System.nanoTime() / 1000000L;
             boolean inBounds = this.currentFrame >= 0 && this.currentFrame < frames.length;
@@ -80,7 +84,7 @@ public class WSpriteButton extends WSprite {
             }
 
             Identifier currentFrameTex = frames[this.currentFrame];
-            this.paintFrame(x, y, new Texture(currentFrameTex));
+            this.paintFrame(matrices, x, y, new Texture(currentFrameTex));
             long elapsed = now - this.lastFrame;
             this.currentFrameTime += elapsed;
             if (this.currentFrameTime >= (long) this.frameTime) {
@@ -102,8 +106,8 @@ public class WSpriteButton extends WSprite {
             builder.add(tooltip);
     }
 
-    public WSpriteButton setOnClick(Runnable r) {
-        this.onClick = r;
+    public WSpriteButton setOnClick(Supplier<InputResult> onClick) {
+        this.onClick = onClick;
         return this;
     }
 }

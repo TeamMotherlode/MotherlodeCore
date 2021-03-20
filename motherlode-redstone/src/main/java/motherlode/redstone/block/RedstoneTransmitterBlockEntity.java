@@ -10,7 +10,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -72,7 +72,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     @Override
-    public void readNbt(CompoundTag tag) {
+    public void readNbt(NbtCompound tag) {
         super.readNbt(tag);
         Inventories.readNbt(tag, stacks);
         receiver = tag.getBoolean("transmitter");
@@ -85,12 +85,12 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     @Override
-    public void fromClientTag(CompoundTag tag) {
+    public void fromClientTag(NbtCompound tag) {
         readNbt(tag);
     }
 
     @Override
-    public CompoundTag writeNbt(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         Inventories.writeNbt(tag, stacks);
         tag.putBoolean("transmitter", receiver);
         tag.putInt("channelCache", channelIDCache);
@@ -98,7 +98,7 @@ public class RedstoneTransmitterBlockEntity extends BlockEntity implements Defau
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag tag) {
+    public NbtCompound toClientTag(NbtCompound tag) {
         return writeNbt(tag);
     }
 

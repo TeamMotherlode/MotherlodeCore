@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.World;
@@ -29,8 +29,8 @@ public class RedstoneChannelManager extends PersistentState {
         this.transmitters = transmitters;
     }
 
-    public static RedstoneChannelManager fromTag(CompoundTag tag) {
-        ListTag channelsTag = tag.getList("channels", 10);
+    public static RedstoneChannelManager fromTag(NbtCompound tag) {
+        NbtList channelsTag = tag.getList("channels", 10);
 
         if (channelsTag == null) return null;
 
@@ -39,20 +39,20 @@ public class RedstoneChannelManager extends PersistentState {
         final Map<Integer, List<BlockPos>> receivers = new HashMap<>();
         final Map<Integer, Map<BlockPos, Integer>> transmitters = new HashMap<>();
 
-        for (Tag cTag : channelsTag)
-            channels.put(((CompoundTag) cTag).getInt("id"), ((CompoundTag) cTag).getInt("value"));
+        for (NbtElement cTag : channelsTag)
+            channels.put(((NbtCompound) cTag).getInt("id"), ((NbtCompound) cTag).getInt("value"));
 
-        ListTag receiverListTag = tag.getList("receivers", 10);
+        NbtList receiverListTag = tag.getList("receivers", 10);
         receiverListTag.forEach((rTag) -> {
-            CompoundTag receiverTag = ((CompoundTag) rTag);
+            NbtCompound receiverTag = ((NbtCompound) rTag);
             List<BlockPos> recieverList = receivers.getOrDefault(receiverTag.getInt("channel"), new ArrayList<>());
             recieverList.add(new BlockPos(receiverTag.getInt("x"), receiverTag.getInt("y"), receiverTag.getInt("z")));
             receivers.put(receiverTag.getInt("channel"), recieverList);
         });
 
-        ListTag transmittersListTag = tag.getList("transmitters", 10);
+        NbtList transmittersListTag = tag.getList("transmitters", 10);
         transmittersListTag.forEach((tTag) -> {
-            CompoundTag transmitterTag = ((CompoundTag) tTag);
+            NbtCompound transmitterTag = ((NbtCompound) tTag);
             Map<BlockPos, Integer> transmittersMap = transmitters.getOrDefault(transmitterTag.getInt("channel"), new HashMap<>());
             transmittersMap.put(new BlockPos(transmitterTag.getInt("x"), transmitterTag.getInt("y"), transmitterTag.getInt("z")), transmitterTag.getInt("value"));
             transmitters.put(transmitterTag.getInt("channel"), transmittersMap);
@@ -62,10 +62,10 @@ public class RedstoneChannelManager extends PersistentState {
     }
 
     @Override
-    public CompoundTag writeNbt(CompoundTag tag) {
-        ListTag listTag = new ListTag();
+    public NbtCompound writeNbt(NbtCompound tag) {
+        NbtList listTag = new NbtList();
         channels.forEach((key, val) -> {
-            CompoundTag channelTag = new CompoundTag();
+            NbtCompound channelTag = new NbtCompound();
             channelTag.putInt("id", key);
             channelTag.putInt("value", val);
             listTag.add(channelTag);
@@ -73,10 +73,10 @@ public class RedstoneChannelManager extends PersistentState {
 
         tag.put("channels", listTag);
 
-        ListTag receiverList = new ListTag();
+        NbtList receiverList = new NbtList();
         receivers.forEach((key, channel) -> {
             for (BlockPos receiverData : channel) {
-                CompoundTag receiverTag = new CompoundTag();
+                NbtCompound receiverTag = new NbtCompound();
                 receiverTag.putInt("x", receiverData.getX());
                 receiverTag.putInt("y", receiverData.getY());
                 receiverTag.putInt("z", receiverData.getZ());
@@ -87,10 +87,10 @@ public class RedstoneChannelManager extends PersistentState {
 
         tag.put("receivers", receiverList);
 
-        ListTag transmitterList = new ListTag();
+        NbtList transmitterList = new NbtList();
         transmitters.forEach((key, channel) ->
             channel.forEach((pos, value) -> {
-                CompoundTag transmitterTag = new CompoundTag();
+                NbtCompound transmitterTag = new NbtCompound();
                 transmitterTag.putInt("x", pos.getX());
                 transmitterTag.putInt("y", pos.getY());
                 transmitterTag.putInt("z", pos.getZ());

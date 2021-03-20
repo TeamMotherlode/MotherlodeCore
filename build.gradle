@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT' apply false
+    id 'fabric-loom' version '0.6-SNAPSHOT' apply false
 }
 apply from: 'dependencies.gradle'
 
@@ -138,5 +138,6 @@ dependencies {
             include project(":$it.path")
         }
     }
+
     tap(rootProject.ext.setRuntimeTestMods)
 }

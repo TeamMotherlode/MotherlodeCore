@@ -3,7 +3,6 @@ package motherlode.redstone.gui;
 import java.util.ArrayList;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -25,6 +24,7 @@ import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WPlainPanel;
 import io.github.cottonmc.cotton.gui.widget.WSprite;
+import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import io.netty.buffer.Unpooled;
 
 public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
@@ -86,6 +86,8 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 transmitButton.setFocusedImage(getImage(true, isOn, true));
                 transmitButton.setTooltip(new LiteralText("Transmitter").asOrderedText());
             }
+
+            return InputResult.PROCESSED;
         });
 
         for (int i = 0; i < 4; i++) {
@@ -143,8 +145,9 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
     }
 
     @Override
-    public ItemStack onSlotClick(int slotNumber, int button, SlotActionType action, PlayerEntity player) {
-        ItemStack stack = super.onSlotClick(slotNumber, button, action, player);
+    public void onSlotClick(int slotNumber, int button, SlotActionType action, PlayerEntity player) {
+        super.onSlotClick(slotNumber, button, action, player);
+
         for (int i = 0; i < blockInventory.size(); i++) {
             if (blockInventory.getStack(i).isEmpty()) {
                 gems.get(i).setImage(MotherlodeModule.id("textures/gui/container/gem.png"));
@@ -178,7 +181,6 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
                 }
             }
         }
-        return stack;
     }
 
     @Override
@@ -189,12 +191,12 @@ public class RedstoneTransmitterGuiDescription extends SyncedGuiDescription {
         super.close(player);
     }
 
-    public BlockPos getBlockPos(ScreenHandlerContext ctx) {
-        return (BlockPos) ctx.run((world, pos) -> pos).orElse(new BlockPos(0, 0, 0));
+    public BlockPos getBlockPos(ScreenHandlerContext context) {
+        return context.get((world, pos) -> pos).orElse(new BlockPos(0, 0, 0));
     }
 
     public World getWorld(ScreenHandlerContext ctx) {
-        return (World) ctx.run((world, pos) -> world).orElse(null);
+        return (World) ctx.get((world, pos) -> world).orElse(null);
     }
 
     public Identifier getImage(boolean focused, boolean on, boolean up) {

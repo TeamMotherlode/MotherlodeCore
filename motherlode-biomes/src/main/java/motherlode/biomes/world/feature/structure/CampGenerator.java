@@ -2,10 +2,10 @@ package motherlode.biomes.world.feature.structure;
 
 import java.util.List;
 import java.util.Random;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.SimpleStructurePiece;
 import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
@@ -21,32 +21,32 @@ import motherlode.biomes.world.MotherlodeStructures;
 public class CampGenerator {
     private static final Identifier CAMP_PIECE = MotherlodeModule.id("camp_piece");
 
-    public static void addPieces(StructureManager manager, BlockPos pos, BlockRotation rotation, List<StructurePiece> pieces) {
-        pieces.add(new CampPiece(manager, pos, CAMP_PIECE, rotation));
+    public static void addPieces(ServerWorld world, BlockPos pos, BlockRotation rotation, List<StructurePiece> pieces) {
+        pieces.add(new CampPiece(world, pos, CAMP_PIECE, rotation));
     }
 
     public static class CampPiece extends SimpleStructurePiece {
         private final BlockRotation rotation;
         private final Identifier template;
 
-        public CampPiece(StructureManager structureManager, CompoundTag compoundTag) {
+        public CampPiece(ServerWorld world, NbtCompound compoundTag) {
             super(MotherlodeStructures.CAMP_PIECE, compoundTag);
             this.template = new Identifier(compoundTag.getString("Template"));
             this.rotation = BlockRotation.valueOf(compoundTag.getString("Rot"));
-            this.initializeStructureData(structureManager);
+            this.initializeStructureData(world);
         }
 
-        public CampPiece(StructureManager structureManager, BlockPos pos, Identifier template, BlockRotation rotation) {
+        public CampPiece(ServerWorld world, BlockPos pos, Identifier template, BlockRotation rotation) {
             super(MotherlodeStructures.CAMP_PIECE, 0);
             this.pos = pos;
             this.rotation = rotation;
             this.template = template;
 
-            this.initializeStructureData(structureManager);
+            this.initializeStructureData(world);
         }
 
-        private void initializeStructureData(StructureManager structureManager) {
-            Structure structure = structureManager.getStructureOrBlank(this.template);
+        private void initializeStructureData(ServerWorld world) {
+            Structure structure = world.getStructureManager().getStructureOrBlank(this.template);
             StructurePlacementData placementData = (new StructurePlacementData())
                 .setRotation(this.rotation)
                 .setMirror(BlockMirror.NONE)
@@ -54,8 +54,8 @@ public class CampGenerator {
             this.setStructureData(structure, this.pos, placementData);
         }
 
-        protected void writeNbt(CompoundTag tag) {
-            super.writeNbt(tag);
+        protected void writeNbt(ServerWorld world, NbtCompound tag) {
+            super.writeNbt(world, tag);
             tag.putString("Template", this.template.toString());
             tag.putString("Rot", this.rotation.name());
         }

@@ -69,16 +69,18 @@ public abstract class CutterScreenHandler extends ScreenHandler {
             }
         }
         inputStack = itemStack.copy();
+
+        super.onContentChanged(inventory);
     }
 
     public <T extends CuttingRecipe> void craft(T recipe) {
         if (availableRecipes.contains(recipe) && recipe.matches(input, world)) {
-            ItemStack cursorStack = playerInventory.getCursorStack();
+            ItemStack cursorStack = this.getCursorStack();
             if (cursorStack.isOf(recipe.getOutput().getItem()) && cursorStack.getMaxCount() >= cursorStack.getCount()+recipe.getOutput().getCount()) {
                 cursorStack.increment(recipe.craft(input).getCount());
                 inputSlot.getStack().decrement(1);
             } else if (cursorStack.isEmpty()) {
-                playerInventory.setCursorStack(recipe.craft(input));
+                this.setCursorStack(recipe.craft(input));
                 inputSlot.getStack().decrement(1);
             }
             onContentChanged(input);
@@ -120,7 +122,7 @@ public abstract class CutterScreenHandler extends ScreenHandler {
                 if (!insertItem(itemStack2, 1, 37, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (world.getRecipeManager().getFirstMatch(getRecipeType(), new SimpleInventory(new ItemStack[]{itemStack2}), this.world).isPresent()) {
+            } else if (world.getRecipeManager().getFirstMatch(getRecipeType(), new SimpleInventory(itemStack2), this.world).isPresent()) {
                 if (!insertItem(itemStack2, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
